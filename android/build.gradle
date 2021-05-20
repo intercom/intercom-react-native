@@ -21,7 +21,7 @@ android {
     compileSdkVersion safeExtGet('IntercomReactNative_compileSdkVersion', 29)
     buildToolsVersion safeExtGet('IntercomReactNative_buildToolsVersion', '29.0.2')
     defaultConfig {
-        minSdkVersion safeExtGet('IntercomReactNative_minSdkVersion', 16)
+        minSdkVersion safeExtGet('IntercomReactNative_minSdkVersion', 21)
         targetSdkVersion safeExtGet('IntercomReactNative_targetSdkVersion', 29)
         versionCode 1
         versionName "1.0"
@@ -55,4 +55,5 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation 'io.intercom.android:intercom-sdk:9.+'
 }

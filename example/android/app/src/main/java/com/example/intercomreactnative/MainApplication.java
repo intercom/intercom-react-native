@@ -10,6 +10,8 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+
+import com.intercomreactnative.IntercomModule;
 import com.intercomreactnative.IntercomPackage;
 
 public class MainApplication extends Application implements ReactApplication {
@@ -46,6 +48,9 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+
+    IntercomModule.initialize(this, "apiKey", "appId");
+
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager()); // Remove this line if you don't want Flipper enabled
   }
 
