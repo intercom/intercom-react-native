@@ -1,12 +1,21 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
-// import Intercom from 'intercom-react-native';
+import { StyleSheet, View, Button } from 'react-native';
+import { useEffect } from 'react';
+import Intercom from 'intercom-react-native';
 
 export default function App() {
-
+  useEffect(() => {
+    Intercom.registerUnidentifiedUser();
+  }, []);
 
   return (
     <View style={styles.container}>
+      <Button
+        title={'Display Messenger'}
+        onPress={() => {
+          Intercom.displayMessenger();
+        }}
+      />
     </View>
   );
 }
