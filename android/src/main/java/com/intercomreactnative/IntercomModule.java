@@ -1,5 +1,6 @@
 package com.intercomreactnative;
 
+import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
 
@@ -12,14 +13,20 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.module.annotations.ReactModule;
+import com.google.firebase.messaging.RemoteMessage;
+
+import java.util.Map;
 
 import io.intercom.android.sdk.Intercom;
 import io.intercom.android.sdk.UserAttributes;
 import io.intercom.android.sdk.identity.Registration;
+import io.intercom.android.sdk.push.IntercomPushClient;
 
 @ReactModule(name = IntercomModule.NAME)
 public class IntercomModule extends ReactContextBaseJavaModule {
   public static final String NAME = "Intercom";
+
+  private static final IntercomPushClient intercomPushClient = new IntercomPushClient();
 
   public IntercomModule(ReactApplicationContext reactContext) {
     super(reactContext);
@@ -29,6 +36,67 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   @NonNull
   public String getName() {
     return NAME;
+  }
+
+  public static boolean isIntercomPush(RemoteMessage remoteMessage) {
+    try {
+      Map message = remoteMessage.getData();
+      return intercomPushClient.isIntercomPush(message);
+    } catch (Exception err) {
+      Log.e(NAME, "isIntercomPush error:");
+      Log.e(NAME, err.toString());
+      return false;
+    }
+  }
+
+  public static void handleRemotePushMessage(@NonNull Application application, RemoteMessage
+    remoteMessage) {
+    try {
+      Map message = remoteMessage.getData();
+      intercomPushClient.handlePush(application, message);
+    } catch (Exception err) {
+      Log.e(NAME, "handleRemotePushMessage error:");
+      Log.e(NAME, err.toString());
+    }
+  }
+
+  public static void sendTokenToIntercom(Application application, @NonNull String token) {
+    intercomPushClient.sendTokenToIntercom(application, token);
+    Log.d(NAME, "sendTokenToIntercom");
+  }
+
+  @ReactMethod
+  public void handlePushMessage(Promise promise) {
+    try {
+      Intercom.client().handlePushMessage();
+      promise.resolve(true);
+      Log.d(NAME, "handlePushMessage");
+    } catch (Exception err) {
+      Log.e(NAME, "handlePushMessage error:");
+      Log.e(NAME, err.toString());
+      promise.reject(IntercomErrorCodes.HANDLE_PUSH_MESSAGE, err.toString());
+    }
+  }
+
+  @ReactMethod
+  public void sendTokenToIntercom(@NonNull String token, Promise promise) {
+    try {
+      Activity activity = getCurrentActivity();
+      if (activity != null) {
+        intercomPushClient.sendTokenToIntercom(activity.getApplication(), token);
+        Log.d(NAME, "sendTokenToIntercom");
+        promise.resolve(true);
+      } else {
+        Log.e(NAME, "sendTokenToIntercom");
+        Log.e(NAME, "no current activity");
+      }
+
+    } catch (
+      Exception err) {
+      Log.e(NAME, "sendTokenToIntercom error:");
+      Log.e(NAME, err.toString());
+      promise.reject(IntercomErrorCodes.SEND_TOKEN_TO_INTERCOM, err.toString());
+    }
   }
 
   @ReactMethod

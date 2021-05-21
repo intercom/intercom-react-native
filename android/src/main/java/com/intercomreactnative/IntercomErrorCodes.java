@@ -17,5 +17,7 @@ public class IntercomErrorCodes {
   public static final String HIDE_MESSENGER = "206";
   public static final String SET_LAUNCHER_VISIBILITY = "207";
   public static final String SET_BOTTOM_PADDING = "208";
+  public static final String HANDLE_PUSH_MESSAGE = "301";
+  public static final String SEND_TOKEN_TO_INTERCOM = "302";
 }
 
