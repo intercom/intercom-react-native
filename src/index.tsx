@@ -1,4 +1,6 @@
-import { NativeModules } from 'react-native';
+import { NativeModules, NativeEventEmitter } from 'react-native';
+
+const { Intercom, IntercomEventEmitter } = NativeModules;
 
 export type Registration = Partial<{
   email: string;
@@ -9,6 +11,7 @@ export enum Visibility {
   GONE = 'GONE',
   VISIBLE = 'VISIBLE',
 }
+
 type VisibilityType = keyof typeof Visibility;
 
 export enum LogLevel {
@@ -20,7 +23,13 @@ export enum LogLevel {
   VERBOSE = 'VERBOSE',
   WARN = 'WARN',
 }
+
 type LogLevelType = keyof typeof LogLevel;
+
+const Events = {
+  IntercomUnreadCountDidChange:
+    IntercomEventEmitter.UNREAD_COUNT_CHANGE_NOTIFICATION,
+};
 
 export type CustomAttributes = {
   [key: string]: boolean | string | number;
@@ -50,8 +59,11 @@ export type Company = {
   plan?: string;
 };
 
+type EventCallback = (event: { count: number }) => void;
+
 export type IntercomType = {
   displayCarousel(carouselId: string): Promise<boolean>;
+  displayHelpCenter(carouselId: string): Promise<boolean>;
   displayHelpCenter(): Promise<boolean>;
   displayMessageComposer(initialMessage?: string): Promise<boolean>;
   displayMessenger(): Promise<boolean>;
@@ -69,12 +81,12 @@ export type IntercomType = {
   updateUser(params: UpdateUserParamList): Promise<boolean>;
   handlePushMessage(): Promise<boolean>;
   sendTokenToIntercom(token: string): Promise<boolean>;
+  addOnMessageCountChangeListener: (callback: EventCallback) => () => void;
 };
-
-const { Intercom } = NativeModules;
 
 export default {
   displayCarousel: (carouselId: string) => Intercom.displayCarousel(carouselId),
+  displayHelpCenter: () => Intercom.displayHelpCenter(),
   displayMessageComposer: (initialMessage = undefined) =>
     Intercom.displayMessageComposer(initialMessage),
   displayMessenger: () => Intercom.displayMessenger(),
@@ -94,4 +106,16 @@ export default {
   setUserHash: (hash) => Intercom.setUserHash(hash),
   updateUser: (params) => Intercom.updateUser(params),
   sendTokenToIntercom: (token) => Intercom.sendTokenToIntercom(token),
+  addOnMessageCountChangeListener: (callback) => {
+    IntercomEventEmitter.startEventListener();
+    const eventEmitter = new NativeEventEmitter(IntercomEventEmitter);
+    const listener = eventEmitter.addListener(
+      Events.IntercomUnreadCountDidChange,
+      callback
+    );
+    return () => {
+      IntercomEventEmitter.removeEventListener();
+      listener.remove();
+    };
+  },
 } as IntercomType;
