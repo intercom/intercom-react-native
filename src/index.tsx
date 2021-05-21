@@ -67,6 +67,8 @@ export type IntercomType = {
   setLogLevel(logLevel: LogLevelType): Promise<boolean>;
   setUserHash(hash: string): Promise<boolean>;
   updateUser(params: UpdateUserParamList): Promise<boolean>;
+  handlePushMessage(): Promise<boolean>;
+  sendTokenToIntercom(token: string): Promise<boolean>;
 };
 
 const { Intercom } = NativeModules;
@@ -77,6 +79,7 @@ export default {
     Intercom.displayMessageComposer(initialMessage),
   displayMessenger: () => Intercom.displayMessenger(),
   getUnreadConversationCount: () => Intercom.getUnreadConversationCount(),
+  handlePushMessage: () => Intercom.handlePushMessage(),
   hideMessenger: () => Intercom.hideMessenger(),
   logEvent: (eventName, metaData = undefined) =>
     Intercom.logEvent(eventName, metaData),
@@ -90,4 +93,5 @@ export default {
   setLogLevel: (logLevel) => Intercom.setLogLevel(logLevel),
   setUserHash: (hash) => Intercom.setUserHash(hash),
   updateUser: (params) => Intercom.updateUser(params),
+  sendTokenToIntercom: (token) => Intercom.sendTokenToIntercom(token),
 } as IntercomType;
