@@ -284,6 +284,18 @@ public class IntercomModule extends ReactContextBaseJavaModule {
       promise.reject(IntercomErrorCodes.DISPLAY_CAROUSEL, err.toString());
     }
   }
+  @ReactMethod
+  public void displayArticle(String articleId, Promise promise) {
+    try {
+      Intercom.client().displayArticle(articleId);
+      Log.d(NAME, "displayArticle");
+      promise.resolve(true);
+    } catch (Exception err) {
+      Log.e(NAME, "displayArticle error:");
+      Log.e(NAME, err.toString());
+      promise.reject(IntercomErrorCodes.DISPLAY_ARTICLE, err.toString());
+    }
+  }
 
   @ReactMethod
   public void setInAppMessageVisibility(String visibility, Promise promise) {

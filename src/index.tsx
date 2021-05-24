@@ -62,8 +62,8 @@ export type Company = {
 type EventCallback = (event: { count: number }) => void;
 
 export type IntercomType = {
+  displayArticle(articleId: string): Promise<boolean>;
   displayCarousel(carouselId: string): Promise<boolean>;
-  displayHelpCenter(carouselId: string): Promise<boolean>;
   displayHelpCenter(): Promise<boolean>;
   displayMessageComposer(initialMessage?: string): Promise<boolean>;
   displayMessenger(): Promise<boolean>;
@@ -102,6 +102,8 @@ export default {
   setBottomPadding: (paddingBottom) => Intercom.setBottomPadding(paddingBottom),
   setInAppMessageVisibility: (visibility) =>
     Intercom.setInAppMessageVisibility(visibility),
+  setLauncherVisibility: (visibility) =>
+    Intercom.setLauncherVisibility(visibility),
   setLogLevel: (logLevel) => Intercom.setLogLevel(logLevel),
   setUserHash: (hash) => Intercom.setUserHash(hash),
   updateUser: (params) => Intercom.updateUser(params),
