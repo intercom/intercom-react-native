@@ -9,7 +9,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import Intercom, { Visibility } from 'intercom-react-native';
+import Intercom, { IntercomEvents, Visibility } from 'intercom-react-native';
 import Button from './Button';
 
 const CAROUSEL_ID = ''; //Provide carouselId
@@ -52,9 +52,12 @@ export default function App() {
     /**
      * Handle message count changed
      */
-    const event = Intercom.addOnMessageCountChangeListener(({ count }) => {
-      setCount(count);
-    });
+    const event = Intercom.addEventListener(
+      IntercomEvents.IntercomUnreadCountDidChange,
+      ({ count }) => {
+        setCount(count as number);
+      }
+    );
 
     return () => {
       Linking.removeEventListener('url', () => {});
