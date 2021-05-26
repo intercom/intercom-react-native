@@ -1,6 +1,6 @@
-import { NativeModules, NativeEventEmitter } from 'react-native';
+import { NativeModules, NativeEventEmitter, Platform } from 'react-native';
 
-const { Intercom, IntercomEventEmitter } = NativeModules;
+const { IntercomModule, IntercomEventEmitter } = NativeModules;
 
 export type Registration = Partial<{
   email: string;
@@ -26,10 +26,23 @@ export enum LogLevel {
 
 type LogLevelType = keyof typeof LogLevel;
 
-const Events = {
+export const IntercomEvents = {
   IntercomUnreadCountDidChange:
     IntercomEventEmitter.UNREAD_COUNT_CHANGE_NOTIFICATION,
+  IntercomWindowDidHide: IntercomEventEmitter.WINDOW_DID_HIDE_NOTIFICATION,
+  IntercomWindowDidShow: IntercomEventEmitter.WINDOW_DID_SHOW_NOTIFICATION,
+  IntercomHelpCenterWindowDidShow:
+    IntercomEventEmitter.HELP_CENTER_WINDOW_DID_SHOW_NOTIFICATION,
+  IntercomHelpCenterWindowDidHide:
+    IntercomEventEmitter.HELP_CENTER_WINDOW_DID_HIDE_NOTIFICATION,
 };
+
+type EventType =
+  | 'IntercomUnreadConversationCountDidChangeNotification'
+  | 'IntercomHelpCenterDidShowNotification'
+  | 'IntercomHelpCenterDidHideNotification'
+  | 'IntercomWindowDidHideNotification'
+  | 'IntercomWindowDidShowNotification';
 
 export type CustomAttributes = {
   [key: string]: boolean | string | number;
@@ -59,8 +72,6 @@ export type Company = {
   plan?: string;
 };
 
-type EventCallback = (event: { count: number }) => void;
-
 export type IntercomType = {
   displayArticle(articleId: string): Promise<boolean>;
   displayCarousel(carouselId: string): Promise<boolean>;
@@ -79,44 +90,52 @@ export type IntercomType = {
   setLogLevel(logLevel: LogLevelType): Promise<boolean>;
   setUserHash(hash: string): Promise<boolean>;
   updateUser(params: UpdateUserParamList): Promise<boolean>;
-  handlePushMessage(): Promise<boolean>;
+  handlePushMessage(): boolean;
   sendTokenToIntercom(token: string): Promise<boolean>;
-  addOnMessageCountChangeListener: (callback: EventCallback) => () => void;
+  addEventListener: (
+    event: EventType,
+    callback: (response: { count?: number; visible: boolean }) => void
+  ) => () => void;
 };
 
 export default {
-  displayCarousel: (carouselId: string) => Intercom.displayCarousel(carouselId),
-  displayHelpCenter: () => Intercom.displayHelpCenter(),
+  displayArticle: (articleId: string) =>
+    IntercomModule.displayArticle(articleId),
+  displayCarousel: (carouselId: string) =>
+    IntercomModule.displayCarousel(carouselId),
+  displayHelpCenter: () => IntercomModule.displayHelpCenter(),
   displayMessageComposer: (initialMessage = undefined) =>
-    Intercom.displayMessageComposer(initialMessage),
-  displayMessenger: () => Intercom.displayMessenger(),
-  getUnreadConversationCount: () => Intercom.getUnreadConversationCount(),
-  handlePushMessage: () => Intercom.handlePushMessage(),
-  hideMessenger: () => Intercom.hideMessenger(),
+    IntercomModule.displayMessageComposer(initialMessage),
+  displayMessenger: () => IntercomModule.displayMessenger(),
+  getUnreadConversationCount: () => IntercomModule.getUnreadConversationCount(),
+  handlePushMessage: () => IntercomModule.handlePushMessage(),
+  hideMessenger: () => IntercomModule.hideMessenger(),
   logEvent: (eventName, metaData = undefined) =>
-    Intercom.logEvent(eventName, metaData),
-  logout: () => Intercom.logout(),
+    IntercomModule.logEvent(eventName, metaData),
+  logout: () => IntercomModule.logout(),
   registerIdentifiedUser: (eventName) =>
-    Intercom.registerIdentifiedUser(eventName),
-  registerUnidentifiedUser: () => Intercom.registerUnidentifiedUser(),
-  setBottomPadding: (paddingBottom) => Intercom.setBottomPadding(paddingBottom),
+    IntercomModule.registerIdentifiedUser(eventName),
+  registerUnidentifiedUser: () => IntercomModule.registerUnidentifiedUser(),
+  setBottomPadding: (paddingBottom) =>
+    IntercomModule.setBottomPadding(paddingBottom),
   setInAppMessageVisibility: (visibility) =>
-    Intercom.setInAppMessageVisibility(visibility),
+    IntercomModule.setInAppMessageVisibility(visibility),
   setLauncherVisibility: (visibility) =>
-    Intercom.setLauncherVisibility(visibility),
-  setLogLevel: (logLevel) => Intercom.setLogLevel(logLevel),
-  setUserHash: (hash) => Intercom.setUserHash(hash),
-  updateUser: (params) => Intercom.updateUser(params),
-  sendTokenToIntercom: (token) => Intercom.sendTokenToIntercom(token),
-  addOnMessageCountChangeListener: (callback) => {
-    IntercomEventEmitter.startEventListener();
+    IntercomModule.setLauncherVisibility(visibility),
+  setLogLevel: (logLevel) => IntercomModule.setLogLevel(logLevel),
+  setUserHash: (hash) => IntercomModule.setUserHash(hash),
+  updateUser: (params) => IntercomModule.updateUser(params),
+  sendTokenToIntercom: (token) => IntercomModule.sendTokenToIntercom(token),
+  addEventListener: (event, callback) => {
+    event === IntercomEvents.IntercomUnreadCountDidChange &&
+      Platform.OS === 'android' &&
+      IntercomEventEmitter.startEventListener();
     const eventEmitter = new NativeEventEmitter(IntercomEventEmitter);
-    const listener = eventEmitter.addListener(
-      Events.IntercomUnreadCountDidChange,
-      callback
-    );
+    const listener = eventEmitter.addListener(event, callback);
     return () => {
-      IntercomEventEmitter.removeEventListener();
+      event === IntercomEvents.IntercomUnreadCountDidChange &&
+        Platform.OS === 'android' &&
+        IntercomEventEmitter.removeEventListener();
       listener.remove();
     };
   },
