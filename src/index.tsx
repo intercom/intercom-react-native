@@ -108,7 +108,11 @@ export default {
     IntercomModule.displayMessageComposer(initialMessage),
   displayMessenger: () => IntercomModule.displayMessenger(),
   getUnreadConversationCount: () => IntercomModule.getUnreadConversationCount(),
-  handlePushMessage: () => IntercomModule.handlePushMessage(),
+  handlePushMessage: () =>
+    Platform.select({
+      android: IntercomModule.handlePushMessage(),
+      default: async () => true,
+    }),
   hideMessenger: () => IntercomModule.hideMessenger(),
   logEvent: (eventName, metaData = undefined) =>
     IntercomModule.logEvent(eventName, metaData),

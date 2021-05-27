@@ -11,6 +11,8 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <IntercomModule.h>
+#import <UserNotifications/UserNotifications.h>
+#import <React/RCTLinkingManager.h>
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -51,8 +53,34 @@ static void InitializeFlipper(UIApplication *application) {
     [IntercomModule initialize:@"APP KEY" withAppId:@"APP ID"];
 
     [self.window makeKeyAndVisible];
+
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert + UNAuthorizationOptionSound)
+                          completionHandler:^(BOOL granted, NSError *_Nullable error) {
+                          }];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+
+
     return YES;
 }
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    [IntercomModule setDeviceToken:deviceToken];
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+    return [RCTLinkingManager application:application openURL:url options:options];
+}
+
+- (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity
+ restorationHandler:(nonnull void (^)(NSArray<id <UIUserActivityRestoring>> *_Nullable))restorationHandler {
+    return [RCTLinkingManager application:application
+            com.example.intercomreactnative                     continueUserActivity:userActivity
+                       restorationHandler:restorationHandler];
+}
+
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge {
 #if DEBUG
