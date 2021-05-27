@@ -71,11 +71,15 @@ buildscript {
 
 ### Permissions
 
-Add those permissions to your `AndroidManifest.xml`
+You will need to include the [READ\_EXTERNAL\_STORAGE](http://developer.android.com/reference/android/Manifest.permission.html#READ_EXTERNAL_STORAGE) permission if you have enabled attachments:
 
 ```xml
-
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+```
+
+You can also include [VIBRATE](http://developer.android.com/reference/android/Manifest.permission.html#VIBRATE) to enable vibration in push notifications:
+
+```xml
 <uses-permission android:name="android.permission.VIBRATE"/>
 ```
 
