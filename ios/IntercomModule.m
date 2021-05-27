@@ -3,11 +3,12 @@
 #import <Intercom/Intercom.h>
 
 @implementation IntercomModule
-NSString *REGISTER_IDENTIFIED_USER = @"101";
-NSString *UPDATE_USER = @"102";
+NSString *IDENTIFIED_REGISTRATION = @"102";
 NSString *SET_USER_HASH = @"103";
-NSString *LOG_EVENT = @"104";
-NSString *UNREAD_CONVERSATION_COUNT = @"105";
+NSString *UPDATE_USER = @"104";
+NSString *LOG_EVENT = @"105";
+NSString *UNREAD_CONVERSATION_COUNT = @"107";
+NSString *SEND_TOKEN_TO_INTERCOM = @"302";
 
 RCT_EXPORT_MODULE()
 
@@ -15,6 +16,34 @@ RCT_EXPORT_MODULE()
     [Intercom setApiKey:apiKey forAppId:appId];
     NSLog(@"initialized Intercom module");
 }
+
++ (void)setDeviceToken:(nonnull NSString *)deviceToken {
+    [Intercom setDeviceToken:deviceToken];
+    NSLog(@"setDeviceToken");
+}
+
++ (BOOL)isIntercomPushNotification:(NSDictionary *)userInfo {
+
+    return [Intercom isIntercomPushNotification:userInfo];
+}
+
++ (void)handleIntercomPushNotification:(NSDictionary *)userInfo {
+    [Intercom handleIntercomPushNotification:userInfo];
+}
+
+RCT_EXPORT_METHOD(sendTokenToIntercom :
+    (NSString *) token:
+(RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
+    @try {
+        NSData *data = [token dataUsingEncoding:NSUTF8StringEncoding];
+        [Intercom setDeviceToken:data];
+
+        NSLog(@"sendTokenToIntercom");
+        resolve(@(YES));
+    } @catch (NSException *exception) {
+        reject(UPDATE_USER, @"Error in sendTokenToIntercom", [self exceptionToError:exception :SEND_TOKEN_TO_INTERCOM :@"sendTokenToIntercom"]);
+    }
+};
 
 RCT_EXPORT_METHOD(registerUnidentifiedUser :
     (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
@@ -49,8 +78,8 @@ RCT_EXPORT_METHOD(registerIdentifiedUser:
         resolve(@(YES));
     } else {
         NSLog(@"[Intercom] ERROR - No user registered. You must supply an email, a userId or both");
-        NSError *error = [NSError errorWithDomain:@"registerIdentifiedUser" code:[REGISTER_IDENTIFIED_USER intValue] userInfo:@{@"Error reason": @"Invalid Input. No user registered. You must supply an email, a userId or both"}];
-        reject(REGISTER_IDENTIFIED_USER, @"No user registered. You must supply an email, a userId or both", error);
+        NSError *error = [NSError errorWithDomain:@"registerIdentifiedUser" code:[IDENTIFIED_REGISTRATION intValue] userInfo:@{@"Error reason": @"Invalid Input. No user registered. You must supply an email, a userId or both"}];
+        reject(IDENTIFIED_REGISTRATION, @"No user registered. You must supply an email, a userId or both", error);
     }
 }
 
