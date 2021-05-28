@@ -98,7 +98,7 @@ export type IntercomType = {
   ) => () => void;
 };
 
-export default {
+const Intercom = {
   displayArticle: (articleId: string) =>
     IntercomModule.displayArticle(articleId),
   displayCarousel: (carouselId: string) =>
@@ -144,3 +144,5 @@ export default {
     };
   },
 } as IntercomType;
+
+export default Intercom;
