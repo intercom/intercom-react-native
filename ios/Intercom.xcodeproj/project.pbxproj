@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3A6572C897F85E4E8295FC2D /* IntercomEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A657CFB9FBFC5F094B4D20D /* IntercomEventEmitter.m */; };
 		3A6576B390F8276AE2651D35 /* IntercomAttributesBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6576960DB107666B27C442 /* IntercomAttributesBuilder.m */; };
+		7D72E2FD26611EAB00A3C250 /* IntercomModule.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* IntercomModule.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -122,6 +123,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D72E2FD26611EAB00A3C250 /* IntercomModule.m in Sources */,
 				3A6576B390F8276AE2651D35 /* IntercomAttributesBuilder.m in Sources */,
 				3A6572C897F85E4E8295FC2D /* IntercomEventEmitter.m in Sources */,
 			);
