@@ -104,6 +104,10 @@ As react-native@0.60 and above supports autolinking there is no need to run the 
 
 ### Android Manual React Native v0.59 and below
 
+Make `react native link intercom-react-native`
+
+### Or
+
 - Add below code to `android/settings.gradle`
 
 ```
@@ -285,8 +289,7 @@ Add this permission to your `Info.plist`
 Make `pod install` in ios directory
 
 ### IOS Manual React Native v0.59 and below
-
-TODO
+####[How to manual link IOS Intecom SDK ](docs/IOS-MANUAL-LINKING.md)
 
 ### IOS Push Notifications
 
