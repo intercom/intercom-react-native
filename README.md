@@ -25,7 +25,7 @@
 - [Uploading token to Intercom](#upload-token-to-intercom)
 - [Common methods](#methods)
 - [Usage](#usage)
-- [Example App](#methods)
+- [Troubleshooting](#troubleshooting)
 - [Author](#author)
 - [License](#license)
 
@@ -393,6 +393,7 @@ Linking.getInitialURL()
 Token upload can be handled by [Intercom.sendTokenToIntercom(token)](#intercomsendtokentointercomtoken)
 with token obtained
 from [react-native-notifications](https://wix.github.io/react-native-notifications/api/general-events#registerremotenotificationsregistered)
+___
 
 ## Methods
 
@@ -744,7 +745,27 @@ Set the level of the native logger
 ___
 
 ## Usage
+
 [Check example app](./example/src/App.tsx)
+___
+
+## Troubleshooting
+
+- #### This project uses AndroidX dependencies, but the 'android.useAndroidX' property is not enabled.
+  - To enable `jetifier`, add those two lines to your `gradle.properties` file:
+    ```
+    android.useAndroidX=true
+    android.enableJetifier=true
+    ```
+
+
+- #### When Android app keeps stopping (E/AndroidRuntime: FATAL EXCEPTION: mqt_native_modules)
+  - Add those lines to `dependencies` in `./android/app/build.gradle`:
+    ```
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha03'
+    ```
+___
 ## Author
 
 👤 **Intercom <support@intercom.com> (https://www.intercom.com/)**
