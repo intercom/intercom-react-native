@@ -24,7 +24,7 @@ import io.intercom.android.sdk.push.IntercomPushClient;
 
 @ReactModule(name = IntercomModule.NAME)
 public class IntercomModule extends ReactContextBaseJavaModule {
-  public static final String NAME = "Intercom";
+  public static final String NAME = "IntercomModule";
 
   private static final IntercomPushClient intercomPushClient = new IntercomPushClient();
 
