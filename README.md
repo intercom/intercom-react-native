@@ -285,12 +285,13 @@ Add this permission to your `Info.plist`
 Make `pod install` in ios directory
 
 ### IOS Manual React Native v0.59 and below
-####[How to manual link IOS Intecom SDK ](docs/IOS-MANUAL-LINKING.md)
+
+[How to manual link IOS Intecom SDK ](docs/IOS-MANUAL-LINKING.md)
 
 ### IOS Push Notifications
 
 Package handles Push Notification itself, you have to only
-#### [Upload Token to intercom]("#uploat-token-to-intercom")
+[Upload Token to intercom](#uploat-token-to-intercom)
 ___
 
 ### Or Set up notification in native part
