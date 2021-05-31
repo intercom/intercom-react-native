@@ -6,6 +6,10 @@
 
 RCT_EXPORT_MODULE();
 
++ (BOOL)requiresMainQueueSetup {
+    return NO;
+}
+
 - (NSDictionary<NSString *, NSString *> *)constantsToExport {
     return @{@"UNREAD_COUNT_CHANGE_NOTIFICATION": IntercomUnreadConversationCountDidChangeNotification,
             @"WINDOW_DID_HIDE_NOTIFICATION": IntercomWindowDidHideNotification,
