@@ -17,7 +17,7 @@ RCT_EXPORT_MODULE()
     NSLog(@"initialized Intercom module");
 }
 
-+ (void)setDeviceToken:(nonnull NSString *)deviceToken {
++ (void)setDeviceToken:(nonnull NSData *)deviceToken {
     [Intercom setDeviceToken:deviceToken];
     NSLog(@"setDeviceToken");
 }
@@ -31,11 +31,26 @@ RCT_EXPORT_MODULE()
     [Intercom handleIntercomPushNotification:userInfo];
 }
 
+- (NSData *)dataFromHexString:(NSString *)string {
+    NSString *command = [string stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSMutableData *commandToSend = [[NSMutableData alloc] init];
+    unsigned char whole_byte;
+    char byte_chars[3] = {'\0', '\0', '\0'};
+    int i;
+    for (i = 0; i < [command length] / 2; i++) {
+        byte_chars[0] = [command characterAtIndex:i * 2];
+        byte_chars[1] = [command characterAtIndex:i * 2 + 1];
+        whole_byte = strtol(byte_chars, NULL, 16);
+        [commandToSend appendBytes:&whole_byte length:1];
+    }
+    return commandToSend;
+}
+
 RCT_EXPORT_METHOD(sendTokenToIntercom :
     (NSString *) token:
 (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
     @try {
-        NSData *data = [token dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *data = [self dataFromHexString:token];
         [Intercom setDeviceToken:data];
 
         NSLog(@"sendTokenToIntercom");
