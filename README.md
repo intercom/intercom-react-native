@@ -403,6 +403,23 @@ ___
 
 ___
 
+### `Intercom.setUserHash(userHash) (Optional)`
+
+Sets the user hash necessary for validation when Identity Verification is enabled.
+***This should be called before any registration calls.***
+
+### Options
+
+| Type    | Type        | Required |
+| ------- | --------    | -------- |
+| userHash   | string   |yes        |
+
+### Returns
+
+`Promise<boolean>`
+
+___
+
 ### `Intercom.registerUnidentifiedUser()`
 
 Registers an unidentified user with Intercom
@@ -425,22 +442,6 @@ One of below fields is required.
 | ------- | -------- | -------- |
 | email   | string   |no        |
 | userId  | string   |no        |
-
-### Returns
-
-`Promise<boolean>`
-
-___
-
-### `Intercom.setUserHash(userHash)`
-
-Sets the user hash necessary for validation when Identity Verification is enabled.
-
-### Options
-
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| userHash   | string   |yes        |
 
 ### Returns
 
