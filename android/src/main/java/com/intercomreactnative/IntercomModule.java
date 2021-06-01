@@ -11,10 +11,12 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.module.annotations.ReactModule;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.List;
 import java.util.Map;
 
 import io.intercom.android.sdk.Intercom;
@@ -273,6 +275,20 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void displayHelpCenterCollections(ReadableArray collectionsId, Promise promise) {
+    try {
+      List<String> list = IntercomHelpers.readableArrayToStringList(collectionsId);
+      Intercom.client().displayHelpCenterCollections(list);
+      Log.d(NAME, "displayHelpCenterCollections");
+      promise.resolve(true);
+    } catch (Exception err) {
+      Log.e(NAME, "displayHelpCenterCollections error:");
+      Log.e(NAME, err.toString());
+      promise.reject(IntercomErrorCodes.DISPLAY_HELP_CENTER_COLLECTIONS, err.toString());
+    }
+  }
+
+  @ReactMethod
   public void displayCarousel(String carouselId, Promise promise) {
     try {
       Intercom.client().displayCarousel(carouselId);
@@ -284,6 +300,7 @@ public class IntercomModule extends ReactContextBaseJavaModule {
       promise.reject(IntercomErrorCodes.DISPLAY_CAROUSEL, err.toString());
     }
   }
+
   @ReactMethod
   public void displayArticle(String articleId, Promise promise) {
     try {

@@ -14,6 +14,7 @@ import Button from './Button';
 
 const CAROUSEL_ID = ''; //Provide carouselId
 const EVENT_NAME = ''; //Provide eventName
+const COLLECTIONS: string[] = []; //Provide help center collections ids
 
 export default function App() {
   const [count, setCount] = useState<number>(0);
@@ -109,6 +110,13 @@ export default function App() {
           title={'Display Help Center'}
           onPress={() => {
             Intercom.displayHelpCenter();
+          }}
+        />
+        <Button
+          disabled={!loggedUser}
+          title={'Display Help Center Collections'}
+          onPress={() => {
+            Intercom.displayHelpCenterCollections(COLLECTIONS);
           }}
         />
         <Button
