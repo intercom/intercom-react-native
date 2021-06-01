@@ -4,16 +4,21 @@ import {
   Alert,
   AppState,
   Linking,
+  Platform,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 import Intercom, { IntercomEvents, Visibility } from 'intercom-react-native';
 import Button from './Button';
+import type { Registration } from '../../lib/typescript';
 
 const CAROUSEL_ID = ''; //Provide carouselId
 const EVENT_NAME = ''; //Provide eventName
+const ARTICLE_ID = ''; //Provide articleId
 
 export default function App() {
   const [count, setCount] = useState<number>(0);
@@ -21,6 +26,8 @@ export default function App() {
   const [bottomPadding, setBottomPadding] = useState<number>(0);
   const [inAppMessageVisibility, setInAppMessageVisibility] =
     useState<boolean>(true);
+  const [launcherVisibility, setLauncherVisibility] = useState<boolean>(true);
+  const [user, setUser] = useState<Registration>({ email: '' });
 
   useEffect(() => {
     /**
@@ -69,12 +76,24 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.text}>
-          In App Message Visibility:{' '}
-          <Text style={styles.boldText}>
-            {inAppMessageVisibility ? Visibility.GONE : Visibility.VISIBLE}
-          </Text>
-        </Text>
+        <View style={styles.row}>
+          <View style={styles.visibilityContainer}>
+            <Text style={[styles.text, styles.textCenter]}>
+              In App Message Visibility:{' \n'}
+              <Text style={styles.boldText}>
+                {inAppMessageVisibility ? Visibility.GONE : Visibility.VISIBLE}
+              </Text>
+            </Text>
+          </View>
+          <View style={styles.visibilityContainer}>
+            <Text style={[styles.text, styles.textCenter]}>
+              Launcher Visibility:{' \n'}
+              <Text style={styles.boldText}>
+                {launcherVisibility ? Visibility.GONE : Visibility.VISIBLE}
+              </Text>
+            </Text>
+          </View>
+        </View>
         <Text style={styles.text}>
           Bottom padding: <Text style={styles.boldText}>{bottomPadding}</Text>
         </Text>
@@ -85,9 +104,35 @@ export default function App() {
       <ScrollView>
         <Button
           disabled={loggedUser}
-          title={'Login User'}
+          title={'Login unidentified User'}
           onPress={() => {
             Intercom.registerUnidentifiedUser().then(() => setLoggedUser(true));
+          }}
+        />
+        <TextInput
+          style={styles.input}
+          value={user.email}
+          onChangeText={(val) => {
+            setUser((prev) => ({ ...prev, email: val }));
+          }}
+          keyboardType={'email-address'}
+          placeholder={'Provide user email'}
+          editable={!loggedUser}
+        />
+        <Button
+          disabled={loggedUser && user.email !== ''}
+          title={'Login identified User'}
+          onPress={() => {
+            if (user.email?.includes('@')) {
+              Intercom.registerIdentifiedUser(user).then(() =>
+                setLoggedUser(true)
+              );
+            } else {
+              Alert.alert(
+                'Not email',
+                'Provide correct email: example@intercom.io'
+              );
+            }
           }}
         />
         <Button
@@ -95,6 +140,13 @@ export default function App() {
           title={'Display Messenger'}
           onPress={() => {
             Intercom.displayMessenger();
+          }}
+        />
+        <Button
+          disabled={!loggedUser}
+          title={'Display Article'}
+          onPress={() => {
+            Intercom.displayArticle(ARTICLE_ID);
           }}
         />
         <Button
@@ -136,6 +188,14 @@ export default function App() {
           }}
         />
         <Button
+          title={'Toggle In Launcher Visibility'}
+          onPress={() => {
+            Intercom.setLauncherVisibility(
+              launcherVisibility ? Visibility.GONE : Visibility.VISIBLE
+            ).then(() => setLauncherVisibility((v) => !v));
+          }}
+        />
+        <Button
           title={'Set Bottom Padding'}
           onPress={() => {
             const paddingToSet =
@@ -168,6 +228,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginHorizontal: 16,
+    paddingTop:
+      Platform.OS === 'ios'
+        ? (StatusBar.currentHeight ?? 0) + 24
+        : StatusBar.currentHeight ?? 0,
   },
   box: {
     width: 60,
@@ -175,6 +239,16 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   text: { marginVertical: 6, fontSize: 18 },
+  textCenter: { textAlign: 'center' },
   boldText: { fontWeight: 'bold', color: '#242d38' },
   textContainer: { justifyContent: 'center', paddingVertical: 16 },
+  input: {
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  row: { flexDirection: 'row' },
+  visibilityContainer: { flex: 1, padding: 4 },
 });
