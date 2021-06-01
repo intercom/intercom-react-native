@@ -748,6 +748,31 @@ Set the level of the native logger
 `Promise<boolean>`
 ___
 
+### `Intercom.addEventListener(event,callback)`
+
+Sets a listener for listed events:
+
+| Event    | Platform        |
+| ------- | --------    |
+| IntercomUnreadConversationCountDidChangeNotification| IOS, Android  |
+| IntercomHelpCenterDidShowNotification| IOS  |
+| IntercomHelpCenterDidHideNotification| IOS  |
+| IntercomWindowDidShowNotification| IOS  |      |
+| IntercomWindowDidHideNotification| IOS  |
+
+#### Options
+
+| Type    | Type        | Required |
+| ------- | --------    | -------- |
+| event| string (`IntercomEvents`)  |yes        |
+| callback| function `({count?: number, visible?: boolean}) => void`  |yes        |
+
+#### Returns
+
+`removeEventListener: () => void`
+
+___
+
 ## Usage
 
 [Check example app](./example/src/App.tsx)
@@ -769,7 +794,9 @@ ___
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha03'
     ```
+
 ___
+
 ## Author
 
 👤 **Intercom <support@intercom.com> (https://www.intercom.com/)**
