@@ -1,4 +1,9 @@
-import { NativeModules, NativeEventEmitter, Platform } from 'react-native';
+import {
+  NativeModules,
+  NativeEventEmitter,
+  Platform,
+  EmitterSubscription,
+} from 'react-native';
 
 const { IntercomModule, IntercomEventEmitter } = NativeModules;
 
@@ -95,7 +100,7 @@ export type IntercomType = {
   addEventListener: (
     event: EventType,
     callback: (response: { count?: number; visible: boolean }) => void
-  ) => () => void;
+  ) => EmitterSubscription;
 };
 
 const Intercom = {
@@ -135,11 +140,14 @@ const Intercom = {
       IntercomEventEmitter.startEventListener();
     const eventEmitter = new NativeEventEmitter(IntercomEventEmitter);
     const listener = eventEmitter.addListener(event, callback);
-    return () => {
-      event === IntercomEvents.IntercomUnreadCountDidChange &&
-        Platform.OS === 'android' &&
-        IntercomEventEmitter.removeEventListener();
-      listener.remove();
+    return {
+      ...listener,
+      remove: () => {
+        event === IntercomEvents.IntercomUnreadCountDidChange &&
+          Platform.OS === 'android' &&
+          IntercomEventEmitter.removeEventListener();
+        listener.remove();
+      },
     };
   },
 } as IntercomType;

@@ -757,6 +757,15 @@ Sets a listener for listed events:
 | IntercomWindowDidShowNotification| IOS  |      |
 | IntercomWindowDidHideNotification| IOS  |
 
+```javascript
+useEffect(() => {
+  const listener = Intercom.addEventListener('IntercomUnreadConversationCountDidChangeNotification', ({count}) => alert(count);
+  return () => {
+    listener.remove();
+  }
+}, [])
+```
+
 #### Options
 
 | Type    | Type        | Required |
@@ -766,7 +775,7 @@ Sets a listener for listed events:
 
 #### Returns
 
-`removeEventListener: () => void`
+`EmitterSubscription`
 
 ___
 
