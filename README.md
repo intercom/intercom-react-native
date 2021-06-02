@@ -37,7 +37,7 @@ or
 yarn add intercom-react-native
 ```
 
-IOS:
+####Cocoapods:
 
 ```sh
 cd ios
@@ -251,7 +251,7 @@ public class MainNotificationService extends FirebaseMessagingService {
 
 ### IOS Automatic React Native v0.60 and above
 
-Make `pod install` in ios directory
+[Insall dependencies using cocoapods](#cocoapods)
 
 ### IOS Manual React Native v0.59 and below
 
