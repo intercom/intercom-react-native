@@ -59,7 +59,7 @@ export default function App() {
     /**
      * Handle message count changed
      */
-    const event = Intercom.addEventListener(
+    const countListener = Intercom.addEventListener(
       IntercomEvents.IntercomUnreadCountDidChange,
       ({ count }) => {
         setCount(count as number);
@@ -67,9 +67,9 @@ export default function App() {
     );
 
     return () => {
+      countListener.remove();
       Linking.removeEventListener('url', () => {});
       AppState.removeEventListener('change', () => {});
-      event();
     };
   }, []);
 
@@ -81,7 +81,7 @@ export default function App() {
             <Text style={[styles.text, styles.textCenter]}>
               In App Message Visibility:{' \n'}
               <Text style={styles.boldText}>
-                {inAppMessageVisibility ? Visibility.GONE : Visibility.VISIBLE}
+                {inAppMessageVisibility ? Visibility.VISIBLE : Visibility.GONE}
               </Text>
             </Text>
           </View>
@@ -89,7 +89,7 @@ export default function App() {
             <Text style={[styles.text, styles.textCenter]}>
               Launcher Visibility:{' \n'}
               <Text style={styles.boldText}>
-                {launcherVisibility ? Visibility.GONE : Visibility.VISIBLE}
+                {launcherVisibility ? Visibility.VISIBLE : Visibility.GONE}
               </Text>
             </Text>
           </View>
