@@ -291,7 +291,7 @@ Make `pod install` in ios directory
 ### IOS Push Notifications
 
 Package handles Push Notification itself, you have to only
-[Upload Token to intercom](#uploat-token-to-intercom)
+[Upload Token to intercom](#upload-token-to-intercom)
 ___
 
 ### Or Set up notification in native part
