@@ -10,16 +10,16 @@
 
 - [Installation](#installation)
   - [Android](#android)
-    - [General](#android-general)
-      - [Permissions](#permissions-android)
     - [Automatic](#android-automatic-react-native-v060-and-above)
     - [Manual](#android-manual-react-native-v059-and-below)
+    - [General](#android-general)
+      - [Permissions](#permissions-android)
     - [Push Notifications](#android-push-notifications)
   - [iOS](#ios)
-    - [General](#ios-general)
-      - [Permissions](#permissions-ios)
     - [Automatic](#ios-automatic-react-native-v060-and-above)
     - [Manual](#ios-manual-react-native-v059-and-below)
+    - [General](#ios-general)
+      - [Permissions](#permissions-ios)
     - [Push Notifications](#ios-push-notifications)
 - [Deep Linking](#deep-linking)
 - [Uploading token to Intercom](#upload-token-to-intercom)
@@ -46,6 +46,29 @@ cd ..
 ```
 
 ### Android
+
+### Android Automatic React Native v0.60 and above
+
+As react-native@0.60 and above supports autolinking there is no need to run the linking.
+
+### Android Manual React Native v0.59 and below
+
+Make `react native link intercom-react-native`
+
+### Or
+
+- Add below code to `android/settings.gradle`
+
+```
+include ':intercomreactnative'
+project(':intercomreactnative').projectDir = new File(rootProject.projectDir, '../../android')
+```
+
+- Then edit `android/app/build.gradle`, inside `dependencies` at very bottom add
+
+```
+implementation project(':intercomreactnative')
+```
 
 #### Android General
 
@@ -96,29 +119,6 @@ You can also include [VIBRATE](http://developer.android.com/reference/android/Ma
 
 ```xml
 <uses-permission android:name="android.permission.VIBRATE"/>
-```
-
-### Android Automatic React Native v0.60 and above
-
-As react-native@0.60 and above supports autolinking there is no need to run the linking.
-
-### Android Manual React Native v0.59 and below
-
-Make `react native link intercom-react-native`
-
-### Or
-
-- Add below code to `android/settings.gradle`
-
-```
-include ':intercomreactnative'
-project(':intercomreactnative').projectDir = new File(rootProject.projectDir, '../../android')
-```
-
-- Then edit `android/app/build.gradle`, inside `dependencies` at very bottom add
-
-```
-implementation project(':intercomreactnative')
 ```
 
 ### Android Push Notifications
@@ -249,6 +249,14 @@ public class MainNotificationService extends FirebaseMessagingService {
 
 ### IOS
 
+### IOS Automatic React Native v0.60 and above
+
+Make `pod install` in ios directory
+
+### IOS Manual React Native v0.59 and below
+
+[How to manual link IOS Intecom SDK ](docs/IOS-MANUAL-LINKING.md)
+
 #### IOS General
 
 - Open `ios/AppDelegate.m` then add below code:
@@ -283,14 +291,6 @@ Add this permission to your `Info.plist`
 <key>NSPhotoLibraryUsageDescription</key>
 <string>Send photos to support center</string>
 ```
-
-### IOS Automatic React Native v0.60 and above
-
-Make `pod install` in ios directory
-
-### IOS Manual React Native v0.59 and below
-
-[How to manual link IOS Intecom SDK ](docs/IOS-MANUAL-LINKING.md)
 
 ### IOS Push Notifications
 
