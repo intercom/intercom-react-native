@@ -90,7 +90,7 @@ export type IntercomType = {
   setLogLevel(logLevel: LogLevelType): Promise<boolean>;
   setUserHash(hash: string): Promise<boolean>;
   updateUser(params: UpdateUserParamList): Promise<boolean>;
-  handlePushMessage(): boolean;
+  handlePushMessage(): Promise<boolean>;
   sendTokenToIntercom(token: string): Promise<boolean>;
   addEventListener: (
     event: EventType,
