@@ -111,7 +111,7 @@ jobs:
       - run:
           working_directory: example/e2e
           name: Build android
-          command: yarn build:android
+          command: npm run build:android
 
       - android/create-avd:
           avd-name: Android_29
@@ -126,7 +126,7 @@ jobs:
       - run:
           working_directory: example/e2e
           name: Run UI Tests
-          command: yarn test:android
+          command: nom run test:android
 
 workflows:
   build-and-test:
