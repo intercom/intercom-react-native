@@ -145,7 +145,7 @@ jobs:
           at: ~/project
 
       - <<: *setup_env_file
-        -
+
       - run:
           working_directory: example/e2e
           name: Build
