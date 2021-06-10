@@ -154,16 +154,16 @@ jobs:
           name: Install Pods
           command: pod install
       - save_cache:
-        key: pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
-        paths:
-          - ~/project/example/ios/Pods
+          key: pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
+          paths:
+            - ~/project/example/ios/Pods
 
-          - run:
+      - run:
               working_directory: example/e2e
               name: Build
               command: npm run build:ios
 
-          - run:
+      - run:
               working_directory: example/e2e
               name: Run UI Tests
               command: npm run test:ios
