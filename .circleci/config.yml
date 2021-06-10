@@ -106,7 +106,7 @@ jobs:
       - run:
           working_directory: example/
           name: Setup .env
-          command: cp .env.example .env.example
+          command: cp .env.example .env
 
       - run:
           working_directory: example/e2e
