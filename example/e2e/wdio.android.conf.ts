@@ -13,7 +13,7 @@ exports.config = {
       platformName: 'Android',
       platformVersion: '10',
       deviceName: 'Android_29',
-      app: '../android/app/build/outputs/apk/release/app-release.apk',
+      app: '../android/app/build/outputs/apk/foss/release/app-foss-release.apk',
       automationName: 'UiAutomator2',
     },
   ],
