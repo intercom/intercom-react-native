@@ -10,7 +10,7 @@ describe('Intercom E2E', () => {
     await (await $('~user-email')).setValue('rn-example@intercom.com');
     await (await $('~login-identified')).click();
     driver.isIOS && (await (await $('~login-identified')).click());
-    await (await $('~authenticated')).waitForDisplayed({ timeout: 5000 });
+    await (await $('~authenticated')).waitForDisplayed({ timeout: 12000 });
   });
 
   it('Should display messenger', async () => {
@@ -53,21 +53,21 @@ describe('Intercom E2E', () => {
     await driver.scrollToElementByAccessibilityLabel(
       'toggle-message-visibility'
     );
-    await driver.clickWithDelay('~toggle-message-visibility', 2000);
-    await driver.clickWithDelay('~toggle-message-visibility', 2000);
+    await driver.clickWithDelay('~toggle-message-visibility', 12000);
+    await driver.clickWithDelay('~toggle-message-visibility', 12000);
   });
 
   it('Should toggle launcher visibility', async () => {
     await driver.scrollToElementByAccessibilityLabel(
       'toggle-launcher-visibility'
     );
-    await driver.clickWithDelay('~toggle-launcher-visibility', 2000);
+    await driver.clickWithDelay('~toggle-launcher-visibility', 12000);
 
     const laincherId = driver.isAndroid
       ? '~Intercom launcher'
       : '~intercom launcher';
-    await (await $(laincherId)).waitForDisplayed({ timeout: 2000 });
-    await driver.clickWithDelay('~toggle-launcher-visibility', 5000);
+    await (await $(laincherId)).waitForDisplayed({ timeout: 12000 });
+    await driver.clickWithDelay('~toggle-launcher-visibility', 12000);
   });
 
   it('Should set bottom padding', async () => {
@@ -96,18 +96,18 @@ describe('Intercom E2E', () => {
   it('Should set logout ', async () => {
     await driver.scrollToElementByAccessibilityLabel('logout');
     await (await $('~logout')).click();
-    await (await $('~unauthenticated')).waitForDisplayed({ timeout: 5000 });
+    await (await $('~unauthenticated')).waitForDisplayed({ timeout: 12000 });
   });
 
   it('Should login unidentified', async () => {
     await driver.scrollToElementByAccessibilityLabel('login-unidentified');
     await (await $('~login-unidentified')).click();
-    await (await $('~authenticated')).waitForDisplayed({ timeout: 5000 });
+    await (await $('~authenticated')).waitForDisplayed({ timeout: 12000 });
   });
 
   it('Should set logout ', async () => {
     await driver.scrollToElementByAccessibilityLabel('logout');
     await (await $('~logout')).click();
-    await (await $('~unauthenticated')).waitForDisplayed({ timeout: 5000 });
+    await (await $('~unauthenticated')).waitForDisplayed({ timeout: 12000 });
   });
 });

@@ -26,13 +26,13 @@ const clickWithDelay = async (element: string, milis: number) => {
 browser.addCommand('clickWithDelay', clickWithDelay);
 
 const waitForRoot = async () => {
-  (await $('~app-root')).waitForDisplayed({ timeout: 10000 });
+  (await $('~app-root')).waitForDisplayed({ timeout: 12000 });
 };
 driver.addCommand('waitForRoot', waitForRoot);
 
 const boot = async () => {
   if (browser.isIOS) {
-    await (await $('~Allow')).waitForDisplayed({ timeout: 10000 });
+    await (await $('~Allow')).waitForDisplayed({ timeout: 12000 });
     await (await $('~Allow')).click();
   }
 };
@@ -54,7 +54,7 @@ const closeHelpCenterOverlay = async () => {
     await closeOverlay();
   } else {
     const closeButton = await $(`~intercom help center close button`);
-    await closeButton.waitForDisplayed({ timeout: 9000 });
+    await closeButton.waitForDisplayed({ timeout: 12000 });
     await closeButton.click();
   }
 };
@@ -65,7 +65,7 @@ const closeAlert = async () => {
     ? '/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.Button\n'
     : '~OK';
   const alertButton = await $(elementId);
-  await alertButton.waitForDisplayed({ timeout: 1000 });
+  await alertButton.waitForDisplayed({ timeout: 12000 });
   await alertButton.click();
 };
 browser.addCommand('closeAlert', closeAlert);
