@@ -137,7 +137,7 @@ jobs:
           command: npm run test:android
 
   # Build the Test App used for UI Testing and save is to the workspace. This allows it to be used by other jobs.
-  build_ios_ui:
+  ios-e2e-test:
     <<: *macos_config
     steps:
       - checkout
@@ -185,9 +185,9 @@ workflows:
       - build-package:
           requires:
             - install-dependencies
-      #      - android-e2e-test:
-      #          requires:
-      #            - install-dependencies
-      - build_ios_ui:
+      - android-e2e-test:
+          requires:
+            - install-dependencies
+      - ios-e2e-test:
           requires:
             - install-dependencies
