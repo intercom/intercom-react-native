@@ -1,5 +1,11 @@
 version: 2.1
 
+# Default VM config to be used for macOS builds
+macos_config: &macos_config
+  macos:
+    xcode: 12.3.0
+  shell: /bin/bash --login -eo pipefail
+
 executors:
   default:
     docker:
@@ -90,12 +96,11 @@ jobs:
           name: Build package
           command: |
             yarn prepare
-
+  # Build and Test android version of module
   android-e2e-test:
     executor:
       name: android/android-machine
     working_directory: ~/project
-    #      resource-class: large
     steps:
       - checkout:
           path: ~/project
@@ -128,6 +133,19 @@ jobs:
           name: Run UI Tests
           command: npm run test:android
 
+  # Build the Test App used for UI Testing and save is to the workspace. This allows it to be used by other jobs.
+  build_ios_ui:
+    <<: *macos_config
+    steps:
+      - checkout
+      - attach_workspace:
+        at: ~/project
+      - run:
+          working_directory: example/e2e
+          name: Build
+          command: npm --version
+
+
 workflows:
   build-and-test:
     jobs:
@@ -144,6 +162,9 @@ workflows:
       - build-package:
           requires:
             - install-dependencies
-      - android-e2e-test:
+#      - android-e2e-test:
+#          requires:
+#            - install-dependencies
+      - build_ios_ui:
           requires:
             - install-dependencies
