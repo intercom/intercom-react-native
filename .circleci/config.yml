@@ -139,7 +139,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-        at: ~/project
+          at: ~/project
       - run:
           working_directory: example/e2e
           name: Build
