@@ -14,7 +14,7 @@ exports.config = {
       platformName: 'iOS',
       platformVersion: '14.4',
       deviceName: 'iPhone 8',
-      app: './build/Build/Products/Release-iphonesimulator/IntercomReactNativeExample.app',
+      app: 'build/Build/Products/Release-iphonesimulator/IntercomReactNativeExampleUI.app',
     },
   ],
   logLevel: 'info',

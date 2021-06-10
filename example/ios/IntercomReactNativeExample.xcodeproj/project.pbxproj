@@ -11,11 +11,17 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1CAC9687D7F7843EDFBBB774 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* IntercomReactNativeExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* IntercomReactNativeExampleTests.m */; };
 		4C39C56BAD484C67AA576FFA /* libPods-IntercomReactNativeExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA3E69C5B9553B26FBA2DF04 /* libPods-IntercomReactNativeExample.a */; };
+		6B689CC9EE73F2BF0457728A /* libPods-IntercomReactNativeExampleUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBBD0C6D5A5B9C44EDCA9EB6 /* libPods-IntercomReactNativeExampleUI.a */; };
+		7D95B163267240E3008096E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		7D95B164267240E3008096E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		7D95B168267240E3008096E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		7D95B169267240E3008096E0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +47,7 @@
 		00E356EE1AD99517003FC87E /* IntercomReactNativeExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntercomReactNativeExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* IntercomReactNativeExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntercomReactNativeExampleTests.m; sourceTree = "<group>"; };
+		0DB6681325C508226B4F50DA /* Pods-IntercomReactNativeExampleUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntercomReactNativeExampleUI.release.xcconfig"; path = "Target Support Files/Pods-IntercomReactNativeExampleUI/Pods-IntercomReactNativeExampleUI.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* IntercomReactNativeExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntercomReactNativeExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = IntercomReactNativeExample/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = IntercomReactNativeExample/AppDelegate.m; sourceTree = "<group>"; };
@@ -49,11 +56,17 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = IntercomReactNativeExample/main.m; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* IntercomReactNativeExample-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IntercomReactNativeExample-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* IntercomReactNativeExample-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "IntercomReactNativeExample-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		47F7ED3B7971BE374F7B8635 /* Pods-IntercomReactNativeExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntercomReactNativeExample.debug.xcconfig"; path = "Target Support Files/Pods-IntercomReactNativeExample/Pods-IntercomReactNativeExample.debug.xcconfig"; sourceTree = "<group>"; };
 		7D4EACBB265F79DC004A6F30 /* IntercomReactNativeExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = IntercomReactNativeExample.entitlements; path = IntercomReactNativeExample/IntercomReactNativeExample.entitlements; sourceTree = "<group>"; };
+		7D95B170267240E3008096E0 /* IntercomReactNativeExampleUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntercomReactNativeExampleUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D95B171267240E4008096E0 /* IntercomReactNativeExample copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "IntercomReactNativeExample copy-Info.plist"; path = "/Users/piotrpietruszewski/Documents/Projects/intercom-react-native/example/ios/IntercomReactNativeExample copy-Info.plist"; sourceTree = "<absolute>"; };
+		7D95B240267248C8008096E0 /* IntercomReactNativeExampleUIRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IntercomReactNativeExampleUIRelease.entitlements; sourceTree = "<group>"; };
+		7D95B246267248D4008096E0 /* IntercomReactNativeExampleRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = IntercomReactNativeExampleRelease.entitlements; path = IntercomReactNativeExample/IntercomReactNativeExampleRelease.entitlements; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = IntercomReactNativeExample/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A2FEE7F5A0DD3331D2553B49 /* Pods-IntercomReactNativeExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntercomReactNativeExample.release.xcconfig"; path = "Target Support Files/Pods-IntercomReactNativeExample/Pods-IntercomReactNativeExample.release.xcconfig"; sourceTree = "<group>"; };
+		A85ABA48189A5CFD1A074287 /* Pods-IntercomReactNativeExampleUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntercomReactNativeExampleUI.debug.xcconfig"; path = "Target Support Files/Pods-IntercomReactNativeExampleUI/Pods-IntercomReactNativeExampleUI.debug.xcconfig"; sourceTree = "<group>"; };
+		BBBD0C6D5A5B9C44EDCA9EB6 /* libPods-IntercomReactNativeExampleUI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IntercomReactNativeExampleUI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA3E69C5B9553B26FBA2DF04 /* libPods-IntercomReactNativeExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IntercomReactNativeExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E00ACF0FDA8BF921659E2F9A /* Pods-IntercomReactNativeExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntercomReactNativeExample.release.xcconfig"; path = "Target Support Files/Pods-IntercomReactNativeExample/Pods-IntercomReactNativeExample.release.xcconfig"; sourceTree = "<group>"; };
+		E95549C9E2FCB27F79DD3B37 /* Pods-IntercomReactNativeExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntercomReactNativeExample.debug.xcconfig"; path = "Target Support Files/Pods-IntercomReactNativeExample/Pods-IntercomReactNativeExample.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -71,6 +84,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C39C56BAD484C67AA576FFA /* libPods-IntercomReactNativeExample.a in Frameworks */,
+				1CAC9687D7F7843EDFBBB774 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +99,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7D95B165267240E3008096E0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B689CC9EE73F2BF0457728A /* libPods-IntercomReactNativeExampleUI.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +133,7 @@
 		13B07FAE1A68108700A75B9A /* IntercomReactNativeExample */ = {
 			isa = PBXGroup;
 			children = (
+				7D95B246267248D4008096E0 /* IntercomReactNativeExampleRelease.entitlements */,
 				7D4EACBB265F79DC004A6F30 /* IntercomReactNativeExample.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -129,6 +152,7 @@
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				CA3E69C5B9553B26FBA2DF04 /* libPods-IntercomReactNativeExample.a */,
+				BBBD0C6D5A5B9C44EDCA9EB6 /* libPods-IntercomReactNativeExampleUI.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -136,8 +160,10 @@
 		6B9684456A2045ADE5A6E47E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				47F7ED3B7971BE374F7B8635 /* Pods-IntercomReactNativeExample.debug.xcconfig */,
-				E00ACF0FDA8BF921659E2F9A /* Pods-IntercomReactNativeExample.release.xcconfig */,
+				E95549C9E2FCB27F79DD3B37 /* Pods-IntercomReactNativeExample.debug.xcconfig */,
+				A2FEE7F5A0DD3331D2553B49 /* Pods-IntercomReactNativeExample.release.xcconfig */,
+				A85ABA48189A5CFD1A074287 /* Pods-IntercomReactNativeExampleUI.debug.xcconfig */,
+				0DB6681325C508226B4F50DA /* Pods-IntercomReactNativeExampleUI.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -152,12 +178,14 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				7D95B240267248C8008096E0 /* IntercomReactNativeExampleUIRelease.entitlements */,
 				13B07FAE1A68108700A75B9A /* IntercomReactNativeExample */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* IntercomReactNativeExampleTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				6B9684456A2045ADE5A6E47E /* Pods */,
+				7D95B171267240E4008096E0 /* IntercomReactNativeExample copy-Info.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -171,6 +199,7 @@
 				00E356EE1AD99517003FC87E /* IntercomReactNativeExampleTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* IntercomReactNativeExample-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* IntercomReactNativeExample-tvOSTests.xctest */,
+				7D95B170267240E3008096E0 /* IntercomReactNativeExampleUI.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -255,6 +284,28 @@
 			productReference = 2D02E4901E0B4A5D006451C7 /* IntercomReactNativeExample-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		7D95B15F267240E3008096E0 /* IntercomReactNativeExampleUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7D95B16D267240E3008096E0 /* Build configuration list for PBXNativeTarget "IntercomReactNativeExampleUI" */;
+			buildPhases = (
+				6F3E370CAD3925799EBE10BA /* [CP] Check Pods Manifest.lock */,
+				7D95B161267240E3008096E0 /* Start Packager */,
+				7D95B162267240E3008096E0 /* Sources */,
+				7D95B165267240E3008096E0 /* Frameworks */,
+				7D95B167267240E3008096E0 /* Resources */,
+				7D95B16A267240E3008096E0 /* Bundle React Native code and images */,
+				2E290AEE444BD7895C572BEF /* [CP] Embed Pods Frameworks */,
+				AD4381D24626F6203C6978AC /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IntercomReactNativeExampleUI;
+			productName = IntercomReactNativeExample;
+			productReference = 7D95B170267240E3008096E0 /* IntercomReactNativeExampleUI.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -280,6 +331,9 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
+					7D95B15F267240E3008096E0 = {
+						ProvisioningStyle = Manual;
+					};
 				};
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "IntercomReactNativeExample" */;
@@ -299,6 +353,7 @@
 				00E356ED1AD99517003FC87E /* IntercomReactNativeExampleTests */,
 				2D02E47A1E0B4A5D006451C7 /* IntercomReactNativeExample-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* IntercomReactNativeExample-tvOSTests */,
+				7D95B15F267240E3008096E0 /* IntercomReactNativeExampleUI */,
 			);
 		};
 /* End PBXProject section */
@@ -335,6 +390,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7D95B167267240E3008096E0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D95B168267240E3008096E0 /* LaunchScreen.storyboard in Resources */,
+				7D95B169267240E3008096E0 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -366,6 +430,24 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		2E290AEE444BD7895C572BEF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-IntercomReactNativeExampleUI/Pods-IntercomReactNativeExampleUI-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Intercom/Intercom.framework/Intercom",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Intercom.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IntercomReactNativeExampleUI/Pods-IntercomReactNativeExampleUI-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4F0A6FC082772762E3E4C96C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -386,6 +468,79 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6F3E370CAD3925799EBE10BA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-IntercomReactNativeExampleUI-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7D95B161267240E3008096E0 /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7D95B16A267240E3008096E0 /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nexport ENTRY_FILE=./index.tsx\necho $ENTRY_FILE\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		AD4381D24626F6203C6978AC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-IntercomReactNativeExampleUI/Pods-IntercomReactNativeExampleUI-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IntercomReactNativeExampleUI/Pods-IntercomReactNativeExampleUI-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C1D60D28B925C94BD88E79D7 /* [CP] Copy Pods Resources */ = {
@@ -414,12 +569,10 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-IntercomReactNativeExample/Pods-IntercomReactNativeExample-frameworks.sh",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Intercom/Intercom.framework/Intercom",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Intercom.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -501,6 +654,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7D95B162267240E3008096E0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D95B163267240E3008096E0 /* AppDelegate.m in Sources */,
+				7D95B164267240E3008096E0 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -562,7 +724,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 47F7ED3B7971BE374F7B8635 /* Pods-IntercomReactNativeExample.debug.xcconfig */;
+			baseConfigurationReference = E95549C9E2FCB27F79DD3B37 /* Pods-IntercomReactNativeExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -589,11 +751,11 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E00ACF0FDA8BF921659E2F9A /* Pods-IntercomReactNativeExample.release.xcconfig */;
+			baseConfigurationReference = A2FEE7F5A0DD3331D2553B49 /* Pods-IntercomReactNativeExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = IntercomReactNativeExample/IntercomReactNativeExample.entitlements;
+				CODE_SIGN_ENTITLEMENTS = IntercomReactNativeExample/IntercomReactNativeExampleRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -716,6 +878,59 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IntercomReactNativeExample-tvOS.app/IntercomReactNativeExample-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+			};
+			name = Release;
+		};
+		7D95B16E267240E3008096E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A85ABA48189A5CFD1A074287 /* Pods-IntercomReactNativeExampleUI.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = IntercomReactNativeExample/IntercomReactNativeExample.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = IntercomReactNativeExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.intercomreactnative;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		7D95B16F267240E3008096E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0DB6681325C508226B4F50DA /* Pods-IntercomReactNativeExampleUI.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = IntercomReactNativeExampleUIRelease.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = IntercomReactNativeExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.intercomreactnative;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
@@ -867,6 +1082,15 @@
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
 				2D02E49A1E0B4A5E006451C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7D95B16D267240E3008096E0 /* Build configuration list for PBXNativeTarget "IntercomReactNativeExampleUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D95B16E267240E3008096E0 /* Debug */,
+				7D95B16F267240E3008096E0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

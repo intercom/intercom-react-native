@@ -12,6 +12,22 @@ setup_env_file: &setup_env_file
     name: Setup .env
     command: sh scripts/generateEnv.sh
 
+install_pods: &install_pods
+  restore_cache:
+    keys:
+      -pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
+
+  run:
+    working_directory: example/ios
+    name: Install Pods
+    command: pod install
+
+  save_cache:
+    key: pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
+    paths: ~/project/example/ios/Pods
+
+
+
 executors:
   default:
     docker:
@@ -115,6 +131,7 @@ jobs:
           at: ~/project
 
       - <<: *setup_env_file
+      - <<: *install_pods
 
       - run:
           working_directory: example/e2e
@@ -173,9 +190,9 @@ workflows:
       - build-package:
           requires:
             - install-dependencies
-#      - android-e2e-test:
-#          requires:
-#            - install-dependencies
+      #      - android-e2e-test:
+      #          requires:
+      #            - install-dependencies
       - build_ios_ui:
           requires:
             - install-dependencies
