@@ -106,7 +106,7 @@ jobs:
       - run:
           working_directory: example/
           name: Setup .env
-          command: cp .env.example .env
+          command: sh scripts/generateEnv.sh
 
       - run:
           working_directory: example/e2e
