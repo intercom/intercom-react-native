@@ -6,6 +6,9 @@ executors:
       - image: circleci/node:12
     working_directory: ~/project
 
+orbs:
+  android: circleci/android@1.0
+
 commands:
   attach_project:
     steps:
@@ -88,6 +91,43 @@ jobs:
           command: |
             yarn prepare
 
+  android-e2e-test:
+    executor:
+      name: android/android-machine
+    working_directory: ~/project
+    #      resource-class: large
+    steps:
+      - checkout:
+          path: ~/project
+
+      - attach_workspace:
+          at: ~/project
+
+      - run:
+          working_directory: example/
+          name: Setup .env
+          command: cp .env.example .env.example
+
+      - run:
+          working_directory: example/e2e
+          name: Build android
+          command: yarn build:android
+
+      - android/create-avd:
+          avd-name: Android_29
+          system-image: system-images;android-29;default;x86
+          install: true
+
+      - android/start-emulator:
+          avd-name: Android_29
+          no-window: true
+          post-emulator-launch-assemble-command: echo Emulator Started
+
+      - run:
+          working_directory: example/e2e
+          name: Run UI Tests
+          command: yarn test:android
+
 workflows:
   build-and-test:
     jobs:
@@ -102,5 +142,8 @@ workflows:
           requires:
             - install-dependencies
       - build-package:
+          requires:
+            - install-dependencies
+      - android-e2e-test:
           requires:
             - install-dependencies
