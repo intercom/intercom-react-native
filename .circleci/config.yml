@@ -6,11 +6,11 @@ macos_config: &macos_config
     xcode: 12.3.0
   shell: /bin/bash --login -eo pipefail
 
-  setup_env_file: &setup_env_file
-    run:
-      working_directory: example/
-      name: Setup .env
-      command: sh scripts/generateEnv.sh
+setup_env_file: &setup_env_file
+  run:
+    working_directory: example/
+    name: Setup .env
+    command: sh scripts/generateEnv.sh
 
 executors:
   default:
