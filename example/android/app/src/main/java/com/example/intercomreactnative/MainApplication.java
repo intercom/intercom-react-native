@@ -11,6 +11,8 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+
 import com.intercomreactnative.IntercomModule;
 import com.intercomreactnative.IntercomPackage;
 
@@ -49,7 +51,10 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
 
-    IntercomModule.initialize(this, "apiKey", "appId");
+    String appId = BuildConfig.ANDROID_INTERCOM_APP_ID;
+    String key = BuildConfig.ANDROID_INTERCOM_KEY;
+
+    IntercomModule.initialize(this, key, appId);
 
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager()); // Remove this line if you don't want Flipper enabled
   }
