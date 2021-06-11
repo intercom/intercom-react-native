@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build:android": "../android/gradlew assembleFossRelease -p ../android",
-    "build:ios": "xcodebuild build-for-testing -workspace ../ios/IntercomReactNativeExample.xcworkspace -scheme IntercomReactNativeExample -configuration Release -sdk iphonesimulator14.4 -derivedDataPath ./build  build",
+    "build:ios": "xcodebuild build -workspace ../ios/IntercomReactNativeExample.xcworkspace -scheme IntercomReactNativeExampleUI -configuration Release -sdk iphonesimulator -derivedDataPath ./build",
     "test:android": "npx wdio ./wdio.android.conf.ts",
     "test:ios": "npx wdio ./wdio.ios.conf.ts"
   },
