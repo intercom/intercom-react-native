@@ -2,8 +2,9 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "intercom-react-native": ["./src/index"]
+      "intercom-react-native": ["./src/index"],
     },
+    "types": ["node", "mocha", "webdriverio/async", "@wdio/mocha-framework"],
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "esModuleInterop": true,
@@ -22,6 +23,9 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "esnext"
-  }
+    "target": "esnext",
+  },
+  "exclude": [
+    "example/e2e/**"
+  ]
 }
