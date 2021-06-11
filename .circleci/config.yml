@@ -3,8 +3,11 @@ version: 2.1
 executors:
   default:
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:12
     working_directory: ~/project
+
+orbs:
+  android: circleci/android@1.0
 
 commands:
   attach_project:
@@ -26,17 +29,25 @@ jobs:
           keys:
             - dependencies-example-{{ checksum "example/package.json" }}
             - dependencies-example-
+      - restore_cache:
+          keys:
+            - dependencies-example-{{ checksum "example/e2e/package.json" }}
+            - dependencies-example-e2e-
       - run:
           name: Install dependencies
           command: |
-            yarn install --cwd example --frozen-lockfile
-            yarn install --frozen-lockfile
+            npm install --cwd example --frozen-lockfile
+            npm install --cwd example/e2e --frozen-lockfile
+            npm install --frozen-lockfile
       - save_cache:
           key: dependencies-{{ checksum "package.json" }}
           paths: node_modules
       - save_cache:
           key: dependencies-example-{{ checksum "example/package.json" }}
           paths: example/node_modules
+      - save_cache:
+          key: dependencies-example-e2e-{{ checksum "example/package.json" }}
+          paths: example/e2e/node_modules
       - persist_to_workspace:
           root: .
           paths: .
@@ -80,6 +91,43 @@ jobs:
           command: |
             yarn prepare
 
+  android-e2e-test:
+    executor:
+      name: android/android-machine
+    working_directory: ~/project
+    #      resource-class: large
+    steps:
+      - checkout:
+          path: ~/project
+
+      - attach_workspace:
+          at: ~/project
+
+      - run:
+          working_directory: example/
+          name: Setup .env
+          command: sh scripts/generateEnv.sh
+
+      - run:
+          working_directory: example/e2e
+          name: Build android
+          command: npm run build:android
+
+      - android/create-avd:
+          avd-name: Android_29
+          system-image: system-images;android-29;default;x86
+          install: true
+
+      - android/start-emulator:
+          avd-name: Android_29
+          no-window: true
+          post-emulator-launch-assemble-command: echo Emulator Started
+
+      - run:
+          working_directory: example/e2e
+          name: Run UI Tests
+          command: npm run test:android
+
 workflows:
   build-and-test:
     jobs:
@@ -94,5 +142,8 @@ workflows:
           requires:
             - install-dependencies
       - build-package:
+          requires:
+            - install-dependencies
+      - android-e2e-test:
           requires:
             - install-dependencies
