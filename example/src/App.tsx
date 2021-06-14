@@ -19,6 +19,7 @@ import type { Registration } from '../../lib/typescript';
 const CAROUSEL_ID = ''; //Provide carouselId
 const EVENT_NAME = ''; //Provide eventName
 const ARTICLE_ID = ''; //Provide articleId
+const COLLECTIONS: string[] = []; //Provide help center collections ids
 
 export default function App() {
   const [count, setCount] = useState<number>(0);
@@ -161,6 +162,13 @@ export default function App() {
           title={'Display Help Center'}
           onPress={() => {
             Intercom.displayHelpCenter();
+          }}
+        />
+        <Button
+          disabled={!loggedUser}
+          title={'Display Help Center Collections'}
+          onPress={() => {
+            Intercom.displayHelpCenterCollections(COLLECTIONS);
           }}
         />
         <Button
