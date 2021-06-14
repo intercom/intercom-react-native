@@ -11,8 +11,8 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import com.intercomreactnative.IntercomModule;
-import com.intercomreactnative.IntercomPackage;
+import com.intercom.reactnative.IntercomModule;
+import com.intercom.reactnative.IntercomPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
