@@ -211,6 +211,15 @@ RCT_EXPORT_METHOD(displayArticle :
     resolve(@(YES));
 };
 
+RCT_EXPORT_METHOD(displayHelpCenterCollections :
+    (NSArray *) collectionsId:
+(RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
+
+    [Intercom presentHelpCenterCollections:collectionsId];
+    NSLog(@"displayHelpCenterCollections");
+    resolve(@(YES));
+};
+
 RCT_EXPORT_METHOD(hideMessenger :
     (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
 

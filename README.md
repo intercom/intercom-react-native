@@ -652,6 +652,22 @@ Open up your apps help center
 `Promise<boolean>`
 
 ___
+### `Intercom.displayHelpCenterCollections()`
+
+Present the help center with specific collections only .
+
+###### Note: If the requested collections cannot be found, the full help center will be shown instead.
+### Options
+
+| Type    | Type        | Required |
+| ------- | --------    | -------- |
+| collections| string[]  |no        |
+
+### Returns
+
+`Promise<boolean>`
+
+___
 
 ### `Intercom.displayCarousel(carouselId)`
 

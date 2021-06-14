@@ -81,6 +81,7 @@ export type IntercomType = {
   displayArticle(articleId: string): Promise<boolean>;
   displayCarousel(carouselId: string): Promise<boolean>;
   displayHelpCenter(): Promise<boolean>;
+  displayHelpCenterCollections(collections?: string[]): Promise<boolean>;
   displayMessageComposer(initialMessage?: string): Promise<boolean>;
   displayMessenger(): Promise<boolean>;
   getUnreadConversationCount(): Promise<number>;
@@ -109,6 +110,8 @@ const Intercom = {
   displayCarousel: (carouselId: string) =>
     IntercomModule.displayCarousel(carouselId),
   displayHelpCenter: () => IntercomModule.displayHelpCenter(),
+  displayHelpCenterCollections: (collections = [] as string[]) =>
+    IntercomModule.displayHelpCenterCollections(collections),
   displayMessageComposer: (initialMessage = undefined) =>
     IntercomModule.displayMessageComposer(initialMessage),
   displayMessenger: () => IntercomModule.displayMessenger(),
