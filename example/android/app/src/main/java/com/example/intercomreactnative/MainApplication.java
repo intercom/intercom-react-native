@@ -13,8 +13,8 @@ import java.util.List;
 
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 
-import com.intercomreactnative.IntercomModule;
-import com.intercomreactnative.IntercomPackage;
+import com.intercom.reactnative.IntercomModule;
+import com.intercom.reactnative.IntercomPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
