@@ -22,6 +22,8 @@ const CAROUSEL_ID = Config.CAROUSEL_ID;
 const EVENT_NAME = Config.EVENT_NAME;
 const ARTICLE_ID = Config.ARTICLE_ID;
 const USER_NAME = Config.USER_NAME;
+const COLLECTIONS: string[] = []; //Provide help center collections ids
+
 
 const TOKEN = Platform.select({
   ios: 'RN-IOS-TOKEN',
@@ -183,6 +185,13 @@ export default function App() {
           title="Display Help Center"
           onPress={() => {
             Intercom.displayHelpCenter();
+          }}
+        />
+        <Button
+          disabled={!loggedUser}
+          title={'Display Help Center Collections'}
+          onPress={() => {
+            Intercom.displayHelpCenterCollections(COLLECTIONS);
           }}
         />
         <Button
