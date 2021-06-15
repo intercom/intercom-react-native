@@ -141,17 +141,28 @@ buildscript {
 }
 ```
 
-- At the bottom of `android/app/build.gradle` add:
+- In `android/app/build.gradle` in dependencies add `Firebase Messaging` and at the very bottom apply `Google Services Plugin`:
 
 ```Gradle
-apply plugin: 'com.google.gms.google-services' // <-- Add this
+// ...
 
+dependencies{
+    implementation "com.facebook.react:react-native:+"
+
+    implementation 'com.google.firebase:firebase-messaging:20.2.+' // <-- Add this
+    // ...
+}
+// ...
+
+apply plugin: 'com.google.gms.google-services' // <-- Add this
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 ```
 
 - Place `google-services.json` in `android/app` directory.
 
 - Create `MainNotificationService.java` inside your app directory(`com.example.app`) with below content:
+
+  ***Remember to replace `package com.example.app;`, with your app package name***
 
 ```java
 package com.example.app;
@@ -174,8 +185,13 @@ public class MainNotificationService extends FirebaseMessagingService {
 
 - Edit `AndroidManifest.xml`. Add below content inside `<application>` below `<activity/>`
 
+**Make sure that `xmlns:tools="http://schemas.android.com/tools"` is added to `manifest` tag **
+
 ```xml
-<manifest>
+<!-- Add xmlns:tools to manifest. See example below-->
+<manifest
+  xmlns:tools="http://schemas.android.com/tools"
+>
   <application>
     <activity>
       ...
