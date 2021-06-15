@@ -120,26 +120,26 @@ export default function App() {
         <Button
           accessibilityLabel="login-unidentified"
           disabled={loggedUser}
-          title={'Login unidentified User'}
+          title="Login unidentified User"
           onPress={() => {
             Intercom.registerUnidentifiedUser().then(() => setLoggedUser(true));
           }}
         />
         <TextInput
-          accessibilityLabel={'user-email'}
+          accessibilityLabel="user-email"
           style={styles.input}
           value={user.email}
           onChangeText={(val) => {
             setUser((prev) => ({ ...prev, email: val }));
           }}
-          keyboardType={'email-address'}
-          placeholder={'Provide user email'}
+          keyboardType="email-address"
+          placeholder="Provide user email"
           editable={!loggedUser}
         />
         <Button
           accessibilityLabel="login-identified"
           disabled={loggedUser && user.email !== ''}
-          title={'Login identified User'}
+          title="Login identified User"
           onPress={() => {
             if (user.email?.includes('@')) {
               Intercom.registerIdentifiedUser(user).then(() =>
@@ -156,48 +156,48 @@ export default function App() {
         <Button
           accessibilityLabel="display-messenger"
           disabled={!loggedUser}
-          title={'Display Messenger'}
+          title="Display Messenger"
           onPress={() => {
             Intercom.displayMessenger();
           }}
         />
         <Button
-          accessibilityLabel={'display-article'}
+          accessibilityLabel="display-article"
           disabled={!loggedUser}
-          title={'Display Article'}
+          title="Display Article"
           onPress={() => {
             Intercom.displayArticle(ARTICLE_ID);
           }}
         />
         <Button
-          accessibilityLabel={'display-message-composer'}
+          accessibilityLabel="display-message-composer"
           disabled={!loggedUser}
-          title={'Display Message Composer'}
+          title="Display Message Composer"
           onPress={() => {
             Intercom.displayMessageComposer();
           }}
         />
         <Button
-          accessibilityLabel={'display-help-center'}
+          accessibilityLabel="display-help-center"
           disabled={!loggedUser}
-          title={'Display Help Center'}
+          title="Display Help Center"
           onPress={() => {
             Intercom.displayHelpCenter();
           }}
         />
         <Button
-          accessibilityLabel={'display-carousel'}
+          accessibilityLabel="display-carousel"
           disabled={!loggedUser}
-          title={'Display Carousel'}
+          title="Display Carousel"
           onPress={() => {
             console.log(CAROUSEL_ID);
             Intercom.displayCarousel(CAROUSEL_ID);
           }}
         />
         <Button
-          accessibilityLabel={'get-unreads'}
+          accessibilityLabel="get-unreads"
           disabled={!loggedUser}
-          title={'Get Unread Conversation Count'}
+          title="Get Unread Conversation Count"
           onPress={() => {
             Intercom.getUnreadConversationCount().then((response) =>
               Alert.alert('Unread Conversation count is', response.toString())
@@ -205,8 +205,8 @@ export default function App() {
           }}
         />
         <Button
-          accessibilityLabel={'toggle-message-visibility'}
-          title={'Toggle In App Message Visibility'}
+          accessibilityLabel="toggle-message-visibility"
+          title="Toggle In App Message Visibility"
           onPress={() => {
             Intercom.setInAppMessageVisibility(
               inAppMessageVisibility ? Visibility.GONE : Visibility.VISIBLE
@@ -214,8 +214,8 @@ export default function App() {
           }}
         />
         <Button
-          title={'Toggle In Launcher Visibility'}
-          accessibilityLabel={'toggle-launcher-visibility'}
+          title="Toggle In Launcher Visibility"
+          accessibilityLabel="toggle-launcher-visibility"
           onPress={() => {
             Intercom.setLauncherVisibility(
               launcherVisibility ? Visibility.GONE : Visibility.VISIBLE
@@ -223,8 +223,8 @@ export default function App() {
           }}
         />
         <Button
-          accessibilityLabel={'set-bottom-padding'}
-          title={'Set Bottom Padding'}
+          accessibilityLabel="set-bottom-padding"
+          title="Set Bottom Padding"
           onPress={() => {
             const paddingToSet =
               bottomPadding + 10 > 300 ? 0 : bottomPadding + 10;
@@ -234,33 +234,33 @@ export default function App() {
           }}
         />
         <Button
-          accessibilityLabel={'log-event'}
+          accessibilityLabel="log-event"
           disabled={!loggedUser}
-          title={'Log Event'}
+          title="Log Event"
           onPress={() => {
             Intercom.logEvent(EVENT_NAME);
           }}
         />
         <Button
-          accessibilityLabel={'send-token'}
+          accessibilityLabel="send-token"
           disabled={!loggedUser}
-          title={'Send Token'}
+          title="Send Token"
           onPress={() => {
             Intercom.sendTokenToIntercom(TOKEN);
           }}
         />
         <Button
-          accessibilityLabel={'update-user'}
+          accessibilityLabel="update-user"
           disabled={!loggedUser}
-          title={"Update user's name"}
+          title="Update user's name"
           onPress={() => {
             Intercom.updateUser({ name: USER_NAME });
           }}
         />
         <Button
-          accessibilityLabel={'logout'}
+          accessibilityLabel="logout"
           disabled={!loggedUser}
-          title={'Logout user'}
+          title="Logout user"
           onPress={() => {
             Intercom.logout().then(() => setLoggedUser(false));
           }}
