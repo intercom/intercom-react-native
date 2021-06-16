@@ -75,7 +75,7 @@ implementation project(':intercomreactnative')
 - Add below lines to `MainApplication.java` inside `onCreate` method.
 
 ```java
- import com.intercomreactnative.IntercomModule;
+ import com.intercom.reactnative.IntercomModule;
  ...
   @Override
   public void onCreate() {
@@ -157,7 +157,7 @@ package com.example.intercomreactnative;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.intercomreactnative.IntercomModule;
+import com.intercom.reactnative.IntercomModule;
 
 public class MainNotificationService extends FirebaseMessagingService {
 
@@ -191,7 +191,7 @@ public class MainNotificationService extends FirebaseMessagingService {
     </service>
 
     <receiver
-      android:name="com.intercomreactnative.RNIntercomPushBroadcastReceiver"
+      android:name="com.intercom.reactnative.RNIntercomPushBroadcastReceiver"
       tools:replace="android:exported"
       android:exported="true"/>
     <!--    Add this-->
