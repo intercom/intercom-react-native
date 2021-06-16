@@ -358,7 +358,8 @@ Notifications.events().registerRemoteNotificationsRegistered(({ deviceToken }: R
 #### iOS: Push notification deep links support
 
 Add URL types
-![Xcode utl types](./docs/scheme-setup.png | height=100)
+
+<img src="./docs/scheme-setup.png" alt="Xcode utl types" width="200"/>
 
 Setup of React Native deep links can be found [Here](https://reactnative.dev/docs/linking#enabling-deep-links)
 
