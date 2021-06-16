@@ -359,7 +359,7 @@ Notifications.events().registerRemoteNotificationsRegistered(({ deviceToken }: R
 
 Add URL types
 
-<img src="./docs/scheme-setup.png" alt="Xcode utl types" width="200"/>
+<img src="./docs/scheme-setup.png" alt="Xcode utl types" width="550"/>
 
 Setup of React Native deep links can be found [Here](https://reactnative.dev/docs/linking#enabling-deep-links)
 
