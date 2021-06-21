@@ -185,7 +185,7 @@ public class MainNotificationService extends FirebaseMessagingService {
 
 - Edit `AndroidManifest.xml`. Add below content inside `<application>` below `<activity/>`
 
-**Make sure that `xmlns:tools="http://schemas.android.com/tools"` is added to `manifest` tag **
+**Make sure that `xmlns:tools="http://schemas.android.com/tools"` is added to `manifest` tag**
 
 ```xml
 <!-- Add xmlns:tools to manifest. See example below-->
