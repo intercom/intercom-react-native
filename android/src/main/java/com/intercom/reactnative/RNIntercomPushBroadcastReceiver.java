@@ -1,4 +1,4 @@
-package com.intercomreactnative;
+package com.intercom.reactnative;
 
 import io.intercom.android.sdk.push.IntercomPushBroadcastReceiver;
 

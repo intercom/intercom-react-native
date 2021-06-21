@@ -31,7 +31,7 @@
 
 
       <receiver
-        android:name="com.intercomreactnative.RNIntercomPushBroadcastReceiver"
+        android:name="com.intercom.reactnative.RNIntercomPushBroadcastReceiver"
         tools:replace="android:exported"
         android:exported="true" />
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />

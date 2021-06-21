@@ -3,7 +3,7 @@ package com.example.intercomreactnative;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.intercomreactnative.IntercomModule;
+import com.intercom.reactnative.IntercomModule;
 
 public class MainNotificationService extends FirebaseMessagingService {
 

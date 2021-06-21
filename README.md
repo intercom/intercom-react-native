@@ -68,7 +68,7 @@ implementation project(':intercomreactnative')
 - Add below lines to `MainApplication.java` inside `onCreate` method, replacing `apiKey` and `appId` which can be found in your [workspace settings](https://app.intercom.com/a/apps/_/settings/android).
 
 ```java
-import com.intercomreactnative.IntercomModule; //  <-- Add this line
+import hideIntercom.IntercomModule; //  <-- Add this line
 
 // ...
 
@@ -169,7 +169,7 @@ package com.example.app;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.intercomreactnative.IntercomModule;
+import hideIntercom.IntercomModule;
 
 public class MainNotificationService extends FirebaseMessagingService {
 
@@ -207,7 +207,7 @@ public class MainNotificationService extends FirebaseMessagingService {
     </service>
 
     <receiver
-      android:name="com.intercomreactnative.RNIntercomPushBroadcastReceiver"
+      android:name="hideIntercom.RNIntercomPushBroadcastReceiver"
       tools:replace="android:exported"
       android:exported="true"/>
     <!-- END: Add this-->
