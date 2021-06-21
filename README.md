@@ -269,7 +269,7 @@ See [How to manually link IOS Intercom SDK](docs/IOS-MANUAL-LINKING.md)
 
 - Open `ios/AppDelegate.m` then add below code:
 
-- At the top of file add the following, replacing `apiKey` and `appId` which can be found in your [workspace settings](https://app.intercom.com/a/apps/_/settings/ios)
+- At the top of file add the following:
 
 ```Objective-C
 #import "AppDelegate.h"
@@ -279,7 +279,7 @@ See [How to manually link IOS Intercom SDK](docs/IOS-MANUAL-LINKING.md)
 // ...
 #import <IntercomModule.h> // <-- Add This
 ```
-- Inside `didFinishLaunchingWithOptions` before `return YES` add:
+- Inside `didFinishLaunchingWithOptions` before `return YES` add, remember to replace `apiKey` and `appId` which can be found in your [workspace settings](https://app.intercom.com/a/apps/_/settings/ios):
 ```Objective-C
   // ...
   self.window.rootViewController = rootViewController;
