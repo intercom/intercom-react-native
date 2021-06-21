@@ -17,14 +17,12 @@ import Button from './Button';
 import type { Registration } from '../../lib/typescript';
 import Config from 'react-native-config';
 
+const COLLECTIONS: string[] = []; //Provide help center collections ids
 // To change, replace values in .env
 const CAROUSEL_ID = Config.CAROUSEL_ID;
 const EVENT_NAME = Config.EVENT_NAME;
 const ARTICLE_ID = Config.ARTICLE_ID;
 const USER_NAME = Config.USER_NAME;
-const COLLECTIONS: string[] = []; //Provide help center collections ids
-
-
 const TOKEN = Platform.select({
   ios: 'RN-IOS-TOKEN',
   default: 'RN-ANDROID-TOKEN',
@@ -188,6 +186,7 @@ export default function App() {
           }}
         />
         <Button
+          accessibilityLabel="display-carousel"
           disabled={!loggedUser}
           title={'Display Help Center Collections'}
           onPress={() => {
@@ -195,9 +194,8 @@ export default function App() {
           }}
         />
         <Button
-          accessibilityLabel="display-carousel"
           disabled={!loggedUser}
-          title="Display Carousel"
+          title={'Display Carousel'}
           onPress={() => {
             console.log(CAROUSEL_ID);
             Intercom.displayCarousel(CAROUSEL_ID);
