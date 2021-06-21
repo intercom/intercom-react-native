@@ -289,20 +289,6 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void displayHelpCenterCollections(ReadableArray collectionsId, Promise promise) {
-    try {
-      List<String> list = IntercomHelpers.readableArrayToStringList(collectionsId);
-      Intercom.client().displayHelpCenterCollections(list);
-      Log.d(NAME, "displayHelpCenterCollections");
-      promise.resolve(true);
-    } catch (Exception err) {
-      Log.e(NAME, "displayHelpCenterCollections error:");
-      Log.e(NAME, err.toString());
-      promise.reject(IntercomErrorCodes.DISPLAY_HELP_CENTER_COLLECTIONS, err.toString());
-    }
-  }
-
-  @ReactMethod
   public void displayCarousel(String carouselId, Promise promise) {
     try {
       Intercom.client().displayCarousel(carouselId);
@@ -342,13 +328,13 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void hideMessenger(Promise promise) {
+  public void hideIntercom(Promise promise) {
     try {
       Intercom.client().hideMessenger();
-      Log.d(NAME, "hideMessenger");
+      Log.d(NAME, "hideIntercom");
       promise.resolve(true);
     } catch (Exception err) {
-      Log.e(NAME, "hideMessenger error:");
+      Log.e(NAME, "hideIntercom error:");
       Log.e(NAME, err.toString());
       promise.reject(IntercomErrorCodes.HIDE_MESSENGER, err.toString());
     }

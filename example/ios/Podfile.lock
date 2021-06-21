@@ -77,9 +77,9 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
-  - Intercom (9.3.6)
+  - Intercom (10.0.0)
   - intercom-react-native (0.1.0):
-    - Intercom (~> 9.3.6)
+    - Intercom (~> 10)
     - React-Core
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.180)
@@ -450,8 +450,8 @@ SPEC CHECKSUMS:
   FlipperKit: 651f50a42eb95c01b3e89a60996dd6aded529eeb
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
-  Intercom: d44bd4264f61a3e343cac46d7b88d4db0f860077
-  intercom-react-native: ffdf95e08035567701665c258fa9b67bb508aa8a
+  Intercom: 451ebe4498745ca20df350560e1066d4af7ffd1c
+  intercom-react-native: 78c4520bab2384896144ea33776c1fb6175d3b2c
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   RCTRequired: 082f10cd3f905d6c124597fd1c14f6f2655ff65e
