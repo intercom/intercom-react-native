@@ -220,11 +220,11 @@ RCT_EXPORT_METHOD(displayHelpCenterCollections :
     resolve(@(YES));
 };
 
-RCT_EXPORT_METHOD(hideMessenger :
+RCT_EXPORT_METHOD(hideIntercom :
     (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
 
-    [Intercom hideMessenger];
-    NSLog(@"hideMessenger");
+    [Intercom hideIntercom];
+    NSLog(@"hideIntercom");
     resolve(@(YES));
 };
 
