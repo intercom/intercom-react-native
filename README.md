@@ -10,19 +10,18 @@
 
 - [Installation](#installation)
   - [Android](#android)
-    - [Automatic](#android-automatic-react-native-v060-and-above)
-    - [Manual](#android-manual-react-native-v059-and-below)
-    - [General](#android-general)
-      - [Permissions](#permissions-android)
+    - [Automatic linking (React Native <=0.59)](#android-automatic-linking-with-react-native-v059-and-below)
+    - [Manual linking (React Native <=0.59)](#android-manual-linking-with-react-native-v059-and-below)
+    - [Setup](#android-setup)
+    - [Permissions](#android-permissions)
     - [Push Notifications](#android-push-notifications)
+    - [Push notification deep links support](#android-push-notification-deep-links-support)
   - [iOS](#ios)
-    - [Automatic](#ios-automatic-react-native-v060-and-above)
-    - [Manual](#ios-manual-react-native-v059-and-below)
-    - [General](#ios-general)
-      - [Permissions](#permissions-ios)
+    - [Manual linking (React Native <=0.59)](#ios-manual-linking-with-react-native-v059-and-below)
+    - [Setup](#ios-setup)
+    - [Permissions](#ios-permissions)
     - [Push Notifications](#ios-push-notifications)
-- [Deep Linking](#deep-linking)
-- [Uploading token to Intercom](#upload-token-to-intercom)
+    - [Push notification deep links support](#ios-push-notification-deep-links-support)
 - [Common methods](#methods)
 - [Usage](#usage)
 - [Troubleshooting](#troubleshooting)
@@ -32,82 +31,85 @@
 ## Installation
 
 ```sh
-npm install intercom-react-native
-or
-yarn add intercom-react-native
+$ npm install intercom-react-native
 ```
-
-####Cocoapods:
-
+or
 ```sh
-cd ios
-pod install
-cd ..
+yarn add intercom-react-native
 ```
 
 ### Android
 
-### Android Automatic React Native v0.60 and above
+If you're using React Native v0.60 or above, the library will be linked automatically without any steps being taken.
 
-As react-native@0.60 and above supports autolinking there is no need to run the linking.
+#### Android: Automatic linking with React Native v0.59 and below
 
-### Android Manual React Native v0.59 and below
+```
+$ react-native link intercom-react-native
+```
 
-Make `react native link intercom-react-native`
-
-### Or
+#### Android: Manual linking with React Native v0.59 and below
 
 - Add below code to `android/settings.gradle`
 
-```
+```Gradle
 include ':intercomreactnative'
 project(':intercomreactnative').projectDir = new File(rootProject.projectDir, '../../android')
 ```
 
 - Then edit `android/app/build.gradle`, inside `dependencies` at very bottom add
 
-```
+```Gradle
 implementation project(':intercomreactnative')
 ```
 
-#### Android General
+#### Android: Setup
 
-- Add below lines to `MainApplication.java` inside `onCreate` method.
+- Add below lines to `MainApplication.java` inside `onCreate` method, replacing `apiKey` and `appId` which can be found in your [workspace settings](https://app.intercom.com/a/apps/_/settings/android).
 
 ```java
- import com.intercomreactnative.IntercomModule;
- ...
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    SoLoader.init(this, /* native exopackage */ false);
+import com.intercomreactnative.IntercomModule; //  <-- Add this line
 
-    IntercomModule.initialize(this, "apiKey", "appId"); <-- Add this line
-    ...
+// ...
+
+@Override
+public void onCreate() {
+  super.onCreate();
+  SoLoader.init(this, /* native exopackage */ false);
+
+  // ...
+
+  IntercomModule.initialize(this, "apiKey", "appId"); // <-- Add this line
+
+  // ...
+}
 ```
 
 - Open `android/build.gradle` and change `minSdkVersion` to **21**
 
-```
+```Gradle
 buildscript {
+    // ...
     ext {
         buildToolsVersion = "29.0.2"
-        minSdkVersion = 21 <--- Here
+        minSdkVersion = 21 // <-- Here
         compileSdkVersion = 29
         targetSdkVersion = 29
     }
-    ...
+    // ...
+}
 ```
 
 - In `android/build.gradle` make sure that `com.android.tools.build:gradle` version is greater than `4.0.0`
 
-```
-    dependencies {
-        classpath("com.android.tools.build:gradle:4.0.1")
-        ...
+```Gradle
+dependencies {
+    classpath("com.android.tools.build:gradle:4.0.1")
+    // ...
+}
 ```
 
-### Permissions Android
+#### Android: Permissions
 
 You will need to include the [READ\_EXTERNAL\_STORAGE](http://developer.android.com/reference/android/Manifest.permission.html#READ_EXTERNAL_STORAGE) permission if you have enabled attachments:
 
@@ -121,30 +123,38 @@ You can also include [VIBRATE](http://developer.android.com/reference/android/Ma
 <uses-permission android:name="android.permission.VIBRATE"/>
 ```
 
-### Android Push Notifications
+#### Android: Push Notifications
 
 For Push notification support add `GoogleServices` and `Firebase Cloud Messagng` to your app.
 
-**More information about PN
-setup [HERE](https://developers.intercom.com/installing-intercom/docs/android-fcm-push-notifications)**
+**More information about push notification setup [HERE](https://developers.intercom.com/installing-intercom/docs/android-fcm-push-notifications)**
 
 - Inside `android/build.gradle` add
 
-```
+```Gradle
 buildscript {
-    ...
+    // ...
     dependencies {
-      ...
-      classpath 'com.google.gms:google-services:4.2.0' <-- Add this
+        // ...
+        classpath 'com.google.gms:google-services:4.2.0' // <-- Add this
     }
 }
 ```
 
-- At the very bottom of `android/app/build.gradle` add:
+- In `android/app/build.gradle` in dependencies add `Firebase Messaging` and at the very bottom apply `Google Services Plugin`:
 
-```
-apply plugin: 'com.google.gms.google-services' <-- Add this
+```Gradle
+// ...
 
+dependencies{
+    implementation "com.facebook.react:react-native:+"
+
+    implementation 'com.google.firebase:firebase-messaging:20.2.+' // <-- Add this
+    // ...
+}
+// ...
+
+apply plugin: 'com.google.gms.google-services' // <-- Add this
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 ```
 
@@ -152,8 +162,10 @@ apply from: file("../../node_modules/@react-native-community/cli-platform-androi
 
 - Create `MainNotificationService.java` inside your app directory(`com.example.app`) with below content:
 
+  ***Remember to replace `package com.example.app;`, with your app package name***
+
 ```java
-package com.example.intercomreactnative;
+package com.example.app;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -165,7 +177,7 @@ public class MainNotificationService extends FirebaseMessagingService {
     if (IntercomModule.isIntercomPush(remoteMessage)) {
       IntercomModule.handleRemotePushMessage(getApplication(), remoteMessage);
     } else {
-      //HANDLE NOT INTERCOM MESSAGE
+      // HANDLE NON-INTERCOM MESSAGE
     }
   }
 }
@@ -173,16 +185,20 @@ public class MainNotificationService extends FirebaseMessagingService {
 
 - Edit `AndroidManifest.xml`. Add below content inside `<application>` below `<activity/>`
 
-```xml
+**Make sure that `xmlns:tools="http://schemas.android.com/tools"` is added to `manifest` tag**
 
-<manifest>
+```xml
+<!-- Add xmlns:tools to manifest. See example below-->
+<manifest
+  xmlns:tools="http://schemas.android.com/tools"
+>
   <application>
     <activity>
       ...
     </activity>
     ...
 
-    <!--    Add this-->
+    <!-- START: Add this-->
     <service
       android:name=".MainNotificationService">
       <intent-filter>
@@ -194,13 +210,13 @@ public class MainNotificationService extends FirebaseMessagingService {
       android:name="com.intercomreactnative.RNIntercomPushBroadcastReceiver"
       tools:replace="android:exported"
       android:exported="true"/>
-    <!--    Add this-->
+    <!-- END: Add this-->
 
   </application>
 </manifest>
 ```
 
-- Add belo code to your React Native app
+- Add below code to your React Native app
 
 ```jsx
   useEffect(() => {
@@ -217,7 +233,9 @@ public class MainNotificationService extends FirebaseMessagingService {
   , [])
 ```
 
-- To handle Push Notification deep linking add below code to `<activity>` inside `AndroidManifest.xml`
+#### Android: Push notification deep links support
+
+- Add below code to `<activity>` inside `AndroidManifest.xml`
 
 ```xml
 
@@ -232,7 +250,7 @@ public class MainNotificationService extends FirebaseMessagingService {
     <category android:name="android.intent.category.LAUNCHER"/>
   </intent-filter>
 
-  <!--  Add this  -->
+  <!--  START: Add this  -->
   <intent-filter>
     <action android:name="android.intent.action.VIEW"/>
     <category android:name="android.intent.category.DEFAULT"/>
@@ -241,90 +259,111 @@ public class MainNotificationService extends FirebaseMessagingService {
     <data android:scheme="http" android:host="Your app url(www.app.com)"/> <!-- Edit this line -->
     <data android:scheme="Your app scheme(app)"/> <!-- Edit this line -->
   </intent-filter>
-  <!--  Add this  -->
+  <!--  END: Add this  -->
 
 </activity>
 
 ```
 
+See the [example app](https://github.com/intercom/intercom-react-native/blob/main/example/src/App.tsx) for an example of how to handle deep linking in your app.
+
 ### IOS
 
-### IOS Automatic React Native v0.60 and above
+```sh
+cd ios
+pod install
+cd ..
+```
 
-[Insall dependencies using cocoapods](#cocoapods)
+If you're using React Native v0.60 or above, the library will be linked automatically without any steps being taken.
 
-### IOS Manual React Native v0.59 and below
+#### iOS: Manual linking with React Native v0.59 and below
 
-[How to manual link IOS Intecom SDK ](docs/IOS-MANUAL-LINKING.md)
+See [How to manually link IOS Intercom SDK](docs/IOS-MANUAL-LINKING.md)
 
-#### IOS General
+#### iOS: Setup
 
 - Open `ios/AppDelegate.m` then add below code:
 
-  - At the top of file add:
+- At the top of file add the following:
 
-  ```
-  #import "AppDelegate.h"
-  #import <React/RCTBridge.h>
-  #import <React/RCTBundleURLProvider.h>
-  #import <React/RCTRootView.h>
-  ...
-  #import <IntercomModule.h> <-- Add This
-  ```
-  - Inside `didFinishLaunchingWithOptions` before `return YES` add:
-  ```
-    ...
-    self.window.rootViewController = rootViewController;
+```Objective-C
+#import "AppDelegate.h"
+#import <React/RCTBridge.h>
+#import <React/RCTBundleURLProvider.h>
+#import <React/RCTRootView.h>
+// ...
+#import <IntercomModule.h> // <-- Add This
+```
+- Inside `didFinishLaunchingWithOptions` before `return YES` add, remember to replace `apiKey` and `appId` which can be found in your [workspace settings](https://app.intercom.com/a/apps/_/settings/ios):
+```Objective-C
+  // ...
+  self.window.rootViewController = rootViewController;
 
-    [IntercomModule initialize:@"APP KEY" withAppId:@"APP ID"]; <-- Add this (Remember to replace strings with your api keys)
+  [IntercomModule initialize:@"apiKey" withAppId:@"appId"]; // <-- Add this (Remember to replace strings with your api keys)
 
-    return YES;
-   }
-  ```
+  return YES;
+  }
+```
 
-#### Permissions IOS
+#### iOS: Permissions
 
 Add this permission to your `Info.plist`
 
 ```xml
-
 <key>NSPhotoLibraryUsageDescription</key>
 <string>Send photos to support center</string>
 ```
 
-### IOS Push Notifications
+#### iOS: Push Notifications
 
-Package handles Push Notification itself, you have to only
-[Upload Token to intercom](#upload-token-to-intercom)
-___
+Add **Push Notifications** and **Background Modes > Remote Notifications** [Details HERE](https://developer.apple.com/documentation/xcode/adding-capabilities-to-your-app)
 
-### Or Set up notification in native part
+
+**Option 1: In your JavaScript code**
+
+An example using [react-native-notifications](https://wix.github.io/react-native-notifications):
+
+```jsx
+// Request notification permissions
+Notifications.registerRemoteNotifications();
+
+// When permission is granted, send the device token to Intercom using [Intercom.sendTokenToIntercom(token)](#intercomsendtokentointercomtoken)
+Notifications.events().registerRemoteNotificationsRegistered(({ deviceToken }: Registered) => {
+  Intercom.sendTokenToIntercom(deviceToken);
+});
+```
+
+**Option 2: In your native code**
 
 - In `AppDelegate.m` at the top add
 
-```
+```Objective-C
 #import <UserNotifications/UserNotifications.h>
 ```
 
-- Inside `didFinishLaunchingWithOptions` before `return YES;` add below code:
+- Request notification permissions when app launches by adding the folloowing to `didFinishLaunchingWithOptions` before `return YES;`:
 
-```
-    ...
+```Objective-C
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    // ...
 
-    //Code to add
+    // START: Code to add
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
     [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert + UNAuthorizationOptionSound)
                           completionHandler:^(BOOL granted, NSError *_Nullable error) {
                           }];
     [[UIApplication sharedApplication] registerForRemoteNotifications];
-    //Code to add
+    // END: Code to add
 
     return YES;
+}
 ```
 
-- In same file, above `@end` add:
+- In same file, above `@end` add the following to send the device token to Intercom when permission is granted:
 
-```
+```Objective-C
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [IntercomModule setDeviceToken:deviceToken];
 }
@@ -332,13 +371,17 @@ ___
 @end
 ```
 
-### Deep Links Support
+#### iOS: Push notification deep links support
+
+Add URL types
+
+<img src="./docs/scheme-setup.png" alt="Xcode utl types" width="550"/>
 
 Setup of React Native deep links can be found [Here](https://reactnative.dev/docs/linking#enabling-deep-links)
 
 - Add import to `AppDelegate.m`
 
-````
+```Objective-C
 #import "AppDelegate.h"
 
 #import <React/RCTBridge.h>
@@ -346,11 +389,11 @@ Setup of React Native deep links can be found [Here](https://reactnative.dev/doc
 #import <React/RCTRootView.h>
 
 #import <React/RCTLinkingManager.h> <--Add this
-````
+```
 
 - Add below code to `AppDelegate.m` above `@end`
 
-```
+```Objective-C
 - (BOOL)application:(UIApplication *)application
    openURL:(NSURL *)url
    options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
@@ -369,34 +412,8 @@ Setup of React Native deep links can be found [Here](https://reactnative.dev/doc
 @end
 ```
 
-## Deep Linking
+See the [example app](https://github.com/intercom/intercom-react-native/blob/main/example/src/App.tsx) for an example of how to handle deep linking in your app.
 
-Deep linking example [Here](https://github.com/intercom/intercom-react-native/blob/main/example/src/App.tsx)
-
-```jsx
- /**
- * Handle Push Notification deep links
- */
-Linking.addEventListener('url', (event) => {
-  if (event) {
-    Alert.alert(event.url);
-  }
-});
-
-Linking.getInitialURL()
-  .then((url) => {
-    if (url) {
-      Alert.alert(url);
-    }
-  })
-  .catch((e) => console.log(e));
-```
-
-## Upload token to Intercom
-
-Token upload can be handled by [Intercom.sendTokenToIntercom(token)](#intercomsendtokentointercomtoken)
-with token obtained
-from [react-native-notifications](https://wix.github.io/react-native-notifications/api/general-events#registerremotenotificationsregistered)
 ___
 
 ## Methods
@@ -570,13 +587,13 @@ Sets a listener that will be notified when the unread conversation count for the
 
 ```
 
-#### Options
+### Options
 
 | Type    | Type        | Required |
 | ------- | --------    | -------- |
 | callback| function `({count: number}) => void`  |yes        |
 
-#### Returns
+### Returns
 
 `removeEventListener: () => void`
 
@@ -586,7 +603,7 @@ ___
 
 Gets the number of unread conversations for a user.
 
-#### Returns
+### Returns
 
 `Promise<number>`
 ___
@@ -786,14 +803,14 @@ useEffect(() => {
 }, [])
 ```
 
-#### Options
+### Options
 
 | Type    | Type        | Required |
 | ------- | --------    | -------- |
 | event| string (`IntercomEvents`)  |yes        |
 | callback| function `({count?: number, visible?: boolean}) => void`  |yes        |
 
-#### Returns
+### Returns
 
 `EmitterSubscription`
 

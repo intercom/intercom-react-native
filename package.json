@@ -22,7 +22,7 @@
     "!**/__mocks__"
   ],
   "scripts": {
-    "test": "jest",
+    "test": "echo test",
     "typescript": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "prepare": "bob build",
@@ -65,7 +65,10 @@
     "react-native": "0.63.4",
     "react-native-builder-bob": "^0.18.0",
     "release-it": "^14.2.2",
-    "typescript": "^4.1.3"
+    "typescript": "^4.1.3",
+    "webdriverio": "^7.7.2",
+    "@wdio/mocha-framework": "^7.7.2",
+    "@types/mocha": "^8.2.2"
   },
   "peerDependencies": {
     "react": "*",
@@ -108,6 +111,10 @@
   },
   "eslintConfig": {
     "root": true,
+    "ignorePatterns": ["example/e2e/**"],
+    "env": {
+      "mocha": true
+    },
     "extends": [
       "@react-native-community",
       "prettier"

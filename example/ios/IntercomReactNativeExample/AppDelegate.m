@@ -13,6 +13,7 @@
 #import <IntercomModule.h>
 #import <UserNotifications/UserNotifications.h>
 #import <React/RCTLinkingManager.h>
+#import "ReactNativeConfig.h"
 
 #ifdef FB_SONARKIT_ENABLED
 
@@ -52,8 +53,10 @@ static void InitializeFlipper(UIApplication *application) {
     UIViewController *rootViewController = [UIViewController new];
     rootViewController.view = rootView;
     self.window.rootViewController = rootViewController;
+    NSString *apiKey = [ReactNativeConfig envFor:@"IOS_INTERCOM_KEY"];
+    NSString *appId = [ReactNativeConfig envFor:@"IOS_INTERCOM_APP_ID"];
 
-    [IntercomModule initialize:@"APP KEY" withAppId:@"APP ID"];
+    [IntercomModule initialize:apiKey withAppId:appId];
 
     [self.window makeKeyAndVisible];
 

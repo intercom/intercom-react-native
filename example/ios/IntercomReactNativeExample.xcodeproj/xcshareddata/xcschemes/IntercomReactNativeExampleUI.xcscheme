@@ -8,15 +8,15 @@
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "IntercomReactNativeExample.app"
-               BlueprintName = "IntercomReactNativeExample"
+               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
+               BuildableName = "IntercomReactNativeExampleTests.xctest"
+               BlueprintName = "IntercomReactNativeExampleTests"
                ReferencedContainer = "container:IntercomReactNativeExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,9 +28,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "IntercomReactNativeExample.app"
-               BlueprintName = "IntercomReactNativeExample"
+               BlueprintIdentifier = "7D95B15F267240E3008096E0"
+               BuildableName = "IntercomReactNativeExampleUI.app"
+               BlueprintName = "IntercomReactNativeExampleUI"
                ReferencedContainer = "container:IntercomReactNativeExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -41,15 +41,6 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "IntercomReactNativeExample.app"
-            BlueprintName = "IntercomReactNativeExample"
-            ReferencedContainer = "container:IntercomReactNativeExample.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
       </Testables>
    </TestAction>
@@ -67,9 +58,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "IntercomReactNativeExample.app"
-            BlueprintName = "IntercomReactNativeExample"
+            BlueprintIdentifier = "7D95B15F267240E3008096E0"
+            BuildableName = "IntercomReactNativeExampleUI.app"
+            BlueprintName = "IntercomReactNativeExampleUI"
             ReferencedContainer = "container:IntercomReactNativeExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -84,16 +75,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "IntercomReactNativeExample.app"
-            BlueprintName = "IntercomReactNativeExample"
+            BlueprintIdentifier = "7D95B15F267240E3008096E0"
+            BuildableName = "IntercomReactNativeExampleUI.app"
+            BlueprintName = "IntercomReactNativeExampleUI"
             ReferencedContainer = "container:IntercomReactNativeExample.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

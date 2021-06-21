@@ -19,3 +19,11 @@ target 'IntercomReactNativeExample' do
     flipper_post_install(installer)
   end
 end
+
+target 'IntercomReactNativeExampleUI' do
+  config = use_native_modules!
+
+  use_react_native!(:path => config["reactNativePath"])
+
+  pod 'intercom-react-native', :path => '../..'
+end

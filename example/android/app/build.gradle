@@ -1,6 +1,12 @@
 apply plugin: "com.android.application"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
 
 import com.android.build.OutputFile
+
+def taskRequests = getGradle().getStartParameter().getTaskRequests().toString().toLowerCase()
+def isFoss = taskRequests.contains("foss")
+
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -133,6 +139,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        resValue "string", "build_config_package", "com.example.intercomreactnative"
     }
     splits {
         abi {
@@ -162,6 +169,18 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+
+    flavorDimensions "type"
+    productFlavors {
+      play {
+        dimension = "type"
+        buildConfigField "boolean", "FDROID_BUILD", "false"
+      }
+      foss {
+        dimension = "type"
+        buildConfigField "boolean", "FDROID_BUILD", "true"
+      }
+    }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
@@ -183,7 +202,9 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
-    implementation 'com.google.firebase:firebase-messaging:20.2.+'
+    if (!isFoss) {
+      implementation 'com.google.firebase:firebase-messaging:20.2.+'
+    }
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
@@ -215,5 +236,8 @@ task copyDownloadableDepsToLibs(type: Copy) {
     into 'libs'
 }
 
-apply plugin: 'com.google.gms.google-services'
+if(!isFoss){
+  apply plugin: 'com.google.gms.google-services'
+}
+
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
