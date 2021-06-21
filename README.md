@@ -301,7 +301,7 @@ Add this permission to your `Info.plist`
 
 #### iOS: Push Notifications
 
-####Add **Push Notifications** and **Background Modes > Remote Notifications** [Details HERE](https://developer.apple.com/documentation/xcode/adding-capabilities-to-your-app)
+Add **Push Notifications** and **Background Modes > Remote Notifications** [Details HERE](https://developer.apple.com/documentation/xcode/adding-capabilities-to-your-app)
 
 
 **Option 1: In your JavaScript code**
