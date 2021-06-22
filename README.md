@@ -685,6 +685,19 @@ Present the help center with specific collections only .
 `Promise<boolean>`
 
 ___
+### `Intercom.displayArticle(articleId)`
+
+Displays article with given id.
+
+| Type    | Type        | Required |
+| ------- | --------    | -------- |
+| articleId| string  |yes        |
+
+### Returns
+
+`Promise<boolean>`
+
+___
 
 ### `Intercom.displayCarousel(carouselId)`
 
