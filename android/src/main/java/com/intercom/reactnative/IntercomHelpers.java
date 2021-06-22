@@ -1,4 +1,4 @@
-package com.intercomreactnative;
+package com.intercom.reactnative;
 
 import androidx.annotation.Nullable;
 

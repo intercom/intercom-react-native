@@ -1,4 +1,4 @@
-package com.intercomreactnative;
+package com.intercom.reactnative;
 
 public class IntercomErrorCodes {
   public static final String UNIDENTIFIED_REGISTRATION = "101";
