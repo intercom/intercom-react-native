@@ -186,7 +186,7 @@ export default function App() {
           }}
         />
         <Button
-          accessibilityLabel="display-carousel"
+          accessibilityLabel="display-help-center-collections"
           disabled={!loggedUser}
           title={'Display Help Center Collections'}
           onPress={() => {
@@ -194,6 +194,7 @@ export default function App() {
           }}
         />
         <Button
+          accessibilityLabel="display-carousel"
           disabled={!loggedUser}
           title={'Display Carousel'}
           onPress={() => {
