@@ -330,13 +330,13 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void hideIntercom(Promise promise) {
     try {
-      Intercom.client().hideMessenger();
+      Intercom.client().hideIntercom();
       Log.d(NAME, "hideIntercom");
       promise.resolve(true);
     } catch (Exception err) {
       Log.e(NAME, "hideIntercom error:");
       Log.e(NAME, err.toString());
-      promise.reject(IntercomErrorCodes.HIDE_MESSENGER, err.toString());
+      promise.reject(IntercomErrorCodes.HIDE_INTERCOM, err.toString());
     }
   }
 
