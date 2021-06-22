@@ -21,6 +21,7 @@ import java.util.Map;
 
 import io.intercom.android.sdk.Intercom;
 import io.intercom.android.sdk.UserAttributes;
+import io.intercom.android.sdk.api.ReactNativeHeaderInterceptor;
 import io.intercom.android.sdk.identity.Registration;
 import io.intercom.android.sdk.push.IntercomPushClient;
 
@@ -367,6 +368,8 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   }
 
   public static synchronized void initialize(Application application, String apiKey, String appId) {
+    String sdkVersion = BuildConfig.VERSION_NAME;
+    ReactNativeHeaderInterceptor.setReactNativeVersion(application.getApplicationContext(), sdkVersion);
     Intercom.initialize(application, apiKey, appId);
   }
 
