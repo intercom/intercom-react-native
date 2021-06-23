@@ -2,6 +2,10 @@
 #import "IntercomAttributesBuilder.h"
 #import <Intercom/Intercom.h>
 
+@interface Intercom (Intercom)
++ (void)setReactNativeVersion:(NSString *)v;
+@end
+
 @implementation IntercomModule
 NSString *IDENTIFIED_REGISTRATION = @"102";
 NSString *SET_USER_HASH = @"103";
@@ -13,6 +17,18 @@ NSString *SEND_TOKEN_TO_INTERCOM = @"302";
 RCT_EXPORT_MODULE()
 
 + (void)initialize:(nonnull NSString *)apiKey withAppId:(nonnull NSString *)appId {
+    NSString* version = @"0";
+    
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"IntercomFramework" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:path];
+    if (bundle!=nil) {
+        NSString* v = [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+        if(v!=nil){
+            version = v;
+        }
+    }
+
+    [Intercom setReactNativeVersion:version];
     [Intercom setApiKey:apiKey forAppId:appId];
     NSLog(@"initialized Intercom module");
 }
