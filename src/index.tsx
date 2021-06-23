@@ -131,7 +131,7 @@ export type IntercomType = {
 };
 
 const Intercom = {
-  searchHelpCenter: (term) => IntercomModule.searchHelpCenter(term),
+  searchHelpCenter: (term = '') => IntercomModule.searchHelpCenter(term),
   fetchHelpCenterCollections: () => IntercomModule.fetchHelpCenterCollections(),
   fetchHelpCenterCollection: (id = '') =>
     IntercomModule.fetchHelpCenterCollection(id),
