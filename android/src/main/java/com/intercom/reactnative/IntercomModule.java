@@ -319,7 +319,7 @@ public class IntercomModule extends ReactContextBaseJavaModule {
           promise.reject(IntercomErrorCodes.FETCH_HELP_CENTER_COLLECTIONS, "fetchHelpCenterCollections failure");
         }
       };
-
+      Log.d(NAME, "fetchHelpCenterCollections");
       Intercom.client().fetchHelpCenterCollections(collectionRequestCallback);
 
     } catch (Exception err) {
@@ -332,27 +332,30 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void fetchHelpCenterCollection(String collectionId, Promise promise) {
     try {
+      if (collectionId.equals("") ) {
+        promise.reject(IntercomErrorCodes.FETCH_HELP_CENTER_COLLECTION, "collectionID can\'t be empty");
+      } else {
+        CollectionContentRequestCallback collectionContentCallback = new CollectionContentRequestCallback() {
+          @Override
+          public void onComplete(@NotNull HelpCenterCollectionContent helpCenterCollectionContent) {
+            promise.resolve(IntercomHelpCenterHelpers.parseHelpCenterCollectionsContentToReadableMap(helpCenterCollectionContent));
+          }
 
-      CollectionContentRequestCallback collectionContentCallback = new CollectionContentRequestCallback() {
-        @Override
-        public void onComplete(@NotNull HelpCenterCollectionContent helpCenterCollectionContent) {
-          promise.resolve(IntercomHelpCenterHelpers.parseHelpCenterCollectionsContentToReadableMap(helpCenterCollectionContent));
-        }
+          @Override
+          public void onError(int i) {
+            Log.e(NAME, "fetchHelpCenterCollection error");
+            promise.reject(String.valueOf(i), "fetchHelpCenterCollection error");
+          }
 
-        @Override
-        public void onError(int i) {
-          Log.e(NAME, "fetchHelpCenterCollection error");
-          promise.reject(String.valueOf(i), "fetchHelpCenterCollection error");
-        }
-
-        @Override
-        public void onFailure() {
-          Log.e(NAME, "fetchHelpCenterCollection failure");
-          promise.reject(IntercomErrorCodes.FETCH_HELP_CENTER_COLLECTION, "fetchHelpCenterCollection failure");
-        }
-      };
-
-      Intercom.client().fetchHelpCenterCollection(collectionId, collectionContentCallback);
+          @Override
+          public void onFailure() {
+            Log.e(NAME, "fetchHelpCenterCollection failure");
+            promise.reject(IntercomErrorCodes.FETCH_HELP_CENTER_COLLECTION, "fetchHelpCenterCollection failure");
+          }
+        };
+        Log.d(NAME, "fetchHelpCenterCollection");
+        Intercom.client().fetchHelpCenterCollection(collectionId, collectionContentCallback);
+      }
 
     } catch (Exception err) {
       Log.e(NAME, "fetchHelpCenterCollection error:");
@@ -383,7 +386,7 @@ public class IntercomModule extends ReactContextBaseJavaModule {
           promise.reject(IntercomErrorCodes.SEARCH_HELP_CENTER, "searchHelpCenter failure");
         }
       };
-
+      Log.d(NAME, "searchHelpCenter");
       Intercom.client().searchHelpCenter(searchTerm, collectionContentCallback);
 
     } catch (Exception err) {

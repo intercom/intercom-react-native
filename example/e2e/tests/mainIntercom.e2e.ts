@@ -45,6 +45,25 @@ describe('Intercom E2E', () => {
     await driver.closeHelpCenterOverlay();
   });
 
+  it('Should fetch help center collections', async () => {
+    await driver.scrollToElementByAccessibilityLabel(
+      'fetch-help-center-collections'
+    );
+    await (await $('~fetch-help-center-collections')).click();
+  });
+
+  it('Should fetch help center collection', async () => {
+    await driver.scrollToElementByAccessibilityLabel(
+      'fetch-help-center-collections'
+    );
+    await (await $('~fetch-help-center-collection')).click();
+  });
+
+  it('Should fetch filtered hel center collections', async () => {
+    await driver.scrollToElementByAccessibilityLabel('search-help-center');
+    await (await $('~search-help-center')).click();
+  });
+
   it('Should display carousel', async () => {
     await driver.scrollToElementByAccessibilityLabel('display-carousel');
     await (await $('~display-carousel')).click();
