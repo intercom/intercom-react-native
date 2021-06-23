@@ -77,14 +77,33 @@ export type Company = {
   plan?: string;
 };
 
+export type HelpCenterArticle = { it: string; title: string };
+export type HelpCenterSection = { name: string; articles: HelpCenterArticle };
 export type HelpCenterCollectionItem = {
   id: string;
   title: string;
   summary: string;
 };
+export type HelpCenterCollectionContent = {
+  id: string;
+  name: string;
+  summary: string;
+  articles: HelpCenterArticle[];
+  sections: HelpCenterSection[];
+};
+export type HelpCenterArticleSearchResult = {
+  id: string;
+  title: string;
+  matchingSnippet: string;
+  summary: string;
+};
 
 export type IntercomType = {
   fetchHelpCenterCollections: () => Promise<HelpCenterCollectionItem>;
+  searchHelpCenter: (term: string) => Promise<HelpCenterArticleSearchResult>;
+  fetchHelpCenterCollection: (
+    id: string
+  ) => Promise<HelpCenterCollectionContent>;
   displayArticle(articleId: string): Promise<boolean>;
   displayCarousel(carouselId: string): Promise<boolean>;
   displayHelpCenter(): Promise<boolean>;
@@ -112,7 +131,10 @@ export type IntercomType = {
 };
 
 const Intercom = {
+  searchHelpCenter: (term) => IntercomModule.searchHelpCenter(term),
   fetchHelpCenterCollections: () => IntercomModule.fetchHelpCenterCollections(),
+  fetchHelpCenterCollection: (id) =>
+    IntercomModule.fetchHelpCenterCollection(id),
   displayArticle: (articleId: string) =>
     IntercomModule.displayArticle(articleId),
   displayCarousel: (carouselId: string) =>

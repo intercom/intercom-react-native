@@ -7,7 +7,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -15,8 +14,6 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.module.annotations.ReactModule;
-import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.bridge.WritableArray;
 import com.google.firebase.messaging.RemoteMessage;
 
 import org.jetbrains.annotations.NotNull;
@@ -27,8 +24,12 @@ import java.util.Map;
 import io.intercom.android.sdk.Intercom;
 import io.intercom.android.sdk.UserAttributes;
 import io.intercom.android.sdk.api.ReactNativeHeaderInterceptor;
+import io.intercom.android.sdk.helpcenter.api.CollectionContentRequestCallback;
 import io.intercom.android.sdk.helpcenter.api.CollectionRequestCallback;
+import io.intercom.android.sdk.helpcenter.api.HelpCenterArticleSearchResult;
+import io.intercom.android.sdk.helpcenter.api.SearchRequestCallback;
 import io.intercom.android.sdk.helpcenter.collections.HelpCenterCollection;
+import io.intercom.android.sdk.helpcenter.sections.HelpCenterCollectionContent;
 import io.intercom.android.sdk.identity.Registration;
 import io.intercom.android.sdk.push.IntercomPushClient;
 
@@ -303,28 +304,19 @@ public class IntercomModule extends ReactContextBaseJavaModule {
       CollectionRequestCallback collectionRequestCallback = new CollectionRequestCallback() {
         @Override
         public void onComplete(@NotNull List<HelpCenterCollection> list) {
-          HelpCenterCollection[] returnArray = new HelpCenterCollection[list.size()];
-
-          returnArray = list.toArray(returnArray);
-          WritableArray promiseArray = Arguments.createArray();
-          for (HelpCenterCollection helpCenterCollection : returnArray) {
-            WritableMap item = Arguments.createMap();
-            item.putString("id", helpCenterCollection.getId());
-            item.putString("title", helpCenterCollection.getTitle());
-            item.putString("summary", helpCenterCollection.getSummary());
-            promiseArray.pushMap(item);
-          }
-          promise.resolve(promiseArray);
+          promise.resolve(IntercomHelpCenterHelpers.parseHelpCenterCollectionsToReadableArray(list));
         }
 
         @Override
         public void onError(int i) {
+          Log.e(NAME, "fetchHelpCenterCollections error");
           promise.reject(String.valueOf(i), "fetchHelpCenterCollections error");
         }
 
         @Override
         public void onFailure() {
-          promise.reject("901", "fetchHelpCenterCollections faliure");
+          Log.e(NAME, "fetchHelpCenterCollections failure");
+          promise.reject(IntercomErrorCodes.FETCH_HELP_CENTER_COLLECTIONS, "fetchHelpCenterCollections failure");
         }
       };
 
@@ -333,9 +325,74 @@ public class IntercomModule extends ReactContextBaseJavaModule {
     } catch (Exception err) {
       Log.e(NAME, "fetchHelpCenterCollections error:");
       Log.e(NAME, err.toString());
-      promise.reject(IntercomErrorCodes.DISPLAY_HELP_CENTER_COLLECTIONS, err.toString());
+      promise.reject(IntercomErrorCodes.FETCH_HELP_CENTER_COLLECTIONS, err.toString());
     }
   }
+
+  @ReactMethod
+  public void fetchHelpCenterCollection(String collectionId, Promise promise) {
+    try {
+
+      CollectionContentRequestCallback collectionContentCallback = new CollectionContentRequestCallback() {
+        @Override
+        public void onComplete(@NotNull HelpCenterCollectionContent helpCenterCollectionContent) {
+          promise.resolve(IntercomHelpCenterHelpers.parseHelpCenterCollectionsContentToReadableMap(helpCenterCollectionContent));
+        }
+
+        @Override
+        public void onError(int i) {
+          Log.e(NAME, "fetchHelpCenterCollection error");
+          promise.reject(String.valueOf(i), "fetchHelpCenterCollection error");
+        }
+
+        @Override
+        public void onFailure() {
+          Log.e(NAME, "fetchHelpCenterCollection failure");
+          promise.reject(IntercomErrorCodes.FETCH_HELP_CENTER_COLLECTION, "fetchHelpCenterCollection failure");
+        }
+      };
+
+      Intercom.client().fetchHelpCenterCollection(collectionId, collectionContentCallback);
+
+    } catch (Exception err) {
+      Log.e(NAME, "fetchHelpCenterCollection error:");
+      Log.e(NAME, err.toString());
+      promise.reject(IntercomErrorCodes.FETCH_HELP_CENTER_COLLECTION, err.toString());
+    }
+  }
+
+  @ReactMethod
+  public void searchHelpCenter(String searchTerm, Promise promise) {
+    try {
+
+      SearchRequestCallback collectionContentCallback = new SearchRequestCallback() {
+        @Override
+        public void onComplete(@NotNull List<HelpCenterArticleSearchResult> helpCenterArticleSearchResult) {
+          promise.resolve(IntercomHelpCenterHelpers.parseHelpCenterArticleSearchToReadableArray(helpCenterArticleSearchResult));
+        }
+
+        @Override
+        public void onError(int i) {
+          Log.e(NAME, "searchHelpCenter error");
+          promise.reject(String.valueOf(i), "searchHelpCenter error");
+        }
+
+        @Override
+        public void onFailure() {
+          Log.e(NAME, "searchHelpCenter failure");
+          promise.reject(IntercomErrorCodes.SEARCH_HELP_CENTER, "searchHelpCenter failure");
+        }
+      };
+
+      Intercom.client().searchHelpCenter(searchTerm, collectionContentCallback);
+
+    } catch (Exception err) {
+      Log.e(NAME, "searchHelpCenter error:");
+      Log.e(NAME, err.toString());
+      promise.reject(IntercomErrorCodes.SEARCH_HELP_CENTER, err.toString());
+    }
+  }
+
 
   @ReactMethod
   public void displayCarousel(String carouselId, Promise promise) {
