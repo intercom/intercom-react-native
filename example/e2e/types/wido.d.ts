@@ -7,6 +7,7 @@ declare global {
       wait: (milis: number) => Promise<void>;
       clickWithDelay: (element: string, milis: number) => Promise<void>;
       closeHelpCenterOverlay: () => Promise<void>;
+      closeArticleOverlay: () => Promise<void>;
       closeOverlay: () => Promise<void>;
       closeAlert: () => Promise<void>;
     }

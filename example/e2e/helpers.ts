@@ -47,13 +47,28 @@ const closeOverlay = async () => {
 };
 browser.addCommand('closeOverlay', closeOverlay);
 
-const closeHelpCenterOverlay = async () => {
+const closeArticleOverlay = async () => {
   if (browser.isAndroid) {
-    await closeOverlay();
-  } else {
-    const closeButton = await $(`~intercom help center close button`);
+    const closeButton = await $(
+      `/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ImageButton`
+    );
     await closeButton.waitForDisplayed({ timeout: 22000 });
     await closeButton.click();
+  } else {
+    await closeOverlay();
+  }
+};
+browser.addCommand('closeArticleOverlay', closeArticleOverlay);
+
+const closeHelpCenterOverlay = async () => {
+  if (browser.isAndroid) {
+    const closeButton = await $(
+      `/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.ImageButton`
+    );
+    await closeButton.waitForDisplayed({ timeout: 22000 });
+    await closeButton.click();
+  } else {
+    await closeOverlay();
   }
 };
 browser.addCommand('closeHelpCenterOverlay', closeHelpCenterOverlay);

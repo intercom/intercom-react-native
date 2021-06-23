@@ -14,7 +14,8 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/intercom/intercom-react-native.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm}"
+  s.resource_bundles = { 'IntercomFramework' => ['ios/assets/*'] }
 
   s.dependency "React-Core"
-  s.dependency "Intercom", '~> 9.3.6'
+  s.dependency "Intercom", '~> 10.0'
 end

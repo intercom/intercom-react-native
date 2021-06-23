@@ -20,7 +20,7 @@ describe('Intercom E2E', () => {
 
   it('Should display article', async () => {
     await (await $('~display-article')).click();
-    await driver.closeOverlay();
+    await driver.closeArticleOverlay();
   });
 
   it('Should message composer', async () => {
@@ -34,6 +34,14 @@ describe('Intercom E2E', () => {
   it('Should display help center', async () => {
     await driver.scrollToElementByAccessibilityLabel('display-help-center');
     await (await $('~display-help-center')).click();
+    await driver.closeHelpCenterOverlay();
+  });
+
+  it('Should display help center collections', async () => {
+    await driver.scrollToElementByAccessibilityLabel(
+      'display-help-center-collections'
+    );
+    await (await $('~display-help-center-collections')).click();
     await driver.closeHelpCenterOverlay();
   });
 
@@ -63,10 +71,10 @@ describe('Intercom E2E', () => {
     );
     await driver.clickWithDelay('~toggle-launcher-visibility', 12000);
 
-    const laincherId = driver.isAndroid
+    const launcherId = driver.isAndroid
       ? '~Intercom launcher'
       : '~intercom launcher';
-    await (await $(laincherId)).waitForDisplayed({ timeout: 12000 });
+    await (await $(launcherId)).waitForDisplayed({ timeout: 12000 });
     await driver.clickWithDelay('~toggle-launcher-visibility', 12000);
   });
 

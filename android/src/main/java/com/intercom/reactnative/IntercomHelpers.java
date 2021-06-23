@@ -153,6 +153,19 @@ public class IntercomHelpers {
     return deconstructedList;
   }
 
+  public static List<String> readableArrayToStringList(ReadableArray readableArray) {
+    List<String> deconstructedList = new ArrayList<>();
+    for (int i = 0; i < readableArray.size(); i++) {
+      ReadableType indexType = readableArray.getType(i);
+      switch (indexType) {
+        case String:
+          deconstructedList.add(i, readableArray.getString(i));
+          break;
+      }
+    }
+    return deconstructedList;
+  }
+
   public static UserAttributes buildUserAttributes(ReadableMap readableMap) {
     UserAttributes.Builder builder = new UserAttributes.Builder();
     ReadableMapKeySetIterator iterator = readableMap.keySetIterator();

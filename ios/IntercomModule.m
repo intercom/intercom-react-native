@@ -2,6 +2,10 @@
 #import "IntercomAttributesBuilder.h"
 #import <Intercom/Intercom.h>
 
+@interface Intercom (Intercom)
++ (void)setReactNativeVersion:(NSString *)v;
+@end
+
 @implementation IntercomModule
 NSString *IDENTIFIED_REGISTRATION = @"102";
 NSString *SET_USER_HASH = @"103";
@@ -13,6 +17,18 @@ NSString *SEND_TOKEN_TO_INTERCOM = @"302";
 RCT_EXPORT_MODULE()
 
 + (void)initialize:(nonnull NSString *)apiKey withAppId:(nonnull NSString *)appId {
+    NSString* version = @"0";
+    
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"IntercomFramework" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:path];
+    if (bundle!=nil) {
+        NSString* v = [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+        if(v!=nil){
+            version = v;
+        }
+    }
+
+    [Intercom setReactNativeVersion:version];
     [Intercom setApiKey:apiKey forAppId:appId];
     NSLog(@"initialized Intercom module");
 }
@@ -211,11 +227,20 @@ RCT_EXPORT_METHOD(displayArticle :
     resolve(@(YES));
 };
 
-RCT_EXPORT_METHOD(hideMessenger :
+RCT_EXPORT_METHOD(displayHelpCenterCollections :
+    (NSArray *) collectionsId:
+(RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
+
+    [Intercom presentHelpCenterCollections:collectionsId];
+    NSLog(@"displayHelpCenterCollections");
+    resolve(@(YES));
+};
+
+RCT_EXPORT_METHOD(hideIntercom :
     (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
 
-    [Intercom hideMessenger];
-    NSLog(@"hideMessenger");
+    [Intercom hideIntercom];
+    NSLog(@"hideIntercom");
     resolve(@(YES));
 };
 
