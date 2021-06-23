@@ -194,6 +194,20 @@ export default function App() {
           }}
         />
         <Button
+          accessibilityLabel="fetch-help-center-collections"
+          disabled={!loggedUser}
+          title="Fetch Help Center Collections"
+          onPress={() => {
+            Intercom.fetchHelpCenterCollections()
+              .then((items) => {
+                console.log(items);
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+          }}
+        />
+        <Button
           accessibilityLabel="display-carousel"
           disabled={!loggedUser}
           title={'Display Carousel'}

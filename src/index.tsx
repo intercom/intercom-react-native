@@ -77,7 +77,14 @@ export type Company = {
   plan?: string;
 };
 
+export type HelpCenterCollectionItem = {
+  id: string;
+  title: string;
+  summary: string;
+};
+
 export type IntercomType = {
+  fetchHelpCenterCollections: () => Promise<HelpCenterCollectionItem>;
   displayArticle(articleId: string): Promise<boolean>;
   displayCarousel(carouselId: string): Promise<boolean>;
   displayHelpCenter(): Promise<boolean>;
@@ -105,6 +112,7 @@ export type IntercomType = {
 };
 
 const Intercom = {
+  fetchHelpCenterCollections: () => IntercomModule.fetchHelpCenterCollections(),
   displayArticle: (articleId: string) =>
     IntercomModule.displayArticle(articleId),
   displayCarousel: (carouselId: string) =>
