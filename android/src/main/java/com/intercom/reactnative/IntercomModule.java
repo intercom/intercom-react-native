@@ -332,7 +332,7 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void fetchHelpCenterCollection(String collectionId, Promise promise) {
     try {
-      if (collectionId.equals("") ) {
+      if (collectionId.equals("")) {
         promise.reject(IntercomErrorCodes.FETCH_HELP_CENTER_COLLECTION, "collectionID can\'t be empty");
       } else {
         CollectionContentRequestCallback collectionContentCallback = new CollectionContentRequestCallback() {
@@ -366,33 +366,36 @@ public class IntercomModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void searchHelpCenter(String searchTerm, Promise promise) {
-    try {
+    if (searchTerm.equals("")) {
+      promise.reject(IntercomErrorCodes.SEARCH_HELP_CENTER, "searchTerm can\'t be empty");
+    } else {
+      try {
+        SearchRequestCallback collectionContentCallback = new SearchRequestCallback() {
+          @Override
+          public void onComplete(@NotNull List<HelpCenterArticleSearchResult> helpCenterArticleSearchResult) {
+            promise.resolve(IntercomHelpCenterHelpers.parseHelpCenterArticleSearchToReadableArray(helpCenterArticleSearchResult));
+          }
 
-      SearchRequestCallback collectionContentCallback = new SearchRequestCallback() {
-        @Override
-        public void onComplete(@NotNull List<HelpCenterArticleSearchResult> helpCenterArticleSearchResult) {
-          promise.resolve(IntercomHelpCenterHelpers.parseHelpCenterArticleSearchToReadableArray(helpCenterArticleSearchResult));
-        }
+          @Override
+          public void onError(int i) {
+            Log.e(NAME, "searchHelpCenter error");
+            promise.reject(String.valueOf(i), "searchHelpCenter error");
+          }
 
-        @Override
-        public void onError(int i) {
-          Log.e(NAME, "searchHelpCenter error");
-          promise.reject(String.valueOf(i), "searchHelpCenter error");
-        }
+          @Override
+          public void onFailure() {
+            Log.e(NAME, "searchHelpCenter failure");
+            promise.reject(IntercomErrorCodes.SEARCH_HELP_CENTER, "searchHelpCenter failure");
+          }
+        };
+        Log.d(NAME, "searchHelpCenter");
+        Intercom.client().searchHelpCenter(searchTerm, collectionContentCallback);
 
-        @Override
-        public void onFailure() {
-          Log.e(NAME, "searchHelpCenter failure");
-          promise.reject(IntercomErrorCodes.SEARCH_HELP_CENTER, "searchHelpCenter failure");
-        }
-      };
-      Log.d(NAME, "searchHelpCenter");
-      Intercom.client().searchHelpCenter(searchTerm, collectionContentCallback);
-
-    } catch (Exception err) {
-      Log.e(NAME, "searchHelpCenter error:");
-      Log.e(NAME, err.toString());
-      promise.reject(IntercomErrorCodes.SEARCH_HELP_CENTER, err.toString());
+      } catch (Exception err) {
+        Log.e(NAME, "searchHelpCenter error:");
+        Log.e(NAME, err.toString());
+        promise.reject(IntercomErrorCodes.SEARCH_HELP_CENTER, err.toString());
+      }
     }
   }
 
