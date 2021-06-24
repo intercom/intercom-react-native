@@ -23,6 +23,7 @@
     - [Push Notifications](#ios-push-notifications)
     - [Push notification deep links support](#ios-push-notification-deep-links-support)
 - [Common methods](#methods)
+  - [Types](#types)
 - [Usage](#usage)
 - [Troubleshooting](#troubleshooting)
 - [Author](#author)
@@ -685,6 +686,46 @@ Present the help center with specific collections only .
 `Promise<boolean>`
 
 ___
+### `Intercom.fetchHelpCenterCollections()`
+
+Fetch a list of all Collections.
+
+
+### Returns
+`Promise<HelpCenterCollectionItem[]>`
+
+
+___
+### `Intercom.fetchHelpCenterCollection(collectionId)`
+
+Get a list of sections/articles for a collection.
+
+### Options
+
+| Type    | Type        | Required |
+| ------- | --------    | -------- |
+| collectionId| string  |yes        |
+
+### Returns
+
+`Promise<HelpCenterCollectionContent>`
+
+___
+### `Intercom.searchHelpCenter(searchTerm)`
+
+Get a list of articles in the Help Center, filtered by a search term
+
+### Options
+
+| Type    | Type        | Required |
+| ------- | --------    | -------- |
+| searchTerm| string  |yes        |
+
+### Returns
+
+`Promise<HelpCenterArticleSearchResult[]>`
+
+___
 ### `Intercom.displayArticle(articleId)`
 
 Displays article with given id.
@@ -827,6 +868,41 @@ useEffect(() => {
 
 `EmitterSubscription`
 
+___
+### Types
+
+```typescript
+type HelpCenterArticle = {
+  it: string;
+  title: string;
+};
+
+type HelpCenterSection = {
+  name: string;
+  articles: HelpCenterArticle;
+};
+
+type HelpCenterCollectionItem = {
+  id: string;
+  title: string;
+  summary: string;
+};
+
+type HelpCenterCollectionContent = {
+  id: string;
+  name: string;
+  summary: string;
+  articles: HelpCenterArticle[];
+  sections: HelpCenterSection[];
+};
+
+type HelpCenterArticleSearchResult = {
+  id: string;
+  title: string;
+  matchingSnippet: string;
+  summary: string;
+};
+```
 ___
 
 ## Usage

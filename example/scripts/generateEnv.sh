@@ -9,4 +9,4 @@ echo EVENT_NAME=$EVENT_NAME >>.env
 echo ARTICLE_ID=$ARTICLE_ID >>.env
 echo USER_NAME=$USER_NAME >>.env
 echo SEARCH_TERM=$SEARCH_TERM >>.env
-echo SECTION_ID=$SECTION_ID >>.env
+echo COLLECTION_ID=$COLLECTION_ID >>.env

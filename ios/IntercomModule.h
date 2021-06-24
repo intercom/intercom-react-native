@@ -5,6 +5,6 @@
 + (void)setDeviceToken:(nonnull NSString *)deviceToken;
 + (BOOL)isIntercomPushNotification:(nonnull NSDictionary *)userInfo;
 + (void)handleIntercomPushNotification:(nonnull NSDictionary *)userInfo;
-+ (NSError *)exceptionToError:(NSException *)exception :(NSString *)code;
+- (NSError *)exceptionToError:(NSException *)exception :(NSString *)code :(NSString *)domain;
 
 @end
