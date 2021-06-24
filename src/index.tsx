@@ -78,7 +78,7 @@ export type Company = {
 };
 
 export type HelpCenterArticle = { it: string; title: string };
-export type HelpCenterSection = { name: string; articles: HelpCenterArticle };
+export type HelpCenterSection = { title: string; articles: HelpCenterArticle };
 export type HelpCenterCollectionItem = {
   id: string;
   title: string;
@@ -86,7 +86,7 @@ export type HelpCenterCollectionItem = {
 };
 export type HelpCenterCollectionContent = {
   id: string;
-  name: string;
+  title: string;
   summary: string;
   articles: HelpCenterArticle[];
   sections: HelpCenterSection[];
