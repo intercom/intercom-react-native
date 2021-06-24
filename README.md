@@ -1,4 +1,4 @@
-# Welcome to intercom-react-native 👋
+# Welcome to @intercom/intercom-react-native 👋
 
 [![Version](https://img.shields.io/npm/v/intercom-react-native.svg)](https://www.npmjs.com/package/intercom-react-native)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](https://github.com/intercom/intercom-react-native#readme)
@@ -29,11 +29,11 @@
 ## Installation
 
 ```sh
-$ npm install intercom-react-native
+$ npm install @intercom/intercom-react-native
 ```
 or
 ```sh
-yarn add intercom-react-native
+yarn add @intercom/intercom-react-native
 ```
 
 ### Android
@@ -394,7 +394,7 @@ ___
 
 ## Import
 
-### `import Intercom from 'react-native-intercom';`
+### `import Intercom from '@intercom/intercom-react-native';`
 
 ___
 
@@ -904,9 +904,8 @@ ___
 
 ## Author
 
-👤 **Intercom <support@intercom.com> (https://www.intercom.com/)**
+👤 **Intercom (https://www.intercom.com/)**
 
-* Website: (https://www.intercom.com/)
 
 ## Show your support
 

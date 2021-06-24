@@ -12,7 +12,10 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import Intercom, { IntercomEvents, Visibility } from 'intercom-react-native';
+import Intercom, {
+  IntercomEvents,
+  Visibility,
+} from '@intercom/intercom-react-native';
 import Button from './Button';
 import type { Registration } from '../../lib/typescript';
 import Config from 'react-native-config';

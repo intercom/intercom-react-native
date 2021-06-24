@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "intercom-react-native": ["./src/index"],
+      "@intercom/intercom-react-native": ["./src/index"],
     },
     "types": ["node", "mocha", "webdriverio/async", "@wdio/mocha-framework"],
     "allowUnreachableCode": false,
