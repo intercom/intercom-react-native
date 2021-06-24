@@ -10,19 +10,17 @@
 
 - [Installation](#installation)
   - [Android](#android)
-    - [Automatic linking (React Native <=0.59)](#android-automatic-linking-with-react-native-v059-and-below)
-    - [Manual linking (React Native <=0.59)](#android-manual-linking-with-react-native-v059-and-below)
     - [Setup](#android-setup)
     - [Permissions](#android-permissions)
     - [Push Notifications](#android-push-notifications)
     - [Push notification deep links support](#android-push-notification-deep-links-support)
   - [iOS](#ios)
-    - [Manual linking (React Native <=0.59)](#ios-manual-linking-with-react-native-v059-and-below)
     - [Setup](#ios-setup)
     - [Permissions](#ios-permissions)
     - [Push Notifications](#ios-push-notifications)
     - [Push notification deep links support](#ios-push-notification-deep-links-support)
 - [Common methods](#methods)
+  - [Types](#types)
 - [Usage](#usage)
 - [Troubleshooting](#troubleshooting)
 - [Author](#author)
@@ -42,33 +40,13 @@ yarn add intercom-react-native
 
 If you're using React Native v0.60 or above, the library will be linked automatically without any steps being taken.
 
-#### Android: Automatic linking with React Native v0.59 and below
-
-```
-$ react-native link intercom-react-native
-```
-
-#### Android: Manual linking with React Native v0.59 and below
-
-- Add below code to `android/settings.gradle`
-
-```Gradle
-include ':intercomreactnative'
-project(':intercomreactnative').projectDir = new File(rootProject.projectDir, '../../android')
-```
-
-- Then edit `android/app/build.gradle`, inside `dependencies` at very bottom add
-
-```Gradle
-implementation project(':intercomreactnative')
-```
 
 #### Android: Setup
 
 - Add below lines to `MainApplication.java` inside `onCreate` method, replacing `apiKey` and `appId` which can be found in your [workspace settings](https://app.intercom.com/a/apps/_/settings/android).
 
 ```java
-import com.intercomreactnative.IntercomModule; //  <-- Add this line
+import hideIntercom.IntercomModule; //  <-- Add this line
 
 // ...
 
@@ -141,11 +119,20 @@ buildscript {
 }
 ```
 
-- At the bottom of `android/app/build.gradle` add:
+- In `android/app/build.gradle` in dependencies add `Firebase Messaging` and at the very bottom apply `Google Services Plugin`:
 
 ```Gradle
-apply plugin: 'com.google.gms.google-services' // <-- Add this
+// ...
 
+dependencies{
+    implementation "com.facebook.react:react-native:+"
+
+    implementation 'com.google.firebase:firebase-messaging:20.2.+' // <-- Add this
+    // ...
+}
+// ...
+
+apply plugin: 'com.google.gms.google-services' // <-- Add this
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 ```
 
@@ -153,12 +140,14 @@ apply from: file("../../node_modules/@react-native-community/cli-platform-androi
 
 - Create `MainNotificationService.java` inside your app directory(`com.example.app`) with below content:
 
+  ***Remember to replace `package com.example.app;`, with your app package name***
+
 ```java
 package com.example.app;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.intercomreactnative.IntercomModule;
+import hideIntercom.IntercomModule;
 
 public class MainNotificationService extends FirebaseMessagingService {
 
@@ -174,8 +163,13 @@ public class MainNotificationService extends FirebaseMessagingService {
 
 - Edit `AndroidManifest.xml`. Add below content inside `<application>` below `<activity/>`
 
+**Make sure that `xmlns:tools="http://schemas.android.com/tools"` is added to `manifest` tag**
+
 ```xml
-<manifest>
+<!-- Add xmlns:tools to manifest. See example below-->
+<manifest
+  xmlns:tools="http://schemas.android.com/tools"
+>
   <application>
     <activity>
       ...
@@ -191,7 +185,7 @@ public class MainNotificationService extends FirebaseMessagingService {
     </service>
 
     <receiver
-      android:name="com.intercomreactnative.RNIntercomPushBroadcastReceiver"
+      android:name="hideIntercom.RNIntercomPushBroadcastReceiver"
       tools:replace="android:exported"
       android:exported="true"/>
     <!-- END: Add this-->
@@ -261,15 +255,11 @@ cd ..
 
 If you're using React Native v0.60 or above, the library will be linked automatically without any steps being taken.
 
-#### iOS: Manual linking with React Native v0.59 and below
-
-See [How to manually link IOS Intercom SDK](docs/IOS-MANUAL-LINKING.md)
-
 #### iOS: Setup
 
 - Open `ios/AppDelegate.m` then add below code:
 
-- At the top of file add the following, replacing `apiKey` and `appId` which can be found in your [workspace settings](https://app.intercom.com/a/apps/_/settings/ios)
+- At the top of file add the following:
 
 ```Objective-C
 #import "AppDelegate.h"
@@ -279,7 +269,7 @@ See [How to manually link IOS Intercom SDK](docs/IOS-MANUAL-LINKING.md)
 // ...
 #import <IntercomModule.h> // <-- Add This
 ```
-- Inside `didFinishLaunchingWithOptions` before `return YES` add:
+- Inside `didFinishLaunchingWithOptions` before `return YES` add, remember to replace `apiKey` and `appId` which can be found in your [workspace settings](https://app.intercom.com/a/apps/_/settings/ios):
 ```Objective-C
   // ...
   self.window.rootViewController = rootViewController;
@@ -300,6 +290,9 @@ Add this permission to your `Info.plist`
 ```
 
 #### iOS: Push Notifications
+
+Add **Push Notifications** and **Background Modes > Remote Notifications** [Details HERE](https://developer.apple.com/documentation/xcode/adding-capabilities-to-your-app)
+
 
 **Option 1: In your JavaScript code**
 
@@ -353,6 +346,10 @@ Notifications.events().registerRemoteNotificationsRegistered(({ deviceToken }: R
 ```
 
 #### iOS: Push notification deep links support
+
+Add URL types
+
+<img src="./docs/scheme-setup.png" alt="Xcode utl types" width="550"/>
 
 Setup of React Native deep links can be found [Here](https://reactnative.dev/docs/linking#enabling-deep-links)
 
@@ -646,6 +643,75 @@ Open up your apps help center
 `Promise<boolean>`
 
 ___
+### `Intercom.displayHelpCenterCollections()`
+
+Present the help center with specific collections only .
+
+###### Note: If the requested collections cannot be found, the full help center will be shown instead.
+### Options
+
+| Type    | Type        | Required |
+| ------- | --------    | -------- |
+| collections| string[]  |no        |
+
+### Returns
+
+`Promise<boolean>`
+
+___
+### `Intercom.fetchHelpCenterCollections()`
+
+Fetch a list of all Collections.
+
+
+### Returns
+`Promise<HelpCenterCollectionItem[]>`
+
+
+___
+### `Intercom.fetchHelpCenterCollection(collectionId)`
+
+Get a list of sections/articles for a collection.
+
+### Options
+
+| Type    | Type        | Required |
+| ------- | --------    | -------- |
+| collectionId| string  |yes        |
+
+### Returns
+
+`Promise<HelpCenterCollectionContent>`
+
+___
+### `Intercom.searchHelpCenter(searchTerm)`
+
+Get a list of articles in the Help Center, filtered by a search term
+
+### Options
+
+| Type    | Type        | Required |
+| ------- | --------    | -------- |
+| searchTerm| string  |yes        |
+
+### Returns
+
+`Promise<HelpCenterArticleSearchResult[]>`
+
+___
+### `Intercom.displayArticle(articleId)`
+
+Displays article with given id.
+
+| Type    | Type        | Required |
+| ------- | --------    | -------- |
+| articleId| string  |yes        |
+
+### Returns
+
+`Promise<boolean>`
+
+___
 
 ### `Intercom.displayCarousel(carouselId)`
 
@@ -775,6 +841,41 @@ useEffect(() => {
 
 `EmitterSubscription`
 
+___
+### Types
+
+```typescript
+type HelpCenterArticle = {
+  it: string;
+  title: string;
+};
+
+type HelpCenterSection = {
+  name: string;
+  articles: HelpCenterArticle;
+};
+
+type HelpCenterCollectionItem = {
+  id: string;
+  title: string;
+  summary: string;
+};
+
+type HelpCenterCollectionContent = {
+  id: string;
+  name: string;
+  summary: string;
+  articles: HelpCenterArticle[];
+  sections: HelpCenterSection[];
+};
+
+type HelpCenterArticleSearchResult = {
+  id: string;
+  title: string;
+  matchingSnippet: string;
+  summary: string;
+};
+```
 ___
 
 ## Usage

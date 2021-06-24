@@ -77,14 +77,41 @@ export type Company = {
   plan?: string;
 };
 
+export type HelpCenterArticle = { it: string; title: string };
+export type HelpCenterSection = { title: string; articles: HelpCenterArticle };
+export type HelpCenterCollectionItem = {
+  id: string;
+  title: string;
+  summary: string;
+};
+export type HelpCenterCollectionContent = {
+  id: string;
+  title: string;
+  summary: string;
+  articles: HelpCenterArticle[];
+  sections: HelpCenterSection[];
+};
+export type HelpCenterArticleSearchResult = {
+  id: string;
+  title: string;
+  matchingSnippet: string;
+  summary: string;
+};
+
 export type IntercomType = {
+  fetchHelpCenterCollections: () => Promise<HelpCenterCollectionItem>;
+  searchHelpCenter: (term: string) => Promise<HelpCenterArticleSearchResult>;
+  fetchHelpCenterCollection: (
+    id: string
+  ) => Promise<HelpCenterCollectionContent>;
   displayArticle(articleId: string): Promise<boolean>;
   displayCarousel(carouselId: string): Promise<boolean>;
   displayHelpCenter(): Promise<boolean>;
+  displayHelpCenterCollections(collections?: string[]): Promise<boolean>;
   displayMessageComposer(initialMessage?: string): Promise<boolean>;
   displayMessenger(): Promise<boolean>;
   getUnreadConversationCount(): Promise<number>;
-  hideMessenger(): Promise<boolean>;
+  hideIntercom(): Promise<boolean>;
   logEvent(eventName: string, metaData?: MetaData): Promise<boolean>;
   logout(): Promise<boolean>;
   registerIdentifiedUser(params: Registration): Promise<boolean>;
@@ -104,11 +131,17 @@ export type IntercomType = {
 };
 
 const Intercom = {
+  searchHelpCenter: (term = '') => IntercomModule.searchHelpCenter(term),
+  fetchHelpCenterCollections: () => IntercomModule.fetchHelpCenterCollections(),
+  fetchHelpCenterCollection: (id = '') =>
+    IntercomModule.fetchHelpCenterCollection(id),
   displayArticle: (articleId: string) =>
     IntercomModule.displayArticle(articleId),
   displayCarousel: (carouselId: string) =>
     IntercomModule.displayCarousel(carouselId),
   displayHelpCenter: () => IntercomModule.displayHelpCenter(),
+  displayHelpCenterCollections: (collections = [] as string[]) =>
+    IntercomModule.displayHelpCenterCollections(collections),
   displayMessageComposer: (initialMessage = undefined) =>
     IntercomModule.displayMessageComposer(initialMessage),
   displayMessenger: () => IntercomModule.displayMessenger(),
@@ -117,7 +150,7 @@ const Intercom = {
     android: IntercomModule.handlePushMessage,
     default: async () => true,
   }),
-  hideMessenger: () => IntercomModule.hideMessenger(),
+  hideIntercom: () => IntercomModule.hideIntercom(),
   logEvent: (eventName, metaData = undefined) =>
     IntercomModule.logEvent(eventName, metaData),
   logout: () => IntercomModule.logout(),

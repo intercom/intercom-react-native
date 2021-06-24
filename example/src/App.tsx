@@ -17,12 +17,14 @@ import Button from './Button';
 import type { Registration } from '../../lib/typescript';
 import Config from 'react-native-config';
 
+const COLLECTIONS: string[] = []; //Provide help center collections ids
 // To change, replace values in .env
 const CAROUSEL_ID = Config.CAROUSEL_ID;
 const EVENT_NAME = Config.EVENT_NAME;
 const ARTICLE_ID = Config.ARTICLE_ID;
 const USER_NAME = Config.USER_NAME;
-
+const COLLECTION_ID = Config.COLLECTION_ID;
+const SEARCH_TERM = Config.SEARCH_TERM;
 const TOKEN = Platform.select({
   ios: 'RN-IOS-TOKEN',
   default: 'RN-ANDROID-TOKEN',
@@ -36,6 +38,10 @@ export default function App() {
     useState<boolean>(true);
   const [launcherVisibility, setLauncherVisibility] = useState<boolean>(false);
   const [user, setUser] = useState<Registration>({ email: '' });
+
+  const showErrorAlert = (e: Error) => {
+    Alert.alert('ERROR', JSON.stringify(e));
+  };
 
   useEffect(() => {
     /**
@@ -186,9 +192,62 @@ export default function App() {
           }}
         />
         <Button
+          accessibilityLabel="display-help-center-collections"
+          disabled={!loggedUser}
+          title={'Display Help Center Collections'}
+          onPress={() => {
+            Intercom.displayHelpCenterCollections(COLLECTIONS);
+          }}
+        />
+        <Button
+          accessibilityLabel="fetch-help-center-collections"
+          disabled={!loggedUser}
+          title="Fetch Help Center Collections"
+          onPress={() => {
+            Intercom.fetchHelpCenterCollections()
+              .then((items) => {
+                console.log(items);
+              })
+              .catch((e) => {
+                showErrorAlert(e);
+                console.error(e);
+              });
+          }}
+        />
+        <Button
+          accessibilityLabel="fetch-help-center-collection"
+          disabled={!loggedUser}
+          title="Fetch Help Center Collection"
+          onPress={() => {
+            Intercom.fetchHelpCenterCollection(COLLECTION_ID)
+              .then((item) => {
+                console.log(item);
+              })
+              .catch((e) => {
+                showErrorAlert(e);
+                console.error(e);
+              });
+          }}
+        />
+        <Button
+          accessibilityLabel="search-help-center"
+          disabled={!loggedUser}
+          title="Search Help Center"
+          onPress={() => {
+            Intercom.searchHelpCenter(SEARCH_TERM)
+              .then((item) => {
+                console.log(item);
+              })
+              .catch((e) => {
+                showErrorAlert(e);
+                console.error(e);
+              });
+          }}
+        />
+        <Button
           accessibilityLabel="display-carousel"
           disabled={!loggedUser}
-          title="Display Carousel"
+          title={'Display Carousel'}
           onPress={() => {
             console.log(CAROUSEL_ID);
             Intercom.displayCarousel(CAROUSEL_ID);

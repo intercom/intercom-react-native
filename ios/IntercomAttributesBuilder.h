@@ -1,7 +1,5 @@
 #import <Foundation/Foundation.h>
-
-@class ICMUserAttributes;
-
+#import <Intercom/Intercom.h>
 
 @interface IntercomAttributesBuilder : NSObject
 + (ICMUserAttributes *)userAttributesForDictionary:(NSDictionary *)attributesDict;
