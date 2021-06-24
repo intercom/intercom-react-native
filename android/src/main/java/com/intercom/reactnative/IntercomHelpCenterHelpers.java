@@ -68,7 +68,7 @@ public class IntercomHelpCenterHelpers {
 
   public static ReadableMap parseHelpCenterSectionToReadableMap(HelpCenterSection helpCenterSection) {
     WritableMap section = Arguments.createMap();
-    section.putString("id", helpCenterSection.getTitle());
+    section.putString("title", helpCenterSection.getTitle());
 
 
     ReadableArray articles = parseArticlesToReadableArray(helpCenterSection.getHelpCenterArticles());
