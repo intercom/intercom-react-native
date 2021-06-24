@@ -50,9 +50,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            npm install --cwd example
-            npm install --cwd example/e2e
-            npm install
+            yarn install --cwd example
+            yarn install --cwd example/e2e
+            yarn install
       - save_cache:
           key: dependencies-{{ checksum "package.json" }}
           paths: node_modules
