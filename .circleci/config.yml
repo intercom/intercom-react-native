@@ -242,7 +242,7 @@ workflows:
       - release-to-npm:
           <<: *run_on_master
           context:
-            - react-native-env
+            - react-native-context
           requires:
             - install-dependencies
             - lint
