@@ -10,14 +10,11 @@
 
 - [Installation](#installation)
   - [Android](#android)
-    - [Automatic linking (React Native <=0.59)](#android-automatic-linking-with-react-native-v059-and-below)
-    - [Manual linking (React Native <=0.59)](#android-manual-linking-with-react-native-v059-and-below)
     - [Setup](#android-setup)
     - [Permissions](#android-permissions)
     - [Push Notifications](#android-push-notifications)
     - [Push notification deep links support](#android-push-notification-deep-links-support)
   - [iOS](#ios)
-    - [Manual linking (React Native <=0.59)](#ios-manual-linking-with-react-native-v059-and-below)
     - [Setup](#ios-setup)
     - [Permissions](#ios-permissions)
     - [Push Notifications](#ios-push-notifications)
@@ -42,26 +39,6 @@ yarn add intercom-react-native
 
 If you're using React Native v0.60 or above, the library will be linked automatically without any steps being taken.
 
-#### Android: Automatic linking with React Native v0.59 and below
-
-```
-$ react-native link intercom-react-native
-```
-
-#### Android: Manual linking with React Native v0.59 and below
-
-- Add below code to `android/settings.gradle`
-
-```Gradle
-include ':intercomreactnative'
-project(':intercomreactnative').projectDir = new File(rootProject.projectDir, '../../android')
-```
-
-- Then edit `android/app/build.gradle`, inside `dependencies` at very bottom add
-
-```Gradle
-implementation project(':intercomreactnative')
-```
 
 #### Android: Setup
 
@@ -276,10 +253,6 @@ cd ..
 ```
 
 If you're using React Native v0.60 or above, the library will be linked automatically without any steps being taken.
-
-#### iOS: Manual linking with React Native v0.59 and below
-
-See [How to manually link IOS Intercom SDK](docs/IOS-MANUAL-LINKING.md)
 
 #### iOS: Setup
 
