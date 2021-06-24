@@ -458,7 +458,7 @@ SPEC CHECKSUMS:
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
   Intercom: 9512379fa2a4aaf84cd8884f23b932002edb3147
-  intercom-react-native: 41bba370e914eaa8ae2f2a84eb312e580c27460d
+  intercom-react-native: 40c73042d4cc8d5fef0595fe434f1f982acdb882
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   RCTRequired: 082f10cd3f905d6c124597fd1c14f6f2655ff65e

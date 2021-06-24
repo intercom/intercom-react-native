@@ -1,5 +1,5 @@
 {
-  "name": "intercom-react-native",
+  "name": "@intercom/intercom-react-native",
   "version": "0.1.0",
   "description": "React Native wrapper to bridge our iOS and Android SDK",
   "main": "lib/commonjs/index",
@@ -34,15 +34,21 @@
   "keywords": [
     "react-native",
     "ios",
+    "intercom",
+    "messenger",
+    "help center",
+    "articles",
+    "push notifications",
+    "customer support",
     "android"
   ],
   "repository": "https://github.com/intercom/intercom-react-native",
-  "author": "Intercom <support@intercom.com> (https://www.intercom.com/)",
-  "license": "Apache-2.0",
+  "author": "Intercom (https://www.intercom.com/)",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/intercom/intercom-react-native/issues"
+    "url": "https://www.intercom.com/"
   },
-  "homepage": "https://github.com/intercom/intercom-react-native#readme",
+  "homepage": "https://www.intercom.com/",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },

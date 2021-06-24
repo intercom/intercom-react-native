@@ -202,7 +202,9 @@ jobs:
 
       - run:
           name: Add npm registry auth key
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+          command: |
+            npm config set scope $ORG_NAME --global
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
 
       - restore_cache:
           keys:
