@@ -148,9 +148,9 @@ jobs:
 
       - <<: *setup_env_file
 
-      - restore_cache:
-          keys:
-            - pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
+#      - restore_cache:
+#          keys:
+#            - pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
       - run:
           working_directory: example/ios
           name: Install Pods
