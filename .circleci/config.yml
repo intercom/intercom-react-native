@@ -53,9 +53,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            npm install --cwd example --frozen-lockfile
-            npm install --cwd example/e2e --frozen-lockfile
-            npm install --frozen-lockfile
+            npm install --cwd example
+            npm install --cwd example/e2e
+            npm install
       - save_cache:
           key: dependencies-{{ checksum "package.json" }}
           paths: node_modules
