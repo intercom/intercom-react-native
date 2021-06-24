@@ -42,10 +42,7 @@ jobs:
           keys:
             - dependencies-{{ checksum "package.json" }}
             - dependencies-
-      - restore_cache:
-          keys:
-            - dependencies-example-{{ checksum "example/package.json" }}
-            - dependencies-example-
+
       - restore_cache:
           keys:
             - dependencies-example-{{ checksum "example/e2e/package.json" }}
