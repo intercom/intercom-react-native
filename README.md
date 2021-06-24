@@ -692,7 +692,7 @@ Fetch a list of all Collections.
 
 
 ### Returns
-`Promise<HelpCenterCollectionItem>`
+`Promise<HelpCenterCollectionItem[]>`
 
 
 ___
@@ -723,7 +723,7 @@ Get a list of articles in the Help Center, filtered by a search term
 
 ### Returns
 
-`Promise<HelpCenterArticleSearchResult>`
+`Promise<HelpCenterArticleSearchResult[]>`
 
 ___
 ### `Intercom.displayArticle(articleId)`
