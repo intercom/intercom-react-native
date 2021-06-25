@@ -38,15 +38,18 @@ jobs:
     steps:
       - checkout
       - attach_project
-#      - restore_cache:
-#          keys:
-#            - dependencies-{{ checksum "package.json" }}
-#            - dependencies-
-
-#      - restore_cache:
-#          keys:
-#            - dependencies-example-{{ checksum "example/e2e/package.json" }}
-#            - dependencies-example-e2e-
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "package.json" }}
+            - dependencies-
+      - restore_cache:
+          keys:
+            - dependencies-example-{{ checksum "package.json" }}
+            - dependencies-
+      - restore_cache:
+          keys:
+            - dependencies-example-e2e-{{ checksum "example/e2e/package.json" }}
+            - dependencies-example-e2e-
       - run:
           name: Install dependencies
           command: |
@@ -148,9 +151,9 @@ jobs:
 
       - <<: *setup_env_file
 
-#      - restore_cache:
-#          keys:
-#            - pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
+      - restore_cache:
+          keys:
+            - pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
       - run:
           working_directory: example/ios
           name: Install Pods
@@ -203,9 +206,9 @@ jobs:
             echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/project/.npmrc
             npm config set scope $ORG_NAME
 
-#      - restore_cache:
-#          keys:
-#            - dependencies-{{ checksum "package.json" }}
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "package.json" }}
 
       - run:
           name: Install dependencies
@@ -236,18 +239,26 @@ workflows:
       - android-e2e-test:
           requires:
             - install-dependencies
+            - lint
+            - typescript
+            - unit-tests
+            - build-package
       - ios-e2e-test:
           requires:
             - install-dependencies
+            - lint
+            - typescript
+            - unit-tests
+            - build-package
       - release-to-npm:
           <<: *run_on_master
           context:
             - react-native-context
           requires:
             - install-dependencies
-            # - lint
-            # - typescript
-            # - unit-tests
-            # - build-package
-            # - ios-e2e-test
-            # - android-e2e-test
+             - lint
+             - typescript
+             - unit-tests
+             - build-package
+             - ios-e2e-test
+             - android-e2e-test
