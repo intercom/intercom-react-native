@@ -913,7 +913,7 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-This project is [Apache--2.0](https://github.com/intercom/intercom-react-native#readme) licensed.
+This project is [MIT](LICENSE) licensed.
 
 ***
 Created with ❤️ by [Intercom](https://intercom.com/)
