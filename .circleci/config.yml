@@ -256,9 +256,9 @@ workflows:
             - react-native-context
           requires:
             - install-dependencies
-             - lint
-             - typescript
-             - unit-tests
-             - build-package
-             - ios-e2e-test
-             - android-e2e-test
+            - lint
+            - typescript
+            - unit-tests
+            - build-package
+            - ios-e2e-test
+            - android-e2e-test
