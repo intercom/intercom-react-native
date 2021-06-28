@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3A6572C897F85E4E8295FC2D /* IntercomEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A657CFB9FBFC5F094B4D20D /* IntercomEventEmitter.m */; };
-		3A6576B390F8276AE2651D35 /* IntercomAttributesBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6576960DB107666B27C442 /* IntercomAttributesBuilder.m */; };
-		7D72E2FD26611EAB00A3C250 /* IntercomModule.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* IntercomModule.m */; };
-		7DAD57C02683B5B5001B040A /* IntercomHelpCenterHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DAD57BF2683B5B5001B040A /* IntercomHelpCenterHelpers.m */; };
+		7DC6AEF02689C2060031A854 /* IntercomHelpCenterHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DAD57BF2683B5B5001B040A /* IntercomHelpCenterHelpers.m */; };
+		7DC6AEF32689C2060031A854 /* IntercomModule.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* IntercomModule.m */; };
+		7DC6AEF42689C2060031A854 /* IntercomAttributesBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6576960DB107666B27C442 /* IntercomAttributesBuilder.m */; };
+		7DC6AEF62689C2060031A854 /* IntercomEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A657CFB9FBFC5F094B4D20D /* IntercomEventEmitter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -89,6 +89,7 @@
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
 				58B511D91A9E6C8500147676 /* CopyFiles */,
+				7D9483062689ED1B005A1514 /* Export Intercom Version */,
 			);
 			buildRules = (
 			);
@@ -131,15 +132,36 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		7D9483062689ED1B005A1514 /* Export Intercom Version */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Export Intercom Version";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export INTERCOM_RN_VERSION=$(cat ../package.json \\\n  | grep version \\\n  | head -1 \\\n  | awk -F: '{ print $2 }' \\\n  | sed 's/[\",]//g')\n  \n\nplutil -replace IntercomRnVersion -string $INTERCOM_RN_VERSION $SOURCE_ROOT/../../../../ios/Rn59SampleApp/Info.plist\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		58B511D71A9E6C8500147676 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7DAD57C02683B5B5001B040A /* IntercomHelpCenterHelpers.m in Sources */,
-				7D72E2FD26611EAB00A3C250 /* IntercomModule.m in Sources */,
-				3A6576B390F8276AE2651D35 /* IntercomAttributesBuilder.m in Sources */,
-				3A6572C897F85E4E8295FC2D /* IntercomEventEmitter.m in Sources */,
+				7DC6AEF02689C2060031A854 /* IntercomHelpCenterHelpers.m in Sources */,
+				7DC6AEF32689C2060031A854 /* IntercomModule.m in Sources */,
+				7DC6AEF42689C2060031A854 /* IntercomAttributesBuilder.m in Sources */,
+				7DC6AEF62689C2060031A854 /* IntercomEventEmitter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

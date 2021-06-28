@@ -22,7 +22,7 @@ RCT_EXPORT_MODULE()
 
 + (void)initialize:(nonnull NSString *)apiKey withAppId:(nonnull NSString *)appId {
     NSString *version = @"0";
-    
+
     NSString *path = [[NSBundle mainBundle] pathForResource:@"IntercomFramework" ofType:@"bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:path];
     if (bundle != nil) {
@@ -30,8 +30,14 @@ RCT_EXPORT_MODULE()
         if (v != nil) {
             version = v;
         }
+    } else {
+        bundle = [NSBundle mainBundle];
+        NSString *v = [bundle objectForInfoDictionaryKey:@"IntercomRnVersion"];
+        if (v != nil) {
+            version = v;
+        }
     }
-    
+
     [Intercom setReactNativeVersion:version];
     [Intercom setApiKey:apiKey forAppId:appId];
     NSLog(@"initialized Intercom module");
@@ -43,7 +49,7 @@ RCT_EXPORT_MODULE()
 }
 
 + (BOOL)isIntercomPushNotification:(NSDictionary *)userInfo {
-    
+
     return [Intercom isIntercomPushNotification:userInfo];
 }
 
@@ -72,7 +78,7 @@ RCT_EXPORT_METHOD(sendTokenToIntercom:
     @try {
         NSData *data = [self dataFromHexString:token];
         [Intercom setDeviceToken:data];
-        
+
         NSLog(@"sendTokenToIntercom");
         resolve(@(YES));
     } @catch (NSException *exception) {
@@ -82,7 +88,7 @@ RCT_EXPORT_METHOD(sendTokenToIntercom:
 
 RCT_EXPORT_METHOD(registerUnidentifiedUser:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-    
+
     [Intercom registerUnidentifiedUser];
     NSLog(@"registerUnidentifiedUser");
     resolve(@(YES));
@@ -94,11 +100,11 @@ RCT_EXPORT_METHOD(registerIdentifiedUser:
 {
     NSString *userId = options[@"userId"];
     NSString *userEmail = options[@"email"];
-    
+
     if ([userId isKindOfClass:[NSNumber class]]) {
         userId = [(NSNumber *) userId stringValue];
     }
-    
+
     if (userId.length > 0 && userEmail.length > 0) {
         [Intercom registerUserWithUserId:userId email:userEmail];
         NSLog(@"registerUserWithUserId");
@@ -120,7 +126,7 @@ RCT_EXPORT_METHOD(registerIdentifiedUser:
 
 RCT_EXPORT_METHOD(logout:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-    
+
     [Intercom logout];
     NSLog(@"logout");
     resolve(@(YES));
@@ -131,21 +137,21 @@ RCT_EXPORT_METHOD(updateUser:
     @try {
         ICMUserAttributes *userAttributes = [IntercomAttributesBuilder userAttributesForDictionary:options];
         [Intercom updateUser:userAttributes];
-        
+
         NSLog(@"updateUser");
         resolve(@(YES));
     } @catch (NSException *exception) {
         reject(UPDATE_USER, @"Error in updateUser", [self exceptionToError:exception :UPDATE_USER :@"updateUser"]);
     }
-    
-    
+
+
 };
 
 RCT_EXPORT_METHOD(setUserHash:
                   (NSString *) userHash: (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
     @try {
         [Intercom setUserHash:userHash];
-        
+
         NSLog(@"setUserHash");
         resolve(@(YES));
     } @catch (NSException *exception) {
@@ -162,13 +168,13 @@ RCT_EXPORT_METHOD(logEvent:
         if (eventName == @"") {
             @throw[NSException exceptionWithName:@"Invalid eventName" reason:@"eventName can't be empty" userInfo:nil];
         }
-        
+
         if ([metaData isKindOfClass:[NSDictionary class]] && metaData.count > 0) {
             [Intercom logEventWithName:eventName metaData:metaData];
         } else {
             [Intercom logEventWithName:eventName];
         }
-        
+
         NSLog(@"logEvent");
         resolve(@(YES));
     } @catch (NSException *exception) {
@@ -180,7 +186,7 @@ RCT_EXPORT_METHOD(getUnreadConversationCount:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
     @try {
         NSUInteger count = [Intercom unreadConversationCount];
-        
+
         NSLog(@"unreadConversationCount");
         resolve(@(count));
     } @catch (NSException *exception) {
@@ -190,7 +196,7 @@ RCT_EXPORT_METHOD(getUnreadConversationCount:
 
 RCT_EXPORT_METHOD(displayMessenger:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-    
+
     [Intercom presentMessenger];
     NSLog(@"displayMessenger");
     resolve(@(YES));
@@ -199,7 +205,7 @@ RCT_EXPORT_METHOD(displayMessenger:
 RCT_EXPORT_METHOD(displayMessageComposer:
                   (NSString *) initialMessage:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-    
+
     [Intercom presentMessageComposer:initialMessage];
     NSLog(@"displayMessageComposer");
     resolve(@(YES));
@@ -207,7 +213,7 @@ RCT_EXPORT_METHOD(displayMessageComposer:
 
 RCT_EXPORT_METHOD(displayHelpCenter:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-    
+
     [Intercom presentHelpCenter];
     NSLog(@"displayHelpCenter");
     resolve(@(YES));
@@ -216,7 +222,7 @@ RCT_EXPORT_METHOD(displayHelpCenter:
 RCT_EXPORT_METHOD(displayCarousel:
                   (NSString *) carouselId:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-    
+
     [Intercom presentCarousel:carouselId];
     NSLog(@"displayCarousel");
     resolve(@(YES));
@@ -225,7 +231,7 @@ RCT_EXPORT_METHOD(displayCarousel:
 RCT_EXPORT_METHOD(displayArticle:
                   (NSString *) articleId:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-    
+
     [Intercom presentArticle:articleId];
     NSLog(@"displayArticle");
     resolve(@(YES));
@@ -234,7 +240,7 @@ RCT_EXPORT_METHOD(displayArticle:
 RCT_EXPORT_METHOD(displayHelpCenterCollections:
                   (NSArray *) collectionsId:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-    
+
     [Intercom presentHelpCenterCollections:collectionsId];
     NSLog(@"displayHelpCenterCollections");
     resolve(@(YES));
@@ -245,19 +251,19 @@ RCT_EXPORT_METHOD(fetchHelpCenterCollections:
     NSLog(@"fetchHelpCenterCollections");
     @try {
         [Intercom fetchHelpCenterCollectionsWithCompletion:^(NSArray<ICMHelpCenterCollection *> *_Nullable collections, NSError *_Nullable error) {
-            
+
             if (collections != nil) {
                 NSArray *parsedCollections = [IntercomHelpCenterHelpers parseCollectionsToArray:collections];
                 resolve(parsedCollections);
             } else {
                 reject(FETCH_HELP_CENTER_COLLECTIONS, @"Error in fetchHelpCenterCollections", error);
-                
+
             }
         }];
     } @catch (NSException *exception) {
         reject(FETCH_HELP_CENTER_COLLECTIONS, @"Error in fetchHelpCenterCollections", [self exceptionToError:exception :FETCH_HELP_CENTER_COLLECTIONS :@"fetchHelpCenterCollections"]);
     }
-    
+
 };
 
 RCT_EXPORT_METHOD(fetchHelpCenterCollection:
@@ -275,15 +281,15 @@ RCT_EXPORT_METHOD(fetchHelpCenterCollection:
                 } else {
                     reject(FETCH_HELP_CENTER_COLLECTION, @"Error in fetchHelpCenterCollection", error);
                 }
-                
-                
+
+
             }];
         } @catch (NSException *exception) {
             reject(FETCH_HELP_CENTER_COLLECTION, @"Error in fetchHelpCenterCollection", [self exceptionToError:exception :FETCH_HELP_CENTER_COLLECTION :@"fetchHelpCenterCollection"]);
         }
-        
+
     }
-    
+
 };
 
 RCT_EXPORT_METHOD(searchHelpCenter:
@@ -311,7 +317,7 @@ RCT_EXPORT_METHOD(searchHelpCenter:
 
 RCT_EXPORT_METHOD(hideIntercom:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-    
+
     [Intercom hideIntercom];
     NSLog(@"hideIntercom");
     resolve(@(YES));
@@ -319,14 +325,14 @@ RCT_EXPORT_METHOD(hideIntercom:
 
 RCT_EXPORT_METHOD(setBottomPadding:(nonnull NSNumber*) bottomPadding:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-    
+
     [Intercom setBottomPadding:[bottomPadding doubleValue]];
     NSLog(@"setBottomPadding");
     resolve(@(YES));
 };
 
 RCT_EXPORT_METHOD(setLauncherVisibility:(NSString *) visibility:(RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-    
+
     BOOL visible = NO;
     if ([visibility isEqualToString:@"VISIBLE"]) {
         visible = YES;
@@ -339,7 +345,7 @@ RCT_EXPORT_METHOD(setLauncherVisibility:(NSString *) visibility:(RCTPromiseResol
 RCT_EXPORT_METHOD(setInAppMessageVisibility:
                   (NSString *) visibility:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-    
+
     BOOL visible = NO;
     if ([visibility isEqualToString:@"VISIBLE"]) {
         visible = YES;
@@ -352,7 +358,7 @@ RCT_EXPORT_METHOD(setInAppMessageVisibility:
 RCT_EXPORT_METHOD(setLogLevel:
                   (NSString *) param:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-    
+
     [Intercom enableLogging];
     NSLog(@"setLogLevel");
     resolve(@(YES));
@@ -366,7 +372,7 @@ RCT_EXPORT_METHOD(setLogLevel:
     [info setValue:exception.callStackReturnAddresses forKey:@"ExceptionCallStackReturnAddresses"];
     [info setValue:exception.callStackSymbols forKey:@"ExceptionCallStackSymbols"];
     [info setValue:exception.userInfo forKey:@"ExceptionUserInfo"];
-    
+
     return [[NSError alloc] initWithDomain:domain code:[code integerValue] userInfo:info];
 };
 @end
