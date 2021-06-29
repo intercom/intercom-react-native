@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react';
 import {
   Alert,
   AppState,
+  Image,
   Linking,
   Platform,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import Intercom, {
@@ -17,6 +17,7 @@ import Intercom, {
   Visibility,
 } from '@intercom/intercom-react-native';
 import Button from './Button';
+import Input from './Input';
 import type { Registration } from '../../lib/typescript';
 import Config from 'react-native-config';
 
@@ -42,8 +43,25 @@ export default function App() {
   const [launcherVisibility, setLauncherVisibility] = useState<boolean>(false);
   const [user, setUser] = useState<Registration>({ email: '' });
 
+  const [articleId, setArticleId] = useState<string | undefined>(ARTICLE_ID);
+  const [carouselId, setCarouselId] = useState<string | undefined>(CAROUSEL_ID);
+  const [eventName, setEventName] = useState<string | undefined>(EVENT_NAME);
+  const [collectionId, setCollectionId] = useState<string | undefined>(
+    COLLECTION_ID
+  );
+  const [searchTerm, setSearchTerm] = useState<string | undefined>(SEARCH_TERM);
+  const [userName, setUserName] = useState<string | undefined>(USER_NAME);
+
   const showErrorAlert = (e: Error) => {
     Alert.alert('ERROR', JSON.stringify(e));
+  };
+
+  const showResponseAlert = (obj: any) => {
+    Alert.alert('RESPONSE', JSON.stringify(obj));
+  };
+
+  const showEmptyAlertMessage = (field: string) => {
+    Alert.alert(field, `Please provide ${field}`);
   };
 
   useEffect(() => {
@@ -92,6 +110,11 @@ export default function App() {
 
   return (
     <View style={styles.container} accessibilityLabel="app-root">
+      <StatusBar translucent={true} />
+      <View style={[styles.row, styles.alignCenter, styles.header]}>
+        <Image source={require('../assets/intercom.png')} style={styles.logo} />
+        <Text style={styles.title}>Intercom Example App</Text>
+      </View>
       <View style={styles.textContainer}>
         <View style={styles.row}>
           <View style={styles.visibilityContainer}>
@@ -134,9 +157,9 @@ export default function App() {
             Intercom.registerUnidentifiedUser().then(() => setLoggedUser(true));
           }}
         />
-        <TextInput
+        <Input
+          title="Email"
           accessibilityLabel="user-email"
-          style={styles.input}
           value={user.email}
           onChangeText={(val) => {
             setUser((prev) => ({ ...prev, email: val }));
@@ -147,7 +170,7 @@ export default function App() {
         />
         <Button
           accessibilityLabel="login-identified"
-          disabled={loggedUser && user.email !== ''}
+          disabled={loggedUser || user.email === ''}
           title="Login identified User"
           onPress={() => {
             if (user.email?.includes('@')) {
@@ -155,10 +178,7 @@ export default function App() {
                 setLoggedUser(true)
               );
             } else {
-              Alert.alert(
-                'Not email',
-                'Provide correct email: example@intercom.io'
-              );
+              showEmptyAlertMessage('Email');
             }
           }}
         />
@@ -170,12 +190,25 @@ export default function App() {
             Intercom.displayMessenger();
           }}
         />
+        <Input
+          title="Article Id"
+          accessibilityLabel="article-id"
+          value={articleId}
+          onChangeText={(val) => {
+            setArticleId(val);
+          }}
+          placeholder="Article Id"
+        />
         <Button
           accessibilityLabel="display-article"
           disabled={!loggedUser}
           title="Display Article"
           onPress={() => {
-            Intercom.displayArticle(ARTICLE_ID);
+            if (articleId) {
+              Intercom.displayArticle(articleId);
+            } else {
+              showEmptyAlertMessage('Article id');
+            }
           }}
         />
         <Button
@@ -210,50 +243,91 @@ export default function App() {
             Intercom.fetchHelpCenterCollections()
               .then((items) => {
                 console.log(items);
+                showResponseAlert(items);
               })
               .catch((e) => {
                 showErrorAlert(e);
                 console.error(e);
               });
           }}
+        />
+        <Input
+          title="Help Center Collection Id"
+          accessibilityLabel="search-term"
+          value={collectionId}
+          onChangeText={(val) => {
+            setCollectionId(val);
+          }}
+          placeholder="Help Center Collection Id"
         />
         <Button
           accessibilityLabel="fetch-help-center-collection"
           disabled={!loggedUser}
           title="Fetch Help Center Collection"
           onPress={() => {
-            Intercom.fetchHelpCenterCollection(COLLECTION_ID)
-              .then((item) => {
-                console.log(item);
-              })
-              .catch((e) => {
-                showErrorAlert(e);
-                console.error(e);
-              });
+            if (collectionId) {
+              Intercom.fetchHelpCenterCollection(collectionId)
+                .then((item) => {
+                  console.log(item);
+                  showResponseAlert(item);
+                })
+                .catch((e) => {
+                  showErrorAlert(e);
+                  console.error(e);
+                });
+            } else {
+              showEmptyAlertMessage('Collection id');
+            }
           }}
+        />
+        <Input
+          title="Search term"
+          accessibilityLabel="search-term"
+          value={searchTerm}
+          onChangeText={(val) => {
+            setSearchTerm(val);
+          }}
+          placeholder="Search term"
         />
         <Button
           accessibilityLabel="search-help-center"
           disabled={!loggedUser}
           title="Search Help Center"
           onPress={() => {
-            Intercom.searchHelpCenter(SEARCH_TERM)
-              .then((item) => {
-                console.log(item);
-              })
-              .catch((e) => {
-                showErrorAlert(e);
-                console.error(e);
-              });
+            if (searchTerm) {
+              Intercom.searchHelpCenter(searchTerm)
+                .then((item) => {
+                  console.log(item);
+                  showResponseAlert(item);
+                })
+                .catch((e) => {
+                  showErrorAlert(e);
+                  console.error(e);
+                });
+            } else {
+              showEmptyAlertMessage('Search Term');
+            }
           }}
+        />
+        <Input
+          title="Carousel Id"
+          accessibilityLabel="carousel-id"
+          value={carouselId}
+          onChangeText={(val) => {
+            setCarouselId(val);
+          }}
+          placeholder="Carousel Id"
         />
         <Button
           accessibilityLabel="display-carousel"
           disabled={!loggedUser}
           title={'Display Carousel'}
           onPress={() => {
-            console.log(CAROUSEL_ID);
-            Intercom.displayCarousel(CAROUSEL_ID);
+            if (carouselId) {
+              Intercom.displayCarousel(carouselId);
+            } else {
+              showEmptyAlertMessage('Carousel Id');
+            }
           }}
         />
         <Button
@@ -295,12 +369,25 @@ export default function App() {
             );
           }}
         />
+        <Input
+          title="Event name"
+          accessibilityLabel="event-name"
+          value={eventName}
+          onChangeText={(val) => {
+            setEventName(val);
+          }}
+          placeholder="Event name"
+        />
         <Button
           accessibilityLabel="log-event"
           disabled={!loggedUser}
           title="Log Event"
           onPress={() => {
-            Intercom.logEvent(EVENT_NAME);
+            if (eventName) {
+              Intercom.logEvent(eventName);
+            } else {
+              showEmptyAlertMessage('Event Name');
+            }
           }}
         />
         <Button
@@ -311,12 +398,26 @@ export default function App() {
             Intercom.sendTokenToIntercom(TOKEN);
           }}
         />
+
+        <Input
+          title="User Name"
+          accessibilityLabel="user-name"
+          value={userName}
+          onChangeText={(val) => {
+            setUserName(val);
+          }}
+          placeholder="User Name"
+        />
         <Button
           accessibilityLabel="update-user"
           disabled={!loggedUser}
           title="Update user's name"
           onPress={() => {
-            Intercom.updateUser({ name: USER_NAME });
+            if (userName) {
+              Intercom.updateUser({ name: userName });
+            } else {
+              showEmptyAlertMessage('User Name');
+            }
           }}
         />
         <Button
@@ -335,28 +436,29 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 16,
+    marginHorizontal: 8,
     paddingTop:
       Platform.OS === 'ios'
-        ? (StatusBar.currentHeight ?? 0) + 24
-        : StatusBar.currentHeight ?? 0,
+        ? (StatusBar.currentHeight ?? 0) + 35
+        : (StatusBar.currentHeight ?? 0) + 8 ?? 8,
   },
   box: {
     width: 60,
     height: 60,
     marginVertical: 20,
   },
-  text: { marginVertical: 6, fontSize: 18 },
+  text: { marginVertical: 4, fontSize: 7 },
   textCenter: { textAlign: 'center' },
   boldText: { fontWeight: 'bold', color: '#242d38' },
-  textContainer: { justifyContent: 'center', paddingVertical: 16 },
-  input: {
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-  },
+  textContainer: { justifyContent: 'center', paddingVertical: 8 },
   row: { flexDirection: 'row' },
   visibilityContainer: { flex: 1, padding: 4 },
+  logo: {
+    width: '10%',
+    height: undefined,
+    aspectRatio: 1,
+  },
+  alignCenter: { alignItems: 'center' },
+  title: { fontWeight: 'bold', fontSize: 17, marginLeft: 8 },
+  header: { marginBottom: 8 },
 });
