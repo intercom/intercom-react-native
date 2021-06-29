@@ -1,5 +1,6 @@
  def packageJsonFile = file('../package.json')
  def packageJson = new groovy.json.JsonSlurper().parseText(packageJsonFile.text)
+ def packageVersion = '"' + packageJson.version + '"'
 
 
 buildscript {
@@ -28,7 +29,8 @@ android {
         minSdkVersion safeExtGet('IntercomReactNative_minSdkVersion', 21)
         targetSdkVersion safeExtGet('IntercomReactNative_targetSdkVersion', 29)
         versionCode 1
-        versionName packageJson.version
+        versionName "1.0"
+        buildConfigField 'String', 'INTERCOM_VERSION_NAME', packageVersion
 
     }
 
