@@ -479,7 +479,7 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   }
 
   public static synchronized void initialize(Application application, String apiKey, String appId) {
-    String sdkVersion = BuildConfig.VERSION_NAME;
+    String sdkVersion = BuildConfig.INTERCOM_VERSION_NAME;
     ReactNativeHeaderInterceptor.setReactNativeVersion(application.getApplicationContext(), sdkVersion);
     Intercom.initialize(application, apiKey, appId);
   }
