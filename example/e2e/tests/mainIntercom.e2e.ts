@@ -50,6 +50,7 @@ describe('Intercom E2E', () => {
       'fetch-help-center-collections'
     );
     await (await $('~fetch-help-center-collections')).click();
+    await driver.closeAlert();
   });
 
   it('Should fetch help center collection', async () => {
@@ -57,11 +58,13 @@ describe('Intercom E2E', () => {
       'fetch-help-center-collections'
     );
     await (await $('~fetch-help-center-collection')).click();
+    await driver.closeAlert();
   });
 
-  it('Should fetch filtered hel center collections', async () => {
+  it('Should fetch filtered help center collections', async () => {
     await driver.scrollToElementByAccessibilityLabel('search-help-center');
     await (await $('~search-help-center')).click();
+    await driver.closeAlert();
   });
 
   it('Should display carousel', async () => {
