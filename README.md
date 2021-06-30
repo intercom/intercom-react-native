@@ -6,8 +6,10 @@
 
 > React Native wrapper to bridge our iOS and Android SDK
 
-### 🏠 [Homepage](https://github.com/intercom/intercom-react-native#readme)
-
+### 🏠 [Website](https://intercom.com/)
+### 📚 [Developer Docs](https://developers.intercom.com/installing-intercom/docs/intercom-for-react-native)
+___
+### 📂 [Homepage](https://github.com/intercom/intercom-react-native#readme)
 - [Installation](#installation)
   - [Android](#android)
     - [Automatic linking (React Native <=0.59)](#android-automatic-linking-with-react-native-v059-and-below)
