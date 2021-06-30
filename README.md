@@ -46,7 +46,7 @@ If you're using React Native v0.60 or above, the library will be linked automati
 #### Android: Automatic linking with React Native v0.59 and below
 
 ```
-$ react-native link intercom-react-native
+$ react-native link @intercom/intercom-react-native
 ```
 
 #### Android: Manual linking with React Native v0.59 and below
@@ -69,7 +69,7 @@ implementation project(':intercomreactnative')
 - Add below lines to `MainApplication.java` inside `onCreate` method, replacing `apiKey` and `appId` which can be found in your [workspace settings](https://app.intercom.com/a/apps/_/settings/android).
 
 ```java
-import hideIntercom.IntercomModule; //  <-- Add this line
+import com.intercom.reactnative.IntercomModule; //  <-- Add this line
 
 // ...
 
@@ -170,7 +170,7 @@ package com.example.app;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import hideIntercom.IntercomModule;
+import com.intercom.reactnative.IntercomModule;
 
 public class MainNotificationService extends FirebaseMessagingService {
 
@@ -208,7 +208,7 @@ public class MainNotificationService extends FirebaseMessagingService {
     </service>
 
     <receiver
-      android:name="hideIntercom.RNIntercomPushBroadcastReceiver"
+      android:name="com.intercom.reactnative.RNIntercomPushBroadcastReceiver"
       tools:replace="android:exported"
       android:exported="true"/>
     <!-- END: Add this-->
