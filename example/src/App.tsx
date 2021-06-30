@@ -460,7 +460,7 @@ const styles = StyleSheet.create({
     paddingTop:
       Platform.OS === 'ios'
         ? (StatusBar.currentHeight ?? 0) + 35
-        : (StatusBar.currentHeight ?? 0) + 8 ?? 8,
+        : (StatusBar.currentHeight ?? 0) + 8,
   },
   box: {
     width: 60,
