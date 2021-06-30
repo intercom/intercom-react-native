@@ -20,6 +20,9 @@ import Button from './Button';
 import Input from './Input';
 import type { Registration } from '../../lib/typescript';
 import Config from 'react-native-config';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const AUTK_KEY = 'auth';
 
 const COLLECTIONS: string[] = []; //Provide help center collections ids
 // To change, replace values in .env
@@ -65,6 +68,16 @@ export default function App() {
   };
 
   useEffect(() => {
+    /**
+     * Restore user login status
+     */
+    AsyncStorage.getItem(AUTK_KEY).then((it) => {
+      it === 'true' && setLoggedUser(true);
+      if (it && it !== 'true') {
+        setUser((u) => ({ ...u, email: it }));
+      }
+    });
+
     /**
      * Handle PushNotification
      */
@@ -154,7 +167,10 @@ export default function App() {
           disabled={loggedUser}
           title="Login unidentified User"
           onPress={() => {
-            Intercom.registerUnidentifiedUser().then(() => setLoggedUser(true));
+            Intercom.registerUnidentifiedUser().then(() => {
+              setLoggedUser(true);
+              AsyncStorage.setItem(AUTK_KEY, 'true');
+            });
           }}
         />
         <Input
@@ -174,9 +190,10 @@ export default function App() {
           title="Login identified User"
           onPress={() => {
             if (user.email?.includes('@')) {
-              Intercom.registerIdentifiedUser(user).then(() =>
-                setLoggedUser(true)
-              );
+              Intercom.registerIdentifiedUser(user).then(() => {
+                AsyncStorage.setItem(AUTK_KEY, user.email ?? '');
+                setLoggedUser(true);
+              });
             } else {
               showEmptyAlertMessage('Email');
             }
@@ -425,7 +442,10 @@ export default function App() {
           disabled={!loggedUser}
           title="Logout user"
           onPress={() => {
-            Intercom.logout().then(() => setLoggedUser(false));
+            Intercom.logout().then(() => {
+              AsyncStorage.removeItem(AUTK_KEY);
+              setLoggedUser(false);
+            });
           }}
         />
       </ScrollView>
