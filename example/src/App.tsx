@@ -24,7 +24,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AUTK_KEY = 'auth';
 
-const COLLECTIONS: string[] = []; //Provide help center collections ids
 // To change, replace values in .env
 const CAROUSEL_ID = Config.CAROUSEL_ID;
 const EVENT_NAME = Config.EVENT_NAME;
@@ -32,6 +31,7 @@ const ARTICLE_ID = Config.ARTICLE_ID;
 const USER_NAME = Config.USER_NAME;
 const COLLECTION_ID = Config.COLLECTION_ID;
 const SEARCH_TERM = Config.SEARCH_TERM;
+const COLLECTIONS: string[] = []; //Provide help center collections ids
 const TOKEN = Platform.select({
   ios: 'RN-IOS-TOKEN',
   default: 'RN-ANDROID-TOKEN',
