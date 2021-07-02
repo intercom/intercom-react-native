@@ -57,14 +57,14 @@ $ react-native link @intercom/intercom-react-native
 - Add below code to `android/settings.gradle`
 
 ```Gradle
-include ':intercomreactnative'
-project(':intercomreactnative').projectDir = new File(rootProject.projectDir, '../../android')
+include ':intercom-react-native'
+project(':intercom-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/@intercom/intercom-react-native/android')
 ```
 
 - Then edit `android/app/build.gradle`, inside `dependencies` at very bottom add
 
 ```Gradle
-implementation project(':intercomreactnative')
+implementation project(':intercom-react-native')
 ```
 
 #### Android: Setup
