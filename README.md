@@ -3,6 +3,7 @@
 [![Version](https://img.shields.io/npm/v/intercom-react-native.svg)](https://www.npmjs.com/package/intercom-react-native)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](https://github.com/intercom/intercom-react-native#readme)
 [![License: Apache--2.0](https://img.shields.io/badge/License-Apache--2.0-yellow.svg)](https://github.com/intercom/intercom-react-native#readme)
+[![CircleCi](https://circleci.com/gh/intercom/intercom-react-native.svg?style=shield)](https://github.com/intercom/intercom-react-native#readme)
 
 > React Native wrapper to bridge our iOS and Android SDK
 
@@ -56,14 +57,14 @@ $ react-native link @intercom/intercom-react-native
 - Add below code to `android/settings.gradle`
 
 ```Gradle
-include ':intercomreactnative'
-project(':intercomreactnative').projectDir = new File(rootProject.projectDir, '../../android')
+include ':intercom-react-native'
+project(':intercom-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/@intercom/intercom-react-native/android')
 ```
 
 - Then edit `android/app/build.gradle`, inside `dependencies` at very bottom add
 
 ```Gradle
-implementation project(':intercomreactnative')
+implementation project(':intercom-react-native')
 ```
 
 #### Android: Setup
