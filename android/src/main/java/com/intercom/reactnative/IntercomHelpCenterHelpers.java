@@ -18,7 +18,7 @@ import io.intercom.android.sdk.helpcenter.sections.HelpCenterSection;
 
 public class IntercomHelpCenterHelpers {
 
-  public static ReadableArray parseArticlesToReadableArray(List<HelpCenterArticle> itemArticles) {
+  public static WritableArray parseArticlesToReadableArray(List<HelpCenterArticle> itemArticles) {
     WritableArray articles = Arguments.createArray();
 
     HelpCenterArticle[] articlesArray = new HelpCenterArticle[itemArticles.size()];
@@ -33,7 +33,7 @@ public class IntercomHelpCenterHelpers {
     return articles;
   }
 
-  public static ReadableArray parseHelpCenterArticleSearchToReadableArray(List<HelpCenterArticleSearchResult> helpCenterArticleSearchResultList) {
+  public static WritableArray parseHelpCenterArticleSearchToReadableArray(List<HelpCenterArticleSearchResult> helpCenterArticleSearchResultList) {
     WritableArray articles = Arguments.createArray();
 
     HelpCenterArticleSearchResult[] articlesArray = new HelpCenterArticleSearchResult[helpCenterArticleSearchResultList.size()];
@@ -50,35 +50,35 @@ public class IntercomHelpCenterHelpers {
     return articles;
   }
 
-  public static ReadableMap parseHelpCenterCollectionsContentToReadableMap(HelpCenterCollectionContent helpCenterCollectionContent) {
+  public static WritableMap parseHelpCenterCollectionsContentToReadableMap(HelpCenterCollectionContent helpCenterCollectionContent) {
     WritableMap helpCenterCollection = Arguments.createMap();
     helpCenterCollection.putString("id", helpCenterCollectionContent.getCollectionId());
     helpCenterCollection.putString("title", helpCenterCollectionContent.getTitle());
     helpCenterCollection.putString("summary", helpCenterCollectionContent.getSummary());
 
-    ReadableArray articles = parseArticlesToReadableArray(helpCenterCollectionContent.getHelpCenterArticles());
+    WritableArray articles = parseArticlesToReadableArray(helpCenterCollectionContent.getHelpCenterArticles());
     helpCenterCollection.putArray("articles", articles);
 
-    ReadableArray sections = parseHelpCenterSectionsToReadableArray(helpCenterCollectionContent.getHelpCenterSections());
+    WritableArray sections = parseHelpCenterSectionsToReadableArray(helpCenterCollectionContent.getHelpCenterSections());
     helpCenterCollection.putArray("sections", sections);
 
 
     return helpCenterCollection;
   }
 
-  public static ReadableMap parseHelpCenterSectionToReadableMap(HelpCenterSection helpCenterSection) {
+  public static WritableMap parseHelpCenterSectionToReadableMap(HelpCenterSection helpCenterSection) {
     WritableMap section = Arguments.createMap();
     section.putString("title", helpCenterSection.getTitle());
 
 
-    ReadableArray articles = parseArticlesToReadableArray(helpCenterSection.getHelpCenterArticles());
+    WritableArray articles = parseArticlesToReadableArray(helpCenterSection.getHelpCenterArticles());
     section.putArray("articles", articles);
 
 
     return section;
   }
 
-  public static ReadableArray parseHelpCenterSectionsToReadableArray(List<HelpCenterSection> helpCenterSectionList) {
+  public static WritableArray parseHelpCenterSectionsToReadableArray(List<HelpCenterSection> helpCenterSectionList) {
     WritableArray sections = Arguments.createArray();
 
     HelpCenterSection[] sectionsArray = new HelpCenterSection[helpCenterSectionList.size()];
@@ -91,7 +91,7 @@ public class IntercomHelpCenterHelpers {
     return sections;
   }
 
-  public static ReadableArray parseHelpCenterCollectionsToReadableArray(List<HelpCenterCollection> helpCenterCollections) {
+  public static WritableArray parseHelpCenterCollectionsToReadableArray(List<HelpCenterCollection> helpCenterCollections) {
     HelpCenterCollection[] collectionsArray = new HelpCenterCollection[helpCenterCollections.size()];
     collectionsArray = helpCenterCollections.toArray(collectionsArray);
     WritableArray collections = Arguments.createArray();
