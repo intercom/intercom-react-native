@@ -1,6 +1,6 @@
 # Welcome to @intercom/intercom-react-native 👋
 
-[![Version](https://img.shields.io/npm/v/intercom-react-native.svg)](https://www.npmjs.com/package/intercom-react-native)
+[![Version](https://img.shields.io/npm/v/@intercom/intercom-react-native.svg)](https://www.npmjs.com/package/@intercom/intercom-react-native)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](https://github.com/intercom/intercom-react-native#readme)
 [![License: Apache--2.0](https://img.shields.io/badge/License-Apache--2.0-yellow.svg)](https://github.com/intercom/intercom-react-native#readme)
 [![CircleCi](https://circleci.com/gh/intercom/intercom-react-native.svg?style=shield)](https://github.com/intercom/intercom-react-native#readme)
