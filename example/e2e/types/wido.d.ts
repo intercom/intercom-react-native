@@ -8,7 +8,7 @@ declare global {
       clickWithDelay: (element: string, milis: number) => Promise<void>;
       closeHelpCenterOverlay: () => Promise<void>;
       closeArticleOverlay: () => Promise<void>;
-      closeOverlay: () => Promise<void>;
+      closeOverlay: (customCloseButtonId?: string) => Promise<void>;
       closeAlert: () => Promise<void>;
     }
   }
