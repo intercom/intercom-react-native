@@ -227,12 +227,13 @@ public class MainNotificationService extends FirebaseMessagingService {
     /**
      * Handle PushNotification
      */
-    AppState.addEventListener(
+    const appStateListener = AppState.addEventListener(
       'change',
       (nextAppState) =>
         nextAppState === 'active' && Intercom.handlePushMessage()
     );
-    return () => AppState.removeEventListener('change', () => true);
+    return () => AppState.removeEventListener('change', () => true); // <- for RN < 0.65
+    return () => appStateListener.remove() // <- for RN >= 0.65
   }
   , [])
 ```
@@ -621,16 +622,14 @@ Handles the opening of an Intercom push message. This will retrieve the URI from
   /**
    * Handle PushNotification Open
    */
-  AppState.addEventListener(
+  const appStateListener = AppState.addEventListener(
     'change',
     (nextAppState) =>
       nextAppState === 'active' && Intercom.handlePushMessage()
   );
 
-  return () => {
-    AppState.removeEventListener('change', () => {
-    });
-  };
+  return () => AppState.removeEventListener('change', () => {}); // <- for RN < 0.65
+  return () => appStateListener.remove(); // <- for RN >= 0.65
 }, []);
 ```
 
