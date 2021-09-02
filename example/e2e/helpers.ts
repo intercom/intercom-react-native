@@ -38,8 +38,8 @@ const boot = async () => {
 };
 driver.addCommand('boot', boot);
 
-const closeOverlay = async () => {
-  const buttonId = browser.isAndroid ? `~Close` : `~intercom close button`;
+const closeOverlay = async (customCloseButtonId?: string) => {
+  const buttonId = browser.isAndroid ? `~Close` : customCloseButtonId || `~intercom close button`;
 
   const closeButton = await $(buttonId);
   await closeButton.waitForDisplayed({ timeout: 22000 });
@@ -68,7 +68,7 @@ const closeHelpCenterOverlay = async () => {
     await closeButton.waitForDisplayed({ timeout: 22000 });
     await closeButton.click();
   } else {
-    await closeOverlay();
+    await closeOverlay('~help center close button');
   }
 };
 browser.addCommand('closeHelpCenterOverlay', closeHelpCenterOverlay);

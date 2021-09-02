@@ -7,7 +7,7 @@ buildscript {
     if (project == rootProject) {
         repositories {
             google()
-            jcenter()
+            mavenCentral()
         }
 
         dependencies {
@@ -23,15 +23,13 @@ def safeExtGet(prop, fallback) {
 }
 
 android {
-    compileSdkVersion safeExtGet('IntercomReactNative_compileSdkVersion', 29)
-    buildToolsVersion safeExtGet('IntercomReactNative_buildToolsVersion', '29.0.2')
+    compileSdkVersion safeExtGet('IntercomReactNative_compileSdkVersion', 30)
     defaultConfig {
         minSdkVersion safeExtGet('IntercomReactNative_minSdkVersion', 21)
-        targetSdkVersion safeExtGet('IntercomReactNative_targetSdkVersion', 29)
+        targetSdkVersion safeExtGet('IntercomReactNative_targetSdkVersion', 30)
         versionCode 1
         versionName "1.0"
         buildConfigField 'String', 'INTERCOM_VERSION_NAME', packageVersion
-
     }
 
     buildTypes {
@@ -49,18 +47,18 @@ android {
 }
 
 repositories {
+    mavenCentral()
     mavenLocal()
     maven {
         // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
         url("$rootDir/../node_modules/react-native/android")
     }
     google()
-    jcenter()
 }
 
 dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation 'com.google.firebase:firebase-messaging:20.2.+'
-    implementation 'io.intercom.android:intercom-sdk:10.+'
+    implementation 'io.intercom.android:intercom-sdk:10.1.+'
 }

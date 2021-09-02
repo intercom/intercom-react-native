@@ -3,7 +3,7 @@ version: 2.1
 # Default VM config to be used for macOS builds
 macos_config: &macos_config
   macos:
-    xcode: 12.3.0
+    xcode: 12.5.0
   shell: /bin/bash --login -eo pipefail
 
 setup_env_file: &setup_env_file
@@ -109,6 +109,9 @@ jobs:
             yarn prepare
   # Build and Test android version of module
   android-e2e-test:
+    environment:
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
+      JAVA_OPTS: '-Xms512m -Xmx1024m'
     executor:
       name: android/android-machine
     working_directory: ~/project
