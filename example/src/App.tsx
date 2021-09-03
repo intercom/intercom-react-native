@@ -81,7 +81,7 @@ export default function App() {
     /**
      * Handle PushNotification
      */
-    AppState.addEventListener(
+    const appChangeListener = AppState.addEventListener(
       'change',
       (nextAppState) =>
         nextAppState === 'active' && Intercom.handlePushMessage()
@@ -90,7 +90,7 @@ export default function App() {
     /**
      * Handle Push Notification deep links
      */
-    Linking.addEventListener('url', (event) => {
+    const urlListener = Linking.addEventListener('url', (event) => {
       if (event) {
         Alert.alert(event.url);
       }
@@ -116,8 +116,14 @@ export default function App() {
 
     return () => {
       countListener.remove();
-      Linking.removeEventListener('url', () => {});
-      AppState.removeEventListener('change', () => {});
+
+      // @ts-ignore - type definitions haven't been updated to 0.65 yet
+      urlListener.remove(); // <- for RN 0.65+
+      // Linking.removeEventListener('url', () => {}); <- for RN < 0.65
+
+      // @ts-ignore - type definitions haven't been updated to 0.65 yet
+      appChangeListener.remove(); // <- for RN 0.65+
+      //AppState.removeEventListener('change', () => {}); <- for RN < 0.65
     };
   }, []);
 

@@ -1,6 +1,6 @@
 # Welcome to @intercom/intercom-react-native 👋
 
-[![Version](https://img.shields.io/npm/v/intercom-react-native.svg)](https://www.npmjs.com/package/intercom-react-native)
+[![Version](https://img.shields.io/npm/v/@intercom/intercom-react-native.svg)](https://www.npmjs.com/package/@intercom/intercom-react-native)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](https://github.com/intercom/intercom-react-native#readme)
 [![License: Apache--2.0](https://img.shields.io/badge/License-Apache--2.0-yellow.svg)](https://github.com/intercom/intercom-react-native#readme)
 [![CircleCi](https://circleci.com/gh/intercom/intercom-react-native.svg?style=shield)](https://github.com/intercom/intercom-react-native#readme)
@@ -227,12 +227,13 @@ public class MainNotificationService extends FirebaseMessagingService {
     /**
      * Handle PushNotification
      */
-    AppState.addEventListener(
+    const appStateListener = AppState.addEventListener(
       'change',
       (nextAppState) =>
         nextAppState === 'active' && Intercom.handlePushMessage()
     );
-    return () => AppState.removeEventListener('change', () => true);
+    return () => AppState.removeEventListener('change', () => true); // <- for RN < 0.65
+    return () => appStateListener.remove() // <- for RN >= 0.65
   }
   , [])
 ```
@@ -571,38 +572,6 @@ This takes a push registration token to send to Intercom to enable this device t
 
 ___
 
-### `Intercom.addOnMessageCountChangeListener(callback)`
-
-Sets a listener that will be notified when the unread conversation count for the registered user changes.
-
-```javascript
-  useEffect(() => {
-  /**
-   * Handle message count changed
-   */
-  const event = Intercom.addOnMessageCountChangeListener(({count}) => {
-    setCount(count);
-  });
-
-  return () => {
-    event();
-  };
-}, []);
-
-```
-
-### Options
-
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| callback| function `({count: number}) => void`  |yes        |
-
-### Returns
-
-`removeEventListener: () => void`
-
-___
-
 ### `Intercom.getUnreadConversationCount()`
 
 Gets the number of unread conversations for a user.
@@ -621,16 +590,14 @@ Handles the opening of an Intercom push message. This will retrieve the URI from
   /**
    * Handle PushNotification Open
    */
-  AppState.addEventListener(
+  const appStateListener = AppState.addEventListener(
     'change',
     (nextAppState) =>
       nextAppState === 'active' && Intercom.handlePushMessage()
   );
 
-  return () => {
-    AppState.removeEventListener('change', () => {
-    });
-  };
+  return () => AppState.removeEventListener('change', () => {}); // <- for RN < 0.65
+  return () => appStateListener.remove(); // <- for RN >= 0.65
 }, []);
 ```
 
