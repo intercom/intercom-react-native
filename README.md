@@ -572,38 +572,6 @@ This takes a push registration token to send to Intercom to enable this device t
 
 ___
 
-### `Intercom.addOnMessageCountChangeListener(callback)`
-
-Sets a listener that will be notified when the unread conversation count for the registered user changes.
-
-```javascript
-  useEffect(() => {
-  /**
-   * Handle message count changed
-   */
-  const event = Intercom.addOnMessageCountChangeListener(({count}) => {
-    setCount(count);
-  });
-
-  return () => {
-    event();
-  };
-}, []);
-
-```
-
-### Options
-
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| callback| function `({count: number}) => void`  |yes        |
-
-### Returns
-
-`removeEventListener: () => void`
-
-___
-
 ### `Intercom.getUnreadConversationCount()`
 
 Gets the number of unread conversations for a user.
