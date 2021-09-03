@@ -1,6 +1,6 @@
 # Welcome to @intercom/intercom-react-native 👋
 
-[![Version](https://img.shields.io/npm/v/intercom-react-native.svg)](https://www.npmjs.com/package/intercom-react-native)
+[![Version](https://img.shields.io/npm/v/@intercom/intercom-react-native.svg)](https://www.npmjs.com/package/@intercom/intercom-react-native)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](https://github.com/intercom/intercom-react-native#readme)
 [![License: Apache--2.0](https://img.shields.io/badge/License-Apache--2.0-yellow.svg)](https://github.com/intercom/intercom-react-native#readme)
 [![CircleCi](https://circleci.com/gh/intercom/intercom-react-native.svg?style=shield)](https://github.com/intercom/intercom-react-native#readme)
@@ -569,38 +569,6 @@ This takes a push registration token to send to Intercom to enable this device t
 ### Returns
 
 `Promise<boolean>`
-
-___
-
-### `Intercom.addOnMessageCountChangeListener(callback)`
-
-Sets a listener that will be notified when the unread conversation count for the registered user changes.
-
-```javascript
-  useEffect(() => {
-  /**
-   * Handle message count changed
-   */
-  const event = Intercom.addOnMessageCountChangeListener(({count}) => {
-    setCount(count);
-  });
-
-  return () => {
-    event();
-  };
-}, []);
-
-```
-
-### Options
-
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| callback| function `({count: number}) => void`  |yes        |
-
-### Returns
-
-`removeEventListener: () => void`
 
 ___
 
