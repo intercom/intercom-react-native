@@ -347,7 +347,7 @@ Notifications.events().registerRemoteNotificationsRegistered(({ deviceToken }: R
 #import <UserNotifications/UserNotifications.h>
 ```
 
-- Request notification permissions when app launches by adding the folloowing to `didFinishLaunchingWithOptions` before `return YES;`:
+- Request notification permissions when app launches by adding the following to `didFinishLaunchingWithOptions` before `return YES;`:
 
 ```Objective-C
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
