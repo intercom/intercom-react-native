@@ -48,12 +48,12 @@ RCT_EXPORT_MODULE()
     NSLog(@"setDeviceToken");
 }
 
-+ (BOOL)isIntercomPushNotification:(NSDictionary *)userInfo {
++ (BOOL)isIntercomPushNotification:(nonnull NSDictionary *)userInfo {
 
     return [Intercom isIntercomPushNotification:userInfo];
 }
 
-+ (void)handleIntercomPushNotification:(NSDictionary *)userInfo {
++ (void)handleIntercomPushNotification:(nonnull NSDictionary *)userInfo {
     [Intercom handleIntercomPushNotification:userInfo];
 }
 
