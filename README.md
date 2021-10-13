@@ -69,7 +69,7 @@ implementation project(':intercom-react-native')
 
 #### Android: Setup
 
-- Add below lines to `MainApplication.java` inside `onCreate` method, replacing `apiKey` and `appId` which can be found in your [workspace settings](https://app.intercom.com/a/apps/_/settings/android).
+- Add below lines to `android/app/src/main/java/com/YOUR_APP/app/MainApplication.java` inside `onCreate` method, replacing `apiKey` and `appId` which can be found in your [workspace settings](https://app.intercom.com/a/apps/_/settings/android).
 
 ```java
 import com.intercom.reactnative.IntercomModule; //  <-- Add this line
@@ -115,7 +115,7 @@ dependencies {
 
 #### Android: Permissions
 
-You will need to include the [READ\_EXTERNAL\_STORAGE](http://developer.android.com/reference/android/Manifest.permission.html#READ_EXTERNAL_STORAGE) permission if you have enabled attachments:
+You will need to include the [READ\_EXTERNAL\_STORAGE](http://developer.android.com/reference/android/Manifest.permission.html#READ_EXTERNAL_STORAGE) permission in `android/app/src/main/AndroidManifest.xml` if you have enabled attachments:
 
 ```xml
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
