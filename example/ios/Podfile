@@ -1,7 +1,7 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '11.0'
+platform :ios, '13.0'
 
 target 'IntercomReactNativeExample' do
   config = use_native_modules!
@@ -38,7 +38,11 @@ target 'IntercomReactNativeExample' do
   # I'm not aware of any other way to fix this one other than bumping iOS deployment target to match react-native (iOS 11 now)
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+      # Setting deployment target to iOS 11 for RCT-Folly to avoid errors with Flipper.
+      if ['RCT-Folly'].include? target.name
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+      end
+      config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = 'YES'
      end
   end
 
