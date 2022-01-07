@@ -72,9 +72,9 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
-  - Intercom (10.3.0)
-  - intercom-react-native (1.1.0):
-    - Intercom (~> 10.3.0)
+  - Intercom (11.0.0)
+  - intercom-react-native (2.0.0):
+    - Intercom (~> 11.0.0)
     - React-Core
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.180)
@@ -404,8 +404,6 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://cdn.cocoapods.org/:
-    - Intercom
   trunk:
     - boost-for-react-native
     - CocoaAsyncSocket
@@ -419,6 +417,7 @@ SPEC REPOS:
     - Flipper-RSocket
     - FlipperKit
     - fmt
+    - Intercom
     - libevent
     - OpenSSL-Universal
     - YogaKit
@@ -490,7 +489,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
-  DoubleConversion: cde416483dac037923206447da6e1454df403714
+  DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
   FBLazyVector: 33c82491102f20ecddb6c6a2c273696ace3191e0
   FBReactNativeSpec: df8f81d2a7541ee6755a047b398a5cb5a72acd0e
   Flipper: b1fddf9a17c32097b2b4c806ad158b2f36bb2692
@@ -503,9 +502,9 @@ SPEC CHECKSUMS:
   Flipper-RSocket: d9d9ade67cbecf6ac10730304bf5607266dd2541
   FlipperKit: aec2d931adeee48a07bab1ea8bcc8a6bb87dfce4
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
-  Intercom: b697b5972ca0fad3412a13c67c6920eab301498b
-  intercom-react-native: 1d1eab12e134bb23fb2fdad6adc45a2196575091
+  glog: 5337263514dd6f09803962437687240c5dc39aa4
+  Intercom: 8e1863252ef8e864dcd57484d60665857f6f5669
+  intercom-react-native: b4245dfd4d6abbb846b1240b4a839726443138ae
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   RCT-Folly: 0dd9e1eb86348ecab5ba76f910b56f4b5fef3c46
@@ -536,6 +535,6 @@ SPEC CHECKSUMS:
   Yoga: aa0cb45287ebe1004c02a13f279c55a95f1572f4
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: cfb09338b4af4ccfde99284137920d02f256fc13
+PODFILE CHECKSUM: 6cdbcd20a37a033a80296b6f0ce930a939cadc52
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
