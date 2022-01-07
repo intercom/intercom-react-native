@@ -4,16 +4,12 @@
 
 - In project root make `react-native link` command
 - In Xcode open `YourApp.xcworkspace`, if there is no file with extension `xcworkspace` open `YourApp.xcodeproj`
-- In file browser open `./node_modules/intercom-react-native/ios`
-  - From file browser drag `Intercom.xcframework` and drop in Xcode window under YourProject name
+- [Download intercom for iOS and extract the zip](https://github.com/intercom/intercom-ios/archive/master.zip)
+- Drag Intercom.xcframework into your project. Make sure **"Copy items if needed"** is selected and click Finish.
 
-    ![Xcode linking](xcode-linking.png)
+    ![Xcode linking](https://files.readme.io/51cf138-xcframework_drag.png)
 
-___
-
-- In popup mark `Copy items if needed`
-
-![Xcode popup](xcode-popup.png)
+![Xcode popup](https://files.readme.io/031bc35-copy_items.png)
 
 ___
 
