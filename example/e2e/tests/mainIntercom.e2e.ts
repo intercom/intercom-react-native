@@ -95,7 +95,7 @@ describe('Intercom E2E', () => {
 
     const launcherId = driver.isAndroid
       ? '~Intercom launcher'
-      : '~launcher';
+      : '~intercom launcher';
     await (await $(launcherId)).waitForDisplayed({ timeout: 12000 });
     await driver.clickWithDelay('~toggle-launcher-visibility', 12000);
   });
