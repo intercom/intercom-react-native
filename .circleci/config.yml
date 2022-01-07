@@ -4,6 +4,7 @@ version: 2.1
 macos_config: &macos_config
   macos:
     xcode: 12.5.0
+resource_class: macos.x86.medium.gen2
   shell: /bin/bash --login -eo pipefail
 
 setup_env_file: &setup_env_file
