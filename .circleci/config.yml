@@ -4,6 +4,7 @@ version: 2.1
 macos_config: &macos_config
   macos:
     xcode: 12.5.0
+  resource_class: macos.x86.medium.gen2
   shell: /bin/bash --login -eo pipefail
 
 setup_env_file: &setup_env_file
@@ -21,10 +22,13 @@ executors:
 orbs:
   android: circleci/android@1.0
 
-run_on_master: &run_on_master
+
+run_on_release: &run_on_release
   filters:
+    tags:
+      only: /.*/
     branches:
-      only: main
+      ignore: /.*/
 
 commands:
   attach_project:
@@ -254,7 +258,7 @@ workflows:
             - unit-tests
             - build-package
       - release-to-npm:
-          <<: *run_on_master
+          <<: *run_on_release
           context:
             - react-native-context
           requires:
