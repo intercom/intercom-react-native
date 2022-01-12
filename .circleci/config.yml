@@ -22,10 +22,13 @@ executors:
 orbs:
   android: circleci/android@1.0
 
-run_on_master: &run_on_master
+
+run_on_release: &run_on_release
   filters:
+    tags:
+      only: /.*/
     branches:
-      only: main
+      ignore: /.*/
 
 commands:
   attach_project:
@@ -255,7 +258,7 @@ workflows:
             - unit-tests
             - build-package
       - release-to-npm:
-          <<: *run_on_master
+          <<: *run_on_release
           context:
             - react-native-context
           requires:
