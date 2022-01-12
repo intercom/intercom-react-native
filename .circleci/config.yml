@@ -24,7 +24,7 @@ orbs:
 
 
 run_on_release: &run_on_release
-    filters:
+  filters:
     tags:
       only: /.*/
     branches:
