@@ -897,6 +897,14 @@ ___
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha03'
     ```
 
+
+- #### When tests with Jest fail mentioning "Cannot read property 'UNREAD_CHANGE_NOTIFICATION' of undefined"
+  - Make a `jest.mock` function with the library:
+    ```
+    // jest/setup.ts
+    jest.mock('@intercom/intercom-react-native', () => jest.fn());
+    ```
+
 ___
 
 ## Author
