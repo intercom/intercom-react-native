@@ -17,5 +17,5 @@ Pod::Spec.new do |s|
   s.resource_bundles = { 'IntercomFramework' => ['ios/assets/*'] }
 
   s.dependency "React-Core"
-  s.dependency "Intercom", '~> 11.0.0'
+  s.dependency "Intercom", '~> 11.1.2'
 end
