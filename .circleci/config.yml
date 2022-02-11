@@ -234,9 +234,10 @@ jobs:
 
 
 workflows:
+  version: 2.1
   build-and-test:
     jobs:
-      - install-dependencies
+      - install-dependencies:
           <<: *run_always
       - lint:
           <<: *run_always
