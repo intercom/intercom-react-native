@@ -21,10 +21,18 @@ executors:
 
 orbs:
   android: circleci/android@1.0
+<<<<<<< Updated upstream
 
 
-run_on_release: &run_on_release
+# Always run job
+run_always: &run_always
   filters:
+    tags:
+      only: /.*/
+
+# Only run on release
+run_on_release: &run_on_release
+    filters:
     tags:
       only: /.*/
     branches:
@@ -231,19 +239,25 @@ workflows:
   build-and-test:
     jobs:
       - install-dependencies
+          <<: *run_always
       - lint:
+          <<: *run_always
           requires:
             - install-dependencies
       - typescript:
+          <<: *run_always
           requires:
             - install-dependencies
       - unit-tests:
+          <<: *run_always
           requires:
             - install-dependencies
       - build-package:
+          <<: *run_always
           requires:
             - install-dependencies
       - android-e2e-test:
+          <<: *run_always
           requires:
             - install-dependencies
             - lint
@@ -251,6 +265,7 @@ workflows:
             - unit-tests
             - build-package
       - ios-e2e-test:
+          <<: *run_always
           requires:
             - install-dependencies
             - lint
