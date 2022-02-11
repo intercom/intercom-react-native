@@ -30,11 +30,12 @@ run_always: &run_always
 
 # Only run on release
 run_on_release: &run_on_release
-    filters:
+  filters:
     tags:
       only: /.*/
     branches:
       ignore: /.*/
+
 
 commands:
   attach_project:
