@@ -21,8 +21,6 @@ executors:
 
 orbs:
   android: circleci/android@1.0
-<<<<<<< Updated upstream
-
 
 # Always run job
 run_always: &run_always
