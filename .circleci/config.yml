@@ -230,8 +230,8 @@ jobs:
             yarn install
 
       - run:
-          name: Release package
-          command: npm run release --ci
+          name: Publish the package
+          command: npm publish
 
 
 workflows:
