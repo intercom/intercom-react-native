@@ -78,7 +78,7 @@ export type Company = {
 };
 
 export type HelpCenterArticle = { id: string; title: string };
-export type HelpCenterSection = { title: string; articles: HelpCenterArticle };
+export type HelpCenterSection = { title: string; articles: HelpCenterArticle[] };
 export type HelpCenterCollectionItem = {
   id: string;
   title: string;
