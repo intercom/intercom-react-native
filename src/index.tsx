@@ -77,7 +77,7 @@ export type Company = {
   plan?: string;
 };
 
-export type HelpCenterArticle = { it: string; title: string };
+export type HelpCenterArticle = { id: string; title: string };
 export type HelpCenterSection = { title: string; articles: HelpCenterArticle };
 export type HelpCenterCollectionItem = {
   id: string;
