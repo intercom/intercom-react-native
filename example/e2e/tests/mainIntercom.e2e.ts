@@ -70,7 +70,7 @@ describe('Intercom E2E', () => {
   it('Should display carousel', async () => {
     await driver.scrollToElementByAccessibilityLabel('display-carousel');
     await (await $('~display-carousel')).click();
-    await driver.closeOverlay();
+    await driver.closeModalOverlay();
   });
 
   it('Should get unread messages count', async () => {
