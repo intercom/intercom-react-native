@@ -73,7 +73,7 @@ PODS:
   - fmt (6.2.1)
   - glog (0.3.5)
   - Intercom (11.1.2)
-  - intercom-react-native (2.0.2):
+  - intercom-react-native (2.0.4):
     - Intercom (~> 11.1.2)
     - React-Core
   - libevent (2.1.12)
