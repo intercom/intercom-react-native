@@ -45,7 +45,17 @@ const closeOverlay = async (customCloseButtonId?: string) => {
   await closeButton.waitForDisplayed({ timeout: 22000 });
   await closeButton.click();
 };
+
+const closeModalOverlay = async (customCloseButtonId?: string) => {
+  const buttonId = browser.isAndroid ? `~Close` : customCloseButtonId || `~intercom modal close button`;
+
+  const closeButton = await $(buttonId);
+  await closeButton.waitForDisplayed({ timeout: 22000 });
+  await closeButton.click();
+};
+
 browser.addCommand('closeOverlay', closeOverlay);
+browser.addCommand('closeModalOverlay', closeModalOverlay);
 
 const closeArticleOverlay = async () => {
   if (browser.isAndroid) {
@@ -55,7 +65,7 @@ const closeArticleOverlay = async () => {
     await closeButton.waitForDisplayed({ timeout: 22000 });
     await closeButton.click();
   } else {
-    await closeOverlay();
+    await closeModalOverlay();
   }
 };
 browser.addCommand('closeArticleOverlay', closeArticleOverlay);
