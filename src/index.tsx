@@ -50,7 +50,7 @@ type EventType =
   | 'IntercomWindowDidShowNotification';
 
 export type CustomAttributes = {
-  [key: string]: boolean | string | number;
+  [key: string]: boolean | string | number | null;
 };
 export type MetaData = {
   [key: string]: any;
