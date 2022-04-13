@@ -105,17 +105,32 @@ RCT_EXPORT_METHOD(registerIdentifiedUser:
         userId = [(NSNumber *) userId stringValue];
     }
 
+    ICMUserAttributes *userAttributes = [ICMUserAttributes new];
+
     if (userId.length > 0 && userEmail.length > 0) {
-        [Intercom registerUserWithUserId:userId email:userEmail];
-        NSLog(@"registerUserWithUserId");
+        userAttributes.email = userEmail;
+        userAttributes.userId = userId;
+        [Intercom loginUserWithUserAttributes:userAttributes success:^{
+            NSLog(@"registerUserWithUserId was successful");
+        } failure:^(NSError * _Nonnull error) {
+            NSLog(@"registerUserWithUserId was NOT successful");
+        }];
         resolve(@(YES));
     } else if (userId.length > 0) {
-        [Intercom registerUserWithUserId:userId];
-        NSLog(@"registerUserWithUserId");
+        userAttributes.userId = userId;
+        [Intercom loginUserWithUserAttributes:userAttributes success:^{
+            NSLog(@"registerUserWithUserId was successful");
+        } failure:^(NSError * _Nonnull error) {
+            NSLog(@"registerUserWithUserId was NOT successful");
+        }];
         resolve(@(YES));
     } else if (userEmail.length > 0) {
-        [Intercom registerUserWithEmail:userEmail];
-        NSLog(@"registerUserWithEmail");
+        userAttributes.email = userEmail;
+        [Intercom loginUserWithUserAttributes:userAttributes success:^{
+            NSLog(@"registerUserWithUserId was successful");
+        } failure:^(NSError * _Nonnull error) {
+            NSLog(@"registerUserWithUserId was NOT successful");
+        }];
         resolve(@(YES));
     } else {
         NSLog(@"[Intercom] ERROR - No user registered. You must supply an email, a userId or both");
@@ -375,4 +390,5 @@ RCT_EXPORT_METHOD(setLogLevel:
 
     return [[NSError alloc] initWithDomain:domain code:[code integerValue] userInfo:info];
 };
+
 @end
