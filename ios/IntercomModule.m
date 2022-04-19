@@ -44,7 +44,9 @@ RCT_EXPORT_MODULE()
 }
 
 + (void)setDeviceToken:(nonnull NSData *)deviceToken {
-    [Intercom setDeviceToken:deviceToken];
+    [Intercom setDeviceToken:deviceToken failure:^(NSError * _Nullable error) {
+        NSLog(@"setDeviceToken was NOT successful");
+    }];
     NSLog(@"setDeviceToken");
 }
 
@@ -88,10 +90,13 @@ RCT_EXPORT_METHOD(sendTokenToIntercom:
 
 RCT_EXPORT_METHOD(registerUnidentifiedUser:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-
-    [Intercom registerUnidentifiedUser];
+    [Intercom loginUnidentifiedUserWithSuccess:^{
+        resolve(@(YES));
+    } failure:^(NSError * _Nonnull error) {
+        reject(IDENTIFIED_REGISTRATION, @"No user registered. You must supply an email, a userId or both", error);
+    }];
     NSLog(@"registerUnidentifiedUser");
-    resolve(@(YES));
+    
 };
 
 RCT_EXPORT_METHOD(registerIdentifiedUser:
@@ -152,17 +157,13 @@ RCT_EXPORT_METHOD(logout:
 
 RCT_EXPORT_METHOD(updateUser:
                   (NSDictionary *) options: (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-    @try {
         ICMUserAttributes *userAttributes = [IntercomAttributesBuilder userAttributesForDictionary:options];
-        [Intercom updateUser:userAttributes];
-
-        NSLog(@"updateUser");
-        resolve(@(YES));
-    } @catch (NSException *exception) {
-        reject(UPDATE_USER, @"Error in updateUser", [self exceptionToError:exception :UPDATE_USER :@"updateUser"]);
-    }
-
-
+        [Intercom updateUser:userAttributes success:^{
+            NSLog(@"updateUser");
+            resolve(@(YES));
+        } failure:^(NSError * _Nonnull error) {
+            reject(UPDATE_USER, @"Error in updateUser", [self exceptionToError:error :UPDATE_USER :@"updateUser"]);
+        }];
 };
 
 RCT_EXPORT_METHOD(setUserHash:
