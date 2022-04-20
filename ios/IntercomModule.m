@@ -90,10 +90,13 @@ RCT_EXPORT_METHOD(sendTokenToIntercom:
 
 RCT_EXPORT_METHOD(registerUnidentifiedUser:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-
-    [Intercom registerUnidentifiedUser];
+    [Intercom loginUnidentifiedUserWithSuccess:^{
+        resolve(@(YES));
+    } failure:^(NSError * _Nonnull error) {
+        reject(IDENTIFIED_REGISTRATION, @"No user registered. You must supply an email, a userId or both", error);
+    }];
     NSLog(@"registerUnidentifiedUser");
-    resolve(@(YES));
+    
 };
 
 RCT_EXPORT_METHOD(registerIdentifiedUser:
