@@ -112,29 +112,26 @@ RCT_EXPORT_METHOD(registerIdentifiedUser:
         userAttributes.userId = userId;
         [Intercom loginUserWithUserAttributes:userAttributes success:^{
             NSLog(@"registerUserWithUserId was successful");
-            resolve(@(YES));
         } failure:^(NSError * _Nonnull error) {
             NSLog(@"registerUserWithUserId was NOT successful");
-            reject(IDENTIFIED_REGISTRATION, @"No user registered. You must supply an email, a userId or both", error);
         }];
+        resolve(@(YES));
     } else if (userId.length > 0) {
         userAttributes.userId = userId;
         [Intercom loginUserWithUserAttributes:userAttributes success:^{
             NSLog(@"registerUserWithUserId was successful");
-            resolve(@(YES));
         } failure:^(NSError * _Nonnull error) {
             NSLog(@"registerUserWithUserId was NOT successful");
-            reject(IDENTIFIED_REGISTRATION, @"No user registered. You must supply an email, a userId or both", error);
         }];
+        resolve(@(YES));
     } else if (userEmail.length > 0) {
         userAttributes.email = userEmail;
         [Intercom loginUserWithUserAttributes:userAttributes success:^{
             NSLog(@"registerUserWithUserId was successful");
-            resolve(@(YES));
         } failure:^(NSError * _Nonnull error) {
             NSLog(@"registerUserWithUserId was NOT successful");
-            reject(IDENTIFIED_REGISTRATION, @"No user registered. You must supply an email, a userId or both", error);
         }];
+        resolve(@(YES));
     } else {
         NSLog(@"[Intercom] ERROR - No user registered. You must supply an email, a userId or both");
         NSError *error = [NSError errorWithDomain:@"registerIdentifiedUser" code:[IDENTIFIED_REGISTRATION intValue] userInfo:@{@"Error reason": @"Invalid Input. No user registered. You must supply an email, a userId or both"}];
