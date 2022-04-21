@@ -45,7 +45,7 @@ RCT_EXPORT_MODULE()
 
 + (void)setDeviceToken:(nonnull NSData *)deviceToken {
     [Intercom setDeviceToken:deviceToken failure:^(NSError * _Nullable error) {
-        NSLog(@"setDeviceToken was NOT successful");
+        NSLog(error.localizedDescription);
     }];
     NSLog(@"setDeviceToken");
 }
@@ -93,7 +93,7 @@ RCT_EXPORT_METHOD(registerUnidentifiedUser:
     [Intercom loginUnidentifiedUserWithSuccess:^{
         resolve(@(YES));
     } failure:^(NSError * _Nonnull error) {
-        reject(IDENTIFIED_REGISTRATION, @"No user registered. You must supply an email, a userId or both", error);
+        reject(IDENTIFIED_REGISTRATION, @"Error: ", error.localizedDescription);
     }];
     NSLog(@"registerUnidentifiedUser");
     
@@ -119,8 +119,7 @@ RCT_EXPORT_METHOD(registerIdentifiedUser:
             NSLog(@"registerUserWithUserId was successful");
             resolve(@(YES));
         } failure:^(NSError * _Nonnull error) {
-            NSLog(@"registerUserWithUserId was NOT successful");
-            reject(IDENTIFIED_REGISTRATION, @"No user registered. You must supply an email, a userId or both", error);
+            reject(IDENTIFIED_REGISTRATION, @"Error: ", error.localizedDescription);
         }];
     } else if (userId.length > 0) {
         userAttributes.userId = userId;
@@ -128,8 +127,7 @@ RCT_EXPORT_METHOD(registerIdentifiedUser:
             NSLog(@"registerUserWithUserId was successful");
             resolve(@(YES));
         } failure:^(NSError * _Nonnull error) {
-            NSLog(@"registerUserWithUserId was NOT successful");
-            reject(IDENTIFIED_REGISTRATION, @"No user registered. You must supply an email, a userId or both", error);
+            reject(IDENTIFIED_REGISTRATION, @"Error: ", error.localizedDescription);
         }];
     } else if (userEmail.length > 0) {
         userAttributes.email = userEmail;
@@ -137,13 +135,12 @@ RCT_EXPORT_METHOD(registerIdentifiedUser:
             NSLog(@"registerUserWithUserId was successful");
             resolve(@(YES));
         } failure:^(NSError * _Nonnull error) {
-            NSLog(@"registerUserWithUserId was NOT successful");
-            reject(IDENTIFIED_REGISTRATION, @"No user registered. You must supply an email, a userId or both", error);
+            reject(IDENTIFIED_REGISTRATION, @"Error: ", error.localizedDescription);
         }];
     } else {
         NSLog(@"[Intercom] ERROR - No user registered. You must supply an email, a userId or both");
         NSError *error = [NSError errorWithDomain:@"registerIdentifiedUser" code:[IDENTIFIED_REGISTRATION intValue] userInfo:@{@"Error reason": @"Invalid Input. No user registered. You must supply an email, a userId or both"}];
-        reject(IDENTIFIED_REGISTRATION, @"No user registered. You must supply an email, a userId or both", error);
+        reject(IDENTIFIED_REGISTRATION, @"Error: ", error.localizedDescription);
     }
 }
 
