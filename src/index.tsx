@@ -99,7 +99,7 @@ export type HelpCenterArticleSearchResult = {
 };
 
 export type IntercomType = {
-  fetchHelpCenterCollections: () => Promise<HelpCenterCollectionItem>;
+  fetchHelpCenterCollections: () => Promise<Array<HelpCenterCollectionItem>>;
   searchHelpCenter: (term: string) => Promise<HelpCenterArticleSearchResult>;
   fetchHelpCenterCollection: (
     id: string
