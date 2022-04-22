@@ -16,7 +16,7 @@ setup_env_file: &setup_env_file
 executors:
   default:
     docker:
-      - image: circleci/node:12
+      - image: circleci/node:14
     working_directory: ~/project
 
 orbs:
