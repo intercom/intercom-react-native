@@ -141,12 +141,12 @@ jobs:
           command: npm run build:android
 
       - android/create-avd:
-          avd-name: Android_31
-          system-image: system-images;android-31;default;x86
+          avd-name: Android_29
+          system-image: system-images;android-29;default;x86
           install: true
 
       - android/start-emulator:
-          avd-name: Android_31
+          avd-name: Android_29
           no-window: true
           post-emulator-launch-assemble-command: echo Emulator Started
 
