@@ -124,12 +124,14 @@ describe('Intercom E2E', () => {
   });
 
   it('Should set logout ', async () => {
+    await (await $('~ logout')).waitForExist({ timeout: 12000 });
     await driver.scrollToElementByAccessibilityLabel('logout');
     await (await $('~logout')).click();
     await (await $('~unauthenticated')). waitForExist({ timeout: 12000 });
   });
 
   it('Should login unidentified', async () => {
+    await (await $('~ login-unidentified')).waitForExist({ timeout: 12000 });
     await driver.scrollToElementByAccessibilityLabel('login-unidentified');
     await (await $('~login-unidentified')).click();
     await (await $('~authenticated')).waitForExist({ timeout: 12000 });
