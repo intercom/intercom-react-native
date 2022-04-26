@@ -44,7 +44,9 @@ RCT_EXPORT_MODULE()
 }
 
 + (void)setDeviceToken:(nonnull NSData *)deviceToken {
-    [Intercom setDeviceToken:deviceToken];
+    [Intercom setDeviceToken:deviceToken failure:^(NSError * _Nullable error) {
+        NSLog(error.localizedDescription);
+    }];
     NSLog(@"setDeviceToken");
 }
 
@@ -88,10 +90,13 @@ RCT_EXPORT_METHOD(sendTokenToIntercom:
 
 RCT_EXPORT_METHOD(registerUnidentifiedUser:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-
-    [Intercom registerUnidentifiedUser];
+    [Intercom loginUnidentifiedUserWithSuccess:^{
+        resolve(@(YES));
+    } failure:^(NSError * _Nonnull error) {
+        reject(IDENTIFIED_REGISTRATION, @"Error: ", error.localizedDescription);
+    }];
     NSLog(@"registerUnidentifiedUser");
-    resolve(@(YES));
+    
 };
 
 RCT_EXPORT_METHOD(registerIdentifiedUser:
@@ -105,22 +110,37 @@ RCT_EXPORT_METHOD(registerIdentifiedUser:
         userId = [(NSNumber *) userId stringValue];
     }
 
+    ICMUserAttributes *userAttributes = [ICMUserAttributes new];
+
     if (userId.length > 0 && userEmail.length > 0) {
-        [Intercom registerUserWithUserId:userId email:userEmail];
-        NSLog(@"registerUserWithUserId");
-        resolve(@(YES));
+        userAttributes.email = userEmail;
+        userAttributes.userId = userId;
+        [Intercom loginUserWithUserAttributes:userAttributes success:^{
+            NSLog(@"registerUserWithUserId was successful");
+            resolve(@(YES));
+        } failure:^(NSError * _Nonnull error) {
+            reject(IDENTIFIED_REGISTRATION, @"Error: ", error.localizedDescription);
+        }];
     } else if (userId.length > 0) {
-        [Intercom registerUserWithUserId:userId];
-        NSLog(@"registerUserWithUserId");
-        resolve(@(YES));
+        userAttributes.userId = userId;
+        [Intercom loginUserWithUserAttributes:userAttributes success:^{
+            NSLog(@"registerUserWithUserId was successful");
+            resolve(@(YES));
+        } failure:^(NSError * _Nonnull error) {
+            reject(IDENTIFIED_REGISTRATION, @"Error: ", error.localizedDescription);
+        }];
     } else if (userEmail.length > 0) {
-        [Intercom registerUserWithEmail:userEmail];
-        NSLog(@"registerUserWithEmail");
-        resolve(@(YES));
+        userAttributes.email = userEmail;
+        [Intercom loginUserWithUserAttributes:userAttributes success:^{
+            NSLog(@"registerUserWithUserId was successful");
+            resolve(@(YES));
+        } failure:^(NSError * _Nonnull error) {
+            reject(IDENTIFIED_REGISTRATION, @"Error: ", error.localizedDescription);
+        }];
     } else {
         NSLog(@"[Intercom] ERROR - No user registered. You must supply an email, a userId or both");
         NSError *error = [NSError errorWithDomain:@"registerIdentifiedUser" code:[IDENTIFIED_REGISTRATION intValue] userInfo:@{@"Error reason": @"Invalid Input. No user registered. You must supply an email, a userId or both"}];
-        reject(IDENTIFIED_REGISTRATION, @"No user registered. You must supply an email, a userId or both", error);
+        reject(IDENTIFIED_REGISTRATION, @"Error: ", error.localizedDescription);
     }
 }
 
@@ -134,17 +154,13 @@ RCT_EXPORT_METHOD(logout:
 
 RCT_EXPORT_METHOD(updateUser:
                   (NSDictionary *) options: (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
-    @try {
         ICMUserAttributes *userAttributes = [IntercomAttributesBuilder userAttributesForDictionary:options];
-        [Intercom updateUser:userAttributes];
-
-        NSLog(@"updateUser");
-        resolve(@(YES));
-    } @catch (NSException *exception) {
-        reject(UPDATE_USER, @"Error in updateUser", [self exceptionToError:exception :UPDATE_USER :@"updateUser"]);
-    }
-
-
+        [Intercom updateUser:userAttributes success:^{
+            NSLog(@"updateUser");
+            resolve(@(YES));
+        } failure:^(NSError * _Nonnull error) {
+            reject(UPDATE_USER, @"Error in updateUser", [self exceptionToError:error :UPDATE_USER :@"updateUser"]);
+        }];
 };
 
 RCT_EXPORT_METHOD(setUserHash:
@@ -375,4 +391,5 @@ RCT_EXPORT_METHOD(setLogLevel:
 
     return [[NSError alloc] initWithDomain:domain code:[code integerValue] userInfo:info];
 };
+
 @end
