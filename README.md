@@ -89,7 +89,7 @@ public void onCreate() {
 }
 ```
 
-- Open `android/build.gradle` and change `minSdkVersion` to **21**
+- Open `android/build.gradle` and change `minSdkVersion` to **21**, `compileSdkVersion` and `targetSdkVersion` to at least **31**
 
 ```Gradle
 buildscript {
@@ -97,8 +97,8 @@ buildscript {
     ext {
         buildToolsVersion = "29.0.2"
         minSdkVersion = 21 // <-- Here
-        compileSdkVersion = 29
-        targetSdkVersion = 29
+        compileSdkVersion = 31 // <-- Here
+        targetSdkVersion = 31 // <-- Here
     }
     // ...
 }
@@ -176,6 +176,12 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.intercom.reactnative.IntercomModule;
 
 public class MainNotificationService extends FirebaseMessagingService {
+
+  @Override
+  public void onNewToken(String refreshedToken) {
+    IntercomModule.sendTokenToIntercom(getApplication(), refreshedToken);
+    //DO LOGIC HERE
+  }
 
   public void onMessageReceived(RemoteMessage remoteMessage) {
     if (IntercomModule.isIntercomPush(remoteMessage)) {
