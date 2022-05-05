@@ -69,7 +69,7 @@ implementation project(':intercom-react-native')
 
 #### Android: Setup
 
-- Add below lines to `MainApplication.java` inside `onCreate` method, replacing `apiKey` and `appId` which can be found in your [workspace settings](https://app.intercom.com/a/apps/_/settings/android).
+- Add below lines to `android/app/src/main/java/com/YOUR_APP/app/MainApplication.java` inside `onCreate` method, replacing `apiKey` and `appId` which can be found in your [workspace settings](https://app.intercom.com/a/apps/_/settings/android).
 
 ```java
 import com.intercom.reactnative.IntercomModule; //  <-- Add this line
@@ -89,7 +89,7 @@ public void onCreate() {
 }
 ```
 
-- Open `android/build.gradle` and change `minSdkVersion` to **21**
+- Open `android/build.gradle` and change `minSdkVersion` to **21**, `compileSdkVersion` and `targetSdkVersion` to at least **31**
 
 ```Gradle
 buildscript {
@@ -97,8 +97,8 @@ buildscript {
     ext {
         buildToolsVersion = "29.0.2"
         minSdkVersion = 21 // <-- Here
-        compileSdkVersion = 29
-        targetSdkVersion = 29
+        compileSdkVersion = 31 // <-- Here
+        targetSdkVersion = 31 // <-- Here
     }
     // ...
 }
@@ -115,7 +115,7 @@ dependencies {
 
 #### Android: Permissions
 
-You will need to include the [READ\_EXTERNAL\_STORAGE](http://developer.android.com/reference/android/Manifest.permission.html#READ_EXTERNAL_STORAGE) permission if you have enabled attachments:
+You will need to include the [READ\_EXTERNAL\_STORAGE](http://developer.android.com/reference/android/Manifest.permission.html#READ_EXTERNAL_STORAGE) permission in `android/app/src/main/AndroidManifest.xml` if you have enabled attachments:
 
 ```xml
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -176,6 +176,12 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.intercom.reactnative.IntercomModule;
 
 public class MainNotificationService extends FirebaseMessagingService {
+
+  @Override
+  public void onNewToken(String refreshedToken) {
+    IntercomModule.sendTokenToIntercom(getApplication(), refreshedToken);
+    //DO LOGIC HERE
+  }
 
   public void onMessageReceived(RemoteMessage remoteMessage) {
     if (IntercomModule.isIntercomPush(remoteMessage)) {
@@ -347,7 +353,7 @@ Notifications.events().registerRemoteNotificationsRegistered(({ deviceToken }: R
 #import <UserNotifications/UserNotifications.h>
 ```
 
-- Request notification permissions when app launches by adding the folloowing to `didFinishLaunchingWithOptions` before `return YES;`:
+- Request notification permissions when app launches by adding the following to `didFinishLaunchingWithOptions` before `return YES;`:
 
 ```Objective-C
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -895,6 +901,14 @@ ___
     ```
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha03'
+    ```
+
+
+- #### When tests with Jest fail mentioning "Cannot read property 'UNREAD_CHANGE_NOTIFICATION' of undefined"
+  - Make a `jest.mock` function with the library:
+    ```
+    // jest/setup.ts
+    jest.mock('@intercom/intercom-react-native', () => jest.fn());
     ```
 
 ___
