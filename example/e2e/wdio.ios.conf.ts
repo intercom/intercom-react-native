@@ -13,7 +13,7 @@ exports.config = {
       automationName: 'XCUITest',
       platformName: 'iOS',
       platformVersion: '14.5',
-      deviceName: 'iPhone 8',
+      deviceName: 'iPhone 11',
       app: 'build/Build/Products/Release-iphonesimulator/IntercomReactNativeExampleUI.app',
     },
   ],

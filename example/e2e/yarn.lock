@@ -48,7 +48,14 @@
     core-js-pure "^3.0.0"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.4.3", "@babel/runtime@^7.6.0", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.7":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.11.2", "@babel/runtime@^7.4.3", "@babel/runtime@^7.6.0", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.7":
+  version "7.14.6"
+  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.14.6.tgz"
+  integrity sha512-/PCB2uJ7oM44tz8YhC4Z/6PeOKXp4K588f+5M3clr1M4zbqztlo0XEfJ2LEzj/FgwfgGcIdl8n7YYjTCI0BYwg==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
+"@babel/runtime@^7.10.2":
   version "7.14.0"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.14.0.tgz"
   integrity sha512-JELkvo/DlpNdJ7dlyw/eY7E0suy5i5GQH+Vlxaq1nsNJ+H7f4Vtv3jMeCEgRhZZQFXTjldYfQgv2qmM6M1v5wA==
@@ -793,9 +800,9 @@
   integrity sha512-e6ZowgGJmTuXa3GyaPbTGxX17tnThl2aSSizrFthQ7m9uLGZBXiGhgE55cjRZTF5kjZvYn9EOPOMljdjwbflxw==
 
 "@types/node@^17.0.4":
-  version "17.0.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.8.tgz#50d680c8a8a78fe30abe6906453b21ad8ab0ad7b"
-  integrity sha512-YofkM6fGv4gDJq78g4j0mMuGMkZVxZDgtU0JRdx6FgiJDG+0fY0GKVolOV8WqVmEhLCXkQRjwDdKyPxJp/uucg==
+  version "17.0.25"
+  resolved "https://registry.npmjs.org/@types/node/-/node-17.0.25.tgz"
+  integrity sha512-wANk6fBrUwdpY4isjWrKTufkrXdu1D2YHCot2fD/DfWxF5sMrVSA+KN7ydckvaTCh0HiqX9IVl0L5/ZoXg5M7w==
 
 "@types/puppeteer-core@^5.4.0":
   version "5.4.0"
@@ -805,9 +812,9 @@
     "@types/puppeteer" "*"
 
 "@types/puppeteer@*":
-  version "5.4.3"
-  resolved "https://registry.npmjs.org/@types/puppeteer/-/puppeteer-5.4.3.tgz"
-  integrity sha512-3nE8YgR9DIsgttLW+eJf6mnXxq8Ge+27m5SU3knWmrlfl6+KOG0Bf9f7Ua7K+C4BnaTMAh3/UpySqdAYvrsvjg==
+  version "5.4.4"
+  resolved "https://registry.npmjs.org/@types/puppeteer/-/puppeteer-5.4.4.tgz"
+  integrity sha512-3Nau+qi69CN55VwZb0ATtdUAlYlqOOQ3OfQfq0Hqgc4JMFXiQT/XInlwQ9g6LbicDslE6loIFsXFklGh5XmI6Q==
   dependencies:
     "@types/node" "*"
 
@@ -819,9 +826,9 @@
     "@types/node" "*"
 
 "@types/request@^2.48.4":
-  version "2.48.5"
-  resolved "https://registry.npmjs.org/@types/request/-/request-2.48.5.tgz"
-  integrity sha512-/LO7xRVnL3DxJ1WkPGDQrp4VTV1reX9RkC85mJ+Qzykj2Bdw+mG15aAfDahc76HtknjzE16SX/Yddn6MxVbmGQ==
+  version "2.48.6"
+  resolved "https://registry.npmjs.org/@types/request/-/request-2.48.6.tgz"
+  integrity sha512-vrZaV3Ij7j/l/3hz6OttZFtpRCu7zlq7XgkYHJP6FwVEAZkGQ095WqyJV08/GlW9eyXKVcp/xmtruHm8eHpw1g==
   dependencies:
     "@types/caseless" "*"
     "@types/node" "*"
@@ -855,9 +862,9 @@
     "@types/node" "*"
 
 "@types/tough-cookie@*":
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/@types/tough-cookie/-/tough-cookie-4.0.0.tgz"
-  integrity sha512-I99sngh224D0M7XgW1s120zxCt3VYQ3IQsuw3P3jbq5GG4yc79+ZjyKznyOGIQrflfylLgcfekeZW/vk0yng6A==
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/@types/tough-cookie/-/tough-cookie-4.0.1.tgz"
+  integrity sha512-Y0K95ThC3esLEYD6ZuqNek29lNX2EM1qxV8y2FTLUB0ff5wWrk7az+mLrnNFUnaXcgKye22+sFBRXOgpPILZNg==
 
 "@types/which@^1.3.2":
   version "1.3.2"
@@ -889,14 +896,14 @@
   integrity sha512-sL/cEvJWAnClXw0wHk85/2L0G6Sj8UB0Ctc1TEMbKSsmpRosqhwj9gWgFRZSrBr2f9tiXISwNhCPmlfqUqyb9Q==
 
 "@wdio/appium-service@^7.16.13":
-  version "7.16.13"
-  resolved "https://registry.yarnpkg.com/@wdio/appium-service/-/appium-service-7.16.13.tgz#1b2a1ca7460ba477dd7545d9cc220cd394443324"
-  integrity sha512-hb2Avr2g4wWZOthz1SMOcneZQGrbFfgksHNQwLub2lyvTpW7VGDb54nHj7IyPN4bFz/FUlea64ptiJFO5LIMNg==
+  version "7.19.5"
+  resolved "https://registry.npmjs.org/@wdio/appium-service/-/appium-service-7.19.5.tgz"
+  integrity sha512-kdrfjYjurh7N1gAVi1Nz7D3xEZItMENm++3XWQ5klyGm1BJMVPT71t1JcZl8xQTdHw+yGvz6w7Kc4R+YSalGAA==
   dependencies:
     "@types/fs-extra" "^9.0.4"
-    "@wdio/config" "7.16.13"
-    "@wdio/logger" "7.16.0"
-    "@wdio/types" "7.16.13"
+    "@wdio/config" "7.19.5"
+    "@wdio/logger" "7.19.0"
+    "@wdio/types" "7.19.5"
     fs-extra "^10.0.0"
     param-case "^3.0.0"
 
@@ -950,13 +957,13 @@
     deepmerge "^4.0.0"
     glob "^7.1.2"
 
-"@wdio/config@7.16.13":
-  version "7.16.13"
-  resolved "https://registry.yarnpkg.com/@wdio/config/-/config-7.16.13.tgz#fcc316e33fe28886ee641282bbae8cae70871c90"
-  integrity sha512-LSGoa83tWQIBppB+LeHjY40B9tuuvmDV1qdBLVXR1ROcOUWWz/oQP3NFLtLm3266LXoJUbwebzGcRIK1EcNk3Q==
+"@wdio/config@7.19.5":
+  version "7.19.5"
+  resolved "https://registry.npmjs.org/@wdio/config/-/config-7.19.5.tgz"
+  integrity sha512-GyG0SSUjw9RyDgEwculgwiWyQ0eEeFAgaKTAa4RHC6ZgHHTgfyxzkWqBmNLzHfiB6GSR2DyZDcDsPT7ZAHkiEg==
   dependencies:
-    "@wdio/logger" "7.16.0"
-    "@wdio/types" "7.16.13"
+    "@wdio/logger" "7.19.0"
+    "@wdio/types" "7.19.5"
     deepmerge "^4.0.0"
     glob "^7.1.2"
 
@@ -1004,10 +1011,10 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
-"@wdio/logger@7.16.0":
-  version "7.16.0"
-  resolved "https://registry.yarnpkg.com/@wdio/logger/-/logger-7.16.0.tgz#40f116ebffc23c638b8e421e350f110a058523e9"
-  integrity sha512-/6lOGb2Iow5eSsy7RJOl1kCwsP4eMlG+/QKro5zUJsuyNJSQXf2ejhpkzyKWLgQbHu83WX6cM1014AZuLkzoQg==
+"@wdio/logger@7.19.0":
+  version "7.19.0"
+  resolved "https://registry.npmjs.org/@wdio/logger/-/logger-7.19.0.tgz"
+  integrity sha512-xR7SN/kGei1QJD1aagzxs3KMuzNxdT/7LYYx+lt6BII49+fqL/SO+5X0FDCZD0Ds93AuQvvz9eGyzrBI2FFXmQ==
   dependencies:
     chalk "^4.0.0"
     loglevel "^1.6.0"
@@ -1046,10 +1053,10 @@
   resolved "https://registry.npmjs.org/@wdio/protocols/-/protocols-6.12.0.tgz"
   integrity sha512-UhTBZxClCsM3VjaiDp4DoSCnsa7D1QNmI2kqEBfIpyNkT3GcZhJb7L+nL0fTkzCwi7+/uLastb3/aOwH99gt0A==
 
-"@wdio/protocols@7.16.7":
-  version "7.16.7"
-  resolved "https://registry.yarnpkg.com/@wdio/protocols/-/protocols-7.16.7.tgz#8a160d59f0c028ff2dda6a1599a86a801a79bcb8"
-  integrity sha512-Wv40pNQcLiPzQ3o98Mv4A8T1EBQ6k4khglz/e2r16CTm+F3DDYh8eLMAsU5cgnmuwwDKX1EyOiFwieykBn5MCg==
+"@wdio/protocols@7.19.0":
+  version "7.19.0"
+  resolved "https://registry.npmjs.org/@wdio/protocols/-/protocols-7.19.0.tgz"
+  integrity sha512-ji74rQag6v+INSNd0J8eAh2rpH5vOXgeiP5Qr32K6PWU6HzYWuAFH2x4srXsH0JawHCdTK2OQAOYrLmMb44hug==
 
 "@wdio/protocols@7.5.3":
   version "7.5.3"
@@ -1112,10 +1119,10 @@
     easy-table "^1.1.1"
     pretty-ms "^7.0.0"
 
-"@wdio/types@7.16.13":
-  version "7.16.13"
-  resolved "https://registry.yarnpkg.com/@wdio/types/-/types-7.16.13.tgz#91e675cc2ba8f0da45f49d4630a143fa69792cc8"
-  integrity sha512-HIeXKCL+mUjyJxvnHSoaIo3NRgZLbeekyRIwo6USfd9qGlQ8dQ6fyCR3ZU9VqNz9j4+JIn+LRQ7imbz5SdnGbw==
+"@wdio/types@7.19.5":
+  version "7.19.5"
+  resolved "https://registry.npmjs.org/@wdio/types/-/types-7.19.5.tgz"
+  integrity sha512-S1lC0pmtEO7NVH/2nM1c7NHbkgxLZH3VVG/z6ym3Bbxdtcqi2LMsEvvawMAU/fmhyiIkMsGZCO8vxG9cRw4z4A==
   dependencies:
     "@types/node" "^17.0.4"
     got "^11.8.1"
@@ -1143,13 +1150,13 @@
   dependencies:
     "@wdio/logger" "6.10.10"
 
-"@wdio/utils@7.16.13":
-  version "7.16.13"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-7.16.13.tgz#49bc88857900dd3543d15bef3d5c422669325212"
-  integrity sha512-O6D89Ghtm5XtTv4DPKvCBKZOZYNONIcBM5/hmdr3V9mzVrTFq8Q3uE8pmmq303Oh91KcoN8Em5zoAG7Zpc5tRg==
+"@wdio/utils@7.19.5":
+  version "7.19.5"
+  resolved "https://registry.npmjs.org/@wdio/utils/-/utils-7.19.5.tgz"
+  integrity sha512-UvZK8PvY50aUEg5CYSDkkT2NsDA0+Eo7QWjreA3L5ff50jaFrYnpVOyfX4PjWhErH8gZtYSwep+DSgldCUInGQ==
   dependencies:
-    "@wdio/logger" "7.16.0"
-    "@wdio/types" "7.16.13"
+    "@wdio/logger" "7.19.0"
+    "@wdio/types" "7.19.5"
     p-iteration "^1.1.8"
 
 "@wdio/utils@7.7.3":
@@ -1159,6 +1166,11 @@
   dependencies:
     "@wdio/logger" "7.7.0"
     "@wdio/types" "7.7.3"
+
+"@xmldom/xmldom@^0.x":
+  version "0.7.5"
+  resolved "https://registry.npmjs.org/@xmldom/xmldom/-/xmldom-0.7.5.tgz"
+  integrity sha512-V3BIhmY36fXZ1OtVcI9W+FxQqxVLsPKcNjWigIaa81dLC9IolJl5Mt4Cvhmr0flUnjSpTdrbMTSbXqYqV5dT6A==
 
 accepts@~1.3.7:
   version "1.3.7"
@@ -1241,6 +1253,11 @@ ansi-regex@^5.0.0:
   resolved "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.0.tgz"
   integrity sha512-bY6fj56OUQ0hU1KjFNDQuJFezqKdrAyFdIevADiqrWHwSlbmBNMHp5ak2f40Pm8JTFyM2mqxkG6ngkHO11f/lg==
 
+ansi-regex@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz"
+  integrity sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==
+
 ansi-styles@^2.2.1:
   version "2.2.1"
   resolved "https://registry.npmjs.org/ansi-styles/-/ansi-styles-2.2.1.tgz"
@@ -1283,10 +1300,10 @@ anymatch@~3.1.1:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-appium-adb@^8.10.0, appium-adb@^8.11.0, appium-adb@^8.8.0, appium-adb@^8.9.0:
-  version "8.12.3"
-  resolved "https://registry.npmjs.org/appium-adb/-/appium-adb-8.12.3.tgz"
-  integrity sha512-sHfCOuaxH8g/n/DmIfrSEE6lalVB1aqPQmJB2Nnq54NMLEb4MIlr5eI2Rt0Xx/LtkN/SWDtLwS6LyEyBUlECzA==
+appium-adb@^8.10.0, appium-adb@^8.16.0, appium-adb@^8.8.0, appium-adb@^8.9.0:
+  version "8.16.2"
+  resolved "https://registry.npmjs.org/appium-adb/-/appium-adb-8.16.2.tgz"
+  integrity sha512-mWPPY0Z10Q3HiHsiKD5+PJelpU/AtG1Hxr18S2KKM/sRPIFIo05iyboXsGYYg0cx0u3Mtwdq7LEhWRlSWbrr3A==
   dependencies:
     "@babel/runtime" "^7.0.0"
     adbkit-apkreader "^3.1.2"
@@ -1302,17 +1319,16 @@ appium-adb@^8.10.0, appium-adb@^8.11.0, appium-adb@^8.8.0, appium-adb@^8.9.0:
     teen_process "^1.11.0"
     utf7 "^1.0.2"
 
-appium-android-driver@^4.20.0, appium-android-driver@^4.40.0:
-  version "4.43.2"
-  resolved "https://registry.npmjs.org/appium-android-driver/-/appium-android-driver-4.43.2.tgz"
-  integrity sha512-a7UUzr7LipaEN3ZQNyzQvXxPrmDaxOZNNDE2vr3EePXNO0BPA/23orShQRvNxOkbSvgpfcP+Qv0fZ1xCaAUxPw==
+appium-android-driver@^4.20.0, appium-android-driver@^4.45.0, appium-android-driver@^4.50.0:
+  version "4.51.0"
+  resolved "https://registry.npmjs.org/appium-android-driver/-/appium-android-driver-4.51.0.tgz"
+  integrity sha512-OghdG1BdmF6MZiHnulqo+6khxPKKE5Bb4JaGMND/7NG8CFuztAFA3vf4X5g3p3zs5e9a2XoSFUqC5iEoE4zvcQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
-    appium-adb "^8.11.0"
+    appium-adb "^8.16.0"
     appium-base-driver "^7.0.0"
     appium-chromedriver "^4.13.0"
     appium-support "^2.47.1"
-    async-lock "^1.2.2"
     asyncbox "^2.8.0"
     axios "^0.x"
     bluebird "^3.4.7"
@@ -1328,7 +1344,7 @@ appium-android-driver@^4.20.0, appium-android-driver@^4.40.0:
     shared-preferences-builder "^0.0.4"
     source-map-support "^0.5.5"
     teen_process "^1.9.0"
-    ws "^7.0.0"
+    ws "^8.0.0"
 
 appium-base-driver@^4.0.0:
   version "4.5.1"
@@ -1359,43 +1375,15 @@ appium-base-driver@^4.0.0:
     webdriverio "^5.10.9"
     ws "^7.0.0"
 
-appium-base-driver@^5.0.0:
-  version "5.8.1"
-  resolved "https://registry.npmjs.org/appium-base-driver/-/appium-base-driver-5.8.1.tgz"
-  integrity sha512-k5ybExgP0kJx7vsR0Y8GeEay+Vr0yCs0muzYtdrIDbqOCz5bFX0skyZubSSsm/lOE4KvgHhm4cRwWJM0DlHvRA==
+appium-base-driver@^7.0.0, appium-base-driver@^7.1.0, appium-base-driver@^7.2.3, appium-base-driver@^7.4.1:
+  version "7.11.0"
+  resolved "https://registry.npmjs.org/appium-base-driver/-/appium-base-driver-7.11.0.tgz"
+  integrity sha512-EXdLWbj3adRMKgopeaUXeQsoMu8ttVPqYZXPoSjG82IiyaccpnZmAjSkmCwvhlIyW9lw8xM+cwdaF6ZRYMZLLg==
   dependencies:
     "@babel/runtime" "^7.0.0"
-    appium-support "^2.46.0"
+    appium-support "^2.54.1"
     async-lock "^1.0.0"
-    asyncbox "^2.3.1"
-    axios "^0.19.2"
-    bluebird "^3.5.3"
-    body-parser "^1.18.2"
-    colors "^1.1.2"
-    es6-error "^4.1.1"
-    express "^4.16.2"
-    http-status-codes "^1.3.0"
-    lodash "^4.0.0"
-    lru-cache "^5.0.0"
-    method-override "^3.0.0"
-    morgan "^1.9.0"
-    request "^2.88.2"
-    request-promise "^4.2.5"
-    serve-favicon "^2.4.5"
-    source-map-support "^0.5.5"
-    validate.js "^0.13.0"
-    webdriverio "^6.0.2"
-    ws "^7.0.0"
-
-appium-base-driver@^7.0.0, appium-base-driver@^7.1.0, appium-base-driver@^7.2.3:
-  version "7.7.0"
-  resolved "https://registry.npmjs.org/appium-base-driver/-/appium-base-driver-7.7.0.tgz"
-  integrity sha512-HEGXn10dtwlR9nY8VWaWTs/qij5Y2kMT69YgEho1JkuUvYiFM53np9Rb7o5oTEmwbFL/QhzBwIgxZYOVfcS8mw==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    appium-support "^2.52.0"
-    async-lock "^1.0.0"
-    asyncbox "^2.3.1"
+    asyncbox "^2.9.1"
     axios "^0.x"
     bluebird "^3.5.3"
     body-parser "^1.18.2"
@@ -1411,12 +1399,12 @@ appium-base-driver@^7.0.0, appium-base-driver@^7.1.0, appium-base-driver@^7.2.3:
     source-map-support "^0.x"
     validate.js "^0.13.0"
     webdriverio "^6.0.2"
-    ws "^7.0.0"
+    ws "^8.0.0"
 
 appium-chromedriver@^4.13.0, appium-chromedriver@^4.23.1:
-  version "4.27.2"
-  resolved "https://registry.npmjs.org/appium-chromedriver/-/appium-chromedriver-4.27.2.tgz"
-  integrity sha512-xvjr2pfX4pcf7+3ARXR62Hc9c65pAxq4AP1F0QVH7+uxS14cmxmebzDwGMa4z9rJZfr+wvXU78UKaw5Wfllh/A==
+  version "4.27.3"
+  resolved "https://registry.npmjs.org/appium-chromedriver/-/appium-chromedriver-4.27.3.tgz"
+  integrity sha512-6yonhwM+DJ7fOJlu/q+UNtSwQ6SiTs6T8XTwP5ce1kEQAdANknOqkLVseqlvDyb1ICgcb2kUHRwtAYdnQZoqeQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     appium-base-driver "^7.1.0"
@@ -1434,13 +1422,13 @@ appium-chromedriver@^4.13.0, appium-chromedriver@^4.23.1:
     xpath "^0.x"
 
 appium-espresso-driver@^1.0.0:
-  version "1.45.0"
-  resolved "https://registry.npmjs.org/appium-espresso-driver/-/appium-espresso-driver-1.45.0.tgz"
-  integrity sha512-CIcmw629wSYMNtTh5NOHVNIRae3p6pEvHI84gCTQwSar0AJL3gTuIhK8jg3A6f1hZPX49hBHKCF8a29JrrWB+Q==
+  version "1.45.3"
+  resolved "https://registry.npmjs.org/appium-espresso-driver/-/appium-espresso-driver-1.45.3.tgz"
+  integrity sha512-CzWOsCD4z/67XmIfZzptiWYfHjGwjSOiltXwgTEi6WAL4WzBtz0tORu4+oYXNssen8EZ/ljgckcIA8GPB+5aKA==
   dependencies:
     "@babel/runtime" "^7.4.3"
     appium-adb "^8.9.0"
-    appium-android-driver "^4.40.0"
+    appium-android-driver "^4.45.0"
     appium-base-driver "^7.0.0"
     appium-support "^2.46.0"
     asyncbox "^2.3.1"
@@ -1466,15 +1454,19 @@ appium-fake-driver@^1.x:
     xpath "^0.x"
 
 appium-flutter-driver@^0.x:
-  version "0.0.28"
-  resolved "https://registry.npmjs.org/appium-flutter-driver/-/appium-flutter-driver-0.0.28.tgz"
-  integrity sha512-OIA92awOflC194OeV592bBelOIdgF5lgnRheJWGJE7ncvKkIpykNKOSUx6K6pfAI2gAssQyAfTnu1tywFSY7Yg==
+  version "0.0.32"
+  resolved "https://registry.npmjs.org/appium-flutter-driver/-/appium-flutter-driver-0.0.32.tgz"
+  integrity sha512-Hl00luaY9duDQbg/LSXxJDYX/CXL+ZZxtiQ7Ms1F4GEt6SF6v9J4yd3vo6MWR8/nJmksP0XbyqaGRdrUOlMu8g==
   dependencies:
     appium-adb "^8.8.0"
-    appium-base-driver "^5.0.0"
+    appium-base-driver "^7.4.1"
     appium-ios-device "^1.7.1"
+    appium-support "^2.47.1"
     appium-uiautomator2-driver "^1.35.1"
     appium-xcuitest-driver "^3.17.0"
+    asyncbox "^2.3.1"
+    bluebird "^3.1.1"
+    portscanner "2.2.0"
     rpc-websockets "^5.1.1"
 
 appium-geckodriver@^0.x:
@@ -1516,10 +1508,10 @@ appium-ios-device@^0.10.0:
     semver "^6.1.2"
     source-map-support "^0.5.5"
 
-appium-ios-device@^1.5.0, appium-ios-device@^1.7.0, appium-ios-device@^1.7.1:
-  version "1.7.1"
-  resolved "https://registry.npmjs.org/appium-ios-device/-/appium-ios-device-1.7.1.tgz"
-  integrity sha512-kMsj/jjYqNRNgKpl7waXzWv9ydioMmGy1hGvdbhLHFI8oNMw71KJlK0rQtJ2Abw1H2zf92bpjpmoCBmO+UyICQ==
+appium-ios-device@^1.7.0, appium-ios-device@^1.7.1, appium-ios-device@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.npmjs.org/appium-ios-device/-/appium-ios-device-1.8.0.tgz"
+  integrity sha512-l4PVO0RSCsgd9wLiHhpBOlCP2wM0ND3+9+UMKP72c3qaaC2JxEqiKNIoc0r/jW7D5/Aoh/MtTT2yFHvqtZ0r/Q==
   dependencies:
     "@babel/runtime" "^7.0.0"
     appium-support "^2.35.0"
@@ -1558,22 +1550,22 @@ appium-ios-driver@4.x:
     xpath "^0.x"
 
 appium-ios-simulator@^3.14.0, appium-ios-simulator@^3.23.0, appium-ios-simulator@^3.24.0, appium-ios-simulator@^3.28.0:
-  version "3.28.0"
-  resolved "https://registry.npmjs.org/appium-ios-simulator/-/appium-ios-simulator-3.28.0.tgz"
-  integrity sha512-HYUUl+FN/OtnY2uh4uyMKwnhW7BAeXwGM1lrdnqoIGDm0m112npBueZVrh87l1pnaCIISXBjmTXLbX4PxWyTDg==
+  version "3.29.0"
+  resolved "https://registry.npmjs.org/appium-ios-simulator/-/appium-ios-simulator-3.29.0.tgz"
+  integrity sha512-7Y6KJJI3K4V35xbJeEwyedPg0DACYmv7cyyyoMbyz7PcLmoaKcufziNYwhlIiiKJIlPc+U/MJfeWUBSQ6W5/Vg==
   dependencies:
     "@babel/runtime" "^7.0.0"
+    "@xmldom/xmldom" "^0.x"
     appium-support "^2.44.0"
     appium-xcode "^3.1.0"
     async-lock "^1.0.0"
     asyncbox "^2.3.1"
     bluebird "^3.5.1"
     lodash "^4.2.1"
-    node-simctl "^6.4.0"
+    node-simctl "^6.6.0"
     semver "^7.0.0"
     source-map-support "^0.5.3"
     teen_process "^1.3.0"
-    xmldom "^0.x"
 
 appium-mac-driver@1.x, appium-mac-driver@^1.10.0:
   version "1.10.2"
@@ -1590,9 +1582,9 @@ appium-mac-driver@1.x, appium-mac-driver@^1.10.0:
     teen_process "^1.15.0"
 
 appium-mac2-driver@^0.x:
-  version "0.13.1"
-  resolved "https://registry.npmjs.org/appium-mac2-driver/-/appium-mac2-driver-0.13.1.tgz"
-  integrity sha512-LfWiJ4j3aCfU9OwSdb++P99TZkPJB53ptufIGy2kVsVEU4TtE42UA5vDXgfL6vk9tVoIt43B44go7ZnQ0S2KJQ==
+  version "0.14.1"
+  resolved "https://registry.npmjs.org/appium-mac2-driver/-/appium-mac2-driver-0.14.1.tgz"
+  integrity sha512-gq7A0Q2w7cUF3ZTC+jWSSGEjRhF2ifFr/3IcOMxLwXY6LmgD7eavPdVYZ+DYw8a7dRkUZdnSWuWcyfSCCxplQQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     appium-base-driver "^7.1.0"
@@ -1662,10 +1654,10 @@ appium-sdb@^1.0.1-beta.1:
     source-map-support "^0.5.9"
     teen_process "^1.3.1"
 
-appium-support@2.x, appium-support@^2.11.1, appium-support@^2.28.0, appium-support@^2.30.0, appium-support@^2.33.1, appium-support@^2.35.0, appium-support@^2.36.0, appium-support@^2.4.0, appium-support@^2.41.0, appium-support@^2.44.0, appium-support@^2.46.0, appium-support@^2.47.1, appium-support@^2.48.1, appium-support@^2.49.0, appium-support@^2.52.0, appium-support@^2.8.0:
-  version "2.53.0"
-  resolved "https://registry.npmjs.org/appium-support/-/appium-support-2.53.0.tgz"
-  integrity sha512-E4OykST5+ip8aH+fmoKOklwJpuQ9zwxU62481RJoXdnKV0qzPRkrI65zbRX6QzhaUPMKD6N5rLOvlYLITS5rHQ==
+appium-support@2.x, appium-support@^2.11.1, appium-support@^2.28.0, appium-support@^2.30.0, appium-support@^2.33.1, appium-support@^2.35.0, appium-support@^2.36.0, appium-support@^2.4.0, appium-support@^2.41.0, appium-support@^2.44.0, appium-support@^2.46.0, appium-support@^2.47.1, appium-support@^2.48.1, appium-support@^2.49.0, appium-support@^2.54.1, appium-support@^2.8.0:
+  version "2.54.1"
+  resolved "https://registry.npmjs.org/appium-support/-/appium-support-2.54.1.tgz"
+  integrity sha512-Nhbduhtj9CwDAhOH77Ux5nyXpccIw9kz2WW0eLwIn2BoEEIcRjEcAdIvXQ2qTqURhVAHd4VyATllf1oAVYFbkQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     archiver "^5.0.0"
@@ -1686,7 +1678,7 @@ appium-support@2.x, appium-support@^2.11.1, appium-support@^2.28.0, appium-suppo
     moment "^2.24.0"
     mv "^2.1.1"
     ncp "^2.0.0"
-    npmlog "^4.1.2"
+    npmlog "^5.0.0"
     plist "^3.0.1"
     pluralize "^8.0.0"
     pngjs "^6.0.0"
@@ -1719,17 +1711,17 @@ appium-tizen-driver@^1.1.1-beta.4:
     yargs "^12.0.2"
 
 appium-uiautomator2-driver@^1.35.1, appium-uiautomator2-driver@^1.37.1, appium-uiautomator2-driver@^1.57.1:
-  version "1.66.1"
-  resolved "https://registry.npmjs.org/appium-uiautomator2-driver/-/appium-uiautomator2-driver-1.66.1.tgz"
-  integrity sha512-/B3f78gbAZFlz/kNtCqNJKlZC1tY8881Ad7Iubz0IRV5iuaHHD50Td/hqz6ymlep23xspMhlq/8niozN9X+0oA==
+  version "1.70.1"
+  resolved "https://registry.npmjs.org/appium-uiautomator2-driver/-/appium-uiautomator2-driver-1.70.1.tgz"
+  integrity sha512-KMCjO4QBcBy+vqWDx0mIhP90vr/1dMDqE0m6LR4MlHCREeJn2BhzRaepTLJCYvDDOtItI2gkgrjkCp9sbKuLzg==
   dependencies:
     "@babel/runtime" "^7.0.0"
     appium-adb "^8.10.0"
-    appium-android-driver "^4.40.0"
+    appium-android-driver "^4.50.0"
     appium-base-driver "^7.0.0"
     appium-chromedriver "^4.23.1"
     appium-support "^2.49.0"
-    appium-uiautomator2-server "^4.22.1"
+    appium-uiautomator2-server "^4.26.0"
     asyncbox "^2.3.1"
     axios "^0.x"
     bluebird "^3.5.1"
@@ -1739,15 +1731,15 @@ appium-uiautomator2-driver@^1.35.1, appium-uiautomator2-driver@^1.37.1, appium-u
     source-map-support "^0.5.5"
     teen_process "^1.3.1"
 
-appium-uiautomator2-server@^4.22.1:
-  version "4.22.3"
-  resolved "https://registry.npmjs.org/appium-uiautomator2-server/-/appium-uiautomator2-server-4.22.3.tgz"
-  integrity sha512-ichVUBgEip2KxEzfGTjPBllxqzOJcp7er/Xeyr2SACcnPHDyPrrO95tz2LJS8NiBAsA5u+4dW+UAOf1eT/a8DQ==
+appium-uiautomator2-server@^4.26.0:
+  version "4.27.0"
+  resolved "https://registry.npmjs.org/appium-uiautomator2-server/-/appium-uiautomator2-server-4.27.0.tgz"
+  integrity sha512-R7cX/9UGUuUheFBnDMI6lQezQJKUfHdnZRKoXNtqxyAlzpgAhJNoG62LHEL3e5nygq1Qt2DQmbFB5xgNXUvomg==
 
-appium-webdriveragent@^3.9.1:
-  version "3.9.2"
-  resolved "https://registry.npmjs.org/appium-webdriveragent/-/appium-webdriveragent-3.9.2.tgz"
-  integrity sha512-y+80/Qk0+jcDIR6V9gxYZ0fANeYdUBkkqAbiSHddRq2MPEJdm6eSdFvjnDsOgChi26muxTXo4ZtqlGO6eLAPlg==
+appium-webdriveragent@^3.16.0:
+  version "3.17.0"
+  resolved "https://registry.npmjs.org/appium-webdriveragent/-/appium-webdriveragent-3.17.0.tgz"
+  integrity sha512-gHtx1uPCQlJn4k2cnMyyOPf4dCaNy0eFt6Oc1bPXkxrYm0X04ZVLFUSIdqBL9n5YKv8Igg3/mkqt4TzWyZxrFw==
   dependencies:
     "@babel/runtime" "^7.0.0"
     appium-base-driver "^7.0.0"
@@ -1763,24 +1755,25 @@ appium-webdriveragent@^3.9.1:
     teen_process "^1.14.1"
 
 appium-windows-driver@1.x:
-  version "1.19.0"
-  resolved "https://registry.npmjs.org/appium-windows-driver/-/appium-windows-driver-1.19.0.tgz"
-  integrity sha512-T9O1V8kSWwEaiQakHuaUIBT9JX7L2hQ/Bpi7zHkUswFxRVNMSImotbe8Nwc6qzxk83TT1UfQRCjwmj+kDrAxAg==
+  version "1.19.1"
+  resolved "https://registry.npmjs.org/appium-windows-driver/-/appium-windows-driver-1.19.1.tgz"
+  integrity sha512-iZW51z88VQKPA851IshZaWyogfoI05QKqH9ltzuKHkHgdvWm/DLnAXmeQHfJi+nUaBy+D92PLiyHnAvJJTRB/Q==
   dependencies:
     "@babel/runtime" "^7.0.0"
     appium-base-driver "^7.0.0"
     appium-support "^2.49.0"
     asyncbox "^2.3.1"
     bluebird "^3.5.1"
+    es6-error "^4.1.1"
     lodash "^4.6.1"
     portscanner "2.2.0"
     source-map-support "^0.5.5"
     teen_process "^1.7.0"
 
 appium-xcode@^3.1.0, appium-xcode@^3.8.0:
-  version "3.10.0"
-  resolved "https://registry.npmjs.org/appium-xcode/-/appium-xcode-3.10.0.tgz"
-  integrity sha512-6Db49w2UjcdMn96nUMS/EGKE/6r/sgIPcw8mr9+e4Oeb5rvROAm/VeIWmwnov3uk2JG3SGkLTQRB9tROKKRDgw==
+  version "3.11.0"
+  resolved "https://registry.npmjs.org/appium-xcode/-/appium-xcode-3.11.0.tgz"
+  integrity sha512-kT1du+HYBrd8X+cLfpp0mLCbqv7tgPRI9lCmrSeL2t9cIGdb+p9m4MOlfaKxrsqFurQlmMVUHmKDZLU4kvZWBg==
   dependencies:
     "@babel/runtime" "^7.0.0"
     appium-support "^2.4.0"
@@ -1791,40 +1784,41 @@ appium-xcode@^3.1.0, appium-xcode@^3.8.0:
     source-map-support "^0.5.5"
     teen_process "^1.3.0"
 
-appium-xcuitest-driver@^3.17.0, appium-xcuitest-driver@^3.27.4, appium-xcuitest-driver@^3.27.6:
-  version "3.46.1"
-  resolved "https://registry.npmjs.org/appium-xcuitest-driver/-/appium-xcuitest-driver-3.46.1.tgz"
-  integrity sha512-0qP4OBRCHycfYEKX1rEKDk9zNBlhOGZ6YK3r62KDqIVQ5Ao5qElVXizGe3dT6UG7iw19WuwonTcwj9LyuuF0iA==
+appium-xcuitest-driver@^3.17.0, appium-xcuitest-driver@^3.27.4, appium-xcuitest-driver@^3.59.0:
+  version "3.59.0"
+  resolved "https://registry.npmjs.org/appium-xcuitest-driver/-/appium-xcuitest-driver-3.59.0.tgz"
+  integrity sha512-SG3ylxzzbIDg8P4zx9S6vSBIcT4TGnvVcolENC/pYJBO/8g3ru4z8+lcHZNdVzNZ6fpORdTROcEk2Zfu8WEAnw==
   dependencies:
     "@babel/runtime" "^7.0.0"
+    "@xmldom/xmldom" "^0.x"
     appium-base-driver "^7.0.0"
     appium-idb "^0.x"
-    appium-ios-device "^1.5.0"
+    appium-ios-device "^1.8.0"
     appium-ios-simulator "^3.28.0"
     appium-remote-debugger "^8.13.2"
     appium-support "^2.47.1"
-    appium-webdriveragent "^3.9.1"
+    appium-webdriveragent "^3.16.0"
     appium-xcode "^3.8.0"
     async-lock "^1.0.0"
     asyncbox "^2.3.1"
     bluebird "^3.5.1"
     css-selector-parser "^1.4.1"
-    js2xmlparser2 "^0.2.0"
+    js2xmlparser2 "^0.x"
     lodash "^4.17.10"
+    lru-cache "^6.0.0"
     moment "^2.24.0"
     moment-timezone "^0.x"
     node-simctl "^6.4.0"
     portscanner "2.2.0"
     semver "^7.0.0"
-    source-map-support "^0.5.5"
+    source-map-support "^0.x"
     teen_process "^1.14.0"
-    ws "^7.0.0"
-    xmldom "^0.x"
+    ws "^8.0.0"
 
 appium-youiengine-driver@^1.2.8:
-  version "1.2.8"
-  resolved "https://registry.npmjs.org/appium-youiengine-driver/-/appium-youiengine-driver-1.2.8.tgz"
-  integrity sha512-JXRAMTba1NqY6JQSwv2bSuoF3XM60vDZJh2W2COwIDyaZekk/U6CNvLUMHkCvU/kWtd/HRsAjw0Uw100eEo4Pw==
+  version "1.2.9"
+  resolved "https://registry.npmjs.org/appium-youiengine-driver/-/appium-youiengine-driver-1.2.9.tgz"
+  integrity sha512-Xq3sttITAJi+fF42BepuyT82YwMWQCFpH21/fZuNwUv8Ry6jercFoNa0wz6SIXyXOMgmoHsf+uW7sinrcq/9tA==
   dependencies:
     "@babel/runtime" "^7.11.2"
     appium-base-driver "^7.2.3"
@@ -1842,10 +1836,10 @@ appium-youiengine-driver@^1.2.8:
     source-map-support "^0.5.19"
     teen_process "^1.15.0"
 
-appium@^1.21.0:
-  version "1.21.0"
-  resolved "https://registry.npmjs.org/appium/-/appium-1.21.0.tgz"
-  integrity sha512-aSFz8Bu7hzvNPFYeYlJbCFh8mSCu1S4tkDXTs077PdgKIg8mMdPLzZR1nZtsmdhNpLCdobPWJqPBJ+9xXfVYQA==
+appium@^1.22.3:
+  version "1.22.3"
+  resolved "https://registry.npmjs.org/appium/-/appium-1.22.3.tgz"
+  integrity sha512-0/SkcOdC8h79Z5TgCeWbeGEbAQzLzwR3h2jYL5EI6zPIrbqZczGv7S8HgmFQPQ98La2wmf26dpPvL8Vw4r/WXw==
   dependencies:
     "@babel/runtime" "^7.6.0"
     appium-android-driver "^4.20.0"
@@ -1862,7 +1856,7 @@ appium@^1.21.0:
     appium-tizen-driver "^1.1.1-beta.4"
     appium-uiautomator2-driver "^1.37.1"
     appium-windows-driver "1.x"
-    appium-xcuitest-driver "^3.27.6"
+    appium-xcuitest-driver "^3.59.0"
     appium-youiengine-driver "^1.2.8"
     argparse "^2.0.1"
     async-lock "^1.0.0"
@@ -1880,7 +1874,7 @@ appium@^1.21.0:
     winston "3.x"
     word-wrap "^1.2.3"
 
-aproba@^1.0.3:
+aproba@^1.0.3, "aproba@^1.0.3 || ^2.0.0":
   version "1.2.0"
   resolved "https://registry.npmjs.org/aproba/-/aproba-1.2.0.tgz"
   integrity sha512-Y9J6ZjXtoYh8RnXVCMOU/ttDmk1aBjunq9vO0ta5x85WDQiQfUF9sIPBITdbiiIVcBo03Hi3jMxigBtsddlXRw==
@@ -1926,6 +1920,14 @@ archiver@^5.0.0:
     readdir-glob "^1.0.0"
     tar-stream "^2.2.0"
     zip-stream "^4.1.0"
+
+are-we-there-yet@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/are-we-there-yet/-/are-we-there-yet-2.0.0.tgz"
+  integrity sha512-Ci/qENmwHnsYo9xKIcUJN5LeDKdJ6R1Z1j9V/J5wyq8nh/mYPEpIKJbBZXtZjG04HiK7zV/p6Vs9952MrMeUIw==
+  dependencies:
+    delegates "^1.0.0"
+    readable-stream "^3.6.0"
 
 are-we-there-yet@~1.1.2:
   version "1.1.5"
@@ -2032,10 +2034,10 @@ async@^3.1.0, async@^3.2.0:
   resolved "https://registry.npmjs.org/async/-/async-3.2.0.tgz"
   integrity sha512-TR2mEZFVOj2pLStYxLht7TyfuRzaydfpxr3k9RpHIzMgw7A64dzsdqCxH1WJyQdoe8T10nDXd9wnEigmiuHIZw==
 
-asyncbox@2.x, asyncbox@^2.0.2, asyncbox@^2.0.4, asyncbox@^2.3.0, asyncbox@^2.3.1, asyncbox@^2.3.2, asyncbox@^2.5.2, asyncbox@^2.5.3, asyncbox@^2.6.0, asyncbox@^2.8.0:
-  version "2.8.0"
-  resolved "https://registry.npmjs.org/asyncbox/-/asyncbox-2.8.0.tgz"
-  integrity sha512-wutDUrsVaCOjNNEDskVnLAcu8nQRHRNtI/gz1LtR4GNYMF+yMiWe5YvFMOOeGlavbEmkwrTalftIaTwwCiMtog==
+asyncbox@2.x, asyncbox@^2.0.2, asyncbox@^2.0.4, asyncbox@^2.3.0, asyncbox@^2.3.1, asyncbox@^2.3.2, asyncbox@^2.5.2, asyncbox@^2.5.3, asyncbox@^2.6.0, asyncbox@^2.8.0, asyncbox@^2.9.1:
+  version "2.9.2"
+  resolved "https://registry.npmjs.org/asyncbox/-/asyncbox-2.9.2.tgz"
+  integrity sha512-VSon1vGccTPcseugq0hl1ImUReW2+Z0GrDpeNHrxuZIKIUf5+gaeXtEFqESFJzSlF3y1UHC8Pkc6AhX/mTiBLA==
   dependencies:
     "@babel/runtime" "^7.0.0"
     bluebird "^3.5.1"
@@ -2067,13 +2069,6 @@ aws4@^1.8.0:
   version "1.11.0"
   resolved "https://registry.npmjs.org/aws4/-/aws4-1.11.0.tgz"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
-
-axios@^0.19.2:
-  version "0.19.2"
-  resolved "https://registry.npmjs.org/axios/-/axios-0.19.2.tgz"
-  integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
-  dependencies:
-    follow-redirects "1.5.10"
 
 axios@^0.21.1, axios@^0.x:
   version "0.21.1"
@@ -2490,14 +2485,14 @@ color-name@^1.0.0, color-name@~1.1.4:
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
 
 color-string@^1.5.2:
-  version "1.5.5"
-  resolved "https://registry.npmjs.org/color-string/-/color-string-1.5.5.tgz"
-  integrity sha512-jgIoum0OfQfq9Whcfc2z/VhCNcmQjWbey6qBX0vqt7YICflUmBCh9E9CiQD5GSJ+Uehixm3NUwHVhqUAWRivZg==
+  version "1.6.0"
+  resolved "https://registry.npmjs.org/color-string/-/color-string-1.6.0.tgz"
+  integrity sha512-c/hGS+kRWJutUBEngKKmk4iH3sD59MBkoxVapS/0wgpCz2u7XsNloxknyvBhzwEs1IbV36D9PwqLPJ2DTu3vMA==
   dependencies:
     color-name "^1.0.0"
     simple-swizzle "^0.2.2"
 
-color-support@^1.1.3:
+color-support@^1.1.2, color-support@^1.1.3:
   version "1.1.3"
   resolved "https://registry.npmjs.org/color-support/-/color-support-1.1.3.tgz"
   integrity sha512-qiBjkpbMLO/HL68y+lh4q0/O1MZFj2RX6X/KmMa3+gJD3z+WwI1ZzDHysvqHGS3mP6mznPckpXmw1nI9cJjyRg==
@@ -2565,7 +2560,7 @@ concat-map@0.0.1:
   resolved "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
-console-control-strings@^1.0.0, console-control-strings@~1.1.0:
+console-control-strings@^1.0.0, console-control-strings@^1.1.0, console-control-strings@~1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/console-control-strings/-/console-control-strings-1.1.0.tgz"
   integrity sha1-PXz0Rk22RG6mRL9LOVB/mFEAjo4=
@@ -2704,7 +2699,7 @@ debug@2.6.9, debug@^2.2.0, debug@^2.6.8:
   dependencies:
     ms "2.0.0"
 
-debug@3.1.0, debug@=3.1.0:
+debug@3.1.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/debug/-/debug-3.1.0.tgz"
   integrity sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
@@ -3141,15 +3136,10 @@ extract-zip@^2.0.0, extract-zip@^2.0.1:
   optionalDependencies:
     "@types/yauzl" "^2.9.1"
 
-extsprintf@1.3.0:
+extsprintf@1.3.0, extsprintf@^1.2.0:
   version "1.3.0"
   resolved "https://registry.npmjs.org/extsprintf/-/extsprintf-1.3.0.tgz"
   integrity sha1-lpGEQOMEGnpBT4xS48V06zw+HgU=
-
-extsprintf@^1.2.0:
-  version "1.4.0"
-  resolved "https://registry.npmjs.org/extsprintf/-/extsprintf-1.4.0.tgz"
-  integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
 fancy-log@^1.3.2:
   version "1.3.3"
@@ -3189,9 +3179,9 @@ fast-json-stable-stringify@^2.0.0:
   integrity sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==
 
 fast-safe-stringify@^2.0.4:
-  version "2.0.7"
-  resolved "https://registry.npmjs.org/fast-safe-stringify/-/fast-safe-stringify-2.0.7.tgz"
-  integrity sha512-Utm6CdzT+6xsDk2m8S6uL8VHxNwI6Jub+e9NYTcAms28T84pTa25GJQV9j0CY0N1rM8hK4x6grpF2BQf+2qwVA==
+  version "2.0.8"
+  resolved "https://registry.npmjs.org/fast-safe-stringify/-/fast-safe-stringify-2.0.8.tgz"
+  integrity sha512-lXatBjf3WPjmWD6DpIZxkeSsCOwqI0maYMpgDlx8g4U2qi4lbjA9oH/HD2a87G+KfsUmo5WbJFmqBZlPxtptag==
 
 fastq@^1.6.0:
   version "1.11.0"
@@ -3297,13 +3287,6 @@ fn.name@1.x.x:
   resolved "https://registry.npmjs.org/fn.name/-/fn.name-1.1.0.tgz"
   integrity sha512-GRnmB5gPyJpAhTQdSZTSp9uaPSvl09KoYcMQtsB9rQoOmzs9dH6ffeccH+Z+cv6P68Hu5bC6JjRh4Ah/mHSNRw==
 
-follow-redirects@1.5.10:
-  version "1.5.10"
-  resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.5.10.tgz"
-  integrity sha512-0V5l4Cizzvqt5D44aTXbFZz+FtyXV1vrDN6qrelxtfYQKW0KO0W2T/hkE8xvGa/540LkZlkaUjO4ailYTFtHVQ==
-  dependencies:
-    debug "=3.1.0"
-
 follow-redirects@^1.10.0:
   version "1.14.1"
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.1.tgz"
@@ -3396,6 +3379,21 @@ function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/function-bind/-/function-bind-1.1.1.tgz"
   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
+
+gauge@^3.0.0:
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/gauge/-/gauge-3.0.2.tgz"
+  integrity sha512-+5J6MS/5XksCuXq++uFRsnUd7Ovu1XenbeuIuNRJxYWjgQbPuFhT14lAvsWfqfAmnwluf1OwMjz39HjfLPci0Q==
+  dependencies:
+    aproba "^1.0.3 || ^2.0.0"
+    color-support "^1.1.2"
+    console-control-strings "^1.0.0"
+    has-unicode "^2.0.1"
+    object-assign "^4.1.1"
+    signal-exit "^3.0.0"
+    string-width "^4.2.3"
+    strip-ansi "^6.0.1"
+    wide-align "^1.1.2"
 
 gauge@~2.7.3:
   version "2.7.4"
@@ -3610,7 +3608,7 @@ has-flag@^4.0.0:
   resolved "https://registry.npmjs.org/has-flag/-/has-flag-4.0.0.tgz"
   integrity sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==
 
-has-unicode@^2.0.0:
+has-unicode@^2.0.0, has-unicode@^2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/has-unicode/-/has-unicode-2.0.1.tgz"
   integrity sha1-4Ob+aijPUROIVeCG0Wkedx3iqLk=
@@ -3637,24 +3635,13 @@ http-cache-semantics@^4.0.0:
   resolved "https://registry.npmjs.org/http-cache-semantics/-/http-cache-semantics-4.1.0.tgz"
   integrity sha512-carPklcUh7ROWRK7Cv27RPtdhYhUsela/ue5/jKzjegVvXDqM2ILE9Q2BGn9JZJh1g87cp56su/FgQSzcWS8cQ==
 
-http-errors@1.7.2:
+http-errors@1.7.2, http-errors@~1.7.2:
   version "1.7.2"
   resolved "https://registry.npmjs.org/http-errors/-/http-errors-1.7.2.tgz"
   integrity sha512-uUQBt3H/cSIVfch6i1EuPNy/YsRSOUBXTVfZ+yR7Zjez3qjBz6i9+i4zjNaoqcoFVI4lQJ5plg63TvGfRSDCRg==
   dependencies:
     depd "~1.1.2"
     inherits "2.0.3"
-    setprototypeof "1.1.1"
-    statuses ">= 1.5.0 < 2"
-    toidentifier "1.0.0"
-
-http-errors@~1.7.2:
-  version "1.7.3"
-  resolved "https://registry.npmjs.org/http-errors/-/http-errors-1.7.3.tgz"
-  integrity sha512-ZTTX0MWrsQ2ZAhA1cejAwDLycFsd7I7nVtnkT3Ol0aqodaKW+0CTZDQ1uBv5whptCnc8e8HeRRJxRs0kmm/Qfw==
-  dependencies:
-    depd "~1.1.2"
-    inherits "2.0.4"
     setprototypeof "1.1.1"
     statuses ">= 1.5.0 < 2"
     toidentifier "1.0.0"
@@ -3747,7 +3734,7 @@ inflight@^1.0.4:
     once "^1.3.0"
     wrappy "1"
 
-inherits@2, inherits@2.0.4, inherits@^2.0.3, inherits@^2.0.4, inherits@~2.0.1, inherits@~2.0.3:
+inherits@2, inherits@^2.0.3, inherits@^2.0.4, inherits@~2.0.1, inherits@~2.0.3:
   version "2.0.4"
   resolved "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
@@ -3793,9 +3780,9 @@ invert-kv@^2.0.0:
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
 
 io.appium.settings@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.npmjs.org/io.appium.settings/-/io.appium.settings-3.3.0.tgz"
-  integrity sha512-feZO8TnXtPqNeFGMqZQyl2uLkIGpNV1i9lxXOT9yes0ff6ntzAtMQqRe+5emrYhSNVgekfax7hACz/iU2xcmGg==
+  version "3.4.0"
+  resolved "https://registry.npmjs.org/io.appium.settings/-/io.appium.settings-3.4.0.tgz"
+  integrity sha512-7up+8dJr2RXXZhXNVUq9rdtZbGRTytSJ1rax4qm16534zPcBwXeWin0hC9qsIjDtqXXEEUOHdybeqTD1X8ZlMQ==
 
 ip-regex@^4.1.0:
   version "4.3.0"
@@ -4082,7 +4069,7 @@ js-yaml@4.0.0:
   dependencies:
     argparse "^2.0.1"
 
-js2xmlparser2@^0.2.0:
+js2xmlparser2@^0.2.0, js2xmlparser2@^0.x:
   version "0.2.0"
   resolved "https://registry.npmjs.org/js2xmlparser2/-/js2xmlparser2-0.2.0.tgz"
   integrity sha1-p8ogibg9AjMdYxiS3WdDhkElAz8=
@@ -4179,10 +4166,10 @@ kuler@^2.0.0:
   resolved "https://registry.npmjs.org/kuler/-/kuler-2.0.0.tgz"
   integrity sha512-Xq9nH7KlWZmXAtodXDDRE7vs6DU1gTU8zYDHDiWLSip45Egwq3plLHzPn27NgvzL2r1LMPC1vdqh98sQxtqj4A==
 
-ky@^0.28.5:
-  version "0.28.7"
-  resolved "https://registry.yarnpkg.com/ky/-/ky-0.28.7.tgz#10c42be863fb96c1846d6e71e229263ffb72eb15"
-  integrity sha512-a23i6qSr/ep15vdtw/zyEQIDLoUaKDg9Jf04CYl/0ns/wXNYna26zJpI+MeIFaPeDvkrjLPrKtKOiiI3IE53RQ==
+ky@^0.30.0:
+  version "0.30.0"
+  resolved "https://registry.npmjs.org/ky/-/ky-0.30.0.tgz"
+  integrity sha512-X/u76z4JtDVq10u1JA5UQfatPxgPaVDMYTrgHyiTpGN2z4TMEJkIHsoSBBSg9SWZEIXTKsi9kHgiQ9o3Y/4yog==
 
 lazystream@^1.0.0:
   version "1.0.0"
@@ -4710,6 +4697,23 @@ node-simctl@^6.0.2, node-simctl@^6.3.2, node-simctl@^6.4.0:
     uuid "^8.0.0"
     which "^2.0.0"
 
+node-simctl@^6.6.0:
+  version "6.6.0"
+  resolved "https://registry.npmjs.org/node-simctl/-/node-simctl-6.6.0.tgz"
+  integrity sha512-157a3XqQFatcPT8BijH3IQml/GW8qByVjhe04reG86SawyJGfosM3s+qugd1kaar3nsKo+ad6KSS4GB7e9fxig==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    asyncbox "^2.3.1"
+    bluebird "^3.5.1"
+    lodash "^4.2.1"
+    npmlog "^5.0.0"
+    rimraf "^3.0.0"
+    semver "^7.0.0"
+    source-map-support "^0.5.5"
+    teen_process "^1.5.1"
+    uuid "^8.0.0"
+    which "^2.0.0"
+
 normalize-package-data@^2.3.2:
   version "2.5.0"
   resolved "https://registry.npmjs.org/normalize-package-data/-/normalize-package-data-2.5.0.tgz"
@@ -4747,6 +4751,16 @@ npmlog@4.x, npmlog@^4.1.2:
     gauge "~2.7.3"
     set-blocking "~2.0.0"
 
+npmlog@^5.0.0:
+  version "5.0.1"
+  resolved "https://registry.npmjs.org/npmlog/-/npmlog-5.0.1.tgz"
+  integrity sha512-AqZtDUWOMKs1G/8lwylVjrdYgqA4d9nu8hc+0gzRxlDb1I10+FHBGMXs6aiQHFdCUUlqH99MUMuLfzWDNDtfxw==
+  dependencies:
+    are-we-there-yet "^2.0.0"
+    console-control-strings "^1.1.0"
+    gauge "^3.0.0"
+    set-blocking "^2.0.0"
+
 number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/number-is-nan/-/number-is-nan-1.0.1.tgz"
@@ -4757,7 +4771,7 @@ oauth-sign@~0.9.0:
   resolved "https://registry.npmjs.org/oauth-sign/-/oauth-sign-0.9.0.tgz"
   integrity sha512-fexhUFFPTGV8ybAtSIGbV6gOkSv8UtRbDBnAyLQw4QPKkgNlsH2ByPGtMUqdWkos6YCRmAqViwgZrJc/mRDzZQ==
 
-object-assign@^4.1.0:
+object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz"
   integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
@@ -4851,7 +4865,7 @@ p-is-promise@^2.0.0:
 
 p-iteration@^1.1.8:
   version "1.1.8"
-  resolved "https://registry.yarnpkg.com/p-iteration/-/p-iteration-1.1.8.tgz#14df726d55af368beba81bcc92a26bb1b48e714a"
+  resolved "https://registry.npmjs.org/p-iteration/-/p-iteration-1.1.8.tgz"
   integrity sha512-IMFBSDIYcPNnW7uWYGrBqmvTiq7W0uB0fJn6shQZs7dlF3OvrHOre+JT9ikSZ7gZS3vWqclVgoQSvToJrns7uQ==
 
 p-limit@^2.0.0, p-limit@^2.2.0:
@@ -5377,7 +5391,7 @@ request-promise-core@1.1.4:
   dependencies:
     lodash "^4.17.19"
 
-request-promise@^4.2.2, request-promise@^4.2.5:
+request-promise@^4.2.2:
   version "4.2.6"
   resolved "https://registry.npmjs.org/request-promise/-/request-promise-4.2.6.tgz"
   integrity sha512-HCHI3DJJUakkOr8fNoCc73E5nU5bqITjOYFMDrKHYOXWXrgD/SBaC7LjwuPymUprRyuF06UK7hd/lMHkmUXglQ==
@@ -5387,7 +5401,7 @@ request-promise@^4.2.2, request-promise@^4.2.5:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request@^2.83.0, request@^2.88.2:
+request@^2.83.0:
   version "2.88.2"
   resolved "https://registry.npmjs.org/request/-/request-2.88.2.tgz"
   integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==
@@ -5443,7 +5457,14 @@ responselike@^2.0.0:
   dependencies:
     lowercase-keys "^2.0.0"
 
-resq@^1.6.0, resq@^1.9.1:
+resq@^1.6.0:
+  version "1.10.1"
+  resolved "https://registry.npmjs.org/resq/-/resq-1.10.1.tgz"
+  integrity sha512-zhp1iyUH02MLciv3bIM2bNtTFx/fqRsK4Jk73jcPqp00d/sMTTjOtjdTMAcgjrQKGx5DvQ/HSpeqaMW0atGRJA==
+  dependencies:
+    fast-deep-equal "^2.0.1"
+
+resq@^1.9.1:
   version "1.10.0"
   resolved "https://registry.npmjs.org/resq/-/resq-1.10.0.tgz"
   integrity sha512-hCUd0xMalqtPDz4jXIqs0M5Wnv/LZXN8h7unFOo4/nvExT9dDPbhwd3udRxLlp0HgBnHcV009UlduE9NZi7A6w==
@@ -5541,12 +5562,12 @@ safe-buffer@5.1.1:
   resolved "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.1.tgz"
   integrity sha512-kKvNJn6Mm93gAczWVJg7wH+wGYWNrDHdWvpUmHyEsgCtIwwo3bqPtV4tR5tuPaUhTOo/kvhVwd8XwwOllGYkbg==
 
-safe-buffer@5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
+safe-buffer@5.1.2, safe-buffer@^5.0.1, safe-buffer@^5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.2"
   resolved "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz"
   integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
 
-safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.2, safe-buffer@~5.2.0:
+safe-buffer@^5.1.0, safe-buffer@~5.2.0:
   version "5.2.1"
   resolved "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz"
   integrity sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==
@@ -5833,7 +5854,7 @@ stream-combiner@^0.2.2:
     duplexer "~0.1.1"
     through "~2.3.4"
 
-string-width@^1.0.1:
+string-width@^1.0.1, "string-width@^1.0.2 || 2":
   version "1.0.2"
   resolved "https://registry.npmjs.org/string-width/-/string-width-1.0.2.tgz"
   integrity sha1-EYvfW4zcUaKn5w0hHgfisLmxB9M=
@@ -5842,7 +5863,7 @@ string-width@^1.0.1:
     is-fullwidth-code-point "^1.0.0"
     strip-ansi "^3.0.0"
 
-"string-width@^1.0.2 || 2", string-width@^2.0.0, string-width@^2.1.1:
+string-width@^2.0.0, string-width@^2.1.1:
   version "2.1.1"
   resolved "https://registry.npmjs.org/string-width/-/string-width-2.1.1.tgz"
   integrity sha512-nOqH59deCq9SRHlxq1Aw85Jnt4w6KvLKqWVik6oA9ZklXLNIOlqg4F2yrT1MVaTjAqvVwdfeZ7w7aCvJD7ugkw==
@@ -5858,6 +5879,15 @@ string-width@^4.1.0, string-width@^4.2.0:
     emoji-regex "^8.0.0"
     is-fullwidth-code-point "^3.0.0"
     strip-ansi "^6.0.0"
+
+string-width@^4.2.3:
+  version "4.2.3"
+  resolved "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz"
+  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
+  dependencies:
+    emoji-regex "^8.0.0"
+    is-fullwidth-code-point "^3.0.0"
+    strip-ansi "^6.0.1"
 
 string_decoder@^1.1.1:
   version "1.3.0"
@@ -5898,6 +5928,13 @@ strip-ansi@^6.0.0:
   integrity sha512-AuvKTrTfQNYNIctbR1K/YGTR1756GycPsg7b9bdV9Duqur4gv6aKqHXah67Z8ImS7WEz5QVcOtlfW2rZEugt6w==
   dependencies:
     ansi-regex "^5.0.0"
+
+strip-ansi@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
+  dependencies:
+    ansi-regex "^5.0.1"
 
 strip-bom@^2.0.0:
   version "2.0.0"
@@ -6136,9 +6173,9 @@ type-is@~1.6.17, type-is@~1.6.18:
     mime-types "~2.1.24"
 
 typescript@^4.3.2:
-  version "4.3.2"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-4.3.2.tgz"
-  integrity sha512-zZ4hShnmnoVnAHpVHWpTcxdv7dWP60S2FsydQLV8V5PbS3FifjWFFRiHSWpDJahly88PRyV5teTSLoq4eG7mKw==
+  version "4.6.3"
+  resolved "https://registry.npmjs.org/typescript/-/typescript-4.6.3.tgz"
+  integrity sha512-yNIatDa5iaofVozS/uQJEl3JRWLKKGJKh6Yaiv0GLGSuhpFJe7P3SbHZ8/yjAHRQwKRoA6YZqlfjXWmVzoVSMw==
 
 ua-parser-js@^0.7.21:
   version "0.7.28"
@@ -6302,18 +6339,18 @@ webdriver@7.7.3:
     lodash.merge "^4.6.1"
 
 webdriver@^7.16.13:
-  version "7.16.13"
-  resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-7.16.13.tgz#1e145062efe6525aabd0f1850b7b457c7d815985"
-  integrity sha512-Vfr952W1uIgDeWHPGzqH43dYLeRSZshh3TzA9ICUkvnC+Q7YziQdv/8xI8tuuyvb7lSr3VsuB2cGzyCRoC/NWw==
+  version "7.19.5"
+  resolved "https://registry.npmjs.org/webdriver/-/webdriver-7.19.5.tgz"
+  integrity sha512-kdOC6w2LSZO2zQ+sNQjHRP4CVQzo1C+g2EDz7g3czOQv2Oo8WqkVlMT9hIBiMLHQfh896gFh776GUCDnEd9emg==
   dependencies:
     "@types/node" "^17.0.4"
-    "@wdio/config" "7.16.13"
-    "@wdio/logger" "7.16.0"
-    "@wdio/protocols" "7.16.7"
-    "@wdio/types" "7.16.13"
-    "@wdio/utils" "7.16.13"
+    "@wdio/config" "7.19.5"
+    "@wdio/logger" "7.19.0"
+    "@wdio/protocols" "7.19.0"
+    "@wdio/types" "7.19.5"
+    "@wdio/utils" "7.19.5"
     got "^11.0.2"
-    ky "^0.28.5"
+    ky "^0.30.0"
     lodash.merge "^4.6.1"
 
 webdriverio@7.7.3, webdriverio@^7.7.2:
@@ -6420,7 +6457,7 @@ which@^1.2.9:
   dependencies:
     isexe "^2.0.0"
 
-wide-align@1.1.3, wide-align@^1.1.0:
+wide-align@1.1.3, wide-align@^1.1.0, wide-align@^1.1.2:
   version "1.1.3"
   resolved "https://registry.npmjs.org/wide-align/-/wide-align-1.1.3.tgz"
   integrity sha512-QGkOQc8XL6Bt5PwnsExKBPuMKBxnGxWWW3fU55Xt4feHozMUhdUMaBCk290qpm/wG5u/RSKzwdAC4i51YigihA==
@@ -6483,16 +6520,26 @@ wrappy@1:
   integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
 
 ws@^5.2.2:
-  version "5.2.2"
-  resolved "https://registry.npmjs.org/ws/-/ws-5.2.2.tgz"
-  integrity sha512-jaHFD6PFv6UgoIVda6qZllptQsMlDEJkTQcybzzXDYM1XO9Y8em691FGMPmM46WGyLU4z9KMgQN+qrux/nhlHA==
+  version "5.2.3"
+  resolved "https://registry.npmjs.org/ws/-/ws-5.2.3.tgz"
+  integrity sha512-jZArVERrMsKUatIdnLzqvcfydI85dvd/Fp1u/VOpfdDWQ4c9qWXe+VIeAbQ5FrDwciAkr+lzofXLz3Kuf26AOA==
   dependencies:
     async-limiter "~1.0.0"
 
-ws@^7.0.0, ws@^7.2.3:
+ws@^7.0.0:
+  version "7.5.3"
+  resolved "https://registry.npmjs.org/ws/-/ws-7.5.3.tgz"
+  integrity sha512-kQ/dHIzuLrS6Je9+uv81ueZomEwH0qVYstcAQ4/Z93K8zeko9gtAbttJWzoC5ukqXY1PpoouV3+VSOqEAFt5wg==
+
+ws@^7.2.3:
   version "7.4.6"
   resolved "https://registry.npmjs.org/ws/-/ws-7.4.6.tgz"
   integrity sha512-YmhHDO4MzaDLB+M9ym/mDA5z0naX8j7SIlT8f8z+I0VtzsRbekxEutHSme7NPS2qE8StCYQNUnfWdXta/Yu85A==
+
+ws@^8.0.0:
+  version "8.2.3"
+  resolved "https://registry.npmjs.org/ws/-/ws-8.2.3.tgz"
+  integrity sha512-wBuoj1BDpC6ZQ1B7DWQBYVLphPWkm8i9Y0/3YdHjHKHiohOJ1ws+3OccDWtH+PoC9DZD5WOTrJvNbWvjS6JWaA==
 
 xhr@^2.0.1:
   version "2.6.0"
@@ -6527,15 +6574,10 @@ xmlbuilder@~11.0.0:
   resolved "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-11.0.1.tgz"
   integrity sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA==
 
-xmldom@^0.5.0:
+xmldom@^0.5.0, xmldom@^0.x:
   version "0.5.0"
   resolved "https://registry.npmjs.org/xmldom/-/xmldom-0.5.0.tgz"
   integrity sha512-Foaj5FXVzgn7xFzsKeNIde9g6aFBxTPi37iwsno8QvApmtg7KYrr+OPyRHcJF7dud2a5nGRBXK3n0dL62Gf7PA==
-
-xmldom@^0.x:
-  version "0.6.0"
-  resolved "https://registry.npmjs.org/xmldom/-/xmldom-0.6.0.tgz"
-  integrity sha512-iAcin401y58LckRZ0TkI4k0VSM1Qg0KGSc3i8rU+xrxe19A/BN1zHyVSJY7uoutVlaTSzYyk/v5AmkewAP7jtg==
 
 xpath@^0.x:
   version "0.0.32"
