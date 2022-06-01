@@ -27,6 +27,7 @@ const AUTK_KEY = 'auth';
 const COLLECTIONS: string[] = []; //Provide help center collections ids
 // To change, replace values in .env
 const CAROUSEL_ID = Config.CAROUSEL_ID;
+const SURVEY_ID = Config.SURVEY_ID;
 const EVENT_NAME = Config.EVENT_NAME;
 const ARTICLE_ID = Config.ARTICLE_ID;
 const USER_NAME = Config.USER_NAME;
@@ -48,6 +49,7 @@ export default function App() {
 
   const [articleId, setArticleId] = useState<string | undefined>(ARTICLE_ID);
   const [carouselId, setCarouselId] = useState<string | undefined>(CAROUSEL_ID);
+  const [surveyId, setSurveyId] = useState<string | undefined>(SURVEY_ID);
   const [eventName, setEventName] = useState<string | undefined>(EVENT_NAME);
   const [collectionId, setCollectionId] = useState<string | undefined>(
     COLLECTION_ID
@@ -350,6 +352,27 @@ export default function App() {
               Intercom.displayCarousel(carouselId);
             } else {
               showEmptyAlertMessage('Carousel Id');
+            }
+          }}
+        />
+        <Input
+          title="Survey Id"
+          accessibilityLabel="survey-id"
+          value={surveyId}
+          onChangeText={(val) => {
+            setSurveyId(val);
+          }}
+          placeholder="Survey Id"
+        />
+        <Button
+          accessibilityLabel="display-survey"
+          disabled={!loggedUser}
+          title={'Display Survey'}
+          onPress={() => {
+            if (surveyId) {
+              Intercom.displaySurvey(surveyId);
+            } else {
+              showEmptyAlertMessage('Survey Id');
             }
           }}
         />
