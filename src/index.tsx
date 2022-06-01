@@ -140,8 +140,7 @@ const Intercom = {
     IntercomModule.displayArticle(articleId),
   displayCarousel: (carouselId: string) =>
     IntercomModule.displayCarousel(carouselId),
-  displaySurvey: (surveyId: string) =>
-    IntercomModule.displaySurvey(surveyId),
+  displaySurvey: (surveyId: string) => IntercomModule.displaySurvey(surveyId),
   displayHelpCenter: () => IntercomModule.displayHelpCenter(),
   displayHelpCenterCollections: (collections = [] as string[]) =>
     IntercomModule.displayHelpCenterCollections(collections),
