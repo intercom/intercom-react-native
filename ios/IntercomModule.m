@@ -228,6 +228,15 @@ RCT_EXPORT_METHOD(displayCarousel:
     resolve(@(YES));
 };
 
+RCT_EXPORT_METHOD(displaySurvey:
+                  (NSString *) surveyId:
+                  (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
+
+    [Intercom presentSurvey:surveyId];
+    NSLog(@"displaySurvey");
+    resolve(@(YES));
+};
+
 RCT_EXPORT_METHOD(displayArticle:
                   (NSString *) articleId:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
