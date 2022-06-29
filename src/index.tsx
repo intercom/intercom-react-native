@@ -106,6 +106,7 @@ export type IntercomType = {
   ) => Promise<HelpCenterCollectionContent>;
   displayArticle(articleId: string): Promise<boolean>;
   displayCarousel(carouselId: string): Promise<boolean>;
+  displaySurvey(surveyId: string): Promise<boolean>;
   displayHelpCenter(): Promise<boolean>;
   displayHelpCenterCollections(collections?: string[]): Promise<boolean>;
   displayMessageComposer(initialMessage?: string): Promise<boolean>;
@@ -139,6 +140,7 @@ const Intercom = {
     IntercomModule.displayArticle(articleId),
   displayCarousel: (carouselId: string) =>
     IntercomModule.displayCarousel(carouselId),
+  displaySurvey: (surveyId: string) => IntercomModule.displaySurvey(surveyId),
   displayHelpCenter: () => IntercomModule.displayHelpCenter(),
   displayHelpCenterCollections: (collections = [] as string[]) =>
     IntercomModule.displayHelpCenterCollections(collections),

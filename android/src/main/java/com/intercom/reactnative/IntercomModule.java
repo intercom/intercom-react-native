@@ -414,6 +414,19 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void displaySurvey(String surveyId, Promise promise) {
+    try {
+      Intercom.client().displaySurvey(surveyId);
+      Log.d(NAME, "displaySurvey");
+      promise.resolve(true);
+    } catch (Exception err) {
+      Log.e(NAME, "displaySurvey error:");
+      Log.e(NAME, err.toString());
+      promise.reject(IntercomErrorCodes.DISPLAY_SURVEY, err.toString());
+    }
+  }
+
+  @ReactMethod
   public void displayArticle(String articleId, Promise promise) {
     try {
       Intercom.client().displayArticle(articleId);
