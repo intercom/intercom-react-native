@@ -72,9 +72,9 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
-  - Intercom (12.4.0)
-  - intercom-react-native (3.0.4):
-    - Intercom (~> 12.4.0)
+  - Intercom (12.4.3)
+  - intercom-react-native (3.0.5):
+    - Intercom (~> 12.4.3)
     - React-Core
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.180)
@@ -503,8 +503,8 @@ SPEC CHECKSUMS:
   FlipperKit: aec2d931adeee48a07bab1ea8bcc8a6bb87dfce4
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
-  Intercom: 43bbc1feee8192066601fd414d5e8ff381d8a4c8
-  intercom-react-native: f4736830a2162d0e3bde175e030aaad1dd2aec13
+  Intercom: 43bfacc55b1c93cce9ec569833696d3f15678430
+  intercom-react-native: b2a48297f0ed988970c819133cabe8c965080003
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   RCT-Folly: 0dd9e1eb86348ecab5ba76f910b56f4b5fef3c46
