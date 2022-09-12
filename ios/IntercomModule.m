@@ -44,7 +44,7 @@ RCT_EXPORT_MODULE()
 }
 
 + (void)setDeviceToken:(nonnull NSData *)deviceToken {
-    [Intercom setDeviceToken:deviceToken];
+    [Intercom setDeviceToken:deviceToken failure:nil];
     NSLog(@"setDeviceToken");
 }
 
@@ -77,8 +77,7 @@ RCT_EXPORT_METHOD(sendTokenToIntercom:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
     @try {
         NSData *data = [self dataFromHexString:token];
-        [Intercom setDeviceToken:data];
-
+        [Intercom setDeviceToken:token failure:nil];
         NSLog(@"sendTokenToIntercom");
         resolve(@(YES));
     } @catch (NSException *exception) {
@@ -89,7 +88,7 @@ RCT_EXPORT_METHOD(sendTokenToIntercom:
 RCT_EXPORT_METHOD(registerUnidentifiedUser:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
 
-    [Intercom registerUnidentifiedUser];
+    [Intercom loginUnidentifiedUserWithSuccess:nil failure:nil];
     NSLog(@"registerUnidentifiedUser");
     resolve(@(YES));
 };
@@ -105,17 +104,11 @@ RCT_EXPORT_METHOD(registerIdentifiedUser:
         userId = [(NSNumber *) userId stringValue];
     }
 
-    if (userId.length > 0 && userEmail.length > 0) {
-        [Intercom registerUserWithUserId:userId email:userEmail];
-        NSLog(@"registerUserWithUserId");
-        resolve(@(YES));
-    } else if (userId.length > 0) {
-        [Intercom registerUserWithUserId:userId];
-        NSLog(@"registerUserWithUserId");
-        resolve(@(YES));
-    } else if (userEmail.length > 0) {
-        [Intercom registerUserWithEmail:userEmail];
-        NSLog(@"registerUserWithEmail");
+    if (userId.length > 0 || userEmail.length > 0) {
+        ICMUserAttributes *attributes = [ICMUserAttributes new];
+        attributes.userId = userId;
+        attributes.email = userEmail;
+        [Intercom loginUserWithUserAttributes:attributes success:nil failure:nil];
         resolve(@(YES));
     } else {
         NSLog(@"[Intercom] ERROR - No user registered. You must supply an email, a userId or both");
@@ -136,7 +129,7 @@ RCT_EXPORT_METHOD(updateUser:
                   (NSDictionary *) options: (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
     @try {
         ICMUserAttributes *userAttributes = [IntercomAttributesBuilder userAttributesForDictionary:options];
-        [Intercom updateUser:userAttributes];
+        [Intercom updateUser:userAttributes success:nil failure:nil];
 
         NSLog(@"updateUser");
         resolve(@(YES));
@@ -206,7 +199,7 @@ RCT_EXPORT_METHOD(displayMessageComposer:
                   (NSString *) initialMessage:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
 
-    [Intercom presentMessageComposer:initialMessage];
+    [Intercom presentMessageComposerpresentMessageComposer:initialMessage];
     NSLog(@"displayMessageComposer");
     resolve(@(YES));
 };
