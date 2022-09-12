@@ -199,7 +199,7 @@ RCT_EXPORT_METHOD(displayMessageComposer:
                   (NSString *) initialMessage:
                   (RCTPromiseResolveBlock) resolve :(RCTPromiseRejectBlock)reject) {
 
-    [Intercom presentMessageComposerpresentMessageComposer:initialMessage];
+    [Intercom presentMessageComposer:initialMessage];
     NSLog(@"displayMessageComposer");
     resolve(@(YES));
 };
