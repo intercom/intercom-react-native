@@ -2,7 +2,6 @@ exports.config = {
   appium: { command: 'appium' },
 
   runner: 'local',
-  port: 4723,
   specs: ['./tests/**/*.e2e.ts'],
   exclude: [],
   maxInstances: 10,
@@ -12,8 +11,8 @@ exports.config = {
       browserName: '',
       automationName: 'XCUITest',
       platformName: 'iOS',
-      platformVersion: '16.0',
-      deviceName: 'iPhone 14 Pro',
+      platformVersion: '15.4',
+      deviceName: 'iPhone 11',
       app: 'build/Build/Products/Release-iphonesimulator/IntercomReactNativeExampleUI.app',
     },
   ],
