@@ -18,7 +18,7 @@ target 'IntercomReactNativeExample' do
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable the next line.
-  use_flipper!()
+  use_flipper!( )
 
   post_install do |installer|
     react_native_post_install(installer)
@@ -41,7 +41,7 @@ target 'IntercomReactNativeExample' do
     target.build_configurations.each do |config|
       # Setting deployment target to iOS 11 for RCT-Folly to avoid errors with Flipper.
       if ['RCT-Folly'].include? target.name
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
       end
       config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = 'YES'
      end
