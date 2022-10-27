@@ -3,7 +3,7 @@ version: 2.1
 # Default VM config to be used for macOS builds
 macos_config: &macos_config
   macos:
-    xcode: 12.5.0
+    xcode: 14.0.0
   resource_class: macos.x86.medium.gen2
   shell: /bin/bash --login -eo pipefail
 
