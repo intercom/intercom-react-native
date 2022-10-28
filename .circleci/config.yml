@@ -45,7 +45,7 @@ commands:
 
 jobs:
   install-dependencies:
-    executor: default
+    <<: *macos_config
     steps:
       - checkout
       - attach_project
