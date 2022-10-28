@@ -49,18 +49,7 @@ jobs:
     steps:
       - checkout
       - attach_project
-      - restore_cache:
-          keys:
-            - dependencies-{{ checksum "package.json" }}
-            - dependencies-
-      - restore_cache:
-          keys:
-            - dependencies-example-{{ checksum "package.json" }}
-            - dependencies-
-      - restore_cache:
-          keys:
-            - dependencies-example-e2e-{{ checksum "example/e2e/package.json" }}
-            - dependencies-example-e2e-
+      
       - run:
           name: Install dependencies
           command: |
