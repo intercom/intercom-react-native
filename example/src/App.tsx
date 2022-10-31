@@ -14,11 +14,13 @@ import {
 } from 'react-native';
 import Intercom, {
   IntercomEvents,
+  Space,
+  UserAttributes,
   Visibility,
 } from '@intercom/intercom-react-native';
 import Button from './Button';
 import Input from './Input';
-import type { Registration } from '../../lib/typescript';
+// import type { UserAttributes } from '../../lib/typescript';
 import Config from 'react-native-config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -45,7 +47,7 @@ export default function App() {
   const [inAppMessageVisibility, setInAppMessageVisibility] =
     useState<boolean>(true);
   const [launcherVisibility, setLauncherVisibility] = useState<boolean>(false);
-  const [user, setUser] = useState<Registration>({ email: '' });
+  const [user, setUser] = useState<UserAttributes>({ email: '' });
 
   const [articleId, setArticleId] = useState<string | undefined>(ARTICLE_ID);
   const [carouselId, setCarouselId] = useState<string | undefined>(CAROUSEL_ID);
@@ -175,9 +177,15 @@ export default function App() {
           disabled={loggedUser}
           title="Login unidentified User"
           onPress={() => {
-            Intercom.registerUnidentifiedUser().then(() => {
+            Intercom.loginUnidentifiedUser()
+            .then(() => {
+              console.log("logged in")
               setLoggedUser(true);
               AsyncStorage.setItem(AUTK_KEY, 'true');
+            })
+            .catch((e) => {
+              showErrorAlert(e);
+              console.error(e);
             });
           }}
         />
@@ -198,9 +206,13 @@ export default function App() {
           title="Login identified User"
           onPress={() => {
             if (user.email?.includes('@')) {
-              Intercom.registerIdentifiedUser(user).then(() => {
+              Intercom.loginUserWithUserAttributes(user).then(() => {
                 AsyncStorage.setItem(AUTK_KEY, user.email ?? '');
                 setLoggedUser(true);
+              })
+              .catch((e) => {
+                showErrorAlert(e);
+                console.error(e);
               });
             } else {
               showEmptyAlertMessage('Email');
@@ -210,9 +222,9 @@ export default function App() {
         <Button
           accessibilityLabel="display-messenger"
           disabled={!loggedUser}
-          title="Display Messenger"
+          title="Present Intercom"
           onPress={() => {
-            Intercom.displayMessenger();
+            Intercom.presentIntercom();
           }}
         />
         <Input
@@ -239,17 +251,26 @@ export default function App() {
         <Button
           accessibilityLabel="display-message-composer"
           disabled={!loggedUser}
-          title="Display Message Composer"
+          title="Present Message Composer"
           onPress={() => {
-            Intercom.displayMessageComposer();
+            Intercom.presentMessageComposer();
           }}
         />
         <Button
           accessibilityLabel="display-help-center"
           disabled={!loggedUser}
-          title="Display Help Center"
+          title="Present Help Center"
           onPress={() => {
-            Intercom.displayHelpCenter();
+            Intercom.presentIntercomSpace(Space.helpCenter);
+          }}
+        />
+        <Button
+          accessibilityLabel="display-help-center"
+          disabled={!loggedUser}
+          title="Present Messages"
+          onPress={() => {
+            Intercom.displayMessageComposer("")
+            Intercom.presentIntercomSpace(Space.messages);
           }}
         />
         <Button
@@ -320,6 +341,7 @@ export default function App() {
           title="Search Help Center"
           onPress={() => {
             if (searchTerm) {
+              
               Intercom.searchHelpCenter(searchTerm)
                 .then((item) => {
                   console.log(item);
