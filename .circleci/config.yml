@@ -253,14 +253,14 @@ workflows:
             - typescript
             - unit-tests
             - build-package
-      - ios-e2e-test:
-          <<: *run_always
-          requires:
-            - install-dependencies
-            - lint
-            - typescript
-            - unit-tests
-            - build-package
+      # - ios-e2e-test:
+      #     <<: *run_always
+      #     requires:
+      #       - install-dependencies
+      #       - lint
+      #       - typescript
+      #       - unit-tests
+      #       - build-package
       - release-to-npm:
           <<: *run_on_release
           context:
@@ -271,5 +271,5 @@ workflows:
             - typescript
             - unit-tests
             - build-package
-            - ios-e2e-test
+            # - ios-e2e-test
             - android-e2e-test
