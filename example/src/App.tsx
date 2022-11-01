@@ -17,7 +17,9 @@ import Intercom, {
   Space,
   UserAttributes,
   Visibility,
+  IntercomContent,
 } from '@intercom/intercom-react-native';
+
 import Button from './Button';
 import Input from './Input';
 // import type { UserAttributes } from '../../lib/typescript';
@@ -242,7 +244,8 @@ export default function App() {
           title="Display Article"
           onPress={() => {
             if (articleId) {
-              Intercom.displayArticle(articleId);
+              let articleContent = IntercomContent.articleWithArticleId(articleId);
+              Intercom.presentContent(articleContent);
             } else {
               showEmptyAlertMessage('Article id');
             }
@@ -371,7 +374,8 @@ export default function App() {
           title={'Display Carousel'}
           onPress={() => {
             if (carouselId) {
-              Intercom.displayCarousel(carouselId);
+              let carounselContent = IntercomContent.carouselWithCarouselId(carouselId);
+              Intercom.presentContent(carounselContent);
             } else {
               showEmptyAlertMessage('Carousel Id');
             }
@@ -482,7 +486,15 @@ export default function App() {
           title="Update user's name"
           onPress={() => {
             if (userName) {
-              Intercom.updateUser({ name: userName });
+              Intercom.updateUser({ name: userName })
+              .then(() => {
+                console.log("lupdated User");
+                showResponseAlert("Updated User");
+              })
+              .catch((e) => {
+                showErrorAlert(e);
+                console.error(e);
+              });
             } else {
               showEmptyAlertMessage('User Name');
             }

@@ -203,20 +203,19 @@ RCT_EXPORT_METHOD(presentIntercomSpace:(NSString *)space
     resolve(@(YES));
 };
 
-RCT_EXPORT_METHOD(presentContent:(NSString *)content
+RCT_EXPORT_METHOD(presentContent:(NSDictionary *)content
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
-//    Space selectedSpace = home;
-//    if ([space isEqualToString:@"HOME"]) {
-//        selectedSpace = home;
-//    } else if ([space isEqualToString:@"HELP_CENTER"]) {
-//        selectedSpace = helpCenter;
-//    } else if ([space isEqualToString:@"MESSAGES"]) {
-//        selectedSpace = messages;
-//    }
-//    [Intercom presentIntercom:selectedSpace];
-//    RCTLog(@"Presenting Intercom Space : %@", space);
-//    resolve(@(YES));
+    IntercomContent *intercomContent;
+    if ([content[@"type"] isEqualToString:@"ARTICLE"]) {
+        intercomContent = [IntercomContent articleWithId:content[@"id"]];
+    } else if ([content[@"type"] isEqualToString:@"CAROUSEL"]) {
+        intercomContent = [IntercomContent carouselWithId:content[@"id"]];
+    }
+    if (intercomContent) {
+        [Intercom presentContent:intercomContent];
+        resolve(@(YES));
+    }
 };
 
 
