@@ -415,12 +415,12 @@ const Intercom: IntercomType = {
   registerIdentifiedUser: (registrationParams) => IntercomModule.loginUserWithUserAttributes(registrationParams),
   registerUnidentifiedUser: () => IntercomModule.loginUnidentifiedUser(),
   displayMessenger: () => IntercomModule.presentIntercom(),
-  displayHelpCenter: () => IntercomModule.displayHelpCenter(),// TODO: corect API
+  displayHelpCenter: () => IntercomModule.presentIntercomSpace(Space.helpCenter),
   displayMessageComposer: (initialMessage = undefined) => IntercomModule.presentMessageComposer(initialMessage),
-  displayArticle: (articleId: string) => IntercomModule.displayArticle(articleId),// TODO: corect API
-  displayCarousel: (carouselId: string) => IntercomModule.displayCarousel(carouselId),// TODO: corect API
-  displaySurvey: (surveyId: string) => IntercomModule.displaySurvey(surveyId),// TODO: corect API
-  displayHelpCenterCollections: (collections = [] as string[]) => IntercomModule.displayHelpCenterCollections(collections),// TODO: corect API
+  displayArticle: (articleId: string) => IntercomModule.presentContent(IntercomContent.articleWithArticleId(articleId)),
+  displayCarousel: (carouselId: string) => IntercomModule.presentContent(IntercomContent.carouselWithCarouselId(carouselId)),
+  displaySurvey: (surveyId: string) => IntercomModule.presentContent(IntercomContent.surveyWithSurveyId(surveyId)),
+  displayHelpCenterCollections: (collections = [] as string[]) => IntercomModule.presentContent(IntercomContent.helpCenterCollectionsWithIds(collections)),
 };
 
 export default Intercom;
@@ -459,7 +459,7 @@ export type IntercomContentType = {
   articleWithArticleId:(articleId: string) => Article;
   carouselWithCarouselId:(carouselId: string) => Carousel;
   surveyWithSurveyId:(surveyId: string) => Survey;
-  helpCenterCollectionsWithIds:(collectionIds: [string]) => HelpCenterCollections;
+  helpCenterCollectionsWithIds:(collectionIds: string[]) => HelpCenterCollections;
 };
 
 export const IntercomContent: IntercomContentType = {

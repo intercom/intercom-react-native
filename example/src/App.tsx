@@ -272,7 +272,6 @@ export default function App() {
           disabled={!loggedUser}
           title="Present Messages"
           onPress={() => {
-            Intercom.displayMessageComposer("")
             Intercom.presentIntercomSpace(Space.messages);
           }}
         />
@@ -281,7 +280,8 @@ export default function App() {
           disabled={!loggedUser}
           title={'Display Help Center Collections'}
           onPress={() => {
-            Intercom.displayHelpCenterCollections(COLLECTIONS);
+            let helpCenterCollectionsContent = IntercomContent.helpCenterCollectionsWithIds(COLLECTIONS);
+            Intercom.presentContent(helpCenterCollectionsContent);
           }}
         />
         <Button
@@ -374,8 +374,8 @@ export default function App() {
           title={'Display Carousel'}
           onPress={() => {
             if (carouselId) {
-              let carounselContent = IntercomContent.carouselWithCarouselId(carouselId);
-              Intercom.presentContent(carounselContent);
+              let carouselContent = IntercomContent.carouselWithCarouselId(carouselId);
+              Intercom.presentContent(carouselContent);
             } else {
               showEmptyAlertMessage('Carousel Id');
             }
@@ -396,7 +396,8 @@ export default function App() {
           title={'Display Survey'}
           onPress={() => {
             if (surveyId) {
-              Intercom.displaySurvey(surveyId);
+              let surveyContent = IntercomContent.surveyWithSurveyId(surveyId);
+              Intercom.presentContent(surveyContent);
             } else {
               showEmptyAlertMessage('Survey Id');
             }
