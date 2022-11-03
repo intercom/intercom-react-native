@@ -393,20 +393,14 @@ const Intercom: IntercomType = {
   setLogLevel: (logLevel) => IntercomModule.setLogLevel(logLevel),
 
   addEventListener: (event, callback) => {
-    event === IntercomEvents.IntercomUnreadCountDidChange &&
-      Platform.OS === 'android' &&
-      IntercomEventEmitter.startEventListener();
+    event === IntercomEvents.IntercomUnreadCountDidChange && Platform.OS === 'android' && IntercomEventEmitter.startEventListener();
     const eventEmitter = new NativeEventEmitter(IntercomEventEmitter);
     const listener = eventEmitter.addListener(event, callback);
-    return {
-      ...listener,
-      remove: () => {
-        event === IntercomEvents.IntercomUnreadCountDidChange &&
-          Platform.OS === 'android' &&
-          IntercomEventEmitter.removeEventListener();
+    listener.remove = () => {
+        event === IntercomEvents.IntercomUnreadCountDidChange && Platform.OS === 'android' && IntercomEventEmitter.removeEventListener();
         listener.remove();
-      },
-    };
+    }
+    return listener;
   },
 
   /**
