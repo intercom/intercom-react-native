@@ -207,10 +207,16 @@ RCT_EXPORT_METHOD(presentContent:(NSDictionary *)content
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
     IntercomContent *intercomContent;
-    if ([content[@"type"] isEqualToString:@"ARTICLE"]) {
+    NSString *contentType = content[@"type"];
+    if ([contentType isEqualToString:@"ARTICLE"]) {
         intercomContent = [IntercomContent articleWithId:content[@"id"]];
-    } else if ([content[@"type"] isEqualToString:@"CAROUSEL"]) {
+    } else if ([contentType isEqualToString:@"CAROUSEL"]) {
         intercomContent = [IntercomContent carouselWithId:content[@"id"]];
+    } else if ([contentType isEqualToString:@"SURVEY"]) {
+        intercomContent = [IntercomContent surveyWithId:content[@"id"]];
+    } else if ([contentType isEqualToString:@"HELP_CENTER_COLLECTIONS"]) {
+        NSArray<NSString *> *collectionIds = [NSArray arrayWithObjects:content[@"ids"], nil];
+        intercomContent = [IntercomContent helpCenterCollectionsWithIds:collectionIds];
     }
     if (intercomContent) {
         [Intercom presentContent:intercomContent];

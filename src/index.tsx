@@ -184,7 +184,7 @@ export type IntercomType = {
    * Present Intercom as a modal overlay in your app.
    * The `Home` space is displayed by default.
    */
-  presentIntercom(): Promise<boolean>;
+  present(): Promise<boolean>;
 
   /**
    * Present an Intercom `space` as a modal overlay in your app
@@ -192,7 +192,7 @@ export type IntercomType = {
    * 
    * @param space The Intercom space to be presented.
    */
-  presentIntercomSpace(space: Space): Promise<boolean>;
+  presentSpace(space: Space): Promise<boolean>;
 
   presentContent(content: Content): Promise<boolean>;
 
@@ -368,8 +368,8 @@ const Intercom: IntercomType = {
   fetchHelpCenterCollection: (id = '') => IntercomModule.fetchHelpCenterCollection(id),
   searchHelpCenter: (term = '') => IntercomModule.searchHelpCenter(term),
 
-  presentIntercom: () => IntercomModule.presentIntercom(),
-  presentIntercomSpace: (space) => IntercomModule.presentIntercomSpace(space),
+  present: () => IntercomModule.presentIntercom(),
+  presentSpace: (space) => IntercomModule.presentIntercomSpace(space),
   presentContent: (content) => IntercomModule.presentContent(content),
   presentMessageComposer: (initialMessage = undefined) => IntercomModule.presentMessageComposer(initialMessage),
   getUnreadConversationCount: () => IntercomModule.getUnreadConversationCount(),
@@ -449,7 +449,7 @@ interface Survey extends Content {
 }
 
 interface HelpCenterCollections extends Content {
-  ids: [string];
+  ids: string[];
 }
 
 export type IntercomContentType = {

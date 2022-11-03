@@ -22,7 +22,6 @@ import Intercom, {
 
 import Button from './Button';
 import Input from './Input';
-// import type { UserAttributes } from '../../lib/typescript';
 import Config from 'react-native-config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -226,7 +225,7 @@ export default function App() {
           disabled={!loggedUser}
           title="Present Intercom"
           onPress={() => {
-            Intercom.presentIntercom();
+            Intercom.present();
           }}
         />
         <Input
@@ -264,7 +263,7 @@ export default function App() {
           disabled={!loggedUser}
           title="Present Help Center"
           onPress={() => {
-            Intercom.presentIntercomSpace(Space.helpCenter);
+            Intercom.presentSpace(Space.helpCenter);
           }}
         />
         <Button
@@ -272,7 +271,7 @@ export default function App() {
           disabled={!loggedUser}
           title="Present Messages"
           onPress={() => {
-            Intercom.presentIntercomSpace(Space.messages);
+            Intercom.presentSpace(Space.messages);
           }}
         />
         <Button
