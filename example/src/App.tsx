@@ -179,15 +179,15 @@ export default function App() {
           title="Login unidentified User"
           onPress={() => {
             Intercom.loginUnidentifiedUser()
-            .then(() => {
-              console.log("logged in")
-              setLoggedUser(true);
-              AsyncStorage.setItem(AUTK_KEY, 'true');
-            })
-            .catch((e) => {
-              showErrorAlert(e);
-              console.error(e);
-            });
+              .then(() => {
+                console.log('logged in');
+                setLoggedUser(true);
+                AsyncStorage.setItem(AUTK_KEY, 'true');
+              })
+              .catch((e) => {
+                showErrorAlert(e);
+                console.error(e);
+              });
           }}
         />
         <Input
@@ -207,14 +207,15 @@ export default function App() {
           title="Login identified User"
           onPress={() => {
             if (user.email?.includes('@')) {
-              Intercom.loginUserWithUserAttributes(user).then(() => {
-                AsyncStorage.setItem(AUTK_KEY, user.email ?? '');
-                setLoggedUser(true);
-              })
-              .catch((e) => {
-                showErrorAlert(e);
-                console.error(e);
-              });
+              Intercom.loginUserWithUserAttributes(user)
+                .then(() => {
+                  AsyncStorage.setItem(AUTK_KEY, user.email ?? '');
+                  setLoggedUser(true);
+                })
+                .catch((e) => {
+                  showErrorAlert(e);
+                  console.error(e);
+                });
             } else {
               showEmptyAlertMessage('Email');
             }
@@ -243,7 +244,8 @@ export default function App() {
           title="Display Article"
           onPress={() => {
             if (articleId) {
-              let articleContent = IntercomContent.articleWithArticleId(articleId);
+              let articleContent =
+                IntercomContent.articleWithArticleId(articleId);
               Intercom.presentContent(articleContent);
             } else {
               showEmptyAlertMessage('Article id');
@@ -279,7 +281,8 @@ export default function App() {
           disabled={!loggedUser}
           title={'Display Help Center Collections'}
           onPress={() => {
-            let helpCenterCollectionsContent = IntercomContent.helpCenterCollectionsWithIds(COLLECTIONS);
+            let helpCenterCollectionsContent =
+              IntercomContent.helpCenterCollectionsWithIds(COLLECTIONS);
             Intercom.presentContent(helpCenterCollectionsContent);
           }}
         />
@@ -343,7 +346,6 @@ export default function App() {
           title="Search Help Center"
           onPress={() => {
             if (searchTerm) {
-              
               Intercom.searchHelpCenter(searchTerm)
                 .then((item) => {
                   console.log(item);
@@ -373,7 +375,8 @@ export default function App() {
           title={'Display Carousel'}
           onPress={() => {
             if (carouselId) {
-              let carouselContent = IntercomContent.carouselWithCarouselId(carouselId);
+              let carouselContent =
+                IntercomContent.carouselWithCarouselId(carouselId);
               Intercom.presentContent(carouselContent);
             } else {
               showEmptyAlertMessage('Carousel Id');
@@ -487,14 +490,14 @@ export default function App() {
           onPress={() => {
             if (userName) {
               Intercom.updateUser({ name: userName })
-              .then(() => {
-                console.log("lupdated User");
-                showResponseAlert("Updated User");
-              })
-              .catch((e) => {
-                showErrorAlert(e);
-                console.error(e);
-              });
+                .then(() => {
+                  console.log('lupdated User');
+                  showResponseAlert('Updated User');
+                })
+                .catch((e) => {
+                  showErrorAlert(e);
+                  console.error(e);
+                });
             } else {
               showEmptyAlertMessage('User Name');
             }
