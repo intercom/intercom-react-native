@@ -18,7 +18,7 @@ target 'IntercomReactNativeExample' do
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable the next line.
-  use_flipper!()
+  use_flipper!( )
 
   post_install do |installer|
     react_native_post_install(installer)
@@ -28,6 +28,7 @@ target 'IntercomReactNativeExample' do
    installer.aggregate_targets.each do |aggregate_target|
     aggregate_target.user_project.native_targets.each do |target|
       target.build_configurations.each do |config|
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
         config.build_settings['LIBRARY_SEARCH_PATHS'] = ['$(SDKROOT)/usr/lib/swift', '$(inherited)']
       end
     end

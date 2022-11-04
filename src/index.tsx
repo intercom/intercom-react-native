@@ -7,6 +7,9 @@ import {
 
 const { IntercomModule, IntercomEventEmitter } = NativeModules;
 
+/**
+ * @deprecated Please use `UserAttributes` instead.
+ */
 export type Registration = Partial<{
   email: string;
   userId: string;
@@ -37,9 +40,9 @@ export const IntercomEvents = {
   IntercomWindowDidHide: IntercomEventEmitter.WINDOW_DID_HIDE_NOTIFICATION,
   IntercomWindowDidShow: IntercomEventEmitter.WINDOW_DID_SHOW_NOTIFICATION,
   IntercomHelpCenterWindowDidShow:
-    IntercomEventEmitter.HELP_CENTER_WINDOW_DID_SHOW_NOTIFICATION,
+    IntercomEventEmitter.WINDOW_DID_SHOW_NOTIFICATION,
   IntercomHelpCenterWindowDidHide:
-    IntercomEventEmitter.HELP_CENTER_WINDOW_DID_HIDE_NOTIFICATION,
+    IntercomEventEmitter.WINDOW_DID_HIDE_NOTIFICATION,
 };
 
 type EventType =
@@ -56,7 +59,22 @@ export type MetaData = {
   [key: string]: any;
 };
 
+/**
+ * @deprecated Please use `UserAttributes` instead.
+ */
 export type UpdateUserParamList = {
+  companies?: Company[];
+  customAttributes?: CustomAttributes;
+  email?: string;
+  languageOverride?: string;
+  name?: string;
+  phone?: string;
+  signedUpAt?: number;
+  unsubscribedFromEmails?: boolean;
+  userId?: string;
+};
+
+export type UserAttributes = {
   companies?: Company[];
   customAttributes?: CustomAttributes;
   email?: string;
@@ -77,8 +95,14 @@ export type Company = {
   plan?: string;
 };
 
-export type HelpCenterArticle = { it: string; title: string };
-export type HelpCenterSection = { title: string; articles: HelpCenterArticle };
+export type HelpCenterArticle = {
+  it: string;
+  title: string;
+};
+export type HelpCenterSection = {
+  title: string;
+  articles: HelpCenterArticle;
+};
 export type HelpCenterCollectionItem = {
   id: string;
   title: string;
@@ -98,93 +122,402 @@ export type HelpCenterArticleSearchResult = {
   summary: string;
 };
 
+export enum Space {
+  home = 'HOME',
+  helpCenter = 'HELP_CENTER',
+  messages = 'MESSAGES',
+}
+
 export type IntercomType = {
-  fetchHelpCenterCollections: () => Promise<HelpCenterCollectionItem>;
-  searchHelpCenter: (term: string) => Promise<HelpCenterArticleSearchResult>;
+  /**
+   * Login a unidentified user.
+   * This is a user that doesn't have any identifiable information such as a `userId` or `email`.
+   * @return {Promise<boolean>} A promise to the token.
+   */
+  loginUnidentifiedUser: () => Promise<boolean>;
+
+  /**
+   * Login a user with identifiable information.
+   * Valid identifiers are `userId` and `email` which must be set in the {@link UserAttributes} object.
+   * @param params The {@link UserAttributes} object that contains the user's `email` or `userId`.
+   */
+  loginUserWithUserAttributes: (params: UserAttributes) => Promise<boolean>;
+
+  /**
+   * Log a user out of their Intercom session.
+   * This will dismiss any Intercom UI and clear Intercom's local cache.
+   */
+  logout(): Promise<boolean>;
+
+  /**
+   * Set `hash` string if you are using Identity Verification for your Intercom workspace.
+   * @note This should be called before any user login takes place.
+   *
+   * Identity Verification helps to make sure that conversations between you and your users are kept private, and that one
+   * user can't impersonate another. If Identity Verification is enabled for your app, Intercom for iOS will sign all requests
+   * going to the Intercom servers with tokens. It requires your mobile application to have its own server which authenticates the app's users,
+   * and which can store a secret.
+   *
+   * @see More information on Identity Verification can be found {@link https://developers.intercom.com/installing-intercom/docs/react-native-identity-verification here}
+   * @param hash A HMAC digest of the user ID or email.
+   */
+  setUserHash(hash: string): Promise<boolean>;
+
+  /**
+   * Update a user in Intercom with data specified in {@link UserAttributes}.
+   * Full details of the data data attributes that can be stored on a user can be found in {@link UserAttributes}.
+   *
+   * @param userAttributes The {@link UserAttributes} object with the user data.
+   */
+  updateUser(userAttributes: UserAttributes): Promise<boolean>;
+
+  /**
+   * Log an event with a given name and metaData.
+   * You can log events in Intercom based on user actions in your app.
+   *
+   * @param eventName The name of the event.
+   * @param metaData Metadata Objects support a few simple types that Intercom can present on your behalf,
+   * see the @{https://developers.intercom.com/intercom-api-reference/reference/event-model Intercom API docs}
+   */
+  logEvent(eventName: string, metaData?: MetaData): Promise<boolean>;
+
+  /**
+   * Present Intercom as a modal overlay in your app.
+   * The `Home` space is displayed by default.
+   */
+  present(): Promise<boolean>;
+
+  /**
+   * Present an Intercom `space` as a modal overlay in your app
+   * @see {@link Space} for a list of valid spaces.
+   *
+   * @param space The Intercom space to be presented.
+   */
+  presentSpace(space: Space): Promise<boolean>;
+
+  /**
+   * Present Intercom content.
+   *
+   * An {@link IntercomContent} object.
+   */
+  presentContent(content: Content): Promise<boolean>;
+
+  /**
+   * Present the message composer.
+   *
+   * @param initialMessage An optional message that is used to pre-populate the composer with some text.
+   */
+  presentMessageComposer(initialMessage?: string): Promise<boolean>;
+
+  /**
+   * Fetch all Help Center collections.
+   *
+   * @return {Promise<Array<HelpCenterCollectionItem>>} An array of {@link HelpCenterCollectionItem} objects.
+   */
+  fetchHelpCenterCollections: () => Promise<Array<HelpCenterCollectionItem>>;
+
+  /**
+   * Fetch the contents of a Help Center collection.
+   *
+   * @param id The ID of the Help Center collection.
+   *
+   * @return {Promise<HelpCenterCollectionContent>} A {@link HelpCenterCollectionContent} object.
+   */
   fetchHelpCenterCollection: (
     id: string
   ) => Promise<HelpCenterCollectionContent>;
-  displayArticle(articleId: string): Promise<boolean>;
-  displayCarousel(carouselId: string): Promise<boolean>;
-  displaySurvey(surveyId: string): Promise<boolean>;
-  displayHelpCenter(): Promise<boolean>;
-  displayHelpCenterCollections(collections?: string[]): Promise<boolean>;
-  displayMessageComposer(initialMessage?: string): Promise<boolean>;
-  displayMessenger(): Promise<boolean>;
+
+  /**
+   * Search the Help Center.
+   *
+   * @param term The search term.
+   *
+   * @return {Promise<HelpCenterArticleSearchResult>} An array of {@link HelpCenterArticleSearchResult} objects.
+   */
+  searchHelpCenter: (
+    term: string
+  ) => Promise<Array<HelpCenterArticleSearchResult>>;
+
+  /**
+   * Fetch the current number of unread conversations for the logged in User.
+   * @return {Promise<number>} the number of unread conversations.
+   */
   getUnreadConversationCount(): Promise<number>;
+
+  /**
+   * Hide all Intercom windows that are currently displayed.
+   * This will hide the Messenger, Help Center, Articles, and in-product messages (eg. Mobile Carousels, chats, and posts).
+   */
   hideIntercom(): Promise<boolean>;
-  logEvent(eventName: string, metaData?: MetaData): Promise<boolean>;
-  logout(): Promise<boolean>;
-  registerIdentifiedUser(params: Registration): Promise<boolean>;
-  registerUnidentifiedUser(): Promise<boolean>;
+
+  /**
+   * Set a fixed bottom padding for in app messages and the Intercom Launcher.
+   * @param bottomPadding The size of the bottom padding in points.
+   */
   setBottomPadding(bottomPadding: number): Promise<boolean>;
+
+  /**
+   * Show or hide the Intercom InApp Messages in your app.
+   * @note All InApp Messages are visible by default.
+   *
+   * @param visibility A boolean indicating if the InApps should be visible.
+   */
   setInAppMessageVisibility(visibility: VisibilityType): Promise<boolean>;
+
+  /**
+   * Show or hide the Intercom Launcher in your app.
+   * @note The Launcher is hidden by default.
+   *
+   * @param visibility A boolean indicating if the Intercom Launcher should be visible.
+   */
   setLauncherVisibility(visibility: VisibilityType): Promise<boolean>;
-  setLogLevel(logLevel: LogLevelType): Promise<boolean>;
-  setUserHash(hash: string): Promise<boolean>;
-  updateUser(params: UpdateUserParamList): Promise<boolean>;
+
+  /**
+   * Change the Status Bar's style or visibility while an Intercom notification is on
+   * screen.
+   * Call this method so that Intercom's window can reflect your app's status bar accordingly.
+   */
+  setNeedsStatusBarAppearanceUpdate(): Promise<boolean>;
+
+  /**
+   * Handle an Android push notification payload sent by Intercom.
+   *
+   * @note Android only. iOS handles push notifications automatically.
+   */
   handlePushMessage(): Promise<boolean>;
+
+  /**
+   * Send a device token to Intercom to enable push notifications to be sent to the User.
+   * @param token The device token to send to the server.
+   */
   sendTokenToIntercom(token: string): Promise<boolean>;
+
+  /**
+   * Enable logging for Intercom.
+   * @param logLevel The logging level to set.
+   *
+   * @note iOS will ignore the logging level and by default shows `DEBUG` logging.
+   */
+  setLogLevel(logLevel: LogLevelType): Promise<boolean>;
+
+  /**
+   * Add an `EventListener` to listen for `IntercomUnreadCountDidChange` events.
+   *
+   * @note This function is for Android only.
+   */
   addEventListener: (
     event: EventType,
     callback: (response: { count?: number; visible: boolean }) => void
   ) => EmitterSubscription;
+
+  //////////////////////////////////////////////////////////////////////
+  // Depreacted functions. These will be removed in a future release. //
+  //////////////////////////////////////////////////////////////////////
+
+  /**
+   * @deprecated `registerIdentifiedUser` is deprecated and will be removed in a future release.  Use `loginUserWithUserAttributes` instead.
+   */
+  registerIdentifiedUser(params: Registration): Promise<boolean>;
+
+  /**
+   * @deprecated `registerUnidentifiedUser` is deprecated and will be removed in a future release.  Use `loginUnidentifiedUserWithSuccess` instead.
+   */
+  registerUnidentifiedUser(): Promise<boolean>;
+
+  /**
+   * @deprecated `updateUser` is deprecated and will be removed in a future release.  Use `updateUser` instead.
+   */
+  updateUser(params: UpdateUserParamList): Promise<boolean>;
+
+  /**
+   * @deprecated `displayMessenger` is deprecated and will be removed in a future release.  Use `presentIntercom` instead.
+   */
+  displayMessenger(): Promise<boolean>;
+
+  /**
+   * @deprecated `displayHelpCenter` is deprecated and will be removed in a future release.  Use `presentIntercom` instead.
+   */
+  displayHelpCenter(): Promise<boolean>;
+
+  /**
+   * @deprecated `displayMessageComposer` is deprecated and will be removed in a future release.  Use `presentMessageComposer` instead.
+   * @see presentMessageComposer for details
+   */
+  displayMessageComposer(initialMessage?: string): Promise<boolean>;
+
+  /**
+   * @deprecated `displayArticle` is deprecated and will be removed in a future release.  Use `presentContent` instead.
+   */
+  displayArticle(articleId: string): Promise<boolean>;
+
+  /**
+   * @deprecated `displayCarousel` is deprecated and will be removed in a future release.  Use `presentContent` instead.
+   */
+  displayCarousel(carouselId: string): Promise<boolean>;
+
+  /**
+   * @deprecated `displaySurvey` is deprecated and will be removed in a future release.  Use `presentContent` instead.
+   */
+  displaySurvey(surveyId: string): Promise<boolean>;
+
+  /**
+   * @deprecated `displayHelpCenterCollections` is deprecated and will be removed in a future release.  Use `presentContent` instead.
+   */
+  displayHelpCenterCollections(collections?: string[]): Promise<boolean>;
 };
 
-const Intercom = {
-  searchHelpCenter: (term = '') => IntercomModule.searchHelpCenter(term),
+const Intercom: IntercomType = {
+  loginUnidentifiedUser: () => IntercomModule.loginUnidentifiedUser(),
+  loginUserWithUserAttributes: (userAttributes) =>
+    IntercomModule.loginUserWithUserAttributes(userAttributes),
+  logout: () => IntercomModule.logout(),
+  setUserHash: (hash) => IntercomModule.setUserHash(hash),
+  updateUser: (userAttributes) => IntercomModule.updateUser(userAttributes),
+  logEvent: (eventName, metaData = undefined) =>
+    IntercomModule.logEvent(eventName, metaData),
+
   fetchHelpCenterCollections: () => IntercomModule.fetchHelpCenterCollections(),
   fetchHelpCenterCollection: (id = '') =>
     IntercomModule.fetchHelpCenterCollection(id),
-  displayArticle: (articleId: string) =>
-    IntercomModule.displayArticle(articleId),
-  displayCarousel: (carouselId: string) =>
-    IntercomModule.displayCarousel(carouselId),
-  displaySurvey: (surveyId: string) => IntercomModule.displaySurvey(surveyId),
-  displayHelpCenter: () => IntercomModule.displayHelpCenter(),
-  displayHelpCenterCollections: (collections = [] as string[]) =>
-    IntercomModule.displayHelpCenterCollections(collections),
-  displayMessageComposer: (initialMessage = undefined) =>
-    IntercomModule.displayMessageComposer(initialMessage),
-  displayMessenger: () => IntercomModule.displayMessenger(),
+  searchHelpCenter: (term = '') => IntercomModule.searchHelpCenter(term),
+
+  present: () => IntercomModule.presentIntercom(),
+  presentSpace: (space) => IntercomModule.presentIntercomSpace(space),
+  presentContent: (content) => IntercomModule.presentContent(content),
+  presentMessageComposer: (initialMessage = undefined) =>
+    IntercomModule.presentMessageComposer(initialMessage),
   getUnreadConversationCount: () => IntercomModule.getUnreadConversationCount(),
-  handlePushMessage: Platform.select({
-    android: IntercomModule.handlePushMessage,
-    default: async () => true,
-  }),
+
   hideIntercom: () => IntercomModule.hideIntercom(),
-  logEvent: (eventName, metaData = undefined) =>
-    IntercomModule.logEvent(eventName, metaData),
-  logout: () => IntercomModule.logout(),
-  registerIdentifiedUser: (eventName) =>
-    IntercomModule.registerIdentifiedUser(eventName),
-  registerUnidentifiedUser: () => IntercomModule.registerUnidentifiedUser(),
   setBottomPadding: (paddingBottom) =>
     IntercomModule.setBottomPadding(paddingBottom),
   setInAppMessageVisibility: (visibility) =>
     IntercomModule.setInAppMessageVisibility(visibility),
   setLauncherVisibility: (visibility) =>
     IntercomModule.setLauncherVisibility(visibility),
-  setLogLevel: (logLevel) => IntercomModule.setLogLevel(logLevel),
-  setUserHash: (hash) => IntercomModule.setUserHash(hash),
-  updateUser: (params) => IntercomModule.updateUser(params),
+
+  setNeedsStatusBarAppearanceUpdate: Platform.select({
+    ios: IntercomModule.setNeedsStatusBarAppearanceUpdate,
+    default: async () => true,
+  }),
+
+  handlePushMessage: Platform.select({
+    android: IntercomModule.handlePushMessage,
+    default: async () => true,
+  }),
+
   sendTokenToIntercom: (token) => IntercomModule.sendTokenToIntercom(token),
+  setLogLevel: (logLevel) => IntercomModule.setLogLevel(logLevel),
+
   addEventListener: (event, callback) => {
     event === IntercomEvents.IntercomUnreadCountDidChange &&
       Platform.OS === 'android' &&
       IntercomEventEmitter.startEventListener();
     const eventEmitter = new NativeEventEmitter(IntercomEventEmitter);
     const listener = eventEmitter.addListener(event, callback);
-    return {
-      ...listener,
-      remove: () => {
-        event === IntercomEvents.IntercomUnreadCountDidChange &&
-          Platform.OS === 'android' &&
-          IntercomEventEmitter.removeEventListener();
-        listener.remove();
-      },
+    listener.remove = () => {
+      event === IntercomEvents.IntercomUnreadCountDidChange &&
+        Platform.OS === 'android' &&
+        IntercomEventEmitter.removeEventListener();
+      listener.remove();
     };
+    return listener;
   },
-} as IntercomType;
+
+  /**
+   * @depreacted methods
+   */
+  registerIdentifiedUser: (registrationParams) =>
+    IntercomModule.loginUserWithUserAttributes(registrationParams),
+  registerUnidentifiedUser: () => IntercomModule.loginUnidentifiedUser(),
+  displayMessenger: () => IntercomModule.presentIntercom(),
+  displayHelpCenter: () =>
+    IntercomModule.presentIntercomSpace(Space.helpCenter),
+  displayMessageComposer: (initialMessage = undefined) =>
+    IntercomModule.presentMessageComposer(initialMessage),
+  displayArticle: (articleId: string) =>
+    IntercomModule.presentContent(
+      IntercomContent.articleWithArticleId(articleId)
+    ),
+  displayCarousel: (carouselId: string) =>
+    IntercomModule.presentContent(
+      IntercomContent.carouselWithCarouselId(carouselId)
+    ),
+  displaySurvey: (surveyId: string) =>
+    IntercomModule.presentContent(IntercomContent.surveyWithSurveyId(surveyId)),
+  displayHelpCenterCollections: (collections = [] as string[]) =>
+    IntercomModule.presentContent(
+      IntercomContent.helpCenterCollectionsWithIds(collections)
+    ),
+};
 
 export default Intercom;
+
+export enum ContentType {
+  Article = 'ARTICLE',
+  Carousel = 'CAROUSEL',
+  Survey = 'SURVEY',
+  HelpCenterCollections = 'HELP_CENTER_COLLECTIONS',
+}
+
+export interface Content {
+  type: ContentType;
+}
+
+export interface Article extends Content {
+  id: string;
+}
+
+interface Carousel extends Content {
+  id: string;
+}
+
+interface Survey extends Content {
+  id: string;
+}
+
+interface HelpCenterCollections extends Content {
+  ids: string[];
+}
+
+export type IntercomContentType = {
+  /**
+   * Create
+   */
+  articleWithArticleId: (articleId: string) => Article;
+  carouselWithCarouselId: (carouselId: string) => Carousel;
+  surveyWithSurveyId: (surveyId: string) => Survey;
+  helpCenterCollectionsWithIds: (
+    collectionIds: string[]
+  ) => HelpCenterCollections;
+};
+
+export const IntercomContent: IntercomContentType = {
+  articleWithArticleId(articleId) {
+    let articleContent = {} as Article;
+    articleContent.type = ContentType.Article;
+    articleContent.id = articleId;
+    return articleContent;
+  },
+
+  carouselWithCarouselId(carouselId) {
+    let carouselContent = {} as Carousel;
+    carouselContent.type = ContentType.Carousel;
+    carouselContent.id = carouselId;
+    return carouselContent;
+  },
+
+  surveyWithSurveyId(surveyId) {
+    let surveyContent = {} as Survey;
+    surveyContent.type = ContentType.Survey;
+    surveyContent.id = surveyId;
+    return surveyContent;
+  },
+
+  helpCenterCollectionsWithIds(collectionIds) {
+    let helpCenterCollectionsContent = {} as HelpCenterCollections;
+    helpCenterCollectionsContent.type = ContentType.HelpCenterCollections;
+    helpCenterCollectionsContent.ids = collectionIds;
+    return helpCenterCollectionsContent;
+  },
+};

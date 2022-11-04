@@ -14,11 +14,14 @@ import {
 } from 'react-native';
 import Intercom, {
   IntercomEvents,
+  Space,
+  UserAttributes,
   Visibility,
+  IntercomContent,
 } from '@intercom/intercom-react-native';
+
 import Button from './Button';
 import Input from './Input';
-import type { Registration } from '../../lib/typescript';
 import Config from 'react-native-config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -45,7 +48,7 @@ export default function App() {
   const [inAppMessageVisibility, setInAppMessageVisibility] =
     useState<boolean>(true);
   const [launcherVisibility, setLauncherVisibility] = useState<boolean>(false);
-  const [user, setUser] = useState<Registration>({ email: '' });
+  const [user, setUser] = useState<UserAttributes>({ email: '' });
 
   const [articleId, setArticleId] = useState<string | undefined>(ARTICLE_ID);
   const [carouselId, setCarouselId] = useState<string | undefined>(CAROUSEL_ID);
@@ -175,10 +178,16 @@ export default function App() {
           disabled={loggedUser}
           title="Login unidentified User"
           onPress={() => {
-            Intercom.registerUnidentifiedUser().then(() => {
-              setLoggedUser(true);
-              AsyncStorage.setItem(AUTK_KEY, 'true');
-            });
+            Intercom.loginUnidentifiedUser()
+              .then(() => {
+                console.log('logged in');
+                setLoggedUser(true);
+                AsyncStorage.setItem(AUTK_KEY, 'true');
+              })
+              .catch((e) => {
+                showErrorAlert(e);
+                console.error(e);
+              });
           }}
         />
         <Input
@@ -198,10 +207,15 @@ export default function App() {
           title="Login identified User"
           onPress={() => {
             if (user.email?.includes('@')) {
-              Intercom.registerIdentifiedUser(user).then(() => {
-                AsyncStorage.setItem(AUTK_KEY, user.email ?? '');
-                setLoggedUser(true);
-              });
+              Intercom.loginUserWithUserAttributes(user)
+                .then(() => {
+                  AsyncStorage.setItem(AUTK_KEY, user.email ?? '');
+                  setLoggedUser(true);
+                })
+                .catch((e) => {
+                  showErrorAlert(e);
+                  console.error(e);
+                });
             } else {
               showEmptyAlertMessage('Email');
             }
@@ -210,9 +224,9 @@ export default function App() {
         <Button
           accessibilityLabel="display-messenger"
           disabled={!loggedUser}
-          title="Display Messenger"
+          title="Present Intercom"
           onPress={() => {
-            Intercom.displayMessenger();
+            Intercom.present();
           }}
         />
         <Input
@@ -230,7 +244,9 @@ export default function App() {
           title="Display Article"
           onPress={() => {
             if (articleId) {
-              Intercom.displayArticle(articleId);
+              let articleContent =
+                IntercomContent.articleWithArticleId(articleId);
+              Intercom.presentContent(articleContent);
             } else {
               showEmptyAlertMessage('Article id');
             }
@@ -239,17 +255,25 @@ export default function App() {
         <Button
           accessibilityLabel="display-message-composer"
           disabled={!loggedUser}
-          title="Display Message Composer"
+          title="Present Message Composer"
           onPress={() => {
-            Intercom.displayMessageComposer();
+            Intercom.presentMessageComposer();
           }}
         />
         <Button
           accessibilityLabel="display-help-center"
           disabled={!loggedUser}
-          title="Display Help Center"
+          title="Present Help Center"
           onPress={() => {
-            Intercom.displayHelpCenter();
+            Intercom.presentSpace(Space.helpCenter);
+          }}
+        />
+        <Button
+          accessibilityLabel="display-help-center"
+          disabled={!loggedUser}
+          title="Present Messages"
+          onPress={() => {
+            Intercom.presentSpace(Space.messages);
           }}
         />
         <Button
@@ -257,7 +281,9 @@ export default function App() {
           disabled={!loggedUser}
           title={'Display Help Center Collections'}
           onPress={() => {
-            Intercom.displayHelpCenterCollections(COLLECTIONS);
+            let helpCenterCollectionsContent =
+              IntercomContent.helpCenterCollectionsWithIds(COLLECTIONS);
+            Intercom.presentContent(helpCenterCollectionsContent);
           }}
         />
         <Button
@@ -349,7 +375,9 @@ export default function App() {
           title={'Display Carousel'}
           onPress={() => {
             if (carouselId) {
-              Intercom.displayCarousel(carouselId);
+              let carouselContent =
+                IntercomContent.carouselWithCarouselId(carouselId);
+              Intercom.presentContent(carouselContent);
             } else {
               showEmptyAlertMessage('Carousel Id');
             }
@@ -370,7 +398,8 @@ export default function App() {
           title={'Display Survey'}
           onPress={() => {
             if (surveyId) {
-              Intercom.displaySurvey(surveyId);
+              let surveyContent = IntercomContent.surveyWithSurveyId(surveyId);
+              Intercom.presentContent(surveyContent);
             } else {
               showEmptyAlertMessage('Survey Id');
             }
@@ -460,7 +489,15 @@ export default function App() {
           title="Update user's name"
           onPress={() => {
             if (userName) {
-              Intercom.updateUser({ name: userName });
+              Intercom.updateUser({ name: userName })
+                .then(() => {
+                  console.log('lupdated User');
+                  showResponseAlert('Updated User');
+                })
+                .catch((e) => {
+                  showErrorAlert(e);
+                  console.error(e);
+                });
             } else {
               showEmptyAlertMessage('User Name');
             }
