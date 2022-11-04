@@ -196,8 +196,8 @@ export type IntercomType = {
   presentSpace(space: Space): Promise<boolean>;
 
   /**
-   *  Present Intercom content.
-   * 
+   * Present Intercom content.
+   *
    * An {@link IntercomContent} object.
    */
   presentContent(content: Content): Promise<boolean>;
