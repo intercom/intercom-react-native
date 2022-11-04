@@ -195,6 +195,11 @@ export type IntercomType = {
    */
   presentSpace(space: Space): Promise<boolean>;
 
+  /**
+   *  Present Intercom content.
+   * 
+   * An {@link IntercomContent} object.
+   */
   presentContent(content: Content): Promise<boolean>;
 
   /**
@@ -235,6 +240,7 @@ export type IntercomType = {
 
   /**
    * Fetch the current number of unread conversations for the logged in User.
+   * @return {Promise<number>} the number of unread conversations.
    */
   getUnreadConversationCount(): Promise<number>;
 
