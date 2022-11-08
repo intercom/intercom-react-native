@@ -7,6 +7,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import javax.annotation.Nullable;
@@ -17,9 +18,10 @@ import java.util.HashMap;
 import io.intercom.android.sdk.Intercom;
 import io.intercom.android.sdk.UnreadConversationCountListener;
 
+@ReactModule(name = IntercomEventEmitter.NAME)
 public class IntercomEventEmitter extends ReactContextBaseJavaModule {
 
-  private static final String NAME = "IntercomEventEmitter";
+  public static final String NAME = "IntercomEventEmitter";
   private static final String UNREAD_COUNT_CHANGE_NOTIFICATION = "IntercomUnreadConversationCountDidChangeNotification";
   private int activeListenersCount = 0;
   private final UnreadConversationCountListener unreadConversationCountListener = new UnreadConversationCountListener() {
