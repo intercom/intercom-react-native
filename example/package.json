@@ -11,15 +11,21 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.5",
     "react": "17.0.2",
-    "react-native": "0.65.1",
+    "react-native": "^0.65.1",
     "react-native-config": "^1.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
-    "@babel/runtime": "^7.12.5",
+    "@babel/runtime": "^7.18.3",
     "@types/react-native": "^0.64.13",
+    "@wdio/cli": "^7.25.2",
+    "@wdio/local-runner": "^7.25.2",
+    "@wdio/mocha-framework": "^7.25.2",
+    "@wdio/spec-reporter": "^7.25.1",
     "babel-plugin-module-resolver": "^4.1.0",
+    "chromedriver": "^107.0.1",
     "metro-react-native-babel-preset": "^0.66.0",
-    "react-native-codegen": "^0.0.7"
+    "react-native-codegen": "^0.0.7",
+    "wdio-chromedriver-service": "^8.0.0"
   }
 }

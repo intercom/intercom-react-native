@@ -826,7 +826,7 @@ Sets a listener for listed events:
 
 ```javascript
 useEffect(() => {
-  const listener = Intercom.addEventListener('IntercomUnreadConversationCountDidChangeNotification', ({count}) => alert(count);
+  const listener = Intercom.addEventListener('IntercomUnreadConversationCountDidChangeNotification', ({count}) => alert(count));
   return () => {
     listener.remove();
   }

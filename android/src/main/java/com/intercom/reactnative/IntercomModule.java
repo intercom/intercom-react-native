@@ -3,6 +3,7 @@ package com.intercom.reactnative;
 import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,10 @@ import java.util.List;
 import java.util.Map;
 
 import io.intercom.android.sdk.Intercom;
+import io.intercom.android.sdk.IntercomContent;
+import io.intercom.android.sdk.IntercomError;
+import io.intercom.android.sdk.IntercomSpace;
+import io.intercom.android.sdk.IntercomStatusCallback;
 import io.intercom.android.sdk.UserAttributes;
 import io.intercom.android.sdk.api.ReactNativeHeaderInterceptor;
 import io.intercom.android.sdk.helpcenter.api.CollectionContentRequestCallback;
@@ -111,52 +116,51 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void registerUnidentifiedUser(Promise promise) {
-    try {
-      Intercom.client().registerUnidentifiedUser();
-      Log.d(NAME, "registerUnidentifiedUser");
-      promise.resolve(true);
-    } catch (Exception err) {
-      Log.e(NAME, "registerUnidentifiedUser error:");
-      Log.e(NAME, err.toString());
-      promise.reject(IntercomErrorCodes.UNIDENTIFIED_REGISTRATION, err.toString());
-    }
+  public void loginUnidentifiedUser(Promise promise) {
+      Intercom.client().loginUnidentifiedUser(new IntercomStatusCallback() {
+        @Override
+        public void onSuccess() {
+          promise.resolve(true);
+        }
+
+        @Override
+        public void onFailure(@NonNull IntercomError intercomError) {
+          Log.e("ERROR", intercomError.getErrorMessage());
+          promise.reject(String.valueOf(intercomError.getErrorCode()), intercomError.getErrorMessage());
+        }
+      });
   }
 
   @ReactMethod
-  public void registerIdentifiedUser(ReadableMap params, Promise promise) {
-    try {
+  public void loginUserWithUserAttributes(ReadableMap params, Promise promise) {
       Boolean hasEmail = params.hasKey("email") && params.getString("email").length() > 0;
       Boolean hasUserId = params.hasKey("userId") && params.getString("userId").length() > 0;
-
+      Registration registration = null;
       if (hasEmail && hasUserId) {
-        Intercom.client().registerIdentifiedUser(
-          new Registration().withEmail(params.getString("email")).withUserId(params.getString("userId"))
-        );
-        Log.d(NAME, "registerIdentifiedUser with userEmail and userId");
-        promise.resolve(true);
+          registration = new Registration().withEmail(params.getString("email")).withUserId(params.getString("userId"));
       } else if (hasEmail) {
-        Intercom.client().registerIdentifiedUser(
-          Registration.create().withEmail(params.getString("email"))
-        );
-        Log.d(NAME, "registerIdentifiedUser with userEmail");
-        promise.resolve(true);
+        registration = Registration.create().withEmail(params.getString("email"));
       } else if (hasUserId) {
-        Intercom.client().registerIdentifiedUser(
-          Registration.create().withUserId(params.getString("userId"))
-        );
-        Log.d(NAME, "registerIdentifiedUser with userId");
-        promise.resolve(true);
+        registration = Registration.create().withUserId(params.getString("userId"));
       } else {
-        Log.e(NAME, "registerIdentifiedUser called with invalid userId or email");
+        Log.e(NAME, "loginUserWithUserAttributes called with invalid userId or email");
         Log.e(NAME, "You must provide userId or email");
         promise.reject(IntercomErrorCodes.IDENTIFIED_REGISTRATION, "Invalid userId or email");
       }
-    } catch (Exception err) {
-      Log.e(NAME, "registerIdentifiedUser error:");
-      Log.e(NAME, err.toString());
-      promise.reject(IntercomErrorCodes.IDENTIFIED_REGISTRATION, err.toString());
-    }
+      if (registration != null) {
+        Intercom.client().loginIdentifiedUser(registration, new IntercomStatusCallback() {
+          @Override
+          public void onSuccess() {
+            promise.resolve(true);
+          }
+
+          @Override
+          public void onFailure(@NonNull IntercomError intercomError) {
+            Log.e("ERROR", intercomError.getErrorMessage());
+            promise.reject(String.valueOf(intercomError.getErrorCode()), intercomError.getErrorMessage());
+          }
+        });
+      }
   }
 
   @ReactMethod
@@ -173,16 +177,19 @@ public class IntercomModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void updateUser(ReadableMap params, Promise promise) {
-    try {
       UserAttributes userAttributes = IntercomHelpers.buildUserAttributes(params);
-      Intercom.client().updateUser(userAttributes);
-      Log.d(NAME, "updateUser");
-      promise.resolve(true);
-    } catch (Exception err) {
-      Log.e(NAME, "updateUser error:");
-      Log.e(NAME, err.toString());
-      promise.reject(IntercomErrorCodes.UPDATE_USER_HASH, err.toString());
-    }
+      Intercom.client().updateUser(userAttributes, new IntercomStatusCallback() {
+        @Override
+        public void onSuccess() {
+          promise.resolve(true);
+        }
+
+        @Override
+        public void onFailure(@NonNull IntercomError intercomError) {
+          Log.e("ERROR", intercomError.getErrorMessage());
+          promise.reject(String.valueOf(intercomError.getErrorCode()), intercomError.getErrorMessage());
+        }
+      });
   }
 
   @ReactMethod
@@ -241,61 +248,95 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void displayMessenger(Promise promise) {
+  public void presentIntercom(Promise promise) {
     try {
-      Intercom.client().displayMessenger();
-      Log.d(NAME, "displayMessenger");
+      Intercom.client().present();
       promise.resolve(true);
     } catch (Exception err) {
-      Log.e(NAME, "displayMessenger error:");
+      Log.e(NAME, "presentMessenger error:");
       Log.e(NAME, err.toString());
       promise.reject(IntercomErrorCodes.DISPLAY_MESSENGER, err.toString());
     }
   }
 
   @ReactMethod
-  public void displayMessageComposer(@Nullable String initialMessage, Promise promise) {
+  public void presentIntercomSpace(String space, Promise promise) {
+    try {
+      IntercomSpace selectedSpace = IntercomSpace.Home;
+      if (space.equals("HOME")) {
+        selectedSpace = IntercomSpace.Home;
+        Intercom.client().present(selectedSpace);
+      } else {
+        if (space.equals("MESSAGES")) {
+          selectedSpace = IntercomSpace.Messages;
+        } else if (space.equals("HELP_CENTER")) {
+          selectedSpace = IntercomSpace.HelpCenter;
+        }
+        Intercom.client().present(selectedSpace);
+        promise.resolve(true);
+      }
+    } catch (Exception error) {
+      Log.e(NAME, "presentIntercomSpace error:");
+      Log.e(NAME, error.toString());
+      promise.reject(IntercomErrorCodes.DISPLAY_MESSENGER, error.toString());
+    }
+  }
+
+  @ReactMethod
+  public void presentMessageComposer(@Nullable String initialMessage, Promise promise) {
     try {
       if (initialMessage != null) {
         Intercom.client().displayMessageComposer(initialMessage);
       } else {
         Intercom.client().displayMessageComposer();
       }
-      Log.d(NAME, "displayMessageComposer");
+      Log.d(NAME, "presentMessageComposer");
       promise.resolve(true);
     } catch (Exception err) {
-      Log.e(NAME, "displayMessageComposer error:");
+      Log.e(NAME, "presentMessageComposer error:");
       Log.e(NAME, err.toString());
       promise.reject(IntercomErrorCodes.DISPLAY_MESSENGER_COMPOSER, err.toString());
     }
   }
 
   @ReactMethod
-  public void displayHelpCenter(Promise promise) {
+  public void presentContent(ReadableMap params, Promise promise) {
     try {
-      Intercom.client().displayHelpCenter();
-      Log.d(NAME, "displayHelpCenter");
-      promise.resolve(true);
-    } catch (Exception err) {
-      Log.e(NAME, "displayHelpCenter error:");
-      Log.e(NAME, err.toString());
-      promise.reject(IntercomErrorCodes.DISPLAY_HELP_CENTER, err.toString());
+      Boolean hasContentType = params.hasKey("type") && params.getString("type").length() > 0;
+      if (hasContentType) {
+        IntercomContent content = null;
+        String contentType = params.getString("type");
+
+        switch (contentType) {
+          case "ARTICLE":
+            content = new IntercomContent.Article(params.getString("id"));
+            break;
+          case "CAROUSEL":
+            content = new IntercomContent.Carousel(params.getString("id"));
+            break;
+          case "SURVEY":
+            content = new IntercomContent.Survey(params.getString("id"));
+            break;
+          case "HELP_CENTER_COLLECTIONS":
+            List<String> collectionIds = IntercomHelpers.readableArrayToStringList(params.getArray("ids"));
+            content = new IntercomContent.HelpCenterCollections(collectionIds);
+            break;
+        }
+        if (content != null) {
+          Intercom.client().presentContent(content);
+          promise.resolve(true);
+        } else {
+          promise.reject(IntercomErrorCodes.DISPLAY_CONTENT, "Invalid content type");
+        }
+      } else {
+        promise.reject(IntercomErrorCodes.DISPLAY_CONTENT, "Intercom content must have a type");
+      }
+    } catch (Exception error) {
+      Log.e(NAME, error.toString());
+      promise.reject(IntercomErrorCodes.DISPLAY_CONTENT, error.toString());
     }
   }
 
-  @ReactMethod
-  public void displayHelpCenterCollections(ReadableArray collectionsId, Promise promise) {
-    try {
-      List<String> list = IntercomHelpers.readableArrayToStringList(collectionsId);
-      Intercom.client().displayHelpCenterCollections(list);
-      Log.d(NAME, "displayHelpCenterCollections");
-      promise.resolve(true);
-    } catch (Exception err) {
-      Log.e(NAME, "displayHelpCenterCollections error:");
-      Log.e(NAME, err.toString());
-      promise.reject(IntercomErrorCodes.DISPLAY_HELP_CENTER_COLLECTIONS, err.toString());
-    }
-  }
 
   @ReactMethod
   public void fetchHelpCenterCollections(Promise promise) {
@@ -396,33 +437,6 @@ public class IntercomModule extends ReactContextBaseJavaModule {
         Log.e(NAME, err.toString());
         promise.reject(IntercomErrorCodes.SEARCH_HELP_CENTER, err.toString());
       }
-    }
-  }
-
-
-  @ReactMethod
-  public void displayCarousel(String carouselId, Promise promise) {
-    try {
-      Intercom.client().displayCarousel(carouselId);
-      Log.d(NAME, "displayCarousel");
-      promise.resolve(true);
-    } catch (Exception err) {
-      Log.e(NAME, "displayCarousel error:");
-      Log.e(NAME, err.toString());
-      promise.reject(IntercomErrorCodes.DISPLAY_CAROUSEL, err.toString());
-    }
-  }
-
-  @ReactMethod
-  public void displayArticle(String articleId, Promise promise) {
-    try {
-      Intercom.client().displayArticle(articleId);
-      Log.d(NAME, "displayArticle");
-      promise.resolve(true);
-    } catch (Exception err) {
-      Log.e(NAME, "displayArticle error:");
-      Log.e(NAME, err.toString());
-      promise.reject(IntercomErrorCodes.DISPLAY_ARTICLE, err.toString());
     }
   }
 
