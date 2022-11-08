@@ -22,7 +22,6 @@ import io.intercom.android.sdk.UnreadConversationCountListener;
 public class IntercomEventEmitter extends ReactContextBaseJavaModule {
 
   public static final String NAME = "IntercomEventEmitter";
-  private static final String UNREAD_COUNT_CHANGE_NOTIFICATION = "IntercomUnreadCountDidChange";
   private static final String UNREAD_COUNT_CHANGE_NOTIFICATION = "IntercomUnreadConversationCountDidChangeNotification";
   private int activeListenersCount = 0;
   private final UnreadConversationCountListener unreadConversationCountListener = new UnreadConversationCountListener() {
