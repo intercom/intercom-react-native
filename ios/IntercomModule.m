@@ -1,7 +1,7 @@
 #import "IntercomModule.h"
 #import "IntercomAttributesBuilder.h"
 #import "IntercomHelpCenterHelpers.h"
-#import "RCTLog.h"
+#import <React/RCTLog.h>
 @import Intercom;
 
 @interface Intercom (Intercom)
