@@ -49,7 +49,7 @@ jobs:
     steps:
       - checkout
       - attach_project
-      
+
       - run:
           name: Install dependencies
           command: |
@@ -245,14 +245,14 @@ workflows:
           <<: *run_always
           requires:
             - install-dependencies
-      # - android-e2e-test:
-      #     <<: *run_always
-      #     requires:
-      #       - install-dependencies
-      #       - lint
-      #       - typescript
-      #       - unit-tests
-      #       - build-package
+      - android-e2e-test:
+           <<: *run_always
+           requires:
+             - install-dependencies
+             - lint
+             - typescript
+             - unit-tests
+             - build-package
       # - ios-e2e-test:
       #     <<: *run_always
       #     requires:
