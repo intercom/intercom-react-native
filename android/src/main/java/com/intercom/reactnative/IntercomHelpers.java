@@ -222,4 +222,23 @@ public class IntercomHelpers {
     }
     return builder.build();
   }
+
+  public static String getValueAsStringForKey(ReadableMap map, String key) {
+    ReadableType type = map.getType(key);
+    String value = "";
+    switch (type) {
+      case Number: {
+        value = String.valueOf(map.getInt(key));
+        break;
+      }
+      case String: {
+        value = map.getString(key);
+        break;
+      }
+      default: {
+        throw new IllegalArgumentException("Value for Key: \""+key+"\" should be a String");
+      }
+    }
+    return value;
+  }
 }
