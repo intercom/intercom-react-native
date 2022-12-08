@@ -133,34 +133,36 @@ public class IntercomModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void loginUserWithUserAttributes(ReadableMap params, Promise promise) {
-      Boolean hasEmail = params.hasKey("email") && params.getString("email").length() > 0;
-      Boolean hasUserId = params.hasKey("userId") && params.getString("userId").length() > 0;
-      Registration registration = null;
-      if (hasEmail && hasUserId) {
-          registration = new Registration().withEmail(params.getString("email")).withUserId(params.getString("userId"));
-      } else if (hasEmail) {
-        registration = Registration.create().withEmail(params.getString("email"));
-      } else if (hasUserId) {
-        registration = Registration.create().withUserId(params.getString("userId"));
-      } else {
-        Log.e(NAME, "loginUserWithUserAttributes called with invalid userId or email");
-        Log.e(NAME, "You must provide userId or email");
-        promise.reject(IntercomErrorCodes.IDENTIFIED_REGISTRATION, "Invalid userId or email");
-      }
-      if (registration != null) {
-        Intercom.client().loginIdentifiedUser(registration, new IntercomStatusCallback() {
-          @Override
-          public void onSuccess() {
-            promise.resolve(true);
-          }
+    Boolean hasEmail = params.hasKey("email") && IntercomHelpers.getValueAsStringForKey(params, "email").length() > 0;
+    Boolean hasUserId = params.hasKey("userId") && IntercomHelpers.getValueAsStringForKey(params, "userId").length() > 0;
+    Registration registration = null;
+    String email = IntercomHelpers.getValueAsStringForKey(params, "email");
+    String userId = IntercomHelpers.getValueAsStringForKey(params, "userId");
+    if (hasEmail && hasUserId) {
+      registration = new Registration().withEmail(email).withUserId(userId);
+    } else if (hasEmail) {
+      registration = Registration.create().withEmail(email);
+    } else if (hasUserId) {
+      registration = Registration.create().withUserId(userId);
+    } else {
+      Log.e(NAME, "loginUserWithUserAttributes called with invalid userId or email");
+      Log.e(NAME, "You must provide userId or email");
+      promise.reject(IntercomErrorCodes.IDENTIFIED_REGISTRATION, "Invalid userId or email");
+    }
+    if (registration != null) {
+      Intercom.client().loginIdentifiedUser(registration, new IntercomStatusCallback() {
+        @Override
+        public void onSuccess() {
+          promise.resolve(true);
+        }
 
-          @Override
-          public void onFailure(@NonNull IntercomError intercomError) {
-            Log.e("ERROR", intercomError.getErrorMessage());
-            promise.reject(String.valueOf(intercomError.getErrorCode()), intercomError.getErrorMessage());
-          }
-        });
-      }
+        @Override
+        public void onFailure(@NonNull IntercomError intercomError) {
+          Log.e("ERROR", intercomError.getErrorMessage());
+          promise.reject(String.valueOf(intercomError.getErrorCode()), intercomError.getErrorMessage());
+        }
+      });
+    }
   }
 
   @ReactMethod
