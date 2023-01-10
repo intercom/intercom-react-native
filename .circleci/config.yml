@@ -228,6 +228,8 @@ workflows:
   build-and-test:
     jobs:
       - install-dependencies:
+          context:
+            - react-native-context
           <<: *run_always
       - lint:
           <<: *run_always
