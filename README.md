@@ -452,35 +452,6 @@ Sets the user hash necessary for validation when Identity Verification is enable
 
 ___
 
-### `Intercom.registerUnidentifiedUser()`
-
-Registers an unidentified user with Intercom
-
-### Returns
-
-`Promise<boolean>`
-
-___
-
-### `Intercom.registerIdentifiedUser({email,userId})`
-
-Registers an identified user with Intercom
-
-### Options
-
-One of below fields is required.
-
-| Type    | Type     | Required |
-| ------- | -------- | -------- |
-| email   | string   |no        |
-| userId  | string   |no        |
-
-### Returns
-
-`Promise<boolean>`
-
-___
-
 ### `Intercom.updateUser(userAttributes)`
 
 Updates a user in Intercom.
@@ -693,7 +664,7 @@ Get a list of articles in the Help Center, filtered by a search term
 
 ### Options
 
-| Type    | Type        | Required |
+| Type    | Type        | Required |displayartiete
 | ------- | --------    | -------- |
 | searchTerm| string  |yes        |
 
@@ -701,50 +672,7 @@ Get a list of articles in the Help Center, filtered by a search term
 
 `Promise<HelpCenterArticleSearchResult[]>`
 
-___
-### `Intercom.displayArticle(articleId)`
-
-Displays article with given id.
-
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| articleId| string  |yes        |
-
-### Returns
-
-`Promise<boolean>`
-
-___
-
-### `Intercom.displayCarousel(carouselId)`
-
-Displays carousel
-
-### Options
-
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| carouselId| string  |yes        |
-
-### Returns
-
-`Promise<boolean>`
-
-### `Intercom.displayArticle(articleId)`
-
-Opens an article
-
-### Options
-
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| articleId| string  |yes        |
-
-### Returns
-
-`Promise<boolean>`
-
-___
+---
 
 ### `Intercom.setInAppMessageVisibility(visibility)`
 
