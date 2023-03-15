@@ -21,6 +21,10 @@ NSString *SEARCH_HELP_CENTER = @"903";
 
 RCT_EXPORT_MODULE()
 
+- (dispatch_queue_t)methodQueue {
+    return dispatch_get_main_queue();
+}
+
 + (void)initialize:(nonnull NSString *)apiKey withAppId:(nonnull NSString *)appId {
     NSString *version = @"0";
 
@@ -81,7 +85,7 @@ RCT_EXPORT_METHOD(sendTokenToIntercom:(NSString *)token
         [Intercom setDeviceToken:data failure:^(NSError * _Nullable error) {
             reject(SEND_TOKEN_TO_INTERCOM, @"Error in sendTokenToIntercom", error);
         }];
-        
+
         resolve(@(YES));
     } @catch (NSException *exception) {
         reject(SEND_TOKEN_TO_INTERCOM, @"Error in sendTokenToIntercom", [self exceptionToError:exception :SEND_TOKEN_TO_INTERCOM :@"sendTokenToIntercom"]);
@@ -229,7 +233,7 @@ RCT_EXPORT_METHOD(presentContent:(NSDictionary *)content
 
 RCT_EXPORT_METHOD(fetchHelpCenterCollections:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
     [Intercom fetchHelpCenterCollectionsWithCompletion:^(NSArray<ICMHelpCenterCollection *> *_Nullable collections, NSError *_Nullable error) {
-        
+
         if (collections != nil) {
             NSArray *parsedCollections = [IntercomHelpCenterHelpers parseCollectionsToArray:collections];
             resolve(parsedCollections);
