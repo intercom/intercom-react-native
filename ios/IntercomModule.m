@@ -81,7 +81,7 @@ RCT_EXPORT_METHOD(sendTokenToIntercom:(NSString *)token
         [Intercom setDeviceToken:data failure:^(NSError * _Nullable error) {
             reject(SEND_TOKEN_TO_INTERCOM, @"Error in sendTokenToIntercom", error);
         }];
-        
+
         resolve(@(YES));
     } @catch (NSException *exception) {
         reject(SEND_TOKEN_TO_INTERCOM, @"Error in sendTokenToIntercom", [self exceptionToError:exception :SEND_TOKEN_TO_INTERCOM :@"sendTokenToIntercom"]);
@@ -215,8 +215,7 @@ RCT_EXPORT_METHOD(presentContent:(NSDictionary *)content
     } else if ([contentType isEqualToString:@"SURVEY"]) {
         intercomContent = [IntercomContent surveyWithId:content[@"id"]];
     } else if ([contentType isEqualToString:@"HELP_CENTER_COLLECTIONS"]) {
-        NSArray<NSString *> *collectionIds = [NSArray arrayWithObjects:content[@"ids"], nil];
-        intercomContent = [IntercomContent helpCenterCollectionsWithIds:collectionIds];
+        intercomContent = [IntercomContent helpCenterCollectionsWithIds:content[@"ids"]];
     }
     if (intercomContent) {
         [Intercom presentContent:intercomContent];
@@ -229,7 +228,7 @@ RCT_EXPORT_METHOD(presentContent:(NSDictionary *)content
 
 RCT_EXPORT_METHOD(fetchHelpCenterCollections:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
     [Intercom fetchHelpCenterCollectionsWithCompletion:^(NSArray<ICMHelpCenterCollection *> *_Nullable collections, NSError *_Nullable error) {
-        
+
         if (collections != nil) {
             NSArray *parsedCollections = [IntercomHelpCenterHelpers parseCollectionsToArray:collections];
             resolve(parsedCollections);
