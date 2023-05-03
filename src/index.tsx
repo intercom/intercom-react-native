@@ -477,7 +477,7 @@ interface Survey extends Content {
 }
 
 interface HelpCenterCollections extends Content {
-  ids: string[];
+  ids: string | string[];
 }
 
 export type IntercomContentType = {
@@ -488,7 +488,7 @@ export type IntercomContentType = {
   carouselWithCarouselId: (carouselId: string) => Carousel;
   surveyWithSurveyId: (surveyId: string) => Survey;
   helpCenterCollectionsWithIds: (
-    collectionIds: string[]
+    collectionIds: string | string[]
   ) => HelpCenterCollections;
 };
 
