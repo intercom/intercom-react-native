@@ -17,7 +17,7 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noImplicitUseStrict": false,
-    "noStrictGenericChecks": false,
+    "noStrictGenericChecks": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "resolveJsonModule": true,
