@@ -415,11 +415,12 @@ const Intercom: IntercomType = {
       IntercomEventEmitter.startEventListener();
     const eventEmitter = new NativeEventEmitter(IntercomEventEmitter);
     const listener = eventEmitter.addListener(event, callback);
+    const originalRemove = listener.remove;
     listener.remove = () => {
       event === IntercomEvents.IntercomUnreadCountDidChange &&
         Platform.OS === 'android' &&
         IntercomEventEmitter.removeEventListener();
-      listener.remove();
+      originalRemove();
     };
     return listener;
   },
