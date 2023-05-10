@@ -17,7 +17,7 @@
 #import <IntercomModule.h>
 #import <UserNotifications/UserNotifications.h>
 #import <React/RCTLinkingManager.h>
-#import "ReactNativeConfig.h"
+#import "RNCConfig.h"
 
 #ifdef FB_SONARKIT_ENABLED
 
@@ -61,8 +61,8 @@ static void InitializeFlipper(UIApplication *application) {
     UIViewController *rootViewController = [UIViewController new];
     rootViewController.view = rootView;
     self.window.rootViewController = rootViewController;
-    NSString *apiKey = [ReactNativeConfig envFor:@"IOS_INTERCOM_KEY"];
-    NSString *appId = [ReactNativeConfig envFor:@"IOS_INTERCOM_APP_ID"];
+    NSString *apiKey = [RNCConfig envFor:@"IOS_INTERCOM_KEY"];
+    NSString *appId = [RNCConfig envFor:@"IOS_INTERCOM_APP_ID"];
 
     [IntercomModule initialize:apiKey withAppId:appId];
 
@@ -98,7 +98,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge {
 #if DEBUG
-    return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+    return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
 #else
     return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
