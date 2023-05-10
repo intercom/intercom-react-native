@@ -364,6 +364,8 @@ export type IntercomType = {
    * @deprecated `displayHelpCenterCollections` is deprecated and will be removed in a future release.  Use `presentContent` instead.
    */
   displayHelpCenterCollections(collections?: string[]): Promise<boolean>;
+
+  initialize(apiKey: string, appId: string): void;
 };
 
 const Intercom: IntercomType = {
@@ -424,6 +426,7 @@ const Intercom: IntercomType = {
     };
     return listener;
   },
+  initialize: (apiKey: string, appId: string) => IntercomModule.initialize(apiKey,appId),
 
   /**
    * @depreacted methods

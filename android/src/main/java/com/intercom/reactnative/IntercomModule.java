@@ -82,6 +82,11 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void initialize(String apiKey, String appId) {
+      Intercom.initialize(getCurrentActivity().getApplication(), apiKey, appId);
+  }
+
+  @ReactMethod
   public void handlePushMessage(Promise promise) {
     try {
       Intercom.client().handlePushMessage();
