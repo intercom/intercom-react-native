@@ -181,27 +181,27 @@ jobs:
     executor: default
     steps:
       - checkout
-      - run:
-          name: Set user credentials
-          command: |
-            git config user.email $GIT_USER_EMAIL
-            git config user.name $GIT_USER_NAME
-
-      # Tokens are stored in bas64
-      - run:
-          name: Instal SSH KEY
-          command: |
-            ssh-add -D
-            echo $GIT_WRITE_SSH_KEY | base64 --decode > ~/.ssh/id_ed25519
-            echo $GIT_WRITE_SSH_KEY_PUB | base64 --decode > ~/.ssh/id_ed25519.pub
-
-      - run:
-          name: Change key permission
-          command: chmod 600 ~/.ssh/id_ed25519
-
-      - run:
-          name: Add ssh key
-          command: ssh-add ~/.ssh/id_ed25519
+#      - run:
+#          name: Set user credentials
+#          command: |
+#            git config user.email $GIT_USER_EMAIL
+#            git config user.name $GIT_USER_NAME
+#
+#      # Tokens are stored in bas64
+#      - run:
+#          name: Instal SSH KEY
+#          command: |
+#            ssh-add -D
+#            echo $GIT_WRITE_SSH_KEY | base64 --decode > ~/.ssh/id_ed25519
+#            echo $GIT_WRITE_SSH_KEY_PUB | base64 --decode > ~/.ssh/id_ed25519.pub
+#
+#      - run:
+#          name: Change key permission
+#          command: chmod 600 ~/.ssh/id_ed25519
+#
+#      - run:
+#          name: Add ssh key
+#          command: ssh-add ~/.ssh/id_ed25519
 
       - run:
           name: Add npm registry auth key
