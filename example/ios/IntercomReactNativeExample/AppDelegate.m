@@ -48,6 +48,8 @@ static void InitializeFlipper(UIApplication *application) {
 #endif
 
     NSMutableDictionary *newLaunchOptions = [NSMutableDictionary dictionaryWithDictionary:launchOptions];
+    
+    // Modifying launchOptions to facilitate deep linking.
     if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
        NSDictionary *remoteNotif = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
        if (remoteNotif[@"uri"]) {
@@ -57,6 +59,7 @@ static void InitializeFlipper(UIApplication *application) {
            }
        }
     }
+  
     RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:newLaunchOptions];
     RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                      moduleName:@"IntercomReactNativeExample"
