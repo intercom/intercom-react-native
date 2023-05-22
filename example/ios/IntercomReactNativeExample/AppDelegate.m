@@ -46,7 +46,21 @@ static void InitializeFlipper(UIApplication *application) {
 #ifdef FB_SONARKIT_ENABLED
     InitializeFlipper(application);
 #endif
-    RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
+
+    NSMutableDictionary *newLaunchOptions = [NSMutableDictionary dictionaryWithDictionary:launchOptions];
+    
+    // Modifying launchOptions to facilitate deep linking.
+    if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
+       NSDictionary *remoteNotif = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+       if (remoteNotif[@"uri"]) {
+           NSString *initialURL = remoteNotif[@"uri"];
+           if (!launchOptions[UIApplicationLaunchOptionsURLKey]) {
+               newLaunchOptions[UIApplicationLaunchOptionsURLKey] = [NSURL URLWithString:initialURL];
+           }
+       }
+    }
+  
+    RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:newLaunchOptions];
     RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                      moduleName:@"IntercomReactNativeExample"
                                               initialProperties:nil];
