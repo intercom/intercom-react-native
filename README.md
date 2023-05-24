@@ -431,7 +431,7 @@ ___
 
 ## Import
 
-### `import Intercom from '@intercom/intercom-react-native';`
+### `import Intercom, { IntercomContent, Space } from '@intercom/intercom-react-native';`
 
 ___
 
@@ -452,9 +452,10 @@ Sets the user hash necessary for validation when Identity Verification is enable
 
 ___
 
-### `Intercom.registerUnidentifiedUser()`
+### `Intercom.loginUnidentifiedUser()`
 
-Registers an unidentified user with Intercom
+Login a unidentified user.
+This is a user that doesn't have any identifiable information such as a userId or email.
 
 ### Returns
 
@@ -462,9 +463,9 @@ Registers an unidentified user with Intercom
 
 ___
 
-### `Intercom.registerIdentifiedUser({email,userId})`
+### `Intercom.loginUserWithUserAttributes({email,userId})`
 
-Registers an identified user with Intercom
+Login a user with identifiable information.
 
 ### Options
 
@@ -637,7 +638,7 @@ Open the conversation screen with the composer pre-populated text.
 
 ___
 
-### `Intercom.displayHelpCenter()`
+### `Intercom.presentSpace(Space.helpCenter);`
 
 Open up your apps help center
 
@@ -646,7 +647,7 @@ Open up your apps help center
 `Promise<boolean>`
 
 ___
-### `Intercom.displayHelpCenterCollections()`
+### `Intercom.presentContent(IntercomContent.helpCenterCollectionsWithIds(collections))`
 
 Present the help center with specific collections only .
 
@@ -702,7 +703,7 @@ Get a list of articles in the Help Center, filtered by a search term
 `Promise<HelpCenterArticleSearchResult[]>`
 
 ___
-### `Intercom.displayArticle(articleId)`
+### `Intercom.presentContent(IntercomContent.articleWithArticleId(articleId))`
 
 Displays article with given id.
 
@@ -716,7 +717,7 @@ Displays article with given id.
 
 ___
 
-### `Intercom.displayCarousel(carouselId)`
+### `Intercom.presentContent(IntercomContent.carouselWithCarouselId(carouselId))`
 
 Displays carousel
 
@@ -729,16 +730,6 @@ Displays carousel
 ### Returns
 
 `Promise<boolean>`
-
-### `Intercom.displayArticle(articleId)`
-
-Opens an article
-
-### Options
-
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| articleId| string  |yes        |
 
 ### Returns
 
