@@ -219,7 +219,7 @@ RCT_EXPORT_METHOD(presentContent:(NSDictionary *)content
     } else if ([contentType isEqualToString:@"SURVEY"]) {
         intercomContent = [IntercomContent surveyWithId:content[@"id"]];
     } else if ([contentType isEqualToString:@"HELP_CENTER_COLLECTIONS"]) {
-        NSArray<NSString *> *collectionIds = [NSArray arrayWithObjects:content[@"ids"], nil];
+        NSArray<NSString *> *collectionIds = content[@"ids"];
         intercomContent = [IntercomContent helpCenterCollectionsWithIds:collectionIds];
     }
     if (intercomContent) {
