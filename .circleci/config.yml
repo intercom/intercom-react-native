@@ -68,7 +68,14 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: .
-
+  notify:
+    executor: default
+    steps:
+      - checkout
+      - run:
+          name: Notify
+          command: |
+            pwd
   lint:
     executor: default
     steps:
@@ -203,6 +210,13 @@ jobs:
 
 workflows:
   version: 2.1
+  notify-to-pr-feed:
+    on:
+      pull_request:
+          branches:
+            only: main
+    jobs:
+      - notify
   build-and-test:
     jobs:
       - install-dependencies:
