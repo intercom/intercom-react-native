@@ -622,7 +622,7 @@ Opens the Intercom Messenger automatically to the best place for your users.
 `Promise<boolean>`
 ___
 
-### `Intercom.displayMessageComposer(initialMessage)`
+### `Intercom.presentMessageComposer(initialMessage)`
 
 Open the conversation screen with the composer pre-populated text.
 
