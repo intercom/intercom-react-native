@@ -141,12 +141,14 @@ public class IntercomModule extends ReactContextBaseJavaModule {
     Boolean hasEmail = params.hasKey("email") && IntercomHelpers.getValueAsStringForKey(params, "email").length() > 0;
     Boolean hasUserId = params.hasKey("userId") && IntercomHelpers.getValueAsStringForKey(params, "userId").length() > 0;
     Registration registration = null;
-    String email = IntercomHelpers.getValueAsStringForKey(params, "email");
     String userId = IntercomHelpers.getValueAsStringForKey(params, "userId");
-    if (hasEmail && hasUserId) {
-      registration = new Registration().withEmail(email).withUserId(userId);
-    } else if (hasEmail) {
-      registration = Registration.create().withEmail(email);
+    if (hasEmail) {
+      String email = IntercomHelpers.getValueAsStringForKey(params, "email");
+      if (hasUserId) {
+        registration = new Registration().withEmail(email).withUserId(userId);
+      } else {
+        registration = Registration.create().withEmail(email);
+      }
     } else if (hasUserId) {
       registration = Registration.create().withUserId(userId);
     } else {

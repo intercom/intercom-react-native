@@ -21,6 +21,10 @@ NSString *SEARCH_HELP_CENTER = @"903";
 
 RCT_EXPORT_MODULE()
 
+- (dispatch_queue_t)methodQueue {
+    return dispatch_get_main_queue();
+}
+
 + (void)initialize:(nonnull NSString *)apiKey withAppId:(nonnull NSString *)appId {
     NSString *version = @"0";
 
@@ -219,7 +223,7 @@ RCT_EXPORT_METHOD(presentContent:(NSDictionary *)content
     } else if ([contentType isEqualToString:@"SURVEY"]) {
         intercomContent = [IntercomContent surveyWithId:content[@"id"]];
     } else if ([contentType isEqualToString:@"HELP_CENTER_COLLECTIONS"]) {
-        NSArray<NSString *> *collectionIds = [NSArray arrayWithObjects:content[@"ids"], nil];
+        NSArray<NSString *> *collectionIds = content[@"ids"];
         intercomContent = [IntercomContent helpCenterCollectionsWithIds:collectionIds];
     }
     if (intercomContent) {
