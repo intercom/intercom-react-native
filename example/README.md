@@ -32,7 +32,6 @@ yarn example android --variant=fossDebug
 For iOS, you need to install the necessary pods. Go to the example/ios directory in your terminal and run:
 
 ```sh
-cd example/ios
 pod install
 ```
 
