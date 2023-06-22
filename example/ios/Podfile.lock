@@ -74,7 +74,7 @@ PODS:
   - fmt (6.2.1)
   - glog (0.3.5)
   - Intercom (15.0.0)
-  - intercom-react-native (5.0.0):
+  - intercom-react-native (5.1.1):
     - Intercom (~> 15.0.0)
     - React-Core
   - libevent (2.1.12)
@@ -534,7 +534,7 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   Intercom: c4d9286eb12277dd104e7a49aead819337772716
-  intercom-react-native: 83a85583016a294827177465301795ec46e5a310
+  intercom-react-native: a9174e41c57228fa94ee832f771b6977826254a3
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
