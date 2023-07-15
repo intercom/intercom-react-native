@@ -8,7 +8,7 @@ const Input = ({
   ...props
 }: TextInputProps & { title: string }) => {
   return (
-    <View style={styles.buttonContainer}>
+    <View style={styles.container}>
       {title && <Text style={styles.title}>{title}</Text>}
       <TextInput {...props} style={[styles.input, style]} />
     </View>
@@ -16,13 +16,18 @@ const Input = ({
 };
 
 const styles = StyleSheet.create({
-  buttonContainer: { marginVertical: 8 },
-  title: { marginBottom: 3 },
+  container: { marginVertical: 8 },
+  title: { 
+    marginBottom: 3,
+  },
   input: {
     borderWidth: 1,
     borderColor: 'black',
     paddingHorizontal: 8,
     paddingVertical: 4,
+    borderRadius: 4,
+    backgroundColor: 'white',
+    color: '#808080'
   },
 });
 
