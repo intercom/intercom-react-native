@@ -136,16 +136,16 @@ public class IntercomModule extends ReactContextBaseJavaModule {
     Boolean hasEmail = params.hasKey("email") && IntercomHelpers.getValueAsStringForKey(params, "email").length() > 0;
     Boolean hasUserId = params.hasKey("userId") && IntercomHelpers.getValueAsStringForKey(params, "userId").length() > 0;
     Registration registration = null;
-    String userId = IntercomHelpers.getValueAsStringForKey(params, "userId");
-    if (hasEmail) {
+    if (hasEmail && hasUserId) {
       String email = IntercomHelpers.getValueAsStringForKey(params, "email");
-      if (hasUserId) {
-        registration = new Registration().withEmail(email).withUserId(userId);
-      } else {
-        registration = Registration.create().withEmail(email);
-      }
+      String userId = IntercomHelpers.getValueAsStringForKey(params, "userId");
+      registration = new Registration().withEmail(email).withUserId(userId);
+    } else if (hasEmail) {
+      String email = IntercomHelpers.getValueAsStringForKey(params, "email");
+      registration = new Registration().withEmail(email);
     } else if (hasUserId) {
-      registration = Registration.create().withUserId(userId);
+      String userId = IntercomHelpers.getValueAsStringForKey(params, "userId");
+      registration = new Registration().withUserId(userId);
     } else {
       Log.e(NAME, "loginUserWithUserAttributes called with invalid userId or email");
       Log.e(NAME, "You must provide userId or email");
