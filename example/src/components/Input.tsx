@@ -17,7 +17,7 @@ const Input = ({
 
 const styles = StyleSheet.create({
   container: { marginVertical: 8 },
-  title: { 
+  title: {
     marginBottom: 3,
   },
   input: {
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 4,
     backgroundColor: 'white',
-    color: '#808080'
+    color: '#808080',
   },
 });
 
