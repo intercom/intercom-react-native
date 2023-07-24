@@ -136,7 +136,7 @@ export default function App() {
 
   return (
     <View style={styles.container} accessibilityLabel="app-root">
-      <StatusBar translucent={false} />
+      <StatusBar translucent={true} />
       <View style={[styles.row, styles.alignCenter, styles.header]}>
         <Image source={require('../assets/intercom.png')} style={styles.logo} />
         <Text style={styles.title}>Intercom Example App</Text>
