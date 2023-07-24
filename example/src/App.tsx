@@ -20,7 +20,16 @@ import Intercom, {
   IntercomContent,
 } from '@intercom/intercom-react-native';
 
-import { CAROUSEL_ID, SURVEY_ID, EVENT_NAME, ARTICLE_ID, USER_NAME, COLLECTION_ID, SEARCH_TERM, TOKEN } from './constants'
+import { 
+  CAROUSEL_ID,
+  SURVEY_ID,
+  EVENT_NAME,
+  ARTICLE_ID,
+  USER_NAME,
+  COLLECTION_ID,
+  SEARCH_TERM,
+  TOKEN
+ } from './constants'
 
 import Button from './components/Button';
 import Input from './components/Input';
@@ -62,7 +71,7 @@ export default function App() {
 
   const showIncorrectFieldMessage = (field: string) => {
     Alert.alert(field, `Provided ${field} is not of correct format`);
-  }
+  };
 
   const validateEmail = (email: string | undefined) => {
     return String(email)
@@ -72,7 +81,21 @@ export default function App() {
       );
   };
 
-
+  const resetAttributes = () => {
+    setCount(0);
+    Intercom.setBottomPadding(0).then(() =>
+      setBottomPadding(0)
+    );
+    Intercom.setLauncherVisibility(Visibility.GONE).then(() => setLauncherVisibility(false));
+    Intercom.setInAppMessageVisibility(Visibility.VISIBLE).then(() => setInAppMessageVisibility(true));
+    setArticleId(ARTICLE_ID);
+    setCarouselId(CAROUSEL_ID);
+    setSurveyId(SURVEY_ID);
+    setEventName(EVENT_NAME);
+    setCollectionId(COLLECTION_ID);
+    setSearchTerm(SEARCH_TERM);
+    setUserName(USER_NAME)
+  }
 
   useEffect(() => {
     /**
@@ -482,6 +505,14 @@ export default function App() {
           intercom_title="Send Token"
           intercom_onPress={() => {
             Intercom.sendTokenToIntercom(TOKEN);
+          }}
+        />
+        <Button
+          intercom_accessibilityLabel="reset-attributes"
+          intercom_disabled={!loggedUser}
+          intercom_title="Reset Attributes"
+          intercom_onPress={() => {
+            resetAttributes()
           }}
         />
         <Button
