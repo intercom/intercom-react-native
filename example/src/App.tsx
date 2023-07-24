@@ -20,7 +20,7 @@ import Intercom, {
   IntercomContent,
 } from '@intercom/intercom-react-native';
 
-import { 
+import {
   CAROUSEL_ID,
   SURVEY_ID,
   EVENT_NAME,
@@ -28,8 +28,8 @@ import {
   USER_NAME,
   COLLECTION_ID,
   SEARCH_TERM,
-  TOKEN
- } from './constants'
+  TOKEN,
+} from './constants';
 
 import Button from './components/Button';
 import Input from './components/Input';
@@ -83,19 +83,21 @@ export default function App() {
 
   const resetAttributes = () => {
     setCount(0);
-    Intercom.setBottomPadding(0).then(() =>
-      setBottomPadding(0)
+    Intercom.setBottomPadding(0).then(() => setBottomPadding(0));
+    Intercom.setLauncherVisibility(Visibility.GONE).then(() =>
+      setLauncherVisibility(false)
     );
-    Intercom.setLauncherVisibility(Visibility.GONE).then(() => setLauncherVisibility(false));
-    Intercom.setInAppMessageVisibility(Visibility.VISIBLE).then(() => setInAppMessageVisibility(true));
+    Intercom.setInAppMessageVisibility(Visibility.VISIBLE).then(() =>
+      setInAppMessageVisibility(true)
+    );
     setArticleId(ARTICLE_ID);
     setCarouselId(CAROUSEL_ID);
     setSurveyId(SURVEY_ID);
     setEventName(EVENT_NAME);
     setCollectionId(COLLECTION_ID);
     setSearchTerm(SEARCH_TERM);
-    setUserName(USER_NAME)
-  }
+    setUserName(USER_NAME);
+  };
 
   useEffect(() => {
     /**
@@ -166,14 +168,12 @@ export default function App() {
       </View>
       <View style={styles.stickyHeaderContainer}>
         <Text
-            style={styles.text}
-            accessibilityLabel={loggedUser ? 'authenticated' : 'unauthenticated'}
-          >
-            {`Logged In: ${loggedUser ? 'Yes' : 'No'}`}
+          style={styles.text}
+          accessibilityLabel={loggedUser ? 'authenticated' : 'unauthenticated'}
+        >
+          {`Logged In: ${loggedUser ? 'Yes' : 'No'}`}
         </Text>
-        <Text style={styles.text}>
-          Unread messages count: {count}
-        </Text>
+        <Text style={styles.text}>Unread messages count: {count}</Text>
       </View>
       <ScrollView>
         <Button
@@ -472,7 +472,9 @@ export default function App() {
         />
         <Button
           intercom_accessibilityLabel="toggle-message-visibility"
-          intercom_title={`Toggle In App Message Visibility: ${inAppMessageVisibility ? Visibility.VISIBLE : Visibility.GONE}`}
+          intercom_title={`Toggle In App Message Visibility: ${
+            inAppMessageVisibility ? Visibility.VISIBLE : Visibility.GONE
+          }`}
           intercom_onPress={() => {
             Intercom.setInAppMessageVisibility(
               inAppMessageVisibility ? Visibility.GONE : Visibility.VISIBLE
@@ -480,7 +482,9 @@ export default function App() {
           }}
         />
         <Button
-          intercom_title={`Toggle In Launcher Visibility: ${launcherVisibility ? Visibility.VISIBLE : Visibility.GONE}`}
+          intercom_title={`Toggle In Launcher Visibility: ${
+            launcherVisibility ? Visibility.VISIBLE : Visibility.GONE
+          }`}
           intercom_accessibilityLabel="toggle-launcher-visibility"
           intercom_onPress={() => {
             Intercom.setLauncherVisibility(
@@ -512,7 +516,7 @@ export default function App() {
           intercom_disabled={!loggedUser}
           intercom_title="Reset Attributes"
           intercom_onPress={() => {
-            resetAttributes()
+            resetAttributes();
           }}
         />
         <Button
@@ -566,5 +570,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     borderRadius: 3,
     marginBottom: 5,
-  }
+  },
 });
