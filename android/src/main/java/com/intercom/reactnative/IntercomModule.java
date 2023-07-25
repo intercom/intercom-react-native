@@ -325,9 +325,6 @@ public class IntercomModule extends ReactContextBaseJavaModule {
             List<String> collectionIds = IntercomHelpers.readableArrayToStringList(params.getArray("ids"));
             content = new IntercomContent.HelpCenterCollections(collectionIds);
             break;
-          case "CONVERSATION":
-            content = new IntercomContent.Conversation(params.getString("id"));
-            break;
         }
         if (content != null) {
           Intercom.client().presentContent(content);
