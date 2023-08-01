@@ -299,7 +299,7 @@ export default function App() {
         <Button
           intercom_accessibilityLabel="present-conversation"
           intercom_disabled={!loggedUser}
-          intercom_title="Present Conversation"
+          intercom_title="Display Conversation"
           intercom_onPress={() => {
             if (conversationId) {
               let conversationContent =
