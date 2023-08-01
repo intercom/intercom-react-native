@@ -29,6 +29,7 @@ import {
   COLLECTION_ID,
   SEARCH_TERM,
   TOKEN,
+  CONVERSATION_ID,
 } from './constants';
 
 import Button from './components/Button';
@@ -48,6 +49,9 @@ export default function App() {
   const [launcherVisibility, setLauncherVisibility] = useState<boolean>(false);
   const [user, setUser] = useState<UserAttributes>({ email: '' });
 
+  const [conversationId, setConversationId] = useState<string | undefined>(
+    CONVERSATION_ID
+  );
   const [articleId, setArticleId] = useState<string | undefined>(ARTICLE_ID);
   const [carouselId, setCarouselId] = useState<string | undefined>(CAROUSEL_ID);
   const [surveyId, setSurveyId] = useState<string | undefined>(SURVEY_ID);
@@ -90,6 +94,7 @@ export default function App() {
     Intercom.setInAppMessageVisibility(Visibility.VISIBLE).then(() =>
       setInAppMessageVisibility(true)
     );
+    setConversationId(CONVERSATION_ID);
     setArticleId(ARTICLE_ID);
     setCarouselId(CAROUSEL_ID);
     setSurveyId(SURVEY_ID);
@@ -282,7 +287,29 @@ export default function App() {
               });
           }}
         />
-
+        <Input
+          title="Conversation Id"
+          accessibilityLabel="conversation-id"
+          value={conversationId}
+          onChangeText={(val) => {
+            setConversationId(val);
+          }}
+          placeholder="Conversation Id"
+        />
+        <Button
+          intercom_accessibilityLabel="present-conversation"
+          intercom_disabled={!loggedUser}
+          intercom_title="Present Conversation"
+          intercom_onPress={() => {
+            if (conversationId) {
+              let conversationContent =
+                IntercomContent.conversationWithConversationId(conversationId);
+              Intercom.presentContent(conversationContent);
+            } else {
+              showEmptyAlertMessage('Conversation Id');
+            }
+          }}
+        />
         <Input
           title="Article Id"
           accessibilityLabel="article-id"
