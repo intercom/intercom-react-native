@@ -459,6 +459,7 @@ export enum ContentType {
   Carousel = 'CAROUSEL',
   Survey = 'SURVEY',
   HelpCenterCollections = 'HELP_CENTER_COLLECTIONS',
+  Conversation = 'CONVERSATION',
 }
 
 export interface Content {
@@ -481,6 +482,10 @@ interface HelpCenterCollections extends Content {
   ids: string[];
 }
 
+interface Conversation extends Content {
+  id: string;
+}
+
 export type IntercomContentType = {
   /**
    * Create
@@ -491,6 +496,7 @@ export type IntercomContentType = {
   helpCenterCollectionsWithIds: (
     collectionIds: string[]
   ) => HelpCenterCollections;
+  conversationWithConversationId: (conversationId: string) => Conversation;
 };
 
 export const IntercomContent: IntercomContentType = {
@@ -520,5 +526,12 @@ export const IntercomContent: IntercomContentType = {
     helpCenterCollectionsContent.type = ContentType.HelpCenterCollections;
     helpCenterCollectionsContent.ids = collectionIds;
     return helpCenterCollectionsContent;
+  },
+
+  conversationWithConversationId(conversationId) {
+    let conversationContent = {} as Conversation;
+    conversationContent.type = ContentType.Conversation;
+    conversationContent.id = conversationId;
+    return conversationContent;
   },
 };

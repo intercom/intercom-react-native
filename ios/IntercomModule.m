@@ -221,6 +221,8 @@ RCT_EXPORT_METHOD(presentContent:(NSDictionary *)content
     } else if ([contentType isEqualToString:@"HELP_CENTER_COLLECTIONS"]) {
         NSArray<NSString *> *collectionIds = content[@"ids"];
         intercomContent = [IntercomContent helpCenterCollectionsWithIds:collectionIds];
+    } else if ([contentType isEqualToString:@"CONVERSATION"]) {
+        intercomContent = [IntercomContent conversationWithId:content[@"id"]];
     }
     if (intercomContent) {
         [Intercom presentContent:intercomContent];
