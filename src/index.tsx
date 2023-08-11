@@ -329,9 +329,6 @@ export type IntercomType = {
    */
   updateUser(params: UpdateUserParamList): Promise<boolean>;
 
-  /**
-   * @deprecated `displayMessenger` is deprecated and will be removed in a future release.  Use `presentIntercom` instead.
-   */
   displayMessenger(): Promise<boolean>;
 
   /**
