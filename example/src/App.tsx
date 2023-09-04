@@ -254,11 +254,19 @@ export default function App() {
           }}
         />
         <Button
-          intercom_accessibilityLabel="display-help-center"
+          intercom_accessibilityLabel="display-messages"
           intercom_disabled={!loggedUser}
           intercom_title="Present Messages"
           intercom_onPress={() => {
             Intercom.presentSpace(Space.messages);
+          }}
+        />
+        <Button
+          intercom_accessibilityLabel="display-tickets"
+          intercom_disabled={!loggedUser}
+          intercom_title="Present Tickets"
+          intercom_onPress={() => {
+            Intercom.presentSpace(Space.tickets);
           }}
         />
         <Button
