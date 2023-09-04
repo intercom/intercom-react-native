@@ -126,6 +126,7 @@ export enum Space {
   home = 'HOME',
   helpCenter = 'HELP_CENTER',
   messages = 'MESSAGES',
+  tickets = 'TICKETS',
 }
 
 export type IntercomType = {
