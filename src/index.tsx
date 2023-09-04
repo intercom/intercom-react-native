@@ -331,12 +331,12 @@ export type IntercomType = {
   updateUser(params: UpdateUserParamList): Promise<boolean>;
 
   /**
-   * @deprecated `displayMessenger` is deprecated and will be removed in a future release.  Use `presentIntercom` instead.
+   * @deprecated `displayMessenger` is deprecated and will be removed in a future release.  Use `present` instead.
    */
   displayMessenger(): Promise<boolean>;
 
   /**
-   * @deprecated `displayHelpCenter` is deprecated and will be removed in a future release.  Use `presentIntercom` instead.
+   * @deprecated `displayHelpCenter` is deprecated and will be removed in a future release.  Use `presentSpace` instead.
    */
   displayHelpCenter(): Promise<boolean>;
 
