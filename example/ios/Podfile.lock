@@ -73,9 +73,9 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
-  - Intercom (15.1.3)
-  - intercom-react-native (5.2.0):
-    - Intercom (~> 15.1.3)
+  - Intercom (15.2.0)
+  - intercom-react-native (5.3.0):
+    - Intercom (~> 15.2.0)
     - React-Core
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.1100)
@@ -360,7 +360,7 @@ PODS:
     - React-perflogger (= 0.70.9)
   - RNCAsyncStorage (1.18.1):
     - React-Core
-  - SocketRocket (0.6.0)
+  - SocketRocket (0.6.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -533,8 +533,8 @@ SPEC CHECKSUMS:
   FlipperKit: cbdee19bdd4e7f05472a66ce290f1b729ba3cb86
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
-  Intercom: 9148ad2d563bbe0715f81df4ee153988f425c145
-  intercom-react-native: b11b963bc80cac98f4ef6267c8b57f11fe3cbe93
+  Intercom: c849529af6a2b1926e57251382c3c09d4aad625a
+  intercom-react-native: 2a6925bca18d8484483c2f8fb8b48b59ef1c7952
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
@@ -565,7 +565,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: ed23be8c1e02b73e7e2f88ac7eaab8faf6961a38
   ReactCommon: 153bd73ed963731a8e3e7f03a747b353fed7363e
   RNCAsyncStorage: b90b71f45b8b97be43bc4284e71a6af48ac9f547
-  SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
+  SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: dc109b79db907f0f589fc423e991b09ec42d2295
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 

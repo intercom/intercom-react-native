@@ -267,18 +267,21 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   public void presentIntercomSpace(String space, Promise promise) {
     try {
       IntercomSpace selectedSpace = IntercomSpace.Home;
-      if (space.equals("HOME")) {
-        selectedSpace = IntercomSpace.Home;
-        Intercom.client().present(selectedSpace);
-      } else {
-        if (space.equals("MESSAGES")) {
+      switch (space) {
+        case "TICKETS":
+          selectedSpace = IntercomSpace.Tickets;
+          break;
+        case "MESSAGES":
           selectedSpace = IntercomSpace.Messages;
-        } else if (space.equals("HELP_CENTER")) {
+          break;
+        case "HELP_CENTER":
           selectedSpace = IntercomSpace.HelpCenter;
-        }
-        Intercom.client().present(selectedSpace);
-        promise.resolve(true);
+          break;
+        default:
+          selectedSpace = IntercomSpace.Home;
       }
+      Intercom.client().present(selectedSpace);
+      promise.resolve(true);
     } catch (Exception error) {
       Log.e(NAME, "presentIntercomSpace error:");
       Log.e(NAME, error.toString());
