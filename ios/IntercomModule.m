@@ -201,7 +201,9 @@ RCT_EXPORT_METHOD(presentIntercomSpace:(NSString *)space
         selectedSpace = helpCenter;
     } else if ([space isEqualToString:@"MESSAGES"]) {
         selectedSpace = messages;
-    }
+    } else if ([space isEqualToString:@"TICKETS"]) {
+        selectedSpace = tickets;
+    } 
     [Intercom presentIntercom:selectedSpace];
     RCTLog(@"Presenting Intercom Space : %@", space);
     resolve(@(YES));
