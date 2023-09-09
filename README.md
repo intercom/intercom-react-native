@@ -89,7 +89,7 @@ public void onCreate() {
 }
 ```
 
-- Open `android/build.gradle` and change `minSdkVersion` to **21**, `compileSdkVersion` and `targetSdkVersion` to at least **33**
+- Open `android/build.gradle` and change `minSdkVersion` to **21**, `compileSdkVersion`, and `targetSdkVersion` to at least **33**
 
 ```Gradle
 buildscript {
