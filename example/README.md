@@ -25,7 +25,7 @@ Fill in the required App ID in the .env file. Other variables are optional.
  
 Please set up your React Native Development Environment for Android as described in the guide below (if you didn't do it before):
 
-[https://reactnative.dev/docs/environment-setup?package-manager=yarn&guide=native&platform=android](https://reactnative.dev/docs/environment-setup?package-manager=yarn&guide=native&platform=android)
+[Android enviroment setup](https://reactnative.dev/docs/environment-setup?package-manager=yarn&guide=native&platform=android)
 
 ## Running the app
 
