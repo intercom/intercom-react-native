@@ -7,14 +7,6 @@ import {
 
 const { IntercomModule, IntercomEventEmitter } = NativeModules;
 
-/**
- * @deprecated Please use `UserAttributes` instead.
- */
-export type Registration = Partial<{
-  email: string;
-  userId: string;
-}>;
-
 export enum Visibility {
   GONE = 'GONE',
   VISIBLE = 'VISIBLE',
@@ -47,8 +39,6 @@ export const IntercomEvents = {
 
 type EventType =
   | 'IntercomUnreadConversationCountDidChangeNotification'
-  | 'IntercomHelpCenterDidShowNotification'
-  | 'IntercomHelpCenterDidHideNotification'
   | 'IntercomWindowDidHideNotification'
   | 'IntercomWindowDidShowNotification';
 
@@ -57,21 +47,6 @@ export type CustomAttributes = {
 };
 export type MetaData = {
   [key: string]: any;
-};
-
-/**
- * @deprecated Please use `UserAttributes` instead.
- */
-export type UpdateUserParamList = {
-  companies?: Company[];
-  customAttributes?: CustomAttributes;
-  email?: string;
-  languageOverride?: string;
-  name?: string;
-  phone?: string;
-  signedUpAt?: number;
-  unsubscribedFromEmails?: boolean;
-  userId?: string;
 };
 
 export type UserAttributes = {
@@ -310,61 +285,6 @@ export type IntercomType = {
     event: EventType,
     callback: (response: { count?: number; visible: boolean }) => void
   ) => EmitterSubscription;
-
-  //////////////////////////////////////////////////////////////////////
-  // Depreacted functions. These will be removed in a future release. //
-  //////////////////////////////////////////////////////////////////////
-
-  /**
-   * @deprecated `registerIdentifiedUser` is deprecated and will be removed in a future release.  Use `loginUserWithUserAttributes` instead.
-   */
-  registerIdentifiedUser(params: Registration): Promise<boolean>;
-
-  /**
-   * @deprecated `registerUnidentifiedUser` is deprecated and will be removed in a future release.  Use `loginUnidentifiedUserWithSuccess` instead.
-   */
-  registerUnidentifiedUser(): Promise<boolean>;
-
-  /**
-   * @deprecated `updateUser` is deprecated and will be removed in a future release.  Use `updateUser` instead.
-   */
-  updateUser(params: UpdateUserParamList): Promise<boolean>;
-
-  /**
-   * @deprecated `displayMessenger` is deprecated and will be removed in a future release.  Use `present` instead.
-   */
-  displayMessenger(): Promise<boolean>;
-
-  /**
-   * @deprecated `displayHelpCenter` is deprecated and will be removed in a future release.  Use `presentSpace` instead.
-   */
-  displayHelpCenter(): Promise<boolean>;
-
-  /**
-   * @deprecated `displayMessageComposer` is deprecated and will be removed in a future release.  Use `presentMessageComposer` instead.
-   * @see presentMessageComposer for details
-   */
-  displayMessageComposer(initialMessage?: string): Promise<boolean>;
-
-  /**
-   * @deprecated `displayArticle` is deprecated and will be removed in a future release.  Use `presentContent` instead.
-   */
-  displayArticle(articleId: string): Promise<boolean>;
-
-  /**
-   * @deprecated `displayCarousel` is deprecated and will be removed in a future release.  Use `presentContent` instead.
-   */
-  displayCarousel(carouselId: string): Promise<boolean>;
-
-  /**
-   * @deprecated `displaySurvey` is deprecated and will be removed in a future release.  Use `presentContent` instead.
-   */
-  displaySurvey(surveyId: string): Promise<boolean>;
-
-  /**
-   * @deprecated `displayHelpCenterCollections` is deprecated and will be removed in a future release.  Use `presentContent` instead.
-   */
-  displayHelpCenterCollections(collections?: string[]): Promise<boolean>;
 };
 
 const Intercom: IntercomType = {
@@ -425,32 +345,6 @@ const Intercom: IntercomType = {
     };
     return listener;
   },
-
-  /**
-   * @depreacted methods
-   */
-  registerIdentifiedUser: (registrationParams) =>
-    IntercomModule.loginUserWithUserAttributes(registrationParams),
-  registerUnidentifiedUser: () => IntercomModule.loginUnidentifiedUser(),
-  displayMessenger: () => IntercomModule.presentIntercom(),
-  displayHelpCenter: () =>
-    IntercomModule.presentIntercomSpace(Space.helpCenter),
-  displayMessageComposer: (initialMessage = undefined) =>
-    IntercomModule.presentMessageComposer(initialMessage),
-  displayArticle: (articleId: string) =>
-    IntercomModule.presentContent(
-      IntercomContent.articleWithArticleId(articleId)
-    ),
-  displayCarousel: (carouselId: string) =>
-    IntercomModule.presentContent(
-      IntercomContent.carouselWithCarouselId(carouselId)
-    ),
-  displaySurvey: (surveyId: string) =>
-    IntercomModule.presentContent(IntercomContent.surveyWithSurveyId(surveyId)),
-  displayHelpCenterCollections: (collections = [] as string[]) =>
-    IntercomModule.presentContent(
-      IntercomContent.helpCenterCollectionsWithIds(collections)
-    ),
 };
 
 export default Intercom;
