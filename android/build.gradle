@@ -23,6 +23,8 @@ def safeExtGet(prop, fallback) {
 }
 
 android {
+    namespace "com.intercom.reactnative"
+
     compileSdkVersion safeExtGet('IntercomReactNative_compileSdkVersion', 34)
     defaultConfig {
         minSdkVersion safeExtGet('IntercomReactNative_minSdkVersion', 21)
