@@ -39,8 +39,6 @@ export const IntercomEvents = {
 
 type EventType =
   | 'IntercomUnreadConversationCountDidChangeNotification'
-  | 'IntercomHelpCenterDidShowNotification'
-  | 'IntercomHelpCenterDidHideNotification'
   | 'IntercomWindowDidHideNotification'
   | 'IntercomWindowDidShowNotification';
 
