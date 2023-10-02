@@ -21,7 +21,11 @@ sh scripts/generateEnv.sh
 This command will create a .env file <b>inside the example directory</b>.
 Fill in the required App ID in the .env file. Other variables are optional.
 
+## Before you run the app
+ 
+Please set up your React Native Development Environment for Android as described in the guide below (if you didn't do it before):
 
+[Android enviroment setup](https://reactnative.dev/docs/environment-setup?package-manager=yarn&guide=native&platform=android)
 
 ## Running the app
 
