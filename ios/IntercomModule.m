@@ -351,7 +351,6 @@ RCT_EXPORT_METHOD(setNeedsStatusBarAppearanceUpdate:(RCTPromiseResolveBlock)reso
 };
 
 - (NSError *)exceptionToError:(NSException *)exception :(NSString *)code :(NSString *)domain {
-//    self removeNullUnderlyingError:
     NSMutableDictionary *info = [NSMutableDictionary dictionary];
     [info setValue:exception.name forKey:@"ExceptionName"];
     [info setValue:exception.reason forKey:@"ExceptionReason"];
