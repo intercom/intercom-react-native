@@ -243,7 +243,7 @@ workflows:
       #       - unit-tests
       #       - build-package
       - release-to-npm:
-          <<: *run_on_release
+          <<: *run_always
           context:
             - react-native-context
           requires:
