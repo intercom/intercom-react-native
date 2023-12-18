@@ -104,7 +104,7 @@ RCT_EXPORT_METHOD(loginUnidentifiedUser:(RCTPromiseResolveBlock)successCallback
     [Intercom loginUnidentifiedUserWithSuccess:^{
         successCallback(@(YES));
     } failure:^(NSError * _Nonnull error) {
-        failureCallback(error);
+        failureCallback([self removeNullUnderlyingError:error]);
     }];
 };
 
@@ -123,7 +123,7 @@ RCT_EXPORT_METHOD(loginUserWithUserAttributes:(NSDictionary *)userAttributes
     [Intercom loginUserWithUserAttributes:attributes success:^{
         successCallback(@(YES));
     } failure:^(NSError * _Nonnull error) {
-        failureCallback(error);
+        failureCallback([self removeNullUnderlyingError:error]);
     }];
 }
 
@@ -139,7 +139,7 @@ RCT_EXPORT_METHOD(updateUser:(NSDictionary *)userAttributesDict
     [Intercom updateUser:userAttributes success:^{
         resolve(@(YES));
     } failure:^(NSError * _Nonnull error) {
-        failureCallback(error);
+        failureCallback([self removeNullUnderlyingError:error]);
     }];
 };
 
@@ -205,7 +205,9 @@ RCT_EXPORT_METHOD(presentIntercomSpace:(NSString *)space
         selectedSpace = helpCenter;
     } else if ([space isEqualToString:@"MESSAGES"]) {
         selectedSpace = messages;
-    }
+    } else if ([space isEqualToString:@"TICKETS"]) {
+        selectedSpace = tickets;
+    } 
     [Intercom presentIntercom:selectedSpace];
     RCTLog(@"Presenting Intercom Space : %@", space);
     resolve(@(YES));
@@ -225,6 +227,8 @@ RCT_EXPORT_METHOD(presentContent:(NSDictionary *)content
     } else if ([contentType isEqualToString:@"HELP_CENTER_COLLECTIONS"]) {
         NSArray<NSString *> *collectionIds = content[@"ids"];
         intercomContent = [IntercomContent helpCenterCollectionsWithIds:collectionIds];
+    } else if ([contentType isEqualToString:@"CONVERSATION"]) {
+        intercomContent = [IntercomContent conversationWithId:content[@"id"]];
     }
     if (intercomContent) {
         [Intercom presentContent:intercomContent];
@@ -359,5 +363,21 @@ RCT_EXPORT_METHOD(setNeedsStatusBarAppearanceUpdate:(RCTPromiseResolveBlock)reso
     [info setValue:exception.userInfo forKey:@"ExceptionUserInfo"];
 
     return [[NSError alloc] initWithDomain:domain code:[code integerValue] userInfo:info];
+};
+
+
+/// Remove `NSUnderlyingErrorKey` from the `userInfo` if its value is  of type `NSNull`
+///
+/// NSErrors that are return from Intercom can have a value of `NSNull`. ReactNative is unable to handle this so we
+/// strip them out to avoid crashing the app.
+/// - Parameter error: the `NSError` object.
+- (NSError *)removeNullUnderlyingError:(NSError *)error {
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+    NSError *underlyingError = [error.userInfo objectForKey:NSUnderlyingErrorKey];
+    [userInfo addEntriesFromDictionary:error.userInfo];
+    if([underlyingError isKindOfClass:[NSNull class]]) {
+        [userInfo removeObjectForKey:NSUnderlyingErrorKey];
+    }
+    return [[NSError alloc] initWithDomain:error.domain code:error.code userInfo:userInfo];
 };
 @end

@@ -23,10 +23,10 @@ def safeExtGet(prop, fallback) {
 }
 
 android {
-    compileSdkVersion safeExtGet('IntercomReactNative_compileSdkVersion', 33)
+    compileSdkVersion safeExtGet('IntercomReactNative_compileSdkVersion', 34)
     defaultConfig {
         minSdkVersion safeExtGet('IntercomReactNative_minSdkVersion', 21)
-        targetSdkVersion safeExtGet('IntercomReactNative_targetSdkVersion', 33)
+        targetSdkVersion safeExtGet('IntercomReactNative_targetSdkVersion', 34)
         versionCode 1
         versionName "1.0"
         buildConfigField 'String', 'INTERCOM_VERSION_NAME', packageVersion
@@ -60,5 +60,5 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation "com.google.firebase:firebase-messaging:${safeExtGet('firebaseMessagingVersion', '20.2.+')}"
-    implementation 'io.intercom.android:intercom-sdk:15.1.+'
+    implementation 'io.intercom.android:intercom-sdk:15.4.0'
 }

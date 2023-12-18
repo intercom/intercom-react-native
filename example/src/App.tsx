@@ -20,36 +20,38 @@ import Intercom, {
   IntercomContent,
 } from '@intercom/intercom-react-native';
 
-import Button from './Button';
-import Input from './Input';
-import Config from 'react-native-config';
+import {
+  CAROUSEL_ID,
+  SURVEY_ID,
+  EVENT_NAME,
+  ARTICLE_ID,
+  USER_NAME,
+  COLLECTION_ID,
+  SEARCH_TERM,
+  TOKEN,
+  CONVERSATION_ID,
+} from './constants';
+
+import Button from './components/Button';
+import Input from './components/Input';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AUTK_KEY = 'auth';
-
 const COLLECTIONS: string[] = []; //Provide help center collections ids
-// To change, replace values in .env
-const CAROUSEL_ID = Config.CAROUSEL_ID;
-const SURVEY_ID = Config.SURVEY_ID;
-const EVENT_NAME = Config.EVENT_NAME;
-const ARTICLE_ID = Config.ARTICLE_ID;
-const USER_NAME = Config.USER_NAME;
-const COLLECTION_ID = Config.COLLECTION_ID;
-const SEARCH_TERM = Config.SEARCH_TERM;
-const TOKEN = Platform.select({
-  ios: 'RN-IOS-TOKEN',
-  default: 'RN-ANDROID-TOKEN',
-});
 
 export default function App() {
   const [count, setCount] = useState<number>(0);
   const [loggedUser, setLoggedUser] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string | undefined>(USER_NAME);
   const [bottomPadding, setBottomPadding] = useState<number>(0);
   const [inAppMessageVisibility, setInAppMessageVisibility] =
     useState<boolean>(true);
   const [launcherVisibility, setLauncherVisibility] = useState<boolean>(false);
   const [user, setUser] = useState<UserAttributes>({ email: '' });
 
+  const [conversationId, setConversationId] = useState<string | undefined>(
+    CONVERSATION_ID
+  );
   const [articleId, setArticleId] = useState<string | undefined>(ARTICLE_ID);
   const [carouselId, setCarouselId] = useState<string | undefined>(CAROUSEL_ID);
   const [surveyId, setSurveyId] = useState<string | undefined>(SURVEY_ID);
@@ -58,7 +60,6 @@ export default function App() {
     COLLECTION_ID
   );
   const [searchTerm, setSearchTerm] = useState<string | undefined>(SEARCH_TERM);
-  const [userName, setUserName] = useState<string | undefined>(USER_NAME);
 
   const showErrorAlert = (e: Error) => {
     Alert.alert('ERROR', JSON.stringify(e));
@@ -70,6 +71,37 @@ export default function App() {
 
   const showEmptyAlertMessage = (field: string) => {
     Alert.alert(field, `Please provide ${field}`);
+  };
+
+  const showIncorrectFieldMessage = (field: string) => {
+    Alert.alert(field, `Provided ${field} is not of correct format`);
+  };
+
+  const validateEmail = (email: string | undefined) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
+  const resetAttributes = () => {
+    setCount(0);
+    Intercom.setBottomPadding(0).then(() => setBottomPadding(0));
+    Intercom.setLauncherVisibility(Visibility.GONE).then(() =>
+      setLauncherVisibility(false)
+    );
+    Intercom.setInAppMessageVisibility(Visibility.VISIBLE).then(() =>
+      setInAppMessageVisibility(true)
+    );
+    setConversationId(CONVERSATION_ID);
+    setArticleId(ARTICLE_ID);
+    setCarouselId(CAROUSEL_ID);
+    setSurveyId(SURVEY_ID);
+    setEventName(EVENT_NAME);
+    setCollectionId(COLLECTION_ID);
+    setSearchTerm(SEARCH_TERM);
+    setUserName(USER_NAME);
   };
 
   useEffect(() => {
@@ -139,45 +171,21 @@ export default function App() {
         <Image source={require('../assets/intercom.png')} style={styles.logo} />
         <Text style={styles.title}>Intercom Example App</Text>
       </View>
-      <View style={styles.textContainer}>
-        <View style={styles.row}>
-          <View style={styles.visibilityContainer}>
-            <Text style={[styles.text, styles.textCenter]}>
-              In App Message Visibility:{' \n'}
-              <Text style={styles.boldText}>
-                {inAppMessageVisibility ? Visibility.VISIBLE : Visibility.GONE}
-              </Text>
-            </Text>
-          </View>
-          <View style={styles.visibilityContainer}>
-            <Text style={[styles.text, styles.textCenter]}>
-              Launcher Visibility:{' \n'}
-              <Text style={styles.boldText}>
-                {launcherVisibility ? Visibility.VISIBLE : Visibility.GONE}
-              </Text>
-            </Text>
-          </View>
-        </View>
-        <Text style={styles.text}>
-          Bottom padding: <Text style={styles.boldText}>{bottomPadding}</Text>
-        </Text>
-        <Text style={styles.text}>
-          Unread messages count: <Text style={styles.boldText}>{count}</Text>
-        </Text>
+      <View style={styles.stickyHeaderContainer}>
         <Text
           style={styles.text}
           accessibilityLabel={loggedUser ? 'authenticated' : 'unauthenticated'}
         >
-          Is logged in:
-          <Text style={styles.boldText}>{loggedUser ? 'YES' : 'NO'}</Text>
+          {`Logged In: ${loggedUser ? 'Yes' : 'No'}`}
         </Text>
+        <Text style={styles.text}>Unread messages count: {count}</Text>
       </View>
       <ScrollView>
         <Button
-          accessibilityLabel="login-unidentified"
-          disabled={loggedUser}
-          title="Login unidentified User"
-          onPress={() => {
+          intercom_accessibilityLabel="login-unidentified"
+          intercom_disabled={loggedUser}
+          intercom_title="Login as an Unidentified User"
+          intercom_onPress={() => {
             Intercom.loginUnidentifiedUser()
               .then(() => {
                 console.log('logged in');
@@ -202,11 +210,11 @@ export default function App() {
           editable={!loggedUser}
         />
         <Button
-          accessibilityLabel="login-identified"
-          disabled={loggedUser || user.email === ''}
-          title="Login identified User"
-          onPress={() => {
-            if (user.email?.includes('@')) {
+          intercom_accessibilityLabel="login-identified"
+          intercom_disabled={loggedUser || user.email === ''}
+          intercom_title="Login identified User"
+          intercom_onPress={() => {
+            if (validateEmail(user.email)) {
               Intercom.loginUserWithUserAttributes(user)
                 .then(() => {
                   AsyncStorage.setItem(AUTK_KEY, user.email ?? '');
@@ -217,80 +225,65 @@ export default function App() {
                   console.error(e);
                 });
             } else {
-              showEmptyAlertMessage('Email');
+              showIncorrectFieldMessage('Email');
             }
           }}
         />
         <Button
-          accessibilityLabel="display-messenger"
-          disabled={!loggedUser}
-          title="Present Intercom"
-          onPress={() => {
+          intercom_accessibilityLabel="display-messenger"
+          intercom_disabled={!loggedUser}
+          intercom_title="Present Intercom"
+          intercom_onPress={() => {
             Intercom.present();
           }}
         />
-        <Input
-          title="Article Id"
-          accessibilityLabel="article-id"
-          value={articleId}
-          onChangeText={(val) => {
-            setArticleId(val);
-          }}
-          placeholder="Article Id"
-        />
         <Button
-          accessibilityLabel="display-article"
-          disabled={!loggedUser}
-          title="Display Article"
-          onPress={() => {
-            if (articleId) {
-              let articleContent =
-                IntercomContent.articleWithArticleId(articleId);
-              Intercom.presentContent(articleContent);
-            } else {
-              showEmptyAlertMessage('Article id');
-            }
+          intercom_accessibilityLabel="display-message-composer"
+          intercom_disabled={!loggedUser}
+          intercom_title="Present Message Composer"
+          intercom_onPress={() => {
+            Intercom.presentMessageComposer('initial message');
           }}
         />
         <Button
-          accessibilityLabel="display-message-composer"
-          disabled={!loggedUser}
-          title="Present Message Composer"
-          onPress={() => {
-            Intercom.presentMessageComposer();
-          }}
-        />
-        <Button
-          accessibilityLabel="display-help-center"
-          disabled={!loggedUser}
-          title="Present Help Center"
-          onPress={() => {
+          intercom_accessibilityLabel="display-help-center"
+          intercom_disabled={!loggedUser}
+          intercom_title="Present Help Center"
+          intercom_onPress={() => {
             Intercom.presentSpace(Space.helpCenter);
           }}
         />
         <Button
-          accessibilityLabel="display-help-center"
-          disabled={!loggedUser}
-          title="Present Messages"
-          onPress={() => {
+          intercom_accessibilityLabel="display-messages"
+          intercom_disabled={!loggedUser}
+          intercom_title="Present Messages"
+          intercom_onPress={() => {
             Intercom.presentSpace(Space.messages);
           }}
         />
         <Button
-          accessibilityLabel="display-help-center-collections"
-          disabled={!loggedUser}
-          title={'Display Help Center Collections'}
-          onPress={() => {
+          intercom_accessibilityLabel="display-tickets"
+          intercom_disabled={!loggedUser}
+          intercom_title="Present Tickets"
+          intercom_onPress={() => {
+            Intercom.presentSpace(Space.tickets);
+          }}
+        />
+        <Button
+          intercom_accessibilityLabel="display-help-center-collections"
+          intercom_disabled={!loggedUser}
+          intercom_title={'Display Help Center Collections'}
+          intercom_onPress={() => {
             let helpCenterCollectionsContent =
               IntercomContent.helpCenterCollectionsWithIds(COLLECTIONS);
             Intercom.presentContent(helpCenterCollectionsContent);
           }}
         />
         <Button
-          accessibilityLabel="fetch-help-center-collections"
-          disabled={!loggedUser}
-          title="Fetch Help Center Collections"
-          onPress={() => {
+          intercom_accessibilityLabel="fetch-help-center-collections"
+          intercom_disabled={!loggedUser}
+          intercom_title="Fetch Help Center Collections"
+          intercom_onPress={() => {
             Intercom.fetchHelpCenterCollections()
               .then((items) => {
                 console.log(items);
@@ -303,6 +296,52 @@ export default function App() {
           }}
         />
         <Input
+          title="Conversation Id"
+          accessibilityLabel="conversation-id"
+          value={conversationId}
+          onChangeText={(val) => {
+            setConversationId(val);
+          }}
+          placeholder="Conversation Id"
+        />
+        <Button
+          intercom_accessibilityLabel="present-conversation"
+          intercom_disabled={!loggedUser}
+          intercom_title="Display Conversation"
+          intercom_onPress={() => {
+            if (conversationId) {
+              let conversationContent =
+                IntercomContent.conversationWithConversationId(conversationId);
+              Intercom.presentContent(conversationContent);
+            } else {
+              showEmptyAlertMessage('Conversation Id');
+            }
+          }}
+        />
+        <Input
+          title="Article Id"
+          accessibilityLabel="article-id"
+          value={articleId}
+          onChangeText={(val) => {
+            setArticleId(val);
+          }}
+          placeholder="Article Id"
+        />
+        <Button
+          intercom_accessibilityLabel="display-article"
+          intercom_disabled={!loggedUser}
+          intercom_title="Display Article"
+          intercom_onPress={() => {
+            if (articleId) {
+              let articleContent =
+                IntercomContent.articleWithArticleId(articleId);
+              Intercom.presentContent(articleContent);
+            } else {
+              showEmptyAlertMessage('Article id');
+            }
+          }}
+        />
+        <Input
           title="Help Center Collection Id"
           accessibilityLabel="search-term"
           value={collectionId}
@@ -312,10 +351,10 @@ export default function App() {
           placeholder="Help Center Collection Id"
         />
         <Button
-          accessibilityLabel="fetch-help-center-collection"
-          disabled={!loggedUser}
-          title="Fetch Help Center Collection"
-          onPress={() => {
+          intercom_accessibilityLabel="fetch-help-center-collection"
+          intercom_disabled={!loggedUser}
+          intercom_title="Fetch Help Center Collection"
+          intercom_onPress={() => {
             if (collectionId) {
               Intercom.fetchHelpCenterCollection(collectionId)
                 .then((item) => {
@@ -341,10 +380,10 @@ export default function App() {
           placeholder="Search term"
         />
         <Button
-          accessibilityLabel="search-help-center"
-          disabled={!loggedUser}
-          title="Search Help Center"
-          onPress={() => {
+          intercom_accessibilityLabel="search-help-center"
+          intercom_disabled={!loggedUser}
+          intercom_title="Search Help Center"
+          intercom_onPress={() => {
             if (searchTerm) {
               Intercom.searchHelpCenter(searchTerm)
                 .then((item) => {
@@ -370,10 +409,10 @@ export default function App() {
           placeholder="Carousel Id"
         />
         <Button
-          accessibilityLabel="display-carousel"
-          disabled={!loggedUser}
-          title={'Display Carousel'}
-          onPress={() => {
+          intercom_accessibilityLabel="display-carousel"
+          intercom_disabled={!loggedUser}
+          intercom_title={'Display Carousel'}
+          intercom_onPress={() => {
             if (carouselId) {
               let carouselContent =
                 IntercomContent.carouselWithCarouselId(carouselId);
@@ -393,10 +432,10 @@ export default function App() {
           placeholder="Survey Id"
         />
         <Button
-          accessibilityLabel="display-survey"
-          disabled={!loggedUser}
-          title={'Display Survey'}
-          onPress={() => {
+          intercom_accessibilityLabel="display-survey"
+          intercom_disabled={!loggedUser}
+          intercom_title={'Display Survey'}
+          intercom_onPress={() => {
             if (surveyId) {
               let surveyContent = IntercomContent.surveyWithSurveyId(surveyId);
               Intercom.presentContent(surveyContent);
@@ -405,45 +444,7 @@ export default function App() {
             }
           }}
         />
-        <Button
-          accessibilityLabel="get-unreads"
-          disabled={!loggedUser}
-          title="Get Unread Conversation Count"
-          onPress={() => {
-            Intercom.getUnreadConversationCount().then((response) =>
-              Alert.alert('Unread Conversation count is', response.toString())
-            );
-          }}
-        />
-        <Button
-          accessibilityLabel="toggle-message-visibility"
-          title="Toggle In App Message Visibility"
-          onPress={() => {
-            Intercom.setInAppMessageVisibility(
-              inAppMessageVisibility ? Visibility.GONE : Visibility.VISIBLE
-            ).then(() => setInAppMessageVisibility((v) => !v));
-          }}
-        />
-        <Button
-          title="Toggle In Launcher Visibility"
-          accessibilityLabel="toggle-launcher-visibility"
-          onPress={() => {
-            Intercom.setLauncherVisibility(
-              launcherVisibility ? Visibility.GONE : Visibility.VISIBLE
-            ).then(() => setLauncherVisibility((v) => !v));
-          }}
-        />
-        <Button
-          accessibilityLabel="set-bottom-padding"
-          title="Set Bottom Padding"
-          onPress={() => {
-            const paddingToSet =
-              bottomPadding + 10 > 300 ? 0 : bottomPadding + 10;
-            Intercom.setBottomPadding(paddingToSet).then(() =>
-              setBottomPadding(paddingToSet)
-            );
-          }}
-        />
+
         <Input
           title="Event name"
           accessibilityLabel="event-name"
@@ -454,10 +455,10 @@ export default function App() {
           placeholder="Event name"
         />
         <Button
-          accessibilityLabel="log-event"
-          disabled={!loggedUser}
-          title="Log Event"
-          onPress={() => {
+          intercom_accessibilityLabel="log-event"
+          intercom_disabled={!loggedUser}
+          intercom_title="Log Event"
+          intercom_onPress={() => {
             if (eventName) {
               Intercom.logEvent(eventName);
             } else {
@@ -465,15 +466,6 @@ export default function App() {
             }
           }}
         />
-        <Button
-          accessibilityLabel="send-token"
-          disabled={!loggedUser}
-          title="Send Token"
-          onPress={() => {
-            Intercom.sendTokenToIntercom(TOKEN);
-          }}
-        />
-
         <Input
           title="User Name"
           accessibilityLabel="user-name"
@@ -484,14 +476,14 @@ export default function App() {
           placeholder="User Name"
         />
         <Button
-          accessibilityLabel="update-user"
-          disabled={!loggedUser}
-          title="Update user's name"
-          onPress={() => {
+          intercom_accessibilityLabel="update-user"
+          intercom_disabled={!loggedUser}
+          intercom_title="Update user's name"
+          intercom_onPress={() => {
             if (userName) {
               Intercom.updateUser({ name: userName })
                 .then(() => {
-                  console.log('lupdated User');
+                  console.log('updated User');
                   showResponseAlert('Updated User');
                 })
                 .catch((e) => {
@@ -504,10 +496,69 @@ export default function App() {
           }}
         />
         <Button
-          accessibilityLabel="logout"
-          disabled={!loggedUser}
-          title="Logout user"
-          onPress={() => {
+          intercom_accessibilityLabel="get-unreads"
+          intercom_disabled={!loggedUser}
+          intercom_title="Get Unread Conversation Count"
+          intercom_onPress={() => {
+            Intercom.getUnreadConversationCount().then((response) =>
+              Alert.alert('Unread Conversation count is', response.toString())
+            );
+          }}
+        />
+        <Button
+          intercom_accessibilityLabel="toggle-message-visibility"
+          intercom_title={`Toggle In App Message Visibility: ${
+            inAppMessageVisibility ? Visibility.VISIBLE : Visibility.GONE
+          }`}
+          intercom_onPress={() => {
+            Intercom.setInAppMessageVisibility(
+              inAppMessageVisibility ? Visibility.GONE : Visibility.VISIBLE
+            ).then(() => setInAppMessageVisibility((v) => !v));
+          }}
+        />
+        <Button
+          intercom_title={`Toggle In Launcher Visibility: ${
+            launcherVisibility ? Visibility.VISIBLE : Visibility.GONE
+          }`}
+          intercom_accessibilityLabel="toggle-launcher-visibility"
+          intercom_onPress={() => {
+            Intercom.setLauncherVisibility(
+              launcherVisibility ? Visibility.GONE : Visibility.VISIBLE
+            ).then(() => setLauncherVisibility((v) => !v));
+          }}
+        />
+        <Button
+          intercom_accessibilityLabel="set-bottom-padding"
+          intercom_title={`Increase Bottom Padding: ${bottomPadding}`}
+          intercom_onPress={() => {
+            const paddingToSet =
+              bottomPadding + 10 > 300 ? 0 : bottomPadding + 10;
+            Intercom.setBottomPadding(paddingToSet).then(() =>
+              setBottomPadding(paddingToSet)
+            );
+          }}
+        />
+        <Button
+          intercom_accessibilityLabel="send-token"
+          intercom_disabled={!loggedUser}
+          intercom_title="Send Token"
+          intercom_onPress={() => {
+            Intercom.sendTokenToIntercom(TOKEN);
+          }}
+        />
+        <Button
+          intercom_accessibilityLabel="reset-attributes"
+          intercom_disabled={!loggedUser}
+          intercom_title="Reset Attributes"
+          intercom_onPress={() => {
+            resetAttributes();
+          }}
+        />
+        <Button
+          intercom_accessibilityLabel="logout"
+          intercom_disabled={!loggedUser}
+          intercom_title="Logout user"
+          intercom_onPress={() => {
             Intercom.logout().then(() => {
               AsyncStorage.removeItem(AUTK_KEY);
               setLoggedUser(false);
@@ -522,7 +573,10 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 8,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 15,
+    backgroundColor: 'white',
     paddingTop:
       Platform.OS === 'ios'
         ? (StatusBar.currentHeight ?? 0) + 35
@@ -533,7 +587,7 @@ const styles = StyleSheet.create({
     height: 60,
     marginVertical: 20,
   },
-  text: { marginVertical: 4, fontSize: 7 },
+  text: { marginVertical: 4, fontSize: 10, color: 'white', padding: 5 },
   textCenter: { textAlign: 'center' },
   boldText: { fontWeight: 'bold', color: '#242d38' },
   textContainer: { justifyContent: 'center', paddingVertical: 8 },
@@ -546,5 +600,10 @@ const styles = StyleSheet.create({
   },
   alignCenter: { alignItems: 'center' },
   title: { fontWeight: 'bold', fontSize: 17, marginLeft: 8 },
-  header: { marginBottom: 8 },
+  header: { marginBottom: 8, marginTop: 8 },
+  stickyHeaderContainer: {
+    backgroundColor: 'green',
+    borderRadius: 3,
+    marginBottom: 5,
+  },
 });

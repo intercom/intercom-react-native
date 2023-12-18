@@ -141,16 +141,16 @@ public class IntercomModule extends ReactContextBaseJavaModule {
     Boolean hasEmail = params.hasKey("email") && IntercomHelpers.getValueAsStringForKey(params, "email").length() > 0;
     Boolean hasUserId = params.hasKey("userId") && IntercomHelpers.getValueAsStringForKey(params, "userId").length() > 0;
     Registration registration = null;
-    String userId = IntercomHelpers.getValueAsStringForKey(params, "userId");
-    if (hasEmail) {
+    if (hasEmail && hasUserId) {
       String email = IntercomHelpers.getValueAsStringForKey(params, "email");
-      if (hasUserId) {
-        registration = new Registration().withEmail(email).withUserId(userId);
-      } else {
-        registration = Registration.create().withEmail(email);
-      }
+      String userId = IntercomHelpers.getValueAsStringForKey(params, "userId");
+      registration = new Registration().withEmail(email).withUserId(userId);
+    } else if (hasEmail) {
+      String email = IntercomHelpers.getValueAsStringForKey(params, "email");
+      registration = new Registration().withEmail(email);
     } else if (hasUserId) {
-      registration = Registration.create().withUserId(userId);
+      String userId = IntercomHelpers.getValueAsStringForKey(params, "userId");
+      registration = new Registration().withUserId(userId);
     } else {
       Log.e(NAME, "loginUserWithUserAttributes called with invalid userId or email");
       Log.e(NAME, "You must provide userId or email");
@@ -272,18 +272,21 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   public void presentIntercomSpace(String space, Promise promise) {
     try {
       IntercomSpace selectedSpace = IntercomSpace.Home;
-      if (space.equals("HOME")) {
-        selectedSpace = IntercomSpace.Home;
-        Intercom.client().present(selectedSpace);
-      } else {
-        if (space.equals("MESSAGES")) {
+      switch (space) {
+        case "TICKETS":
+          selectedSpace = IntercomSpace.Tickets;
+          break;
+        case "MESSAGES":
           selectedSpace = IntercomSpace.Messages;
-        } else if (space.equals("HELP_CENTER")) {
+          break;
+        case "HELP_CENTER":
           selectedSpace = IntercomSpace.HelpCenter;
-        }
-        Intercom.client().present(selectedSpace);
-        promise.resolve(true);
+          break;
+        default:
+          selectedSpace = IntercomSpace.Home;
       }
+      Intercom.client().present(selectedSpace);
+      promise.resolve(true);
     } catch (Exception error) {
       Log.e(NAME, "presentIntercomSpace error:");
       Log.e(NAME, error.toString());
@@ -329,6 +332,9 @@ public class IntercomModule extends ReactContextBaseJavaModule {
           case "HELP_CENTER_COLLECTIONS":
             List<String> collectionIds = IntercomHelpers.readableArrayToStringList(params.getArray("ids"));
             content = new IntercomContent.HelpCenterCollections(collectionIds);
+            break;
+          case "CONVERSATION":
+            content = new IntercomContent.Conversation(params.getString("id"));
             break;
         }
         if (content != null) {
