@@ -107,7 +107,6 @@ RCT_EXPORT_METHOD(loginUnidentifiedUser:(RCTPromiseResolveBlock)successCallback
 RCT_EXPORT_METHOD(loginUserWithUserAttributes:(NSDictionary *)userAttributes
                                       success:(RCTPromiseResolveBlock)successCallback
                                       failure:(RCTResponseErrorBlock)failureCallback) {
-    // Use the IntercomAttributesBuilder to create ICMUserAttributes from the dictionary
     ICMUserAttributes *attributes = [IntercomAttributesBuilder userAttributesForDictionary:userAttributes];
 
     [Intercom loginUserWithUserAttributes:attributes success:^{
@@ -197,7 +196,7 @@ RCT_EXPORT_METHOD(presentIntercomSpace:(NSString *)space
         selectedSpace = messages;
     } else if ([space isEqualToString:@"TICKETS"]) {
         selectedSpace = tickets;
-    } 
+    }
     [Intercom presentIntercom:selectedSpace];
     RCTLog(@"Presenting Intercom Space : %@", space);
     resolve(@(YES));
