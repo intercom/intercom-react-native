@@ -107,15 +107,9 @@ RCT_EXPORT_METHOD(loginUnidentifiedUser:(RCTPromiseResolveBlock)successCallback
 RCT_EXPORT_METHOD(loginUserWithUserAttributes:(NSDictionary *)userAttributes
                                       success:(RCTPromiseResolveBlock)successCallback
                                       failure:(RCTResponseErrorBlock)failureCallback) {
-    NSString *userId = userAttributes[@"userId"];
-    NSString *userEmail = userAttributes[@"email"];
+    // Use the IntercomAttributesBuilder to create ICMUserAttributes from the dictionary
+    ICMUserAttributes *attributes = [IntercomAttributesBuilder userAttributesForDictionary:userAttributes];
 
-    if ([userId isKindOfClass:[NSNumber class]]) {
-        userId = [(NSNumber *) userId stringValue];
-    }
-    ICMUserAttributes *attributes = [ICMUserAttributes new];
-    attributes.userId = userId;
-    attributes.email = userEmail;
     [Intercom loginUserWithUserAttributes:attributes success:^{
         successCallback(@(YES));
     } failure:^(NSError * _Nonnull error) {
