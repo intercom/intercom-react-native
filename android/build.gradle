@@ -23,6 +23,9 @@ def safeExtGet(prop, fallback) {
 }
 
 android {
+    // Compatibility for AGP v. <4.2
+    namespace 'io.intercom.android'
+
     compileSdkVersion safeExtGet('IntercomReactNative_compileSdkVersion', 34)
     defaultConfig {
         minSdkVersion safeExtGet('IntercomReactNative_minSdkVersion', 21)
