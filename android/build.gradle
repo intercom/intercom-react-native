@@ -23,8 +23,11 @@ def safeExtGet(prop, fallback) {
 }
 
 android {
-    // Compatibility for AGP v. <4.2
-    namespace 'io.intercom.android'
+    // Compatibility for AGP v. <4.2/Gradle 8
+    def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0].toInteger()
+    if (agpVersion >= 7) {
+      namespace 'com.intercom.reactnative'
+    }
 
     compileSdkVersion safeExtGet('IntercomReactNative_compileSdkVersion', 34)
     defaultConfig {
@@ -43,9 +46,12 @@ android {
     lintOptions {
         disable 'GradleCompatible'
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+
+    if (agpVersion < 8) {
+      compileOptions {
+          sourceCompatibility JavaVersion.VERSION_1_8
+          targetCompatibility JavaVersion.VERSION_1_8
+      }
     }
 }
 
