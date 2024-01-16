@@ -613,7 +613,7 @@ Handles the opening of an Intercom push message. This will retrieve the URI from
 `Promise<boolean>`
 ___
 
-### `Intercom.displayMessenger()`
+### `Intercom.present()`
 
 Opens the Intercom Messenger automatically to the best place for your users.
 
