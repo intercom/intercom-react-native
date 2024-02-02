@@ -1,6 +1,7 @@
 require "json"
 
 package = JSON.parse(File.read(File.join(__dir__, "package.json")))
+intercom_sdk_version = package['sdkVersions']['ios']['intercom']
 
 Pod::Spec.new do |s|
   s.name         = "intercom-react-native"
@@ -17,5 +18,5 @@ Pod::Spec.new do |s|
   s.resource_bundles = { 'IntercomFramework' => ['ios/assets/*'] }
 
   s.dependency "React-Core"
-  s.dependency "Intercom", '~> 16.5.4'
+  s.dependency "Intercom", intercom_sdk_version
 end
