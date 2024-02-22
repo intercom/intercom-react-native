@@ -1,1 +1,1 @@
-module.exports = require('./lib/commonjs/expo-plugin/withIntercom');
+module.exports = require('./lib/commonjs/expo-plugins');
