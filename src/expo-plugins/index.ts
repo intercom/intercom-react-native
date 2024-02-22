@@ -53,7 +53,7 @@ const androidManifest: ConfigPlugin<IntercomPluginProps> = (
     const androidRegionMapper: Record<IntercomRegion, string> = {
       US: '@integer/intercom_server_region_us',
       EU: '@integer/intercom_server_region_eu',
-      AU: '@integer/intercom_server_region_au',
+      AU: '@integer/intercom_server_region_aus',
     };
 
     AndroidConfig.Manifest.addMetaDataItemToMainApplication(
