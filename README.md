@@ -436,7 +436,7 @@ After installing this npm package, add the [config plugin](https://docs.expo.io/
 ```json
 {
   "expo": {
-    "plugins": ["@config-plugins/intercom-react-native"]
+    "plugins": ["@intercom/intercom-react-native"]
   }
 }
 ```
@@ -453,7 +453,7 @@ The plugin provides props for extra customization. Every time you change the pro
   "expo": {
     "plugins": [
       [
-        "@config-plugins/intercom-react-native",
+        "@intercom/intercom-react-native",
         {
           "appId": "abc123",
           "androidApiKey": "android_sdk-abc123",
