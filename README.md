@@ -25,6 +25,8 @@ ___
     - [Permissions](#ios-permissions)
     - [Push Notifications](#ios-push-notifications)
     - [Push notification deep links support](#ios-push-notification-deep-links-support)
+  - [Expo](#expo)
+    - [Limitations](#expo-limitations)
 - [Common methods](#methods)
   - [Types](#types)
 - [Usage](#usage)
