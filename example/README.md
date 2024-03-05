@@ -5,8 +5,6 @@
 To get started with the @intercom/intercom-react-native example app, please follow the instructions below:
 
 1. Install XCode before you setup the app.
->Please note that there is a known bug that prevents the iOS app from building on the latest Xcode. Therefore, it's recommended to use Xcode 14.2.
-
 
 2. Setup the app using:
 ```sh
@@ -21,7 +19,11 @@ sh scripts/generateEnv.sh
 This command will create a .env file <b>inside the example directory</b>.
 Fill in the required App ID in the .env file. Other variables are optional.
 
+## Before you run the app
+ 
+Please set up your React Native Development Environment for Android as described in the guide below (if you didn't do it before):
 
+[Android enviroment setup](https://reactnative.dev/docs/environment-setup?package-manager=yarn&guide=native&platform=android)
 
 ## Running the app
 
