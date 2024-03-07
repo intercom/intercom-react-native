@@ -23,7 +23,7 @@
     "@wdio/mocha-framework": "^7.25.2",
     "@wdio/spec-reporter": "^7.25.1",
     "babel-plugin-module-resolver": "^4.1.0",
-    "chromedriver": "^107.0.1",
+    "chromedriver": "^119.0.1",
     "metro-react-native-babel-preset": "^0.66.0",
     "react-native-codegen": "^0.0.7",
     "wdio-chromedriver-service": "^8.0.0"
