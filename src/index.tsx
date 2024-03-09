@@ -2,7 +2,7 @@ import {
   NativeModules,
   NativeEventEmitter,
   Platform,
-  EmitterSubscription,
+  type EmitterSubscription,
 } from 'react-native';
 
 const { IntercomModule, IntercomEventEmitter } = NativeModules;
@@ -28,13 +28,13 @@ type LogLevelType = keyof typeof LogLevel;
 
 export const IntercomEvents = {
   IntercomUnreadCountDidChange:
-    IntercomEventEmitter.UNREAD_COUNT_CHANGE_NOTIFICATION,
+  IntercomEventEmitter.UNREAD_COUNT_CHANGE_NOTIFICATION,
   IntercomWindowDidHide: IntercomEventEmitter.WINDOW_DID_HIDE_NOTIFICATION,
   IntercomWindowDidShow: IntercomEventEmitter.WINDOW_DID_SHOW_NOTIFICATION,
   IntercomHelpCenterWindowDidShow:
-    IntercomEventEmitter.WINDOW_DID_SHOW_NOTIFICATION,
+  IntercomEventEmitter.WINDOW_DID_SHOW_NOTIFICATION,
   IntercomHelpCenterWindowDidHide:
-    IntercomEventEmitter.WINDOW_DID_HIDE_NOTIFICATION,
+  IntercomEventEmitter.WINDOW_DID_HIDE_NOTIFICATION,
 };
 
 type EventType =
@@ -200,7 +200,7 @@ export type IntercomType = {
    * @return {Promise<HelpCenterCollectionContent>} A {@link HelpCenterCollectionContent} object.
    */
   fetchHelpCenterCollection: (
-    id: string
+    id: string,
   ) => Promise<HelpCenterCollectionContent>;
 
   /**
@@ -211,7 +211,7 @@ export type IntercomType = {
    * @return {Promise<HelpCenterArticleSearchResult>} An array of {@link HelpCenterArticleSearchResult} objects.
    */
   searchHelpCenter: (
-    term: string
+    term: string,
   ) => Promise<Array<HelpCenterArticleSearchResult>>;
 
   /**
@@ -283,7 +283,7 @@ export type IntercomType = {
    */
   addEventListener: (
     event: EventType,
-    callback: (response: { count?: number; visible: boolean }) => void
+    callback: (response: { count?: number; visible: boolean }) => void,
   ) => EmitterSubscription;
 };
 
@@ -332,15 +332,15 @@ const Intercom: IntercomType = {
 
   addEventListener: (event, callback) => {
     event === IntercomEvents.IntercomUnreadCountDidChange &&
-      Platform.OS === 'android' &&
-      IntercomEventEmitter.startEventListener();
+    Platform.OS === 'android' &&
+    IntercomEventEmitter.startEventListener();
     const eventEmitter = new NativeEventEmitter(IntercomEventEmitter);
     const listener = eventEmitter.addListener(event, callback);
     const originalRemove = listener.remove;
     listener.remove = () => {
       event === IntercomEvents.IntercomUnreadCountDidChange &&
-        Platform.OS === 'android' &&
-        IntercomEventEmitter.removeEventListener();
+      Platform.OS === 'android' &&
+      IntercomEventEmitter.removeEventListener();
       originalRemove();
     };
     return listener;
@@ -389,7 +389,7 @@ export type IntercomContentType = {
   carouselWithCarouselId: (carouselId: string) => Carousel;
   surveyWithSurveyId: (surveyId: string) => Survey;
   helpCenterCollectionsWithIds: (
-    collectionIds: string[]
+    collectionIds: string[],
   ) => HelpCenterCollections;
   conversationWithConversationId: (conversationId: string) => Conversation;
 };
