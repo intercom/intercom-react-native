@@ -1,6 +1,6 @@
 {
   "name": "@intercom/intercom-react-native",
-  "version": "6.2.0",
+  "version": "6.8.1",
   "description": "React Native wrapper to bridge our iOS and Android SDK",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -13,6 +13,7 @@
     "android",
     "ios",
     "cpp",
+    "app.plugin.js",
     "intercom-react-native.podspec",
     "!lib/typescript/example",
     "!android/build",
@@ -53,6 +54,7 @@
     "access": "public"
   },
   "devDependencies": {
+    "@expo/config-plugins": "^7.8.4",
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/jest": "^26.0.0",
     "@types/mocha": "^8.2.2",
