@@ -89,7 +89,7 @@ public void onCreate() {
 }
 ```
 
-- Open `android/build.gradle` and change `minSdkVersion` to **21**, `compileSdkVersion` and `targetSdkVersion` to at least **33**
+- Open `android/build.gradle` and change `minSdkVersion` to **21**, `compileSdkVersion` to at least **34** and `targetSdkVersion` to at least **33**
 
 ```Gradle
 buildscript {
@@ -97,7 +97,7 @@ buildscript {
     ext {
         buildToolsVersion = "29.0.2"
         minSdkVersion = 21 // <-- Here
-        compileSdkVersion = 33 // <-- Here
+        compileSdkVersion = 34 // <-- Here
         targetSdkVersion = 33 // <-- Here
     }
     // ...
@@ -427,6 +427,52 @@ See the [example app](https://github.com/intercom/intercom-react-native/blob/mai
 
 ___
 
+### Expo
+
+If you are using Expo, you can use the built-in plugin.
+
+After installing this npm package, add the [config plugin](https://docs.expo.io/guides/config-plugins/) to the [`plugins`](https://docs.expo.io/versions/latest/config/app/#plugins) array of your `app.json` or `app.config.js`:
+
+```json
+{
+  "expo": {
+    "plugins": ["@intercom/intercom-react-native"]
+  }
+}
+```
+
+The plugin provides props for extra customization. Every time you change the props or plugins, you'll need to rebuild (and `prebuild`) the native app. If no extra properties are added, defaults will be used.
+
+- `appId` (_string_): App ID from Intercom.
+- `androidApiKey` (_string_): Android API Key from Intercom.
+- `iosApiKey` (_string_): iOS API Key from Intercom.
+- `intercomRegion` (_string_): Region for Intercom `US`, `EU`, `AU`. Optional. Defaults to `US`.
+
+```json
+{
+  "expo": {
+    "plugins": [
+      [
+        "@intercom/intercom-react-native",
+        {
+          "appId": "abc123",
+          "androidApiKey": "android_sdk-abc123",
+          "iosApiKey": "ios_sdk-abc123",
+          "intercomRegion": "EU" // Europe
+        }
+      ]
+    ]
+  }
+}
+```
+
+Next, rebuild your app as described in the ["Adding custom native code"](https://docs.expo.io/workflow/customizing/) guide.
+
+#### Limitations
+
+- **No push notifications support**: Intercom push notifications currently aren't supported by this config plugin extension. This will be added in the future.
+
+
 ## Methods
 
 ## Import
@@ -613,7 +659,7 @@ Handles the opening of an Intercom push message. This will retrieve the URI from
 `Promise<boolean>`
 ___
 
-### `Intercom.displayMessenger()`
+### `Intercom.present()`
 
 Opens the Intercom Messenger automatically to the best place for your users.
 
