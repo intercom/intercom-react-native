@@ -36,7 +36,6 @@ run_on_release: &run_on_release
     branches:
       ignore: /.*/
 
-
 commands:
   attach_project:
     steps:
@@ -176,7 +175,6 @@ jobs:
           name: Run UI Tests
           command: npm run test:ios
 
-
   release-to-npm:
     executor: default
     steps:
@@ -200,7 +198,6 @@ jobs:
           name: Publish the package
           command: npm publish
 
-
 workflows:
   version: 2.1
   build-and-test:
@@ -223,22 +220,22 @@ workflows:
           <<: *run_always
           requires:
             - install-dependencies
-      # - android-e2e-test:
-      #     <<: *run_always
-      #     requires:
-      #       - install-dependencies
-      #       - lint
-      #       - typescript
-      #       - unit-tests
-      #       - build-package
-      # - ios-e2e-test:
-      #     <<: *run_always
-      #     requires:
-      #       - install-dependencies
-      #       - lint
-      #       - typescript
-      #       - unit-tests
-      #       - build-package
+      - android-e2e-test:
+          <<: *run_always
+          requires:
+            - install-dependencies
+            - lint
+            - typescript
+            - unit-tests
+            - build-package
+      - ios-e2e-test:
+          <<: *run_always
+          requires:
+            - install-dependencies
+            - lint
+            - typescript
+            - unit-tests
+            - build-package
       - release-to-npm:
           <<: *run_on_release
           context:
@@ -249,5 +246,5 @@ workflows:
             - typescript
             - unit-tests
             - build-package
-            # - ios-e2e-test
-            # - android-e2e-test
+            - ios-e2e-test
+            - android-e2e-test
