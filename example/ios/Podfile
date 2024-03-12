@@ -44,6 +44,7 @@ target 'IntercomReactNativeExample' do
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
       end
       config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = 'YES'
+      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)', '_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION']
      end
   end
 

@@ -1,0 +1,88 @@
+#!/bin/sh
+
+#
+# Functions
+#
+function log() {
+  echo "\n"
+  echo "======================================="
+  echo "$1"
+  echo "======================================="
+}
+
+
+
+EXPECTED_RUBY_VERSION=$(cat ${SOURCE_ROOT_DIR}/.ruby-version)
+ruby_version="2.4.4"
+rbenv_version="2.5.7"
+
+log "🏎️  Running React native setup script 🏎️"
+
+log "📱 Installing xcode tools 📱"
+
+if [ ! -f /Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib ]; then
+  echo "⚠️ Xcode CommandLineTools not found installing. Please install and rerun this script ⚠️"
+  xcode-select --install
+  exit 1
+fi
+echo "Xcode CommandLineTools installed 👍"
+
+if ! [ -x "$(command -v xcode-select)" ]; then
+  echo "⚠️ You need Xcode to setuo this project. Please install and rerun this script ⚠️"
+  exit 1s
+fi
+
+log "👀 Looking for Homebrew 👀"
+if ! [ -x "$(command -v brew)" ]; then
+  echo "🍺 Installing Homebrew 🍺"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  echo 'export PATH=/opt/homebrew/bin:$PATH' >> ~/.bash_profile
+  echo 'export PATH=/opt/homebrew/bin:$PATH' >> ~/.zshrc
+else
+  echo "Homebrew already installed 👍"
+fi
+
+log "👀 Looking for rbenv 👀"
+
+if ! [ -x "$(command -v rbenv)" ]; then
+  echo "🍺 Installing rbenv with brew 🍺"
+  brew install rbenv
+  echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+  echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+  eval "$(rbenv init -)"
+  rbenv install "2.5.7"
+else
+  rbenv install "2.5.7"
+  echo "rbenv already installed 👍"
+fi
+rbenv local "2.5.7"
+
+log "👀 Looking for yarn 👀"
+if ! [ -x "$(command -v yarn)" ]; then
+  echo "🍺 Installing yarn 🍺"
+  brew install yarn
+else
+  echo "yarn already installed 👍"
+fi
+
+log "👀 Looking for ruby 👀"
+ruby-build --definitions | grep ^${EXPECTED_RUBY_VERSION} > /dev/null
+RUBYBUILD_DEFS_EXIT_CODE=$?
+if [ "$RUBYBUILD_DEFS_EXIT_CODE" -ne 0 ]; then
+    echo "🍺 Ruby Build: Cannot find Ruby version required, updating via brew 🍺"
+    brew update && brew upgrade ruby-build
+fi
+rbenv install --skip-existing
+echo "Ruby installed 👍"
+
+log "📟 installing dependencies 📟"
+yarn
+
+log "📟 installing dependencies for our example app 📟"
+cd example/ios
+pod install
+cd -
+
+echo "You're all set up 👍"
+echo "📱 Run example app on iOS using -> yarn example ios"
+echo "📱 Run example app on android using -> yarn example android --variant=fossDebug"
