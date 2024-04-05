@@ -282,6 +282,9 @@ See the [example app](https://github.com/intercom/intercom-react-native/blob/mai
 
 ### IOS
 
+Intercom for iOS requires a **minimum iOS version of 15.**
+
+
 ```sh
 cd ios
 pod install
