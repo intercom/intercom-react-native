@@ -74,7 +74,7 @@ PODS:
   - fmt (6.2.1)
   - glog (0.3.5)
   - Intercom (17.0.0)
-  - intercom-react-native (7.0.0):
+  - intercom-react-native (7.0.1):
     - Intercom (~> 17.0.0)
     - React-Core
   - libevent (2.1.12)
@@ -534,7 +534,7 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   Intercom: 558a47a197e619a9f16411e133bc2c57a27e6fbb
-  intercom-react-native: d599994cb9309a146af32910cc3ff1abf968a837
+  intercom-react-native: 70cf20217a4c9e5cf4e40b0af2402e893a5a60d8
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
@@ -569,6 +569,6 @@ SPEC CHECKSUMS:
   Yoga: dc109b79db907f0f589fc423e991b09ec42d2295
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 5b73a3a6016c3b2a7e9c6110204bbbc9a99a9f81
+PODFILE CHECKSUM: 02dddd4ff6ebb5deb0a57503aca62dbf76926aa1
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.12.1
