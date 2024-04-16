@@ -1,6 +1,6 @@
 {
   "name": "@intercom/intercom-react-native",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "React Native wrapper to bridge our iOS and Android SDK",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -81,6 +81,7 @@
     "preset": "react-native",
     "modulePathIgnorePatterns": [
       "<rootDir>/example/node_modules",
+      "<rootDir>/sandboxes/node_modules",
       "<rootDir>/lib/"
     ]
   },
@@ -111,7 +112,8 @@
   },
   "eslintIgnore": [
     "node_modules/",
-    "lib/"
+    "lib/",
+    "sandboxes/"
   ],
   "prettier": {
     "quoteProps": "consistent",
