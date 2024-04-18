@@ -1,5 +1,5 @@
 {
-  "name": "intercomrnnotificationssample",
+  "name": "notificationsandbox",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -8,9 +8,10 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "setup:yarn": "yarn install && cd ios && bundle exec pod install",
-    "setup:npm": "npm install && cd ios && bundle exec pod install",
-    "rename": "react-native-rename 'IntercomRNNotificationsSample' --skipGitStatusCheck"
+    "setup:yarn": "bundle install && yarn install",
+    "setup:npm": "bundle install && npm install",
+    "pod": "cd ios && bundle exec pod install",
+    "rename": "react-native-rename 'notificationsandbox' --skipGitStatusCheck"
   },
   "dependencies": {
     "@intercom/intercom-react-native": "^7.0.1",

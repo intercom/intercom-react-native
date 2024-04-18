@@ -36,7 +36,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'IntercomRNNotificationsSample' do
+target 'notificationsandbox' do
   config = use_native_modules!
 
   use_react_native!(
@@ -50,7 +50,7 @@ target 'IntercomRNNotificationsSample' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'IntercomRNNotificationsSampleTests' do
+  target 'notificationsandboxTests' do
     inherit! :complete
     # Pods for testing
   end

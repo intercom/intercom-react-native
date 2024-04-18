@@ -37,7 +37,20 @@ yarn rename --androidBundleID "my.android.package.name"     # Set Android Packag
 
 >**Note**: This package does not attempt to properly rename build artifacts such as ios/build or Cocoa Pod installation targets. After renaming your project you should clean, build, and reinstall third party dependencies to get it running properly with the new name.
 
-## Step 3: Initialize Intercom
+
+## Step 3: Run pod install
+
+```shell
+# using npm
+npm run pod
+
+# OR using Yarn
+yarn run pod
+```
+
+
+
+## Step 4: Initialize Intercom
 
 ### Android
 >**MainApplication.kt**
@@ -70,7 +83,7 @@ return [super application:application didFinishLaunchingWithOptions:launchOption
 ```
 
 
-## Step 4: Setup Push Notifications
+## Step 5: Setup Push Notifications
 
 ### Android
 > Move your **google-services.json** file into the **android/app** directory

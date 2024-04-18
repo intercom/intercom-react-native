@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* IntercomRNNotificationsSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* IntercomRNNotificationsSampleTests.m */; };
-		0C80B921A6F3F58F76C31292 /* libPods-IntercomRNNotificationsSample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-IntercomRNNotificationsSample.a */; };
+		00E356F31AD99517003FC87E /* notificationsandboxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* notificationsandboxTests.m */; };
+		0C80B921A6F3F58F76C31292 /* libPods-notificationsandbox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-notificationsandbox.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		7699B88040F8A987B510C191 /* libPods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests.a */; };
+		7699B88040F8A987B510C191 /* libPods-notificationsandbox-notificationsandboxTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-notificationsandbox-notificationsandboxTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -22,28 +22,28 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = "IntercomRNNotificationsSample";
+			remoteInfo = notificationsandbox;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* IntercomRNNotificationsSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "IntercomRNNotificationsSampleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* notificationsandboxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = notificationsandboxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* IntercomRNNotificationsSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "IntercomRNNotificationsSampleTests.m"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* IntercomRNNotificationsSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IntercomRNNotificationsSample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "IntercomRNNotificationsSample/AppDelegate.h"; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = "IntercomRNNotificationsSample/AppDelegate.mm"; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "IntercomRNNotificationsSample/Images.xcassets"; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "IntercomRNNotificationsSample/Info.plist"; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "IntercomRNNotificationsSample/main.m"; sourceTree = "<group>"; };
-		19F6CBCC0A4E27FBF8BF4A61 /* libPods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B4392A12AC88292D35C810B /* Pods-IntercomRNNotificationsSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntercomRNNotificationsSample.debug.xcconfig"; path = "Target Support Files/Pods-IntercomRNNotificationsSample/Pods-IntercomRNNotificationsSample.debug.xcconfig"; sourceTree = "<group>"; };
-		5709B34CF0A7D63546082F79 /* Pods-IntercomRNNotificationsSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntercomRNNotificationsSample.release.xcconfig"; path = "Target Support Files/Pods-IntercomRNNotificationsSample/Pods-IntercomRNNotificationsSample.release.xcconfig"; sourceTree = "<group>"; };
-		5B7EB9410499542E8C5724F5 /* Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests.debug.xcconfig"; path = "Target Support Files/Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests/Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5DCACB8F33CDC322A6C60F78 /* libPods-IntercomRNNotificationsSample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IntercomRNNotificationsSample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		600EA8652BC541A100230EF8 /* IntercomRNNotificationsSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = IntercomRNNotificationsSample.entitlements; path = IntercomRNNotificationsSample/IntercomRNNotificationsSample.entitlements; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = "IntercomRNNotificationsSample/LaunchScreen.storyboard"; sourceTree = "<group>"; };
-		89C6BE57DB24E9ADA2F236DE /* Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests.release.xcconfig"; path = "Target Support Files/Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests/Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests.release.xcconfig"; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* notificationsandboxTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = notificationsandboxTests.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* notificationsandbox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = notificationsandbox.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = notificationsandbox/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = notificationsandbox/AppDelegate.mm; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = notificationsandbox/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = notificationsandbox/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = notificationsandbox/main.m; sourceTree = "<group>"; };
+		19F6CBCC0A4E27FBF8BF4A61 /* libPods-notificationsandbox-notificationsandboxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-notificationsandbox-notificationsandboxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B4392A12AC88292D35C810B /* Pods-notificationsandbox.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-notificationsandbox.debug.xcconfig"; path = "Target Support Files/Pods-notificationsandbox/Pods-notificationsandbox.debug.xcconfig"; sourceTree = "<group>"; };
+		5709B34CF0A7D63546082F79 /* Pods-notificationsandbox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-notificationsandbox.release.xcconfig"; path = "Target Support Files/Pods-notificationsandbox/Pods-notificationsandbox.release.xcconfig"; sourceTree = "<group>"; };
+		5B7EB9410499542E8C5724F5 /* Pods-notificationsandbox-notificationsandboxTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-notificationsandbox-notificationsandboxTests.debug.xcconfig"; path = "Target Support Files/Pods-notificationsandbox-notificationsandboxTests/Pods-notificationsandbox-notificationsandboxTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5DCACB8F33CDC322A6C60F78 /* libPods-notificationsandbox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-notificationsandbox.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		600EA8652BC541A100230EF8 /* notificationsandbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = notificationsandbox.entitlements; path = notificationsandbox/notificationsandbox.entitlements; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = notificationsandbox/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		89C6BE57DB24E9ADA2F236DE /* Pods-notificationsandbox-notificationsandboxTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-notificationsandbox-notificationsandboxTests.release.xcconfig"; path = "Target Support Files/Pods-notificationsandbox-notificationsandboxTests/Pods-notificationsandbox-notificationsandboxTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -52,7 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7699B88040F8A987B510C191 /* libPods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests.a in Frameworks */,
+				7699B88040F8A987B510C191 /* libPods-notificationsandbox-notificationsandboxTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,20 +60,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C80B921A6F3F58F76C31292 /* libPods-IntercomRNNotificationsSample.a in Frameworks */,
+				0C80B921A6F3F58F76C31292 /* libPods-notificationsandbox.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* IntercomRNNotificationsSampleTests */ = {
+		00E356EF1AD99517003FC87E /* notificationsandboxTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* IntercomRNNotificationsSampleTests.m */,
+				00E356F21AD99517003FC87E /* notificationsandboxTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = "IntercomRNNotificationsSampleTests";
+			path = notificationsandboxTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -84,10 +84,10 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* IntercomRNNotificationsSample */ = {
+		13B07FAE1A68108700A75B9A /* notificationsandbox */ = {
 			isa = PBXGroup;
 			children = (
-				600EA8652BC541A100230EF8 /* IntercomRNNotificationsSample.entitlements */,
+				600EA8652BC541A100230EF8 /* notificationsandbox.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -95,15 +95,15 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = "IntercomRNNotificationsSample";
+			name = notificationsandbox;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				5DCACB8F33CDC322A6C60F78 /* libPods-IntercomRNNotificationsSample.a */,
-				19F6CBCC0A4E27FBF8BF4A61 /* libPods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests.a */,
+				5DCACB8F33CDC322A6C60F78 /* libPods-notificationsandbox.a */,
+				19F6CBCC0A4E27FBF8BF4A61 /* libPods-notificationsandbox-notificationsandboxTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -118,9 +118,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* IntercomRNNotificationsSample */,
+				13B07FAE1A68108700A75B9A /* notificationsandbox */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* IntercomRNNotificationsSampleTests */,
+				00E356EF1AD99517003FC87E /* notificationsandboxTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
@@ -133,8 +133,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* IntercomRNNotificationsSample.app */,
-				00E356EE1AD99517003FC87E /* IntercomRNNotificationsSampleTests.xctest */,
+				13B07F961A680F5B00A75B9A /* notificationsandbox.app */,
+				00E356EE1AD99517003FC87E /* notificationsandboxTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -142,10 +142,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B4392A12AC88292D35C810B /* Pods-IntercomRNNotificationsSample.debug.xcconfig */,
-				5709B34CF0A7D63546082F79 /* Pods-IntercomRNNotificationsSample.release.xcconfig */,
-				5B7EB9410499542E8C5724F5 /* Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests.debug.xcconfig */,
-				89C6BE57DB24E9ADA2F236DE /* Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests.release.xcconfig */,
+				3B4392A12AC88292D35C810B /* Pods-notificationsandbox.debug.xcconfig */,
+				5709B34CF0A7D63546082F79 /* Pods-notificationsandbox.release.xcconfig */,
+				5B7EB9410499542E8C5724F5 /* Pods-notificationsandbox-notificationsandboxTests.debug.xcconfig */,
+				89C6BE57DB24E9ADA2F236DE /* Pods-notificationsandbox-notificationsandboxTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -153,9 +153,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* IntercomRNNotificationsSampleTests */ = {
+		00E356ED1AD99517003FC87E /* notificationsandboxTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "IntercomRNNotificationsSampleTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "notificationsandboxTests" */;
 			buildPhases = (
 				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -169,14 +169,13 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = "IntercomRNNotificationsSampleTests";
-			productname = "IntercomRNNotificationsSampleTests";
-			productReference = 00E356EE1AD99517003FC87E /* IntercomRNNotificationsSampleTests.xctest */;
+			name = notificationsandboxTests;
+			productReference = 00E356EE1AD99517003FC87E /* notificationsandboxTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* IntercomRNNotificationsSample */ = {
+		13B07F861A680F5B00A75B9A /* notificationsandbox */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "IntercomRNNotificationsSample" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "notificationsandbox" */;
 			buildPhases = (
 				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
@@ -190,9 +189,9 @@
 			);
 			dependencies = (
 			);
-			name = "IntercomRNNotificationsSample";
-			productName = "IntercomRNNotificationsSample";
-			productReference = 13B07F961A680F5B00A75B9A /* IntercomRNNotificationsSample.app */;
+			name = notificationsandbox;
+			productName = notificationsandbox;
+			productReference = 13B07F961A680F5B00A75B9A /* notificationsandbox.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -212,7 +211,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "IntercomRNNotificationsSample" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "notificationsandbox" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -225,8 +224,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* IntercomRNNotificationsSample */,
-				00E356ED1AD99517003FC87E /* IntercomRNNotificationsSampleTests */,
+				13B07F861A680F5B00A75B9A /* notificationsandbox */,
+				00E356ED1AD99517003FC87E /* notificationsandboxTests */,
 			);
 		};
 /* End PBXProject section */
@@ -273,15 +272,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-IntercomRNNotificationsSample/Pods-IntercomRNNotificationsSample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-notificationsandbox/Pods-notificationsandbox-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-IntercomRNNotificationsSample/Pods-IntercomRNNotificationsSample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-notificationsandbox/Pods-notificationsandbox-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IntercomRNNotificationsSample/Pods-IntercomRNNotificationsSample-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-notificationsandbox/Pods-notificationsandbox-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
@@ -299,7 +298,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-notificationsandbox-notificationsandboxTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -321,7 +320,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-IntercomRNNotificationsSample-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-notificationsandbox-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -334,15 +333,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests/Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-notificationsandbox-notificationsandboxTests/Pods-notificationsandbox-notificationsandboxTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests/Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-notificationsandbox-notificationsandboxTests/Pods-notificationsandbox-notificationsandboxTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests/Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-notificationsandbox-notificationsandboxTests/Pods-notificationsandbox-notificationsandboxTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
@@ -351,15 +350,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-IntercomRNNotificationsSample/Pods-IntercomRNNotificationsSample-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-notificationsandbox/Pods-notificationsandbox-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-IntercomRNNotificationsSample/Pods-IntercomRNNotificationsSample-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-notificationsandbox/Pods-notificationsandbox-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IntercomRNNotificationsSample/Pods-IntercomRNNotificationsSample-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-notificationsandbox/Pods-notificationsandbox-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
@@ -368,15 +367,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests/Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-notificationsandbox-notificationsandboxTests/Pods-notificationsandbox-notificationsandboxTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests/Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-notificationsandbox-notificationsandboxTests/Pods-notificationsandbox-notificationsandboxTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests/Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-notificationsandbox-notificationsandboxTests/Pods-notificationsandbox-notificationsandboxTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -386,7 +385,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* IntercomRNNotificationsSampleTests.m in Sources */,
+				00E356F31AD99517003FC87E /* notificationsandboxTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,7 +403,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* IntercomRNNotificationsSample */;
+			target = 13B07F861A680F5B00A75B9A /* notificationsandbox */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -412,14 +411,14 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests.debug.xcconfig */;
+			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-notificationsandbox-notificationsandboxTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "IntercomRNNotificationsSampleTests/Info.plist";
+				INFOPLIST_FILE = notificationsandboxTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -431,19 +430,19 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.sample";
+				PRODUCT_BUNDLE_IDENTIFIER = io.intercom.ios.enterprise.sample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IntercomRNNotificationsSample.app/IntercomRNNotificationsSample";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/notificationsandbox.app/notificationsandbox";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-IntercomRNNotificationsSample-IntercomRNNotificationsSampleTests.release.xcconfig */;
+			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-notificationsandbox-notificationsandboxTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = "IntercomRNNotificationsSampleTests/Info.plist";
+				INFOPLIST_FILE = notificationsandboxTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -455,22 +454,23 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.sample";
+				PRODUCT_BUNDLE_IDENTIFIER = io.intercom.ios.enterprise.sample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IntercomRNNotificationsSample.app/IntercomRNNotificationsSample";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/notificationsandbox.app/notificationsandbox";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-IntercomRNNotificationsSample.debug.xcconfig */;
+			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-notificationsandbox.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = IntercomRNNotificationsSample/IntercomRNNotificationsSample.entitlements;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_ENTITLEMENTS = notificationsandbox/notificationsandbox.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = T5C9P2N824;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -531,9 +531,8 @@
 					"\"$(PODS_ROOT)/Headers/Private/React-Core\"",
 					"\"$(PODS_TARGET_SRCROOT)/include/\"",
 				);
-				INFOPLIST_FILE = "IntercomRNNotificationsSample/Info.plist";
-             INFOPLIST_KEY_CFBundleDisplayName = "IntercomRNNotificationsSample";
-				INFOPLIST_KEY_CFBundleDisplayName = IntercomRNNotificationsSample;
+				INFOPLIST_FILE = notificationsandbox/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = notificationsandbox;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -544,8 +543,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.sample";
-				PRODUCT_NAME = "IntercomRNNotificationsSample";
+				PRODUCT_BUNDLE_IDENTIFIER = io.intercom.ios.enterprise.sample;
+				PRODUCT_NAME = notificationsandbox;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -555,14 +554,15 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-IntercomRNNotificationsSample.release.xcconfig */;
+			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-notificationsandbox.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = IntercomRNNotificationsSample/IntercomRNNotificationsSample.entitlements;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_ENTITLEMENTS = notificationsandbox/notificationsandbox.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = T5C9P2N824;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -622,9 +622,8 @@
 					"\"$(PODS_ROOT)/Headers/Private/React-Core\"",
 					"\"$(PODS_TARGET_SRCROOT)/include/\"",
 				);
-				INFOPLIST_FILE = "IntercomRNNotificationsSample/Info.plist";
-             INFOPLIST_KEY_CFBundleDisplayName = "IntercomRNNotificationsSample";
-				INFOPLIST_KEY_CFBundleDisplayName = IntercomRNNotificationsSample;
+				INFOPLIST_FILE = notificationsandbox/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = notificationsandbox;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -635,8 +634,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.sample";
-				PRODUCT_NAME = "IntercomRNNotificationsSample";
+				PRODUCT_BUNDLE_IDENTIFIER = io.intercom.ios.enterprise.sample;
+				PRODUCT_NAME = notificationsandbox;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -712,7 +711,10 @@
 					"-DFOLLY_USE_LIBCPP=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -780,7 +782,10 @@
 					"-DFOLLY_USE_LIBCPP=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -791,7 +796,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "IntercomRNNotificationsSampleTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "notificationsandboxTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -800,7 +805,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "IntercomRNNotificationsSample" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "notificationsandbox" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -809,7 +814,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "IntercomRNNotificationsSample" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "notificationsandbox" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
