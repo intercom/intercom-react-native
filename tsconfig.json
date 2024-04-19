@@ -26,6 +26,7 @@
     "target": "esnext",
   },
   "exclude": [
-    "example/e2e/**"
+    "example/e2e/**",
+    "sandboxes"
   ]
 }

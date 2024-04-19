@@ -81,6 +81,7 @@
     "preset": "react-native",
     "modulePathIgnorePatterns": [
       "<rootDir>/example/node_modules",
+      "<rootDir>/sandboxes/node_modules",
       "<rootDir>/lib/"
     ]
   },
@@ -111,7 +112,8 @@
   },
   "eslintIgnore": [
     "node_modules/",
-    "lib/"
+    "lib/",
+    "sandboxes/"
   ],
   "prettier": {
     "quoteProps": "consistent",
