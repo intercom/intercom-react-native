@@ -9,6 +9,14 @@
           "iosApiKey": "<ios-api-key>",
           "intercomRegion": "US"
         }
+      ],
+      [ 
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "15.0"
+          }
+        }
       ]
     ],
     "name": "IntercomExpo",
