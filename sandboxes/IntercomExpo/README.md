@@ -6,10 +6,10 @@
 
 ```shell
 # using npm
-npm run setup:npm
+npm install
 
 # OR using Yarn
-yarn run setup:yarn
+yarn install
 ```
 
 ## Step 2: Add your app id and api keys
@@ -47,7 +47,7 @@ yarn expo prebuild
 Go to the `ios` folder and run pod install
 
 ```shell
-bundle exec pod install
+npx pod install
 ```
 
 ## Step 5: Run the app

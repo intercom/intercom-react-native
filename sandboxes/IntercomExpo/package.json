@@ -6,9 +6,7 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web",
-    "setup:yarn": "bundle install && yarn install",
-    "setup:npm": "bundle install && npm install"
+    "web": "expo start --web"
   },
   "dependencies": {
     "@intercom/intercom-react-native": "^7.0.1",
