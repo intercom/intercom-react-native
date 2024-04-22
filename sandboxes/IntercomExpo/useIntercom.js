@@ -1,4 +1,4 @@
-import Intercom from '@intercom/intercom-react-native';
+import Intercom, { Space } from '@intercom/intercom-react-native';
 import { useMMKVStorage } from 'react-native-mmkv-storage';
 import { storage } from './App.utils';
 
@@ -24,11 +24,26 @@ export function useIntercom() {
     setIsLoggedIn(false);
   };
 
+  const openMessages = () => {
+    Intercom.presentSpace(Space.messages);
+  };
+
+  const openHelpCenter = () => {
+    Intercom.presentSpace(Space.helpCenter);
+  };
+
+  const openTicketsSpace = () => {
+    Intercom.presentSpace(Space.tickets);
+  };
+
   return {
     setUserIdentifier,
     isLoggedIn,
     handleLoginIdentifiedUser,
     handleLoginUnidentifiedUser,
     handleLogout,
+    openMessages,
+    openHelpCenter,
+    openTicketsSpace,
   };
 }
