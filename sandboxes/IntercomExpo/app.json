@@ -1,0 +1,55 @@
+{
+  "expo": {
+    "plugins": [
+      [
+        "@intercom/intercom-react-native",
+        {
+          "appId": "<app-id>",
+          "androidApiKey": "<android-api-key>",
+          "iosApiKey": "<ios-api-key>",
+          "intercomRegion": "US"
+        }
+      ],
+      [ 
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "15.0"
+          }
+        }
+      ]
+    ],
+    "name": "IntercomExpo",
+    "slug": "IntercomExpo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "io.intercom.ios.enterprise.sample"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.VIBRATE"
+      ],
+      "package": "com.intercom.sample"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
