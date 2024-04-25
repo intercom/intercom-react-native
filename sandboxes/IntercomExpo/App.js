@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { StatusBar } from 'expo-status-bar';
 import {
   AppState,
   Text,
   TextInput,
   TouchableOpacity,
   View,
+  ScrollView,
 } from 'react-native';
 import Intercom, { Visibility } from '@intercom/intercom-react-native';
 import { useIntercom } from './useIntercom';
@@ -30,7 +30,7 @@ export default function App() {
   const [articleId, setArticleId] = useState(null);
   const [carouselId, setCarouselId] = useState(null);
   const [surveyId, setSurveyId] = useState(null);
-  const [collectionIds, setCollectionIds] = useState([]);
+  const [collectionId, setCollectionId] = useState(null);
   const [launcherVisibility, setLauncherVisibility] = useState(false);
 
   const showConversation = useCallback(() => {
@@ -50,7 +50,7 @@ export default function App() {
   }, [articleId]);
 
   const showHelpCenterCollection = useCallback(() => {
-    openHelpCenterCollection(collectionIds);
+    openHelpCenterCollection(collectionId);
   }, [articleId]);
 
   const toggleLauncherVisibility = useCallback(() => {
@@ -77,139 +77,149 @@ export default function App() {
 
   return (
     <View style={styles.screenWrapper}>
-      <Text style={styles.title}>Push Notifications Sandbox</Text>
-      <View style={styles.wrapper}>
-        <>
-          <TextInput
-            style={styles.emailInput}
-            onChangeText={setUserIdentifier}
-            placeholder="Enter email"
-          />
-          <TouchableOpacity
-            style={styles.button}
-            onPress={handleLoginIdentifiedUser}
-          >
-            <Text style={styles.buttonText}>REGISTER IDENTIFIED</Text>
-          </TouchableOpacity>
-          <View style={styles.rowWrapper}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={handleLoginUnidentifiedUser}
-            >
-              <Text style={styles.buttonText}>REGISTER UNIDENTIFIED</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.button} onPress={handleLogout}>
-              <Text style={styles.buttonText}>RESET</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.rowWrapper}>
-            <TouchableOpacity style={styles.button} onPress={openMessages}>
-              <Text style={styles.buttonText}>OPEN MESSAGES</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.button} onPress={openHelpCenter}>
-              <Text style={styles.buttonText}>HELP CENTER</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.rowWrapper}>
-            <TouchableOpacity style={styles.button} onPress={openTicketsSpace}>
-              <Text style={styles.buttonText}>TICKETS</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.button}
-              onPress={handleLoginUnidentifiedUser}
-            >
-              <Text style={styles.buttonText}>TICKET ID</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.rowWrapper}>
-            <TouchableOpacity style={styles.button} onPress={openTicketsSpace}>
-              <Text style={styles.buttonText}>MESSENGER</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.button} onPress={() => null}>
-              <Text style={styles.buttonText}>HELP CENTER COLLECTION</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.rowWrapper}>
+      <ScrollView>
+        <Text style={styles.title}>Push Notifications Sandbox</Text>
+        <View style={styles.wrapper}>
+          <>
             <TextInput
-              style={styles.input}
-              onChangeText={setConversationId}
-              placeholder="Conversation Id..."
+              style={styles.emailInput}
+              onChangeText={setUserIdentifier}
+              placeholder="Enter email"
             />
             <TouchableOpacity
               style={styles.button}
-              onPress={showConversation}
-              disabled={!conversationId}
+              onPress={handleLoginIdentifiedUser}
             >
-              <Text style={styles.buttonText}>SHOW CONVERSATION</Text>
+              <Text style={styles.buttonText}>REGISTER IDENTIFIED</Text>
             </TouchableOpacity>
-          </View>
+            <View style={styles.rowWrapper}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleLoginUnidentifiedUser}
+              >
+                <Text style={styles.buttonText}>REGISTER UNIDENTIFIED</Text>
+              </TouchableOpacity>
 
-          <View style={styles.rowWrapper}>
-            <TextInput
-              style={styles.input}
-              onChangeText={setArticleId}
-              placeholder="Article Id..."
-            />
-            <TouchableOpacity
-              style={styles.button}
-              onPress={showArticle}
-              disabled={!articleId}
-            >
-              <Text style={styles.buttonText}>SHOW ARTICLE</Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity style={styles.button} onPress={handleLogout}>
+                <Text style={styles.buttonText}>RESET</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.rowWrapper}>
+              <TouchableOpacity style={styles.button} onPress={openMessages}>
+                <Text style={styles.buttonText}>OPEN MESSAGES</Text>
+              </TouchableOpacity>
 
-          <View style={styles.rowWrapper}>
-            <TextInput
-              style={styles.input}
-              onChangeText={setCarouselId}
-              placeholder="Carousel Id..."
-            />
-            <TouchableOpacity
-              style={styles.button}
-              onPress={showCarousel}
-              disabled={!carouselId}
-            >
-              <Text style={styles.buttonText}>SHOW CAROUSEL</Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity style={styles.button} onPress={openHelpCenter}>
+                <Text style={styles.buttonText}>HELP CENTER</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.rowWrapper}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={openTicketsSpace}
+              >
+                <Text style={styles.buttonText}>TICKETS</Text>
+              </TouchableOpacity>
 
-          <View style={styles.rowWrapper}>
-            <TextInput
-              style={styles.input}
-              onChangeText={setSurveyId}
-              placeholder="Survey Id..."
-            />
-            <TouchableOpacity
-              style={styles.button}
-              onPress={showSurvey}
-              disabled={!surveyId}
-            >
-              <Text style={styles.buttonText}>SHOW SURVEY</Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={openTicketsSpace}
+              >
+                <Text style={styles.buttonText}>MESSENGER</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.rowWrapper}>
+              <TextInput
+                style={styles.input}
+                onChangeText={setCollectionId}
+                placeholder="Collection Id"
+              />
+              <TouchableOpacity
+                style={styles.button}
+                onPress={showHelpCenterCollection}
+                disabled={!collectionId}
+              >
+                <Text style={styles.buttonText}>HELP CENTER COLLECTION</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.rowWrapper}>
+              <TextInput
+                style={styles.input}
+                onChangeText={setConversationId}
+                placeholder="Conversation Id..."
+              />
+              <TouchableOpacity
+                style={styles.button}
+                onPress={showConversation}
+                disabled={!conversationId}
+              >
+                <Text style={styles.buttonText}>SHOW CONVERSATION</Text>
+              </TouchableOpacity>
+            </View>
 
-          <View style={styles.rowWrapper}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={openMessageComposer}
-            >
-              <Text style={styles.buttonText}>SHOW COMPOSER</Text>
-            </TouchableOpacity>
+            <View style={styles.rowWrapper}>
+              <TextInput
+                style={styles.input}
+                onChangeText={setArticleId}
+                placeholder="Article Id..."
+              />
+              <TouchableOpacity
+                style={styles.button}
+                onPress={showArticle}
+                disabled={!articleId}
+              >
+                <Text style={styles.buttonText}>SHOW ARTICLE</Text>
+              </TouchableOpacity>
+            </View>
 
-            <TouchableOpacity
-              style={styles.button}
-              onPress={toggleLauncherVisibility}
-            >
-              <Text style={styles.buttonText}>TOGGLE MESSENGER</Text>
-            </TouchableOpacity>
-          </View>
-        </>
-      </View>
+            <View style={styles.rowWrapper}>
+              <TextInput
+                style={styles.input}
+                onChangeText={setCarouselId}
+                placeholder="Carousel Id..."
+              />
+              <TouchableOpacity
+                style={styles.button}
+                onPress={showCarousel}
+                disabled={!carouselId}
+              >
+                <Text style={styles.buttonText}>SHOW CAROUSEL</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.rowWrapper}>
+              <TextInput
+                style={styles.input}
+                onChangeText={setSurveyId}
+                placeholder="Survey Id..."
+              />
+              <TouchableOpacity
+                style={styles.button}
+                onPress={showSurvey}
+                disabled={!surveyId}
+              >
+                <Text style={styles.buttonText}>SHOW SURVEY</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.rowWrapper}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={openMessageComposer}
+              >
+                <Text style={styles.buttonText}>SHOW COMPOSER</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={toggleLauncherVisibility}
+              >
+                <Text style={styles.buttonText}>TOGGLE MESSENGER</Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        </View>
+      </ScrollView>
     </View>
   );
 }
