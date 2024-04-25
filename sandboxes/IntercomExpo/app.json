@@ -4,9 +4,9 @@
       [
         "@intercom/intercom-react-native",
         {
-          "appId": "<app-id>",
-          "androidApiKey": "<android-api-key>",
-          "iosApiKey": "<ios-api-key>",
+          "appId": "jxroz9ou",
+          "androidApiKey": "android_sdk-4c6b71378d12e45c55adb07ae90737d00f7edc0c",
+          "iosApiKey": "ios_sdk-2c22a48f5352470d6133e025b6d3a4d19c3fa8bc",
           "intercomRegion": "US"
         }
       ],
