@@ -474,25 +474,38 @@ The plugin provides props for extra customization. Every time you change the pro
 }
 ```
 
-Place your `google-services.json` inside the project's root and link it.
+#### Push notifications
 
-```
- "android": {
+Add the following configurations into your `app.json` or `app.config.js`:
+
+Place your `google-services.json` inside the project's root and link it
+
+```json
+{
+  "expo": {
+    ...
+    "android": {
       "googleServicesFile": "./google-services.json",
       ...
- }
+    }
+  }
 ```
 
 Add the necessary permission descriptions to infoPlist key.
 
-```
-"ios": {
-  ...
-  "infoPlist": {
-    "NSCameraUsageDescription": "This is just a sample text to access the Camera",
-    "NSPhotoLibraryUsageDescription": "This is just a sample text to access the Photo Library"
+```json
+{
+  "expo": {
+    ...
+    "ios": {
+      ...
+      "infoPlist": {
+        "NSCameraUsageDescription": "This is just a sample text to access the Camera",
+        "NSPhotoLibraryUsageDescription": "This is just a sample text to access the Photo Library"
+      }
+      ...
+    }
   }
-  ...
 }
 ```
 
