@@ -474,7 +474,7 @@ The plugin provides props for extra customization. Every time you change the pro
 }
 ```
 
-Link your `google-service.json`
+Place your `google-services.json` inside the project's root and link it.
 
 ```
  "android": {
@@ -501,7 +501,6 @@ e.g. [react-native-permissions](https://github.com/zoontek/react-native-permissi
 
 Next, rebuild your app as described in the ["Adding custom native code"](https://docs.expo.io/workflow/customizing/) guide.
 
->**Note**: Intercom appends ```npx prebuild --clean``` when changing plugin configurations.
 
 #### Limitations
 
