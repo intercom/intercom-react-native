@@ -161,7 +161,7 @@ By default, this sandbox is configured to handle the following links with React 
 ```shell
 **app://** for deep link
 
-**app.fake** for iOS Universal Link and Android App Link (Only works when linked on a message fron within the app.)
+**app.fake** for iOS Universal Link and Android App Link (Only works when linked on a message from within the app.)
 ```
 
 ```shell
