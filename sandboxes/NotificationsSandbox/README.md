@@ -49,7 +49,6 @@ yarn run pod
 ```
 
 
-
 ## Step 4: Initialize Intercom
 
 ### Android
@@ -87,6 +86,8 @@ return [super application:application didFinishLaunchingWithOptions:launchOption
 
 ### Android
 > Move your **google-services.json** file into the **android/app** directory
+
+> You can find more details on how to configure firebase with Intercom [here](https://developers.intercom.com/installing-intercom/react-native/push-notifications).
 
 
 # Running the the app
@@ -153,15 +154,26 @@ xcrun simctl push booted my.bundle.id payload.json
 ```
 
 
-# Deep Links Testing
+# (Local) Deep Links Testing
 
 By default, this sandbox is configured to handle the following links with React Navigation:
 
 ```shell
-**app.fake** for iOS Universal Link and Android App Link
-
 **app://** for deep link
+
+**app.fake** for iOS Universal Link and Android App Link (Only works when linked on a message from within the app.)
 ```
+
+```shell
+Configured Paths:
+  /settings
+```
+
+>**Note:** Universal and App Links require setup in the server to work.
+
+[Apple - Supporting Associated Domains](https://developer.apple.com/documentation/xcode/supporting-associated-domains)
+
+[Android - Verify App Links](https://developer.android.com/training/app-links/verify-android-applinks)
 
 [React Navigation Documentation - Setup Deep Links](https://reactnavigation.org/docs/deep-linking)
 
@@ -177,6 +189,8 @@ npx uri-scheme open [your deep link] --[ios|android]
 Example:
 ```shell
 npx uri-scheme open "app://settings" --ios
+
+npx uri-scheme open "https://app.fake/settings" --ios
 ```
 
 
@@ -190,6 +204,8 @@ xcrun simctl openurl booted [your deep link]
 Example:
 ```shell
 xcrun simctl openurl booted "app://settings"
+
+xcrun simctl openurl booted "https://app.fake/settings"
 ```
 
 
@@ -203,4 +219,6 @@ adb shell am start -W -a android.intent.action.VIEW -d [your deep link] [your an
 Example:
 ```shell
 adb shell am start -W -a android.intent.action.VIEW -d "app://settings" com.example.app
+
+adb shell am start -W -a android.intent.action.VIEW -d "https://app.fake/settings" com.example.app
 ```
