@@ -332,6 +332,9 @@ Add this permission to your `Info.plist`
 
 #### iOS: Push Notifications
 
+>**Note**: You should request user permission to display push notifications.
+e.g. [react-native-permissions](https://github.com/zoontek/react-native-permissions)
+
 Add **Push Notifications** and **Background Modes > Remote Notifications** [Details HERE](https://developer.apple.com/documentation/xcode/adding-capabilities-to-your-app)
 
 
@@ -470,11 +473,50 @@ The plugin provides props for extra customization. Every time you change the pro
 }
 ```
 
+#### Push notifications
+
+Add the following configurations into your `app.json` or `app.config.js`:
+
+Place your `google-services.json` inside the project's root and link it
+
+```json
+{
+  "expo": {
+    ...
+    "android": {
+      "googleServicesFile": "./google-services.json",
+      ...
+    }
+  }
+```
+
+Add the necessary permission descriptions to infoPlist key.
+
+```json
+{
+  "expo": {
+    ...
+    "ios": {
+      ...
+      "infoPlist": {
+        "NSCameraUsageDescription": "This is just a sample text to access the Camera",
+        "NSPhotoLibraryUsageDescription": "This is just a sample text to access the Photo Library"
+      }
+      ...
+    }
+  }
+}
+```
+
+>**Note**: You should request user permission to display push notifications.
+e.g. [react-native-permissions](https://github.com/zoontek/react-native-permissions)
+
 Next, rebuild your app as described in the ["Adding custom native code"](https://docs.expo.io/workflow/customizing/) guide.
+
 
 #### Limitations
 
-- **No push notifications support**: Intercom push notifications currently aren't supported by this config plugin extension. This will be added in the future.
+- **No deep links support**: Deep Linking currently is not supported by this config plugin extension. This will be added in the future.
 
 
 ## Methods
