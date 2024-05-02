@@ -326,8 +326,8 @@ See [How to manually link IOS Intercom SDK](docs/IOS-MANUAL-LINKING.md)
 Add this permission to your `Info.plist`
 
 ```xml
-<key>NSPhotoLibraryUsageDescription</key>
-<string>Send photos to support center</string>
+<key>NSCameraUsageDescription</key>
+<string>Access your camera to take photos within a conversation</string>
 ```
 
 #### iOS: Push Notifications
@@ -500,7 +500,6 @@ Add the necessary permission descriptions to infoPlist key.
       ...
       "infoPlist": {
         "NSCameraUsageDescription": "This is just a sample text to access the Camera",
-        "NSPhotoLibraryUsageDescription": "This is just a sample text to access the Photo Library"
       }
       ...
     }
