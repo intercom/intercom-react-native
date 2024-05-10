@@ -11,9 +11,9 @@ PODS:
     - ReactCommon/turbomodule/core (= 0.70.9)
   - fmt (6.2.1)
   - glog (0.3.5)
-  - Intercom (17.0.3)
-  - intercom-react-native (7.0.1):
-    - Intercom (~> 17.0.3)
+  - Intercom (17.0.4)
+  - intercom-react-native (7.1.1):
+    - Intercom (~> 17.0.4)
     - React-Core
   - RCT-Folly (2021.07.22.00):
     - boost
@@ -420,8 +420,8 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: 85d34420d92cb178897de05e3aba90e7a8568162
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
-  Intercom: 85b6c558c853da66e1041e23a6a8ed99a6bef640
-  intercom-react-native: 1764646b91eb2d3ba47db932c041c89bb5ded65c
+  Intercom: 373e65416ba9864a797695551d4366cb734083c6
+  intercom-react-native: 4e383c6f2a3b65152669ab138d0ffcf3d2f0a574
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
   RCTRequired: db184d894eed9e15f1fa80c3372595b7ec360580
   RCTTypeSafety: c9bf4c53ad246e4c94a49d91353ed19a8df5952f
