@@ -587,7 +587,7 @@ Next, rebuild your app as described in the ["Adding custom native code"](https:/
   "expo": {
     "ios": {
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["Your app url(www.app.com)"]
+        "IntercomUniversalLinkDomains": ["Your app url(www.app.com)"]
       }
     }
   }
