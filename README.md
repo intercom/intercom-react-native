@@ -26,7 +26,10 @@ ___
     - [Push Notifications](#ios-push-notifications)
     - [Push notification deep links support](#ios-push-notification-deep-links-support)
   - [Expo](#expo)
-    - [Limitations](#limitations)
+    - [Push Notifications](#expo-push-notifications)
+    - [Push notification deep links support](#expo-push-notification-deep-links-support)
+      - [Android](#android-deep-link)
+      - [iOS](#ios-deep-link)
 - [Common methods](#methods)
   - [Types](#types)
 - [Usage](#usage)
@@ -473,7 +476,7 @@ The plugin provides props for extra customization. Every time you change the pro
 }
 ```
 
-#### Push notifications
+#### Expo: Push notifications
 
 Add the following configurations into your `app.json` or `app.config.js`:
 
@@ -512,10 +515,85 @@ e.g. [react-native-permissions](https://github.com/zoontek/react-native-permissi
 
 Next, rebuild your app as described in the ["Adding custom native code"](https://docs.expo.io/workflow/customizing/) guide.
 
+#### Expo: Push notification deep links support
 
-#### Limitations
+> **Note**: You can read more on Expo [documentation](https://docs.expo.dev/guides/deep-linking)
 
-- **No deep links support**: Deep Linking currently is not supported by this config plugin extension. This will be added in the future.
+#### Android: Deep Link
+
+```json
+{
+  "expo": {
+    "android": {
+       "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "host": "Your app scheme(app)"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
+    }
+  }
+}
+```
+
+#### Android: App Links
+
+```json
+{
+  "expo": {
+    "android": {
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "Your app url(www.app.com)",
+              "pathPrefix": "Your url prefix e.g. /settings)"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
+    }
+  }
+}
+```
+
+#### iOS: Deep Link
+
+```json
+{
+  "expo": {
+    "ios": {
+      "infoPlist": {
+        "LSApplicationQueriesSchemes": ["Your app scheme(app)"]
+      }
+    }
+  }
+}
+```
+
+#### iOS: Universal Link
+
+```json
+{
+  "expo": {
+    "ios": {
+      "infoPlist": {
+        "LSApplicationQueriesSchemes": ["Your app url(www.app.com)"]
+      }
+    }
+  }
+}
+```
+
 
 
 ## Methods
