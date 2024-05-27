@@ -278,8 +278,6 @@ export type IntercomType = {
 
   /**
    * Add an `EventListener` to listen for `IntercomUnreadCountDidChange` events.
-   *
-   * @note This function is for Android only.
    */
   addEventListener: (
     event: EventType,
