@@ -139,10 +139,12 @@
     ]
   },
   "resolutions": {
-    "@types/react": "18.2.6",
-    "string-width": "4.2.3"
+    "@types/react": "18.2.6"
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1"
   }
 }
