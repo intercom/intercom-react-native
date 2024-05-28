@@ -228,7 +228,7 @@ public class IntercomModule extends ReactContextBaseJavaModule {
       Log.d(NAME, "setLogLevel");
       promise.resolve(true);
     } catch (Exception err) {
-      Log.e(NAME, "getUnreadConversationCount error:");
+      Log.e(NAME, "setLogLevel error:");
       Log.e(NAME, err.toString());
       promise.reject(IntercomErrorCodes.SET_LOG_LEVEL, err.toString());
     }
