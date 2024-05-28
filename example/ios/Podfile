@@ -2,6 +2,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 
 platform :ios, '15.0'
+use_modular_headers!
 
 target 'IntercomReactNativeExample' do
   config = use_native_modules!
