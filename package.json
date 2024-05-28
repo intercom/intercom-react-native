@@ -139,7 +139,9 @@
     ]
   },
   "resolutions": {
-    "@types/react": "18.2.6"
+    "@types/react": "18.2.6",
+    "string-width": "4.2.3",
+    "wrap-ansi": "7.0.0"
   },
   "engines": {
     "node": ">=18"
