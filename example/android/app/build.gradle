@@ -113,7 +113,7 @@ android {
 dependencies {
   // The version of react-native is set by the React Native Gradle Plugin
   implementation("com.facebook.react:react-android")
-  implementation("com.facebook.react:flipper-integration")
+  //implementation("com.facebook.react:flipper-integration")
 
 
   implementation 'com.google.firebase:firebase-messaging:20.2.+'
