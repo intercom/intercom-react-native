@@ -1,5 +1,5 @@
 import {
-  ConfigPlugin,
+  type ConfigPlugin,
   withAppDelegate,
   withInfoPlist,
 } from '@expo/config-plugins';
