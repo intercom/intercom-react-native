@@ -2,7 +2,7 @@ import {
   NativeModules,
   NativeEventEmitter,
   Platform,
-  EmitterSubscription,
+  type EmitterSubscription,
 } from 'react-native';
 
 const { IntercomModule, IntercomEventEmitter } = NativeModules;
