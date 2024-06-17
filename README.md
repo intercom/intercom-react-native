@@ -281,7 +281,16 @@ public class MainNotificationService extends FirebaseMessagingService {
 
 ```
 
-See the [example app](https://github.com/intercom/intercom-react-native/blob/main/example/src/App.tsx) for an example of how to handle deep linking in your app.
+Add the following in your `MainActivity`
+
+```kotlin
+  override fun onNewIntent(intent: Intent) {
+    super.onNewIntent(intent)
+    setIntent(intent)
+  }
+```
+
+See the [example app](https://github.com/intercom/intercom-react-native/blob/main/sandboxes/NotificationsSandbox/App.tsx) for an example of how to handle deep linking in your app.
 
 ### IOS
 
