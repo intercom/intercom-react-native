@@ -9,6 +9,7 @@
 @end
 
 @implementation IntercomModule
+NSString *UNIDENTIFIED_REGISTRATION = @"101";
 NSString *IDENTIFIED_REGISTRATION = @"102";
 NSString *SET_USER_HASH = @"103";
 NSString *UPDATE_USER = @"104";
@@ -96,23 +97,23 @@ RCT_EXPORT_METHOD(sendTokenToIntercom:(NSString *)token
 #pragma mark - User
 
 RCT_EXPORT_METHOD(loginUnidentifiedUser:(RCTPromiseResolveBlock)successCallback
-                                           failure:(RCTResponseErrorBlock)failureCallback) {
+                                failure:(RCTPromiseRejectBlock)failureCallback) {
     [Intercom loginUnidentifiedUserWithSuccess:^{
         successCallback(@(YES));
     } failure:^(NSError * _Nonnull error) {
-        failureCallback([self removeNullUnderlyingError:error]);
+        failureCallback(UNIDENTIFIED_REGISTRATION, @"Error in loginUnidentifiedUser", [self removeNullUnderlyingError:error]);
     }];
 };
 
 RCT_EXPORT_METHOD(loginUserWithUserAttributes:(NSDictionary *)userAttributes
                                       success:(RCTPromiseResolveBlock)successCallback
-                                      failure:(RCTResponseErrorBlock)failureCallback) {
+                                      failure:(RCTPromiseRejectBlock)failureCallback) {
     ICMUserAttributes *attributes = [IntercomAttributesBuilder userAttributesForDictionary:userAttributes];
 
     [Intercom loginUserWithUserAttributes:attributes success:^{
         successCallback(@(YES));
     } failure:^(NSError * _Nonnull error) {
-        failureCallback([self removeNullUnderlyingError:error]);
+        failureCallback(IDENTIFIED_REGISTRATION, @"Error in loginUserWithUserAttributes", [self removeNullUnderlyingError:error]);
     }];
 }
 
@@ -123,12 +124,12 @@ RCT_EXPORT_METHOD(logout:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRej
 
 RCT_EXPORT_METHOD(updateUser:(NSDictionary *)userAttributesDict
                   resolver:(RCTPromiseResolveBlock)resolve
-                  failureBlock:(RCTResponseErrorBlock)failureCallback) {
+              failureBlock:(RCTPromiseRejectBlock)failureCallback) {
     ICMUserAttributes *userAttributes = [IntercomAttributesBuilder userAttributesForDictionary:userAttributesDict];
     [Intercom updateUser:userAttributes success:^{
         resolve(@(YES));
     } failure:^(NSError * _Nonnull error) {
-        failureCallback([self removeNullUnderlyingError:error]);
+        failureCallback(UPDATE_USER, @"Error in updateUser", [self removeNullUnderlyingError:error]);
     }];
 };
 
