@@ -85,4 +85,4 @@ cd -
 
 echo "You're all set up 👍"
 echo "📱 Run example app on iOS using -> yarn example ios"
-echo "📱 Run example app on android using -> yarn example android --variant=fossDebug"
+echo "📱 Run example app on android using -> yarn example android"

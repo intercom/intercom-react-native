@@ -30,7 +30,7 @@ Please set up your React Native Development Environment for Android as described
 To run the app on Android, execute the following command:
 
 ```sh
-yarn example android --variant=fossDebug
+yarn example android
 ```
 
 To run the app on Android, execute the following command:
