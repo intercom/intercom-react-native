@@ -1,5 +1,27 @@
 # Welcome to @intercom/intercom-react-native 👋
 
+let us do issues so we can report actual bug on your packages. going through a intercom chat that don't support code to talk to a bot and put us in contact 2 days later with someone that don't understand code is not a good way to deal with dev and open source projects.
+
+your android package is not working properly on expo
+
+getting this 
+
+```
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Could not determine the dependencies of task ':intercom_intercom-react-native:compileDebugJavaWithJavac'.
+> Could not resolve all task dependencies for configuration ':intercom_intercom-react-native:debugCompileClasspath'.
+   > Could not resolve com.google.firebase:firebase-messaging:20.2.+.
+     Required by:
+         project :intercom_intercom-react-native
+      > Failed to list versions for com.google.firebase:firebase-messaging.
+         > Unable to load Maven meta-data from https://oss.sonatype.org/content/repositories/snapshots/com/google/firebase/firebase-messaging/maven-metadata.xml.
+            > Could not GET 'https://oss.sonatype.org/content/repositories/snapshots/com/google/firebase/firebase-messaging/maven-metadata.xml'. Received status code 502 from server: Bad Gateway
+```
+
+
+
 [![Version](https://img.shields.io/npm/v/@intercom/intercom-react-native.svg)](https://www.npmjs.com/package/@intercom/intercom-react-native)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](https://github.com/intercom/intercom-react-native#readme)
 [![License: Apache--2.0](https://img.shields.io/badge/License-Apache--2.0-yellow.svg)](https://github.com/intercom/intercom-react-native#readme)
