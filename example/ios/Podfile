@@ -13,7 +13,7 @@ target 'IntercomReactNativeExample' do
     :hermes_enabled => false
   )
 
-  pod 'intercom-react-native', :path => '../..'
+  # pod 'intercom-react-native', :path => '../..'
 
   # Enables Flipper.
   #
@@ -66,5 +66,5 @@ target 'IntercomReactNativeExampleUI' do
     :hermes_enabled => false
   )
 
-  pod 'intercom-react-native', :path => '../..'
+  # pod 'intercom-react-native', :path => '../..'
 end

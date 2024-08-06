@@ -2,9 +2,16 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@intercom/intercom-react-native": ["./src/index"],
+      "@intercom/intercom-react-native": ["./src/index"]
     },
-    "types": ["node", "mocha", "@wdio/globals/types", "@wdio/mocha-framework"],
+    "types": [
+      "node",
+      "mocha",
+      "@wdio/globals/types",
+      "@wdio/mocha-framework",
+      "react",
+      "react-native"
+    ],
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "esModuleInterop": true,
@@ -23,10 +30,15 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "esnext",
+    "target": "esnext"
   },
   "exclude": [
     "example/e2e/**",
     "sandboxes"
+  ],
+  "include": [
+    "src/**/*",
+    "index.ts",
+    "index.tsx"
   ]
 }
