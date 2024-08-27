@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@wdio/cli": "^7.7.2",
-    "appium": "^1.21.0",
+    "appium": "^2.5.2",
     "chai": "^4.3.4",
     "webdriver": "^7.16.13",
     "webdriverio": "^7.7.2"
