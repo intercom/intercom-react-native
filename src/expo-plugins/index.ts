@@ -1,12 +1,13 @@
 import {
-  ConfigPlugin,
-  createRunOncePlugin,
-  withAppDelegate,
+  type ConfigPlugin,
   AndroidConfig,
-  withMainApplication,
+  createRunOncePlugin,
   withAndroidManifest,
+  withAppDelegate,
   withInfoPlist,
+  withMainApplication,
 } from '@expo/config-plugins';
+
 import {
   addImports,
   appendContentsInsideDeclarationBlock,
@@ -16,20 +17,31 @@ import {
   insertContentsInsideObjcFunctionBlock,
 } from '@expo/config-plugins/build/ios/codeMod';
 import type { IntercomPluginProps, IntercomRegion } from './@types';
+import { withIntercomPushNotification } from './withPushNotifications';
 
 const mainApplication: ConfigPlugin<IntercomPluginProps> = (_config, props) =>
   withMainApplication(_config, (config) => {
     let stringContents = config.modResults.contents;
     stringContents = addImports(
       stringContents,
-      ['com.intercom.reactnative.IntercomModule;'],
-      false
+      ['com.intercom.reactnative.IntercomModule'],
+      config.modResults.language === 'java'
     );
+
+    // Remove previous code
+    stringContents = stringContents.replace(
+      /IntercomModule\.initialize\(.*?\)\s*;?\n?/g,
+      ''
+    );
+
     stringContents = appendContentsInsideDeclarationBlock(
       stringContents,
       'onCreate',
-      `IntercomModule.initialize(this, "${props.androidApiKey}", "${props.appId}");`
+      `IntercomModule.initialize(this, "${props.androidApiKey}", "${
+        props.appId
+      }")${config.modResults.language === 'java' ? ';' : ''}\n`
     );
+
     config.modResults.contents = stringContents;
     return config;
   });
@@ -81,12 +93,20 @@ const appDelegate: ConfigPlugin<IntercomPluginProps> = (_config, props) =>
   withAppDelegate(_config, (config) => {
     let stringContents = config.modResults.contents;
     stringContents = addObjcImports(stringContents, ['<IntercomModule.h>']);
+
+    // Remove previous code
+    stringContents = stringContents.replace(
+      /\s*\[IntercomModule initialize:@"(.*)" withAppId:@"(.*)"];/g,
+      ''
+    );
+
     stringContents = insertContentsInsideObjcFunctionBlock(
       stringContents,
       'application didFinishLaunchingWithOptions:',
       `[IntercomModule initialize:@"${props.iosApiKey}" withAppId:@"${props.appId}"];`,
       { position: 'tailBeforeLastReturn' }
     );
+
     config.modResults.contents = stringContents;
     return config;
   });
@@ -105,6 +125,7 @@ const infoPlist: ConfigPlugin<IntercomPluginProps> = (
 
   return newConfig;
 };
+
 const withIntercomIOS: ConfigPlugin<IntercomPluginProps> = (config, props) => {
   let newConfig = appDelegate(config, props);
   newConfig = infoPlist(newConfig, props);
@@ -118,6 +139,7 @@ const withIntercomReactNative: ConfigPlugin<IntercomPluginProps> = (
   let newConfig = config;
   newConfig = withIntercomAndroid(newConfig, props);
   newConfig = withIntercomIOS(newConfig, props);
+  newConfig = withIntercomPushNotification(newConfig, props);
   return newConfig;
 };
 

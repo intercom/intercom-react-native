@@ -2,7 +2,7 @@ import {
   NativeModules,
   NativeEventEmitter,
   Platform,
-  EmitterSubscription,
+  type EmitterSubscription,
 } from 'react-native';
 
 const { IntercomModule, IntercomEventEmitter } = NativeModules;
@@ -277,9 +277,7 @@ export type IntercomType = {
   setLogLevel(logLevel: LogLevelType): Promise<boolean>;
 
   /**
-   * Add an `EventListener` to listen for `IntercomUnreadCountDidChange` events.
-   *
-   * @note This function is for Android only.
+   * Add an event listener for the supported event types.
    */
   addEventListener: (
     event: EventType,

@@ -24,7 +24,7 @@
         attributes.signedUpAt = [self dateValueForKey:@"signedUpAt" inDictionary:attributesDict];
     }
     if ([self stringValueForKey:@"unsubscribedFromEmails" inDictionary:attributesDict]) {
-        attributes.unsubscribedFromEmails = [self stringValueForKey:@"unsubscribedFromEmails" inDictionary:attributesDict];
+        attributes.unsubscribedFromEmails = [self boolValueForKey:@"unsubscribedFromEmails" inDictionary:attributesDict];
     }
     if (attributesDict[@"customAttributes"]) {
         attributes.customAttributes = attributesDict[@"customAttributes"];
@@ -96,6 +96,17 @@
         return [ICMUserAttributes nullDateAttribute];
     }
     return nil;
+}
+
++ (BOOL)boolValueForKey:(NSString *)key inDictionary:(NSDictionary *)dictionary {
+    id value = dictionary[key];
+    if ([value isKindOfClass:[NSNumber class]]) {
+        return [value boolValue];
+    }
+    if ([value isKindOfClass:[NSString class]]) {
+        return [value boolValue];
+    }
+    return NO;
 }
 
 

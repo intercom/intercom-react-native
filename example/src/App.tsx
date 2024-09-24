@@ -15,7 +15,7 @@ import {
 import Intercom, {
   IntercomEvents,
   Space,
-  UserAttributes,
+  type UserAttributes,
   Visibility,
   IntercomContent,
 } from '@intercom/intercom-react-native';

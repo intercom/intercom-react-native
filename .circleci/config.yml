@@ -3,8 +3,8 @@ version: 2.1
 # Default VM config to be used for macOS builds
 macos_config: &macos_config
   macos:
-    xcode: 14.0.0
-  resource_class: macos.x86.medium.gen2
+    xcode: 15.3.0
+  resource_class: macos.m1.large.gen1
   shell: /bin/bash --login -eo pipefail
 
 setup_env_file: &setup_env_file
@@ -16,7 +16,7 @@ setup_env_file: &setup_env_file
 executors:
   default:
     docker:
-      - image: circleci/node:14
+      - image: cimg/node:22.2.0
     working_directory: ~/project
 
 orbs:
@@ -53,6 +53,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            corepack enable
             yarn install --cwd example
             yarn install --cwd example/e2e
             yarn install

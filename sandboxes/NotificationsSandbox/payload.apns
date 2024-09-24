@@ -1,0 +1,9 @@
+{
+  "Simulator Target Bundle": "replace.with.your.bundle.id",
+  "aps": {
+    "alert": {
+      "title": "Testing push notifications",
+      "body": "Local notifications are working"
+    }
+  }
+}

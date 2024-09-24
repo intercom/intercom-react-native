@@ -1,0 +1,8 @@
+{
+  "aps": {
+    "alert": {
+      "title": "Testing push notifications",
+      "body": "Local notifications are working"
+    }
+  }
+}
