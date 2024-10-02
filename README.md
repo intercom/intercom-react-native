@@ -853,7 +853,7 @@ Fetch a list of all Collections.
 ___
 ### `Intercom.fetchHelpCenterCollection(collectionId)`
 
-Get a list of sections/articles for a collection.
+Get a list of subcollections/articles for a collection.
 
 ### Options
 
@@ -1022,11 +1022,6 @@ type HelpCenterArticle = {
   title: string;
 };
 
-type HelpCenterSection = {
-  name: string;
-  articles: HelpCenterArticle;
-};
-
 type HelpCenterCollectionItem = {
   id: string;
   title: string;
@@ -1038,7 +1033,7 @@ type HelpCenterCollectionContent = {
   name: string;
   summary: string;
   articles: HelpCenterArticle[];
-  sections: HelpCenterSection[];
+  collections: HelpCenterCollectionItem[];
 };
 
 type HelpCenterArticleSearchResult = {
