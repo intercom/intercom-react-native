@@ -12,7 +12,7 @@ PODS:
   - fmt (6.2.1)
   - glog (0.3.5)
   - Intercom (18.2.0)
-  - intercom-react-native (8.0.0):
+  - intercom-react-native (8.1.0):
     - Intercom (~> 18.2.0)
     - React-Core
   - RCT-Folly (2022.05.16.00):
@@ -1198,7 +1198,7 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   Intercom: e6febbddf5cfa4a15629c1d075b01a9825a23ad9
-  intercom-react-native: 8653075ec108951d9c9dedb5b8518e6806508b13
+  intercom-react-native: 2f0b89429e93befa1180dde37fc7d8916b762157
   RCT-Folly: 7169b2b1c44399c76a47b5deaaba715eeeb476c0
   RCTRequired: 0c7f03a41ee32dec802c74c341e317a4165973d5
   RCTTypeSafety: 57698bb7fcde424922e201dab377f496a08a63e3
