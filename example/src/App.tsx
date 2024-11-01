@@ -77,6 +77,18 @@ export default function App() {
     Alert.alert(field, `Provided ${field} is not of correct format`);
   };
 
+  const showLoggedInStatusAlert = () => {
+      Intercom.isUserLoggedIn().then((res) => {
+        Alert.alert(`Logged in status: ${res ? 'Yes' : 'No'}`);
+      });
+  }
+
+  const showLoggedInUserAttributes = () => {
+    Intercom.fetchLoggedInUserAttributes().then((res) => {
+      Alert.alert('User Attributes', JSON.stringify(res));
+    });
+  }
+
   const validateEmail = (email: string | undefined) => {
     return String(email)
       .toLowerCase()
@@ -295,6 +307,22 @@ export default function App() {
               });
           }}
         />
+        <Button
+          intercom_accessibilityLabel="show-logged-in-status"
+          intercom_title="Show logged in status"
+          intercom_onPress={() => {
+            showLoggedInStatusAlert();
+          }}
+        />
+        <Button
+          intercom_accessibilityLabel="show-logged-in-attributes"
+          // intercom_disabled={!loggedUser}
+          intercom_title="Show logged in attributes"
+          intercom_onPress={() => {
+            showLoggedInUserAttributes();
+          }}
+        />
+        
         <Input
           title="Conversation Id"
           accessibilityLabel="conversation-id"

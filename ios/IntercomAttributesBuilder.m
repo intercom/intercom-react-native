@@ -39,6 +39,35 @@
     return attributes;
 }
 
++ (NSMutableDictionary *)dictionaryForUserAttributes:(ICMUserAttributes *)attributes {
+    NSMutableDictionary *attributesDict = [NSMutableDictionary new];
+    if (attributes.email) {
+        attributesDict[@"email"] = attributes.email;
+    }
+    if (attributes.userId) {
+        attributesDict[@"userId"] = attributes.userId;
+    }
+    if (attributes.name) {
+        attributesDict[@"name"] = attributes.name;
+    }
+    if (attributes.phone) {
+        attributesDict[@"phone"] = attributes.phone;
+    }
+    if (attributes.languageOverride) {
+        attributesDict[@"languageOverride"] = attributes.languageOverride;
+    }
+    if (attributes.signedUpAt) {
+        attributesDict[@"signedUpAt"] = @([attributes.signedUpAt timeIntervalSince1970]);
+    }
+    if (attributes.unsubscribedFromEmails) {
+        attributesDict[@"unsubscribedFromEmails"] = @(attributes.unsubscribedFromEmails);
+    }
+    if (attributes.customAttributes) {
+        attributesDict[@"customAttributes"] = attributes.customAttributes;
+    }
+    return attributesDict;
+}   
+
 + (ICMCompany *)companyForDictionary:(NSDictionary *)attributesDict {
     ICMCompany *company = [ICMCompany new];
     if ([self stringValueForKey:@"id" inDictionary:attributesDict]) {

@@ -197,6 +197,17 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void isUserLoggedIn(Promise promise) {
+    promise.resolve(Intercom.client().isUserLoggedIn());
+  }
+
+  @ReactMethod
+  public void fetchLoggedInUserAttributes(Promise promise) {
+    Registration registration = Intercom.client().fetchLoggedInUserAttributes();
+    promise.resolve(IntercomHelpers.deconstructRegistration(registration));
+  }
+
+  @ReactMethod
   public void logout(Promise promise) {
     try {
       Intercom.client().logout();

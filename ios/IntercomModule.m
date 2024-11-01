@@ -133,6 +133,16 @@ RCT_EXPORT_METHOD(updateUser:(NSDictionary *)userAttributesDict
     }];
 };
 
+RCT_EXPORT_METHOD(isUserLoggedIn:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+    BOOL loggedIn = [Intercom isUserLoggedIn];
+    resolve(@(loggedIn));
+};
+
+RCT_EXPORT_METHOD(fetchLoggedInUserAttributes:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+    ICMUserAttributes *attributes = [Intercom fetchLoggedInUserAttributes];
+    resolve([IntercomAttributesBuilder dictionaryForUserAttributes:attributes]);
+};
+
 RCT_EXPORT_METHOD(setUserHash:(NSString *)userHash
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
