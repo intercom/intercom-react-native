@@ -154,7 +154,7 @@ export type IntercomType = {
 
   /**
    * Gets a logged in user's attributes
-   * 
+   *
    * @return {Promise<UserAttributes>} A promise to the user's attributes with `email`and/or `userId` populated..
    */
   fetchLoggedInUserAttributes: () => Promise<UserAttributes>;
@@ -305,7 +305,8 @@ const Intercom: IntercomType = {
   setUserHash: (hash) => IntercomModule.setUserHash(hash),
   updateUser: (userAttributes) => IntercomModule.updateUser(userAttributes),
   isUserLoggedIn: () => IntercomModule.isUserLoggedIn(),
-  fetchLoggedInUserAttributes: () => IntercomModule.fetchLoggedInUserAttributes(),
+  fetchLoggedInUserAttributes: () =>
+    IntercomModule.fetchLoggedInUserAttributes(),
   logEvent: (eventName, metaData = undefined) =>
     IntercomModule.logEvent(eventName, metaData),
 

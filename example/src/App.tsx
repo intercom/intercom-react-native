@@ -78,16 +78,16 @@ export default function App() {
   };
 
   const showLoggedInStatusAlert = () => {
-      Intercom.isUserLoggedIn().then((res) => {
-        Alert.alert(`Logged in status: ${res ? 'Yes' : 'No'}`);
-      });
-  }
+    Intercom.isUserLoggedIn().then((res) => {
+      Alert.alert(`Logged in status: ${res ? 'Yes' : 'No'}`);
+    });
+  };
 
   const showLoggedInUserAttributes = () => {
     Intercom.fetchLoggedInUserAttributes().then((res) => {
       Alert.alert('User Attributes', JSON.stringify(res));
     });
-  }
+  };
 
   const validateEmail = (email: string | undefined) => {
     return String(email)
@@ -322,7 +322,7 @@ export default function App() {
             showLoggedInUserAttributes();
           }}
         />
-        
+
         <Input
           title="Conversation Id"
           accessibilityLabel="conversation-id"
