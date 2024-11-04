@@ -11,9 +11,9 @@ PODS:
     - ReactCommon/turbomodule/core (= 0.73.8)
   - fmt (6.2.1)
   - glog (0.3.5)
-  - Intercom (18.1.0)
-  - intercom-react-native (8.0.0):
-    - Intercom (~> 18.1.0)
+  - Intercom (18.2.0)
+  - intercom-react-native (8.1.0):
+    - Intercom (~> 18.2.0)
     - React-Core
   - RCT-Folly (2022.05.16.00):
     - boost
@@ -1197,8 +1197,8 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: bbe8b686178e5ce03d1d8a356789f211f91f31b8
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
-  Intercom: b3a7282d46c7a670d805b70430cb929d9473ddb1
-  intercom-react-native: f4e484301273c2a2ff7c1839eb3c9c2da1c0aa26
+  Intercom: e6febbddf5cfa4a15629c1d075b01a9825a23ad9
+  intercom-react-native: 2f0b89429e93befa1180dde37fc7d8916b762157
   RCT-Folly: 7169b2b1c44399c76a47b5deaaba715eeeb476c0
   RCTRequired: 0c7f03a41ee32dec802c74c341e317a4165973d5
   RCTTypeSafety: 57698bb7fcde424922e201dab377f496a08a63e3
@@ -1247,4 +1247,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 15fb131f3e1a2b2d9a606515df1414680c8e67b5
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.15.2

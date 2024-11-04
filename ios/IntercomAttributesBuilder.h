@@ -3,4 +3,5 @@
 
 @interface IntercomAttributesBuilder : NSObject
 + (ICMUserAttributes *)userAttributesForDictionary:(NSDictionary *)attributesDict;
++ (NSMutableDictionary *)dictionaryForUserAttributes:(ICMUserAttributes *)attributes;
 @end
