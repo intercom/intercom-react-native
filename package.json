@@ -1,6 +1,6 @@
 {
   "name": "@intercom/intercom-react-native",
-  "version": "7.2.1",
+  "version": "8.1.0",
   "description": "React Native wrapper to bridge our iOS and Android SDK",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -60,7 +60,7 @@
     "@types/jest": "29.5.12",
     "@types/mocha": "10.0.6",
     "@types/react": "18.2.6",
-    "@wdio/globals": "8.33.1",
+    "@wdio/globals": "9.5.1",
     "@wdio/mocha-framework": "8.33.1",
     "eslint": "8.19.0",
     "eslint-config-prettier": "8.10.0",
@@ -73,7 +73,7 @@
     "react-native": "0.73.4",
     "react-native-builder-bob": "0.23.2",
     "typescript": "5.0.4",
-    "webdriverio": "8.33.0"
+    "webdriverio": "9.5.1"
   },
   "peerDependencies": {
     "react": "*",
