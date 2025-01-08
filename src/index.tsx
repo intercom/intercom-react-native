@@ -2,7 +2,7 @@ import {
   NativeModules,
   NativeEventEmitter,
   Platform,
-  EmitterSubscription,
+  type EmitterSubscription,
 } from 'react-native';
 
 const { IntercomModule, IntercomEventEmitter } = NativeModules;
@@ -148,6 +148,18 @@ export type IntercomType = {
   updateUser(userAttributes: UserAttributes): Promise<boolean>;
 
   /**
+   * Determines if there is currently a user logged in.
+   */
+  isUserLoggedIn(): Promise<boolean>;
+
+  /**
+   * Gets a logged in user's attributes
+   *
+   * @return {Promise<UserAttributes>} A promise to the user's attributes with `email`and/or `userId` populated..
+   */
+  fetchLoggedInUserAttributes: () => Promise<UserAttributes>;
+
+  /**
    * Log an event with a given name and metaData.
    * You can log events in Intercom based on user actions in your app.
    *
@@ -277,9 +289,7 @@ export type IntercomType = {
   setLogLevel(logLevel: LogLevelType): Promise<boolean>;
 
   /**
-   * Add an `EventListener` to listen for `IntercomUnreadCountDidChange` events.
-   *
-   * @note This function is for Android only.
+   * Add an event listener for the supported event types.
    */
   addEventListener: (
     event: EventType,
@@ -294,6 +304,9 @@ const Intercom: IntercomType = {
   logout: () => IntercomModule.logout(),
   setUserHash: (hash) => IntercomModule.setUserHash(hash),
   updateUser: (userAttributes) => IntercomModule.updateUser(userAttributes),
+  isUserLoggedIn: () => IntercomModule.isUserLoggedIn(),
+  fetchLoggedInUserAttributes: () =>
+    IntercomModule.fetchLoggedInUserAttributes(),
   logEvent: (eventName, metaData = undefined) =>
     IntercomModule.logEvent(eventName, metaData),
 

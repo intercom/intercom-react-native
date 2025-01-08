@@ -1,6 +1,6 @@
 import {
+  type ConfigPlugin,
   AndroidConfig,
-  ConfigPlugin,
   createRunOncePlugin,
   withAndroidManifest,
   withAppDelegate,

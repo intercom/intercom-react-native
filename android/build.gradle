@@ -1,73 +1,73 @@
- def packageJsonFile = file('../package.json')
- def packageJson = new groovy.json.JsonSlurper().parseText(packageJsonFile.text)
- def packageVersion = '"' + packageJson.version + '"'
+def packageJsonFile = file('../package.json')
+def packageJson = new groovy.json.JsonSlurper().parseText(packageJsonFile.text)
+def packageVersion = '"' + packageJson.version + '"'
 
 
 buildscript {
-    if (project == rootProject) {
-        repositories {
-            google()
-            mavenCentral()
-        }
-
-        dependencies {
-            classpath 'com.android.tools.build:gradle:3.5.3'
-        }
+  ext {
+    buildToolsVersion = "34.0.0"
+    minSdkVersion = 21
+    compileSdkVersion = 34
+    targetSdkVersion = 34
+    ndkVersion = "25.1.8937393"
+    kotlinVersion = "1.8.0"
+  }
+  if (project == rootProject) {
+    repositories {
+      google()
+      mavenCentral()
     }
+
+    dependencies {
+      classpath("com.android.tools.build:gradle")
+      classpath("com.facebook.react:react-native-gradle-plugin")
+      classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+    }
+  }
 }
 
 apply plugin: 'com.android.library'
 
 def safeExtGet(prop, fallback) {
-    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+  rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
 }
 
 android {
-    // Compatibility for AGP v. <4.2/Gradle 8
-    def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0].toInteger()
-    if (agpVersion >= 7) {
-      namespace 'com.intercom.reactnative'
-    }
+  namespace 'com.intercom.reactnative'
+  compileSdk rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
 
-    compileSdkVersion safeExtGet('IntercomReactNative_compileSdkVersion', 34)
-    defaultConfig {
-        minSdkVersion safeExtGet('IntercomReactNative_minSdkVersion', 21)
-        targetSdkVersion safeExtGet('IntercomReactNative_targetSdkVersion', 34)
-        versionCode 1
-        versionName "1.0"
-        buildConfigField 'String', 'INTERCOM_VERSION_NAME', packageVersion
-    }
+  defaultConfig {
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
+    versionCode 1
+    versionName "1.0"
+    buildConfigField 'String', 'INTERCOM_VERSION_NAME', packageVersion
+  }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-        }
+  buildTypes {
+    release {
+      minifyEnabled false
     }
-    lintOptions {
-        disable 'GradleCompatible'
-    }
-
-    if (agpVersion < 8) {
-      compileOptions {
-          sourceCompatibility JavaVersion.VERSION_1_8
-          targetCompatibility JavaVersion.VERSION_1_8
-      }
-    }
+  }
+  lintOptions {
+    disable 'GradleCompatible'
+  }
 }
 
 repositories {
-    mavenCentral()
-    mavenLocal()
-    maven {
-        // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-        url("$rootDir/../node_modules/react-native/android")
-    }
-    google()
+  mavenCentral()
+  mavenLocal()
+  maven {
+    // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+    url("$rootDir/../node_modules/react-native/android")
+  }
+  google()
 }
 
 dependencies {
-    //noinspection GradleDynamicVersion
-    implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation "com.google.firebase:firebase-messaging:${safeExtGet('firebaseMessagingVersion', '20.2.+')}"
-    implementation 'io.intercom.android:intercom-sdk:15.8.+'
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-native:+"  // From node_modules
+  implementation "com.google.firebase:firebase-messaging:${safeExtGet('firebaseMessagingVersion', '20.2.+')}"
+  implementation 'io.intercom.android:intercom-sdk:15.11.+'
 }

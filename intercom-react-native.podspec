@@ -1,3 +1,4 @@
+
 require "json"
 
 package = JSON.parse(File.read(File.join(__dir__, "package.json")))
@@ -17,5 +18,5 @@ Pod::Spec.new do |s|
   s.resource_bundles = { 'IntercomFramework' => ['ios/assets/*'] }
 
   s.dependency "React-Core"
-  s.dependency "Intercom", '~> 17.0.4'
+  s.dependency "Intercom", '~> 18.2.0'
 end

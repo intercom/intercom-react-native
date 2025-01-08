@@ -73,6 +73,7 @@ export default function App() {
     openCarousel,
     openSurvey,
     openMessageComposer,
+    openMessenger,
   } = useIntercom();
 
   return (
@@ -123,7 +124,7 @@ export default function App() {
 
               <TouchableOpacity
                 style={styles.button}
-                onPress={openTicketsSpace}
+                onPress={openMessenger}
               >
                 <Text style={styles.buttonText}>MESSENGER</Text>
               </TouchableOpacity>

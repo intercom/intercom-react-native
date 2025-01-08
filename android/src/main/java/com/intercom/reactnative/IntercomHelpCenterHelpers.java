@@ -14,7 +14,6 @@ import io.intercom.android.sdk.helpcenter.api.HelpCenterArticleSearchResult;
 import io.intercom.android.sdk.helpcenter.collections.HelpCenterCollection;
 import io.intercom.android.sdk.helpcenter.sections.HelpCenterArticle;
 import io.intercom.android.sdk.helpcenter.sections.HelpCenterCollectionContent;
-import io.intercom.android.sdk.helpcenter.sections.HelpCenterSection;
 
 public class IntercomHelpCenterHelpers {
 
@@ -59,36 +58,11 @@ public class IntercomHelpCenterHelpers {
     WritableArray articles = parseArticlesToReadableArray(helpCenterCollectionContent.getHelpCenterArticles());
     helpCenterCollection.putArray("articles", articles);
 
-    WritableArray sections = parseHelpCenterSectionsToReadableArray(helpCenterCollectionContent.getHelpCenterSections());
-    helpCenterCollection.putArray("sections", sections);
+    WritableArray collections = parseHelpCenterCollectionsToReadableArray(helpCenterCollectionContent.getSubCollections());
+    helpCenterCollection.putArray("collections", collections);
 
 
     return helpCenterCollection;
-  }
-
-  public static WritableMap parseHelpCenterSectionToReadableMap(HelpCenterSection helpCenterSection) {
-    WritableMap section = Arguments.createMap();
-    section.putString("title", helpCenterSection.getTitle());
-
-
-    WritableArray articles = parseArticlesToReadableArray(helpCenterSection.getHelpCenterArticles());
-    section.putArray("articles", articles);
-
-
-    return section;
-  }
-
-  public static WritableArray parseHelpCenterSectionsToReadableArray(List<HelpCenterSection> helpCenterSectionList) {
-    WritableArray sections = Arguments.createArray();
-
-    HelpCenterSection[] sectionsArray = new HelpCenterSection[helpCenterSectionList.size()];
-    sectionsArray = helpCenterSectionList.toArray(sectionsArray);
-    ;
-
-    for (HelpCenterSection section : sectionsArray) {
-      sections.pushMap(parseHelpCenterSectionToReadableMap(section));
-    }
-    return sections;
   }
 
   public static WritableArray parseHelpCenterCollectionsToReadableArray(List<HelpCenterCollection> helpCenterCollections) {

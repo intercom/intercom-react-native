@@ -36,22 +36,9 @@
     [item setValue:[collectionContent title] forKey:@"title"];
     [item setValue:[collectionContent summary] forKey:@"summary"];
     [item setValue:[self parseArticlesToArray:[collectionContent articles]] forKey:@"articles"];
-    [item setValue:[self parseHelpCenterSectionsToDictionary:[collectionContent sections]] forKey:@"sections"];
+    [item setValue:[self parseCollectionsToArray:[collectionContent collections]] forKey:@"collections"];
 
     return item;
-}
-
-+ (NSMutableArray<NSMutableDictionary *> *)parseHelpCenterSectionsToDictionary:(NSArray<ICMHelpCenterSection *> *)sectionArray {
-
-    NSMutableArray *parsedSections = [NSMutableArray arrayWithCapacity:[sectionArray count]];
-    for (ICMHelpCenterSection *sectionObject in sectionArray) {
-        NSMutableDictionary *sectionItem = [NSMutableDictionary dictionary];
-        [sectionItem setValue:[sectionObject title] forKey:@"title"];
-        [sectionItem setValue:[self parseArticlesToArray:[sectionObject articles]] forKey:@"articles"];
-        [parsedSections addObject:sectionItem];
-    }
-
-    return parsedSections;
 }
 
 + (NSMutableArray<NSMutableDictionary *> *)parseHelpCenterArticleSearchResultToArray:(NSArray<ICMHelpCenterArticleSearchResult *>*)articleArray {

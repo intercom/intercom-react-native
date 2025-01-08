@@ -6,6 +6,8 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.ReadableType;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableMap;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +18,7 @@ import java.util.Map;
 import io.intercom.android.sdk.Company;
 import io.intercom.android.sdk.Intercom;
 import io.intercom.android.sdk.UserAttributes;
+import io.intercom.android.sdk.identity.Registration;
 
 public class IntercomHelpers {
 
@@ -240,5 +243,16 @@ public class IntercomHelpers {
       }
     }
     return value;
+  }
+
+  public static WritableMap deconstructRegistration(Registration registration) {
+    WritableMap registrationMap = Arguments.createMap();
+    if (registration.getEmail() != null) {
+      registrationMap.putString("email", registration.getEmail());
+    }
+    if (registration.getUserId() != null) {
+      registrationMap.putString("userId", registration.getUserId());
+    }
+    return registrationMap;
   }
 }

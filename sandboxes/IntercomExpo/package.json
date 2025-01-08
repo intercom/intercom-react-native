@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@intercom/intercom-react-native": "^7.0.1",
-    "expo": "~50.0.14",
+    "expo": "^52.0.23",
     "expo-build-properties": "~0.11.1",
     "expo-status-bar": "~1.11.1",
     "expo-system-ui": "~2.9.4",
