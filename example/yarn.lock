@@ -3035,9 +3035,9 @@ available-typed-arrays@^1.0.7:
   dependencies:
     possible-typed-array-names "^1.0.0"
 
-axios@^1.6.7:
+axios@^1.7.4:
   version "1.7.9"
-  resolved "https://registry.npmjs.org/axios/-/axios-1.7.9.tgz"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.7.9.tgz#d7d071380c132a24accda1b2cfc1535b79ec650a"
   integrity sha512-LhLcE7Hbiryz8oMDdDptSrWowmB4Bl6RCt6sIJKpRB4XtVf0iEgewX3au/pJqm+Py1kCASkb/FFKjxQaLtxJvw==
   dependencies:
     follow-redirects "^1.15.6"
@@ -3401,13 +3401,13 @@ chrome-launcher@^0.15.2:
     is-wsl "^2.2.0"
     lighthouse-logger "^1.0.0"
 
-chromedriver@^122.0.4:
-  version "122.0.6"
-  resolved "https://registry.npmjs.org/chromedriver/-/chromedriver-122.0.6.tgz"
-  integrity sha512-Q0r+QlUtiJWMQ5HdYaFa0CtBmLFq3n5JWfmq9mOC00UMBvWxku09gUkvBt457QnYfTM/XHqY/HTFOxHvATnTmA==
+chromedriver@^132.0.0:
+  version "132.0.0"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-132.0.0.tgz#0eef414ccf906313f7685edb772fbbfa374e100d"
+  integrity sha512-jECVJjty5ypYKptQ/QCf8Q0Iq0qq2eW5x1WnYwlGCgmBBcwDH+XrdjFKc4mA3lFO1p3dpOUgTbayKCiGpMPBjg==
   dependencies:
     "@testim/chrome-version" "^1.1.4"
-    axios "^1.6.7"
+    axios "^1.7.4"
     compare-versions "^6.1.0"
     extract-zip "^2.0.1"
     proxy-agent "^6.4.0"
@@ -5088,7 +5088,7 @@ http-proxy-agent@^7.0.0, http-proxy-agent@^7.0.1, http-proxy-agent@^7.0.2:
     agent-base "^7.1.0"
     debug "^4.3.4"
 
-https-proxy-agent@^7.0.2, https-proxy-agent@^7.0.3, https-proxy-agent@^7.0.4, https-proxy-agent@^7.0.5, https-proxy-agent@^7.0.6:
+https-proxy-agent@^7.0.2, https-proxy-agent@^7.0.4, https-proxy-agent@^7.0.5, https-proxy-agent@^7.0.6:
   version "7.0.6"
   resolved "https://registry.npmjs.org/https-proxy-agent/-/https-proxy-agent-7.0.6.tgz"
   integrity sha512-vK9P5/iUfdl95AI+JVyUuIcVtd4ofvtrOr3HNtM2yxC9bnMbEdp3x01OhQNnjb8IJYi38VlTE3mBXwcfvywuSw==
@@ -6991,21 +6991,7 @@ proxy-agent@6.3.1:
     proxy-from-env "^1.1.0"
     socks-proxy-agent "^8.0.2"
 
-proxy-agent@^6.4.0:
-  version "6.4.0"
-  resolved "https://registry.npmjs.org/proxy-agent/-/proxy-agent-6.4.0.tgz"
-  integrity sha512-u0piLU+nCOHMgGjRbimiXmA9kM/L9EHh3zL81xCdp7m+Y2pHIsnmbdDoEDoAz5geaonNR6q6+yOPQs6n4T6sBQ==
-  dependencies:
-    agent-base "^7.0.2"
-    debug "^4.3.4"
-    http-proxy-agent "^7.0.1"
-    https-proxy-agent "^7.0.3"
-    lru-cache "^7.14.1"
-    pac-proxy-agent "^7.0.1"
-    proxy-from-env "^1.1.0"
-    socks-proxy-agent "^8.0.2"
-
-proxy-agent@^6.5.0:
+proxy-agent@^6.4.0, proxy-agent@^6.5.0:
   version "6.5.0"
   resolved "https://registry.npmjs.org/proxy-agent/-/proxy-agent-6.5.0.tgz"
   integrity sha512-TmatMXdr2KlRiA2CyDu8GqR8EjahTG3aY3nXjdzFyoZbmB8hrBsTyMezhULIXKnC0jpfjlmiZ3+EaCzoInSu/A==
