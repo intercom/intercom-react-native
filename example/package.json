@@ -12,7 +12,7 @@
     "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-native-community/cli": "^13.6.6",
     "node-fetch": "^2.6.1",
-    "react-native": "^0.73.4",
+    "react-native": "0.74.0",
     "react-native-config": "^1.5.1"
   },
   "devDependencies": {
