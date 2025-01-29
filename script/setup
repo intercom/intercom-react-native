@@ -50,12 +50,12 @@ if ! [ -x "$(command -v rbenv)" ]; then
   echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
   echo 'eval "$(rbenv init -)"' >> ~/.zshrc
   eval "$(rbenv init -)"
-  rbenv install "2.5.7"
+  rbenv install "2.7.5"
 else
-  rbenv install "2.5.7"
+  rbenv install "2.7.5"
   echo "rbenv already installed 👍"
 fi
-rbenv local "2.5.7"
+rbenv local "2.7.5"
 
 log "👀 Looking for yarn 👀"
 if ! [ -x "$(command -v yarn)" ]; then
