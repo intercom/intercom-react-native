@@ -9,7 +9,6 @@ import com.facebook.react.ReactPackage
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.load
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
-import com.facebook.react.flipper.ReactNativeFlipper
 import com.facebook.soloader.SoLoader
 import com.intercom.reactnative.IntercomModule
 
@@ -43,7 +42,5 @@ class MainApplication : Application(), ReactApplication {
     }
 
     IntercomModule.initialize(this, "apiKey", "appId"); // Add your Intercom configurations here
-
-    ReactNativeFlipper.initializeFlipper(this, reactNativeHost.reactInstanceManager)
   }
 }
