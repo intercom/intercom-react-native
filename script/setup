@@ -10,12 +10,6 @@ function log() {
   echo "======================================="
 }
 
-
-
-EXPECTED_RUBY_VERSION=$(cat ${SOURCE_ROOT_DIR}/.ruby-version)
-ruby_version="2.4.4"
-rbenv_version="2.5.7"
-
 log "🏎️  Running React native setup script 🏎️"
 
 log "📱 Installing xcode tools 📱"
@@ -28,8 +22,8 @@ fi
 echo "Xcode CommandLineTools installed 👍"
 
 if ! [ -x "$(command -v xcode-select)" ]; then
-  echo "⚠️ You need Xcode to setuo this project. Please install and rerun this script ⚠️"
-  exit 1s
+  echo "⚠️ You need Xcode to setup this project. Please install and rerun this script ⚠️"
+  exit 1
 fi
 
 log "👀 Looking for Homebrew 👀"
@@ -43,19 +37,31 @@ else
 fi
 
 log "👀 Looking for rbenv 👀"
-
 if ! [ -x "$(command -v rbenv)" ]; then
   echo "🍺 Installing rbenv with brew 🍺"
-  brew install rbenv
+  brew install rbenv ruby-build
   echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
   echo 'eval "$(rbenv init -)"' >> ~/.zshrc
   eval "$(rbenv init -)"
-  rbenv install "2.7.5"
 else
-  rbenv install "2.7.5"
   echo "rbenv already installed 👍"
 fi
-rbenv local "2.7.5"
+
+rbenv install --skip-existing
+echo "Ruby setup complete 👍"
+
+log "👀 Looking for nvm 👀"
+if ! [ -x "$(command -v nvm)" ]; then
+  echo "🍺 Installing nvm with brew 🍺"
+  brew install nvm
+fi
+
+# Source nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+
+nvm install
+echo "Node.js setup complete 👍"
 
 log "👀 Looking for yarn 👀"
 if ! [ -x "$(command -v yarn)" ]; then
@@ -64,16 +70,6 @@ if ! [ -x "$(command -v yarn)" ]; then
 else
   echo "yarn already installed 👍"
 fi
-
-log "👀 Looking for ruby 👀"
-ruby-build --definitions | grep ^${EXPECTED_RUBY_VERSION} > /dev/null
-RUBYBUILD_DEFS_EXIT_CODE=$?
-if [ "$RUBYBUILD_DEFS_EXIT_CODE" -ne 0 ]; then
-    echo "🍺 Ruby Build: Cannot find Ruby version required, updating via brew 🍺"
-    brew update && brew upgrade ruby-build
-fi
-rbenv install --skip-existing
-echo "Ruby installed 👍"
 
 log "📟 installing dependencies 📟"
 yarn
