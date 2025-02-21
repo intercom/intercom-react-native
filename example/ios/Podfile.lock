@@ -4,9 +4,9 @@ PODS:
   - FBLazyVector (0.74.0)
   - fmt (9.1.0)
   - glog (0.3.5)
-  - Intercom (18.5.0)
-  - intercom-react-native (8.2.0):
-    - Intercom (~> 18.5.0)
+  - Intercom (18.6.1)
+  - intercom-react-native (8.3.0):
+    - Intercom (~> 18.6.1)
     - React-Core
   - RCT-Folly (2024.01.01.00):
     - boost
@@ -1313,8 +1313,8 @@ SPEC CHECKSUMS:
   FBLazyVector: 026c8f4ae67b06e088ae01baa2271ef8a26c0e8c
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
   glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
-  Intercom: d745ef2351c8c5d90c2c86756bdf32ca58059b23
-  intercom-react-native: 511f30d73fbdc07f8c731c446e55c597009348ed
+  Intercom: e0b4c525b646ec91a7044136057956937a5798c9
+  intercom-react-native: 452b614d67d2cb3aac5929d925f6fd3b188254e8
   RCT-Folly: 5f972de9f7d384c7d0e7380dd7da506228e568f5
   RCTDeprecation: 3ca8b6c36bfb302e1895b72cfe7db0de0c92cd47
   RCTRequired: 9fc183af555fd0c89a366c34c1ae70b7e03b1dc5
