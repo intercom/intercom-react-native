@@ -1,7 +1,7 @@
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 
-platform :ios, '15.0'
+platform :ios, '15.1'
 use_native_modules!
 
 target 'IntercomReactNativeExample' do
@@ -14,6 +14,7 @@ target 'IntercomReactNativeExample' do
   )
 
   pod 'intercom-react-native', :path => '../..'
+  pod 'boost', :podspec => '../node_modules/react-native/third-party-podspecs/boost.podspec'
 
   # Enables Flipper.
   #

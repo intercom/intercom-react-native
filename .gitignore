@@ -61,3 +61,8 @@ lib/
 
 .env
 google-services.json
+
+## Environment normalization:
+/.bundle/
+/vendor/bundle
+/lib/bundler/man/
