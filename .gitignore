@@ -61,3 +61,8 @@ lib/
 
 .env
 google-services.json
+
+## Bundler environment
+/.bundle/
+/vendor/bundle
+/lib/bundler/man/
