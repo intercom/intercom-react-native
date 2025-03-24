@@ -30,6 +30,7 @@ ___
     - [Push notification deep links support](#expo-push-notification-deep-links-support)
       - [Android](#android-deep-link)
       - [iOS](#ios-deep-link)
+- [Versioning in dependencies](#versioning-in-dependencies)
 - [Common methods](#methods)
   - [Types](#types)
 - [Usage](#usage)
@@ -602,8 +603,22 @@ Next, rebuild your app as described in the ["Adding custom native code"](https:/
   }
 }
 ```
+___
 
+### Versioning in dependencies
 
+We define the iOS and Android versions used in React Native with optimistic operators
+i.e. ``` ~> for iOS ``` and ``` + for Android ```, ensuring compatibility while allowing for non-breaking updates:
+
+iOS (~> in CocoaPods):
+We use a version constraint e.g.``` ~> 18.6.1 ``` which allows updates from ``` 18.6.1 to 18.6.x ``` (up to but not including 18.7.0).
+
+Android (+ in Gradle):
+We use a version constraint e.g. ``` 18.6.+ ``` which allows updates to any patch version within 18.6.x
+
+This means that by removing and reinstalling dependencies, you’ll automatically get the latest compatible patch version, which includes any fixes while avoiding breaking changes from a major version.
+
+___
 
 ## Methods
 
