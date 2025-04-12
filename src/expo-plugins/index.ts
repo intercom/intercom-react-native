@@ -6,6 +6,7 @@ import {
   withAppDelegate,
   withInfoPlist,
   withMainApplication,
+  IOSConfig,
 } from '@expo/config-plugins';
 
 import {
@@ -92,7 +93,12 @@ const withIntercomAndroid: ConfigPlugin<IntercomPluginProps> = (
 const appDelegate: ConfigPlugin<IntercomPluginProps> = (_config, props) =>
   withAppDelegate(_config, (config) => {
     let stringContents = config.modResults.contents;
-    stringContents = addObjcImports(stringContents, ['<IntercomModule.h>']);
+    const swiftAppDelegate =
+      IOSConfig.Paths.getAppDelegate(config.modRequest.projectRoot).language ===
+      'swift';
+    stringContents = swiftAppDelegate
+      ? addImports(stringContents, ['Intercom'], false)
+      : addObjcImports(stringContents, ['<IntercomModule.h>']);
 
     // Remove previous code
     stringContents = stringContents.replace(
