@@ -17,6 +17,8 @@ Pod::Spec.new do |s|
   s.source_files = "ios/**/*.{h,m,mm}"
   s.resource_bundles = { 'IntercomFramework' => ['ios/assets/*'] }
 
+  s.pod_target_xcconfig = { "DEFINES_MODULE" => "YES" }
+
   s.dependency "React-Core"
   s.dependency "Intercom", '~> 18.6.1'
 end
