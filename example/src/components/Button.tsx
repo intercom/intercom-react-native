@@ -11,7 +11,7 @@ function Button(props) {
     intercom_title,
     intercom_disabled,
     intercom_onPress,
-    intercom_accesibilityLabel,
+    intercom_accessibilityLabel,
   } = props;
   const onPress = useCallback(() => {
     intercom_onPress();
@@ -22,7 +22,8 @@ function Button(props) {
       style={buttonStyles(props).touchableOpacity}
       onPress={onPress}
       disabled={intercom_disabled}
-      accessibilityLabel={intercom_accesibilityLabel}
+      accessibilityLabel={intercom_accessibilityLabel}
+      testID={intercom_accessibilityLabel}
     >
       <RNText style={buttonStyles(props).text} allowFontScaling={false}>
         {intercom_title}

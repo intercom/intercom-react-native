@@ -192,7 +192,7 @@ export default function App() {
         </Text>
         <Text style={styles.text}>Unread messages count: {count}</Text>
       </View>
-      <ScrollView>
+      <ScrollView testID="main-scroll">
         <Button
           intercom_accessibilityLabel="login-unidentified"
           intercom_disabled={loggedUser}

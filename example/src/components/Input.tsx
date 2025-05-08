@@ -5,12 +5,19 @@ import { StyleSheet, View, TextInput, Text } from 'react-native';
 const Input = ({
   title,
   style,
+  accessibilityLabel,
+  testID,
   ...props
 }: TextInputProps & { title: string }) => {
   return (
     <View style={styles.container}>
       {title && <Text style={styles.title}>{title}</Text>}
-      <TextInput {...props} style={[styles.input, style]} />
+      <TextInput
+        {...props}
+        style={[styles.input, style]}
+        accessibilityLabel={accessibilityLabel}
+        testID={testID || accessibilityLabel}
+      />
     </View>
   );
 };
