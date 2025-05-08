@@ -100,7 +100,7 @@ const appDelegate: ConfigPlugin<IntercomPluginProps> = (_config, props) =>
     stringContents = isSwift
       ? mergeContents({
           src: stringContents,
-          newSrc: 'import intercom_react_native.IntercomModule',
+          newSrc: 'import IntercomModule',
           comment: '//',
           tag: 'Intercom header',
           anchor: /import Expo/,
