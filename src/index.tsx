@@ -71,7 +71,7 @@ export type Company = {
 };
 
 export type HelpCenterArticle = {
-  it: string;
+  id: string;
   title: string;
 };
 export type HelpCenterSection = {
