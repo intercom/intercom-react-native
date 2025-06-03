@@ -1,84 +1,182 @@
 #!/bin/sh
 
 #
+# Enhanced Setup Script with Progress Indicators
+#
+
+# Colors for better output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+# Progress tracking
+TOTAL_STEPS=7
+CURRENT_STEP=0
+
+#
 # Functions
 #
-function log() {
-  echo "\n"
-  echo "======================================="
-  echo "$1"
-  echo "======================================="
+function log_header() {
+  echo ""
+  echo "${BLUE}════════════════════════════════════════════════════════════════${NC}"
+  echo "${PURPLE}$1${NC}"
+  echo "${BLUE}════════════════════════════════════════════════════════════════${NC}"
 }
 
-log "🏎️  Running React native setup script 🏎️"
+function progress_step() {
+  CURRENT_STEP=$((CURRENT_STEP + 1))
+  echo ""
+  echo "${CYAN}[${CURRENT_STEP}/${TOTAL_STEPS}] $1${NC}"
+  echo "${YELLOW}────────────────────────────────────────────────────────────────${NC}"
+}
 
-log "📱 Installing xcode tools 📱"
+function success() {
+  echo "${GREEN}✅ $1${NC}"
+}
+
+function info() {
+  echo "${BLUE}ℹ️  $1${NC}"
+}
+
+function warning() {
+  echo "${YELLOW}⚠️  $1${NC}"
+}
+
+function error() {
+  echo "${RED}❌ $1${NC}"
+}
+
+function show_progress_bar() {
+  local progress=$((CURRENT_STEP * 100 / TOTAL_STEPS))
+  local filled=$((progress / 5))
+  local empty=$((20 - filled))
+  
+  printf "${CYAN}Progress: ["
+  printf "%*s" $filled | tr ' ' '█'
+  printf "%*s" $empty | tr ' ' '░'
+  printf "] %d%%${NC}\n" $progress
+}
+
+# Start script
+clear
+log_header "🚀 Intercom React Native Setup Script 🚀"
+echo "${GREEN}This script will set up your development environment for the Intercom React Native SDK${NC}"
+echo ""
+show_progress_bar
+
+# Step 1: Xcode tools
+progress_step "Checking and installing Xcode CommandLineTools"
 
 if [ ! -f /Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib ]; then
-  echo "⚠️ Xcode CommandLineTools not found installing. Please install and rerun this script ⚠️"
+  warning "Xcode CommandLineTools not found. Installing..."
+  info "Please follow the installation prompts and rerun this script after installation completes"
   xcode-select --install
   exit 1
 fi
-echo "Xcode CommandLineTools installed 👍"
 
 if ! [ -x "$(command -v xcode-select)" ]; then
-  echo "⚠️ You need Xcode to setup this project. Please install and rerun this script ⚠️"
+  error "Xcode is required to setup this project. Please install Xcode and rerun this script"
   exit 1
 fi
 
-log "👀 Looking for Homebrew 👀"
+success "Xcode CommandLineTools are installed and ready"
+show_progress_bar
+
+# Step 2: Homebrew
+progress_step "Setting up Homebrew package manager"
+
 if ! [ -x "$(command -v brew)" ]; then
-  echo "🍺 Installing Homebrew 🍺"
+  info "Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   echo 'export PATH=/opt/homebrew/bin:$PATH' >> ~/.bash_profile
   echo 'export PATH=/opt/homebrew/bin:$PATH' >> ~/.zshrc
+  success "Homebrew installed successfully"
 else
-  echo "Homebrew already installed 👍"
+  success "Homebrew is already installed"
 fi
+show_progress_bar
 
-log "👀 Looking for rbenv 👀"
+# Step 3: Ruby environment
+progress_step "Setting up Ruby environment with rbenv"
+
 if ! [ -x "$(command -v rbenv)" ]; then
-  echo "🍺 Installing rbenv with brew 🍺"
+  info "Installing rbenv and ruby-build..."
   brew install rbenv ruby-build
   echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
   echo 'eval "$(rbenv init -)"' >> ~/.zshrc
   eval "$(rbenv init -)"
+  success "rbenv installed successfully"
 else
-  echo "rbenv already installed 👍"
+  success "rbenv is already installed"
 fi
 
+info "Installing Ruby version specified in .ruby-version..."
 rbenv install --skip-existing
-echo "Ruby setup complete 👍"
+success "Ruby environment setup complete"
+show_progress_bar
 
-log "👀 Looking for nvm 👀"
+# Step 4: Node.js environment
+progress_step "Setting up Node.js environment with nvm"
+
 if ! [ -x "$(command -v nvm)" ]; then
-  echo "🍺 Installing nvm with brew 🍺"
+  info "Installing nvm..."
   brew install nvm
+  success "nvm installed successfully"
+else
+  success "nvm is already installed"
 fi
 
 # Source nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
 
+info "Installing Node.js version specified in .nvmrc..."
 nvm install
-echo "Node.js setup complete 👍"
+success "Node.js environment setup complete"
+show_progress_bar
 
-log "👀 Looking for yarn 👀"
+# Step 5: Yarn package manager
+progress_step "Setting up Yarn package manager"
+
 if ! [ -x "$(command -v yarn)" ]; then
-  echo "🍺 Installing yarn 🍺"
+  info "Installing yarn..."
   brew install yarn
+  success "Yarn installed successfully"
 else
-  echo "yarn already installed 👍"
+  success "Yarn is already installed"
 fi
+show_progress_bar
 
-log "📟 installing dependencies 📟"
+# Step 6: Project dependencies
+progress_step "Installing project dependencies"
+
+info "Installing main project dependencies..."
 yarn
+success "Main project dependencies installed"
+show_progress_bar
 
-log "📟 installing dependencies for our example app 📟"
+# Step 7: Example app setup
+progress_step "Setting up example app dependencies"
+
+info "Installing iOS CocoaPods dependencies for example app..."
 cd example/ios
 pod install
 cd -
+success "Example app dependencies installed"
+show_progress_bar
 
-echo "You're all set up 👍"
-echo "📱 Run example app on iOS using -> yarn example ios"
-echo "📱 Run example app on android using -> yarn example android"
+# Completion
+echo ""
+log_header "🎉 Setup Complete! 🎉"
+echo ""
+success "Your development environment is now ready!"
+echo ""
+echo "${BLUE}Next steps:${NC}"
+echo "${GREEN}📱 Run example app on iOS:     ${YELLOW}yarn example ios${NC}"
+echo "${GREEN}📱 Run example app on Android: ${YELLOW}yarn example android${NC}"
+echo ""
+echo "${CYAN}Happy coding! 🚀${NC}"

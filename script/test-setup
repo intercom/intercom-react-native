@@ -1,0 +1,176 @@
+#!/bin/bash
+
+#
+# Test script for the setup script
+# This script validates that the setup script has proper structure and functions
+#
+
+# Colors for test output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SETUP_SCRIPT="$SCRIPT_DIR/setup"
+
+# Test counters
+TESTS_RUN=0
+TESTS_PASSED=0
+TESTS_FAILED=0
+
+function test_header() {
+  echo ""
+  echo "${BLUE}════════════════════════════════════════════════════════════════${NC}"
+  echo "${BLUE}Testing Setup Script${NC}"
+  echo "${BLUE}════════════════════════════════════════════════════════════════${NC}"
+}
+
+function test_case() {
+  TESTS_RUN=$((TESTS_RUN + 1))
+  echo ""
+  echo "${YELLOW}[TEST $TESTS_RUN] $1${NC}"
+}
+
+function pass() {
+  TESTS_PASSED=$((TESTS_PASSED + 1))
+  echo "${GREEN}✅ PASS: $1${NC}"
+}
+
+function fail() {
+  TESTS_FAILED=$((TESTS_FAILED + 1))
+  echo "${RED}❌ FAIL: $1${NC}"
+}
+
+function test_summary() {
+  echo ""
+  echo "${BLUE}════════════════════════════════════════════════════════════════${NC}"
+  echo "${BLUE}Test Summary${NC}"
+  echo "${BLUE}════════════════════════════════════════════════════════════════${NC}"
+  echo "Tests run: $TESTS_RUN"
+  echo "${GREEN}Passed: $TESTS_PASSED${NC}"
+  if [ $TESTS_FAILED -gt 0 ]; then
+    echo "${RED}Failed: $TESTS_FAILED${NC}"
+    exit 1
+  else
+    echo "${GREEN}All tests passed!${NC}"
+    exit 0
+  fi
+}
+
+# Start testing
+test_header
+
+# Test 1: Check if setup script exists
+test_case "Setup script exists and is executable"
+if [ -f "$SETUP_SCRIPT" ] && [ -x "$SETUP_SCRIPT" ]; then
+  pass "Setup script exists and is executable"
+else
+  fail "Setup script does not exist or is not executable"
+fi
+
+# Test 2: Check script has proper shebang
+test_case "Script has proper shebang"
+if head -1 "$SETUP_SCRIPT" | grep -q "#!/bin/sh"; then
+  pass "Script has correct shebang"
+else
+  fail "Script does not have correct shebang"
+fi
+
+# Test 3: Check for required functions
+test_case "Required functions are defined"
+required_functions=("log_header" "progress_step" "success" "info" "warning" "error" "show_progress_bar")
+all_functions_found=true
+
+for func in "${required_functions[@]}"; do
+  if grep -q "function $func()" "$SETUP_SCRIPT"; then
+    pass "Function $func is defined"
+  else
+    fail "Function $func is not defined"
+    all_functions_found=false
+  fi
+done
+
+if [ "$all_functions_found" = true ]; then
+  pass "All required functions are defined"
+fi
+
+# Test 4: Check for color definitions
+test_case "Color variables are defined"
+color_vars=("RED" "GREEN" "YELLOW" "BLUE" "PURPLE" "CYAN" "NC")
+all_colors_found=true
+
+for color in "${color_vars[@]}"; do
+  if grep -q "$color=" "$SETUP_SCRIPT"; then
+    pass "Color variable $color is defined"
+  else
+    fail "Color variable $color is not defined"
+    all_colors_found=false
+  fi
+done
+
+if [ "$all_colors_found" = true ]; then
+  pass "All color variables are defined"
+fi
+
+# Test 5: Check for progress tracking variables
+test_case "Progress tracking variables are defined"
+if grep -q "TOTAL_STEPS=" "$SETUP_SCRIPT" && grep -q "CURRENT_STEP=" "$SETUP_SCRIPT"; then
+  pass "Progress tracking variables are defined"
+else
+  fail "Progress tracking variables are not defined"
+fi
+
+# Test 6: Check for key installation steps
+test_case "Key installation steps are present"
+installation_steps=("xcode-select" "brew" "rbenv" "nvm" "yarn" "pod install")
+all_steps_found=true
+
+for step in "${installation_steps[@]}"; do
+  if grep -q "$step" "$SETUP_SCRIPT"; then
+    pass "Installation step for $step is present"
+  else
+    fail "Installation step for $step is missing"
+    all_steps_found=false
+  fi
+done
+
+if [ "$all_steps_found" = true ]; then
+  pass "All key installation steps are present"
+fi
+
+# Test 7: Check for proper error handling
+test_case "Error handling is implemented"
+if grep -q "exit 1" "$SETUP_SCRIPT"; then
+  pass "Script has error handling with exit codes"
+else
+  fail "Script lacks proper error handling"
+fi
+
+# Test 8: Validate script syntax
+test_case "Script syntax is valid"
+if bash -n "$SETUP_SCRIPT" 2>/dev/null; then
+  pass "Script syntax is valid"
+else
+  fail "Script has syntax errors"
+fi
+
+# Test 9: Check for progress indicators
+test_case "Progress indicators are implemented"
+if grep -q "show_progress_bar" "$SETUP_SCRIPT" && grep -q "progress_step" "$SETUP_SCRIPT"; then
+  pass "Progress indicators are implemented"
+else
+  fail "Progress indicators are missing"
+fi
+
+# Test 10: Check for completion message
+test_case "Completion message is present"
+if grep -q "Setup Complete" "$SETUP_SCRIPT" && grep -q "Next steps" "$SETUP_SCRIPT"; then
+  pass "Completion message with next steps is present"
+else
+  fail "Completion message is missing or incomplete"
+fi
+
+# Show test summary
+test_summary
