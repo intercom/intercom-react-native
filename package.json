@@ -23,7 +23,7 @@
     "!**/__mocks__"
   ],
   "scripts": {
-    "test": "echo test",
+    "test": "jest",
     "typescript": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "prepare": "bob build",
