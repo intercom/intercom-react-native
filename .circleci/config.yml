@@ -50,6 +50,15 @@ jobs:
       - checkout
       - attach_project
 
+      # Use Ruby version from .ruby-version file
+      - run:
+          name: Set Ruby Version
+          command: |
+            RUBY_VERSION=$(cat .ruby-version)
+            rvm install $RUBY_VERSION
+            rvm use $RUBY_VERSION
+            gem install bundler
+
       - run:
           name: Install dependencies
           command: |
