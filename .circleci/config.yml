@@ -50,15 +50,6 @@ jobs:
       - checkout
       - attach_project
 
-      # Use Ruby version from .ruby-version file
-      - run:
-          name: Set Ruby Version
-          command: |
-            RUBY_VERSION=$(cat .ruby-version)
-            rvm install $RUBY_VERSION
-            rvm use $RUBY_VERSION
-            gem install bundler
-
       - run:
           name: Install dependencies
           command: |
@@ -171,6 +162,18 @@ jobs:
       - attach_workspace:
           at: ~/project
 
+      - run:
+          name: Install Ruby version
+          command: |
+            brew install rbenv ruby-build
+            RUBY_VERSION=$(cat .ruby-version)
+
+            rbenv install -s $RUBY_VERSION
+            rbenv global $RUBY_VERSION
+            rbenv rehash
+
+            gem install bundler
+
       - <<: *setup_env_file
 
       - run:
@@ -184,7 +187,10 @@ jobs:
       - run:
           working_directory: example/ios
           name: Install Pods
-          command: pod install
+          command: |
+            # Ensure we're using the correct Ruby version
+            eval "$(rbenv init -)"
+            pod install
       - save_cache:
           key: pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
           paths:
