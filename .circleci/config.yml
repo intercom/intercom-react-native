@@ -127,6 +127,11 @@ jobs:
 
       - run:
           working_directory: example/e2e
+          name: Install Maestro
+          command: npm run maestro:install
+
+      - run:
+          working_directory: example/e2e
           name: Build android
           command: npm run build:android
 
@@ -145,6 +150,10 @@ jobs:
           name: Run UI Tests
           command: npm run test:android
 
+      - store_artifacts:
+          path: ~/.maestro/tests
+          destination: maestro-tests
+
   # Build the Test App used for UI Testing and save is to the workspace. This allows it to be used by other jobs.
   ios-e2e-test:
     <<: *macos_config
@@ -154,6 +163,11 @@ jobs:
           at: ~/project
 
       - <<: *setup_env_file
+
+      - run:
+          working_directory: example/e2e
+          name: Install Maestro
+          command: npm run maestro:install
 
       - restore_cache:
           keys:
@@ -177,6 +191,9 @@ jobs:
           name: Run UI Tests
           command: npm run test:ios
 
+      - store_artifacts:
+          path: ~/.maestro/tests
+          destination: maestro-tests
 
   release-to-npm:
     executor: default
@@ -224,22 +241,23 @@ workflows:
           <<: *run_always
           requires:
             - install-dependencies
-      # - android-e2e-test:
-      #     <<: *run_always
-      #     requires:
-      #       - install-dependencies
-      #       - lint
-      #       - typescript
-      #       - unit-tests
-      #       - build-package
-      # - ios-e2e-test:
-      #     <<: *run_always
-      #     requires:
-      #       - install-dependencies
-      #       - lint
-      #       - typescript
-      #       - unit-tests
-      #       - build-package
+      - android-e2e-test:
+           <<: *run_always
+           requires:
+             - install-dependencies
+             - lint
+             - typescript
+             - unit-tests
+             - build-package
+      - ios-e2e-te st:
+           <<: *run_always
+           requires:
+             - install-dependencies
+             - lint
+             - typescript
+             - unit-tests
+             - build-package
+
       - release-to-npm:
           <<: *run_on_release
           context:
@@ -250,5 +268,5 @@ workflows:
             - typescript
             - unit-tests
             - build-package
-            # - ios-e2e-test
-            # - android-e2e-test
+            - ios-e2e-test
+            - android-e2e-test
