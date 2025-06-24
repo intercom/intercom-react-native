@@ -249,7 +249,7 @@ workflows:
              - typescript
              - unit-tests
              - build-package
-      - ios-e2e-te st:
+      - ios-e2e-test:
            <<: *run_always
            requires:
              - install-dependencies
