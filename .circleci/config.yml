@@ -162,17 +162,21 @@ jobs:
       - attach_workspace:
           at: ~/project
 
+      # Install Ruby and CocoaPods
       - run:
-          name: Install Ruby version
+          name: Install Ruby
           command: |
             brew install rbenv ruby-build
-            RUBY_VERSION=$(cat .ruby-version)
+            echo 'eval "$(rbenv init -)"' >> $BASH_ENV
+            source $BASH_ENV
 
+            RUBY_VERSION=$(cat .ruby-version)
             rbenv install -s $RUBY_VERSION
             rbenv global $RUBY_VERSION
             rbenv rehash
 
             gem install bundler
+            gem install cocoapods
 
       - <<: *setup_env_file
 
@@ -188,8 +192,12 @@ jobs:
           working_directory: example/ios
           name: Install Pods
           command: |
-            # Ensure we're using the correct Ruby version
+            # Ensure we're using the correct Ruby environment
             eval "$(rbenv init -)"
+            # Verify pod command is available
+            which pod
+            pod --version
+            # Install pods
             pod install
       - save_cache:
           key: pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
