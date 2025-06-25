@@ -116,7 +116,6 @@ jobs:
     executor:
       name: android/android-machine
       tag: 2023.07.1
-    resource_class: medium
     working_directory: ~/project
     steps:
       - checkout:
