@@ -173,8 +173,17 @@ jobs:
           name: Install Maestro
           command: npm run maestro:install
       - run:
-            name: Set Ruby Version
-            command: rbenv global 3.3.5 && rbenv rehash
+          name: Set Ruby Version
+          command: |
+            # Check available Ruby versions
+            rbenv versions
+            # Try to install Ruby 3.3.5 if not available
+            rbenv install 3.3.5 || true
+            # Set global Ruby version
+            rbenv global 3.3.5
+            rbenv rehash
+            # Verify Ruby version
+            ruby --version
 
       - restore_cache:
           keys:
