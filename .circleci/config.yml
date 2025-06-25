@@ -1,10 +1,5 @@
 version: 2.1
 
-setup_ruby: &setup_ruby
-  run:
-    name: Setup Ruby
-    command: sed -i '' 's/.*chruby ruby.*/chruby ruby-3.3.4/' ~/.bash_profile
-
 # Default VM config to be used for macOS builds
 macos_config: &macos_config
   macos:
@@ -52,7 +47,6 @@ jobs:
   install-dependencies:
     <<: *macos_config
     steps:
-      - <<: *setup_ruby
       - checkout
       - attach_project
 
@@ -123,7 +117,6 @@ jobs:
       name: android/android-machine
     working_directory: ~/project
     steps:
-      - <<: *setup_ruby
       - checkout:
           path: ~/project
 
@@ -180,23 +173,9 @@ jobs:
           keys:
             - pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
       - run:
-          name: Set Ruby Version
-          command: sed -i '' 's/.*chruby ruby.*/chruby ruby-3.3.4/' ~/.bash_profile
-      - run:
-          name: Install Bundler
-          command: gem install bundler
-      - run:
-          name: Bundler
-          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4
-      - run:
-          name: CocoaPods
-          command: |
-            cd Example
-            if bundle exec pod check; then
-              echo "Skipping pod install"
-            else
-              bundle exec pod install
-            fi
+          working_directory: example/ios
+          name: Install Pods
+          command: pod install
 
       - save_cache:
           key: pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
