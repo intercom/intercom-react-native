@@ -165,7 +165,6 @@ jobs:
   ios-e2e-test:
     <<: *macos_config
     steps:
-      - <<: *setup_ruby
       - checkout
       - attach_workspace:
           at: ~/project
@@ -181,9 +180,23 @@ jobs:
           keys:
             - pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
       - run:
-          working_directory: example/ios
-          name: Install Pods
-          command: pod install
+          name: Set Ruby Version
+          command: sed -i '' 's/.*chruby ruby.*/chruby ruby-3.3.4/' ~/.bash_profile
+      - run:
+          name: Install Bundler
+          command: gem install bundler
+      - run:
+          name: Bundler
+          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4
+      - run:
+          name: CocoaPods
+          command: |
+            cd Example
+            if bundle exec pod check; then
+              echo "Skipping pod install"
+            else
+              bundle exec pod install
+            fi
 
       - save_cache:
           key: pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
