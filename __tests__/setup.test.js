@@ -51,7 +51,7 @@ describe('Setup Script', () => {
     const content = fs.readFileSync(setupScriptPath, 'utf8');
 
     // Check for progress tracking
-    expect(content).toContain('TOTAL_STEPS=8');
+    expect(content).toContain('TOTAL_STEPS=9');
     expect(content).toContain('CURRENT_STEP=0');
     expect(content).toContain('START_TIME=');
   });
@@ -67,7 +67,8 @@ describe('Setup Script', () => {
     expect(content).toContain('Step 5: Yarn Package Manager');
     expect(content).toContain('Step 6: Project Dependencies');
     expect(content).toContain('Step 7: iOS Dependencies');
-    expect(content).toContain('Step 8: Final Setup');
+    expect(content).toContain('Step 8: Install Maestro');
+    expect(content).toContain('Step 9: Final Setup');
   });
 
   test('setup script should have enhanced user feedback', () => {

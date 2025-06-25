@@ -1,0 +1,10 @@
+git appId: com.example.intercomreactnative
+tags:
+  - android
+  - messenger
+---
+- launchApp
+- tapOn: "Login as an Unidentified User"
+- tapOn: "Present Intercom"
+- tapOn: "Messenger Apps"
+
