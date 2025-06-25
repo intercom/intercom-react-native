@@ -3,12 +3,7 @@ version: 2.1
 setup_ruby: &setup_ruby
   run:
     name: Setup Ruby
-    command: |
-      echo "ruby-3.3.4" > ~/.ruby-version
-      source /opt/circleci/.circleci_bash_profile
-      ruby --version
-      gem install bundler
-      gem install cocoapods
+    command: sed -i '' 's/.*chruby ruby.*/chruby ruby-3.3.4/' ~/.bash_profile
 
 # Default VM config to be used for macOS builds
 macos_config: &macos_config
