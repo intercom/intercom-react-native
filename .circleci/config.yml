@@ -183,14 +183,8 @@ jobs:
       - run:
           working_directory: example/ios
           name: Install Pods
-          command: |
-            # Ensure we're using the correct Ruby environment
-            eval "$(rbenv init -)"
-            # Verify pod command is available
-            which pod
-            pod --version
-            # Install pods
-            pod install
+          command: pod install
+
       - save_cache:
           key: pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
           paths:
