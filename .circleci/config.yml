@@ -122,6 +122,8 @@ jobs:
     steps:
       - checkout:
           path: ~/project
+      - node/install:
+          node-version: '18.17.0'
 
       - attach_workspace:
           at: ~/project
