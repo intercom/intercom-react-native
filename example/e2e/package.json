@@ -8,7 +8,6 @@
     "build:ios": "xcodebuild build -workspace ../ios/IntercomReactNativeExample.xcworkspace -scheme IntercomReactNativeExampleUI -configuration Release -sdk iphonesimulator -derivedDataPath ./build",
     "test:android": "npx wdio ./wdio.android.conf.ts",
     "test:ios": "npx wdio ./wdio.ios.conf.ts",
-    "maestro:install": "curl -Ls \"https://get.maestro.mobile.dev\" | bash"
   },
   "keywords": [],
   "author": "",

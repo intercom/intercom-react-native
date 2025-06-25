@@ -13,7 +13,7 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 # Progress tracking
-TOTAL_STEPS=8
+TOTAL_STEPS=9
 CURRENT_STEP=0
 START_TIME=$(date +%s)
 
@@ -31,7 +31,7 @@ function step_start() {
   CURRENT_STEP=$((CURRENT_STEP + 1))
   local step_name="$1"
   local icon="$2"
-  
+
   echo "${CYAN}┌─ Step ${CURRENT_STEP}/${TOTAL_STEPS} ────────────────────────────────────────────────┐${NC}"
   echo "${CYAN}│${NC} ${icon} ${step_name}"
   echo "${CYAN}└─────────────────────────────────────────────────────────────┘${NC}"
@@ -62,7 +62,7 @@ function show_progress() {
   local percentage=$((CURRENT_STEP * 100 / TOTAL_STEPS))
   local filled=$((CURRENT_STEP * 50 / TOTAL_STEPS))
   local empty=$((50 - filled))
-  
+
   printf "${CYAN}Progress: [${NC}"
   printf "%${filled}s" | tr ' ' '█'
   printf "%${empty}s" | tr ' ' '░'
@@ -74,7 +74,7 @@ function final_summary() {
   local duration=$((end_time - START_TIME))
   local minutes=$((duration / 60))
   local seconds=$((duration % 60))
-  
+
   echo "\n${GREEN}┌─────────────────────────────────────────────────────────────┐${NC}"
   echo "${GREEN}│  🎉 Setup Complete! 🎉                                     │${NC}"
   echo "${GREEN}└─────────────────────────────────────────────────────────────┘${NC}"
@@ -181,7 +181,20 @@ cd -
 step_success "iOS dependencies installed"
 show_progress
 
-# Step 8: Final Setup
+# Step 8: Install Maestro
+step_start "Installing Maestro" "🧪"
+if ! [ -x "$(command -v maestro)" ]; then
+  curl -Ls "https://get.maestro.mobile.dev" | bash
+  export PATH="$PATH:$HOME/.maestro/bin"
+  step_success "Maestro installed successfully"
+else
+  step_info "Checking Maestro version..."
+  maestro -v
+  step_success "Maestro is already installed"
+fi
+show_progress
+
+# Step 9: Final Setup
 step_start "Finalizing setup" "🏁"
 step_success "Setup completed successfully"
 show_progress

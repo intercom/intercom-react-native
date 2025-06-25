@@ -7,5 +7,5 @@ tags:
 - tapOn: "Login as an Unidentified User"
 - tapOn: "Present Help Center"
 - assertVisible: "Help"
-- assertVisible: "Intercom Overview"
-- tapOn: "Intercom Overview"
+- assertVisible: "Untitled Collection"
+- tapOn: "Untitled Collection"
