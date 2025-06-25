@@ -20,7 +20,7 @@ executors:
     working_directory: ~/project
 
 orbs:
-  android: circleci/android@1.0
+  android: circleci/android@2.5.0
 
 # Always run job
 run_always: &run_always
@@ -115,8 +115,6 @@ jobs:
       JAVA_OPTS: '-Xms512m -Xmx1024m'
     executor:
       name: android/android-machine
-      resource_class: medium
-      tag: default
     working_directory: ~/project
     steps:
       - checkout:
