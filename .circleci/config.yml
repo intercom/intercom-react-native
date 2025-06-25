@@ -115,7 +115,8 @@ jobs:
       JAVA_OPTS: '-Xms512m -Xmx1024m'
     executor:
       name: android/android-machine
-    resource_class: large
+      resource_class: medium
+      tag: default
     working_directory: ~/project
     steps:
       - checkout:
