@@ -1,5 +1,15 @@
 version: 2.1
 
+setup_ruby: &setup_ruby
+  run:
+    name: Setup Ruby
+    command: |
+      echo "ruby-3.3.4" > ~/.ruby-version
+      source /opt/circleci/.circleci_bash_profile
+      ruby --version
+      gem install bundler
+      gem install cocoapods
+
 # Default VM config to be used for macOS builds
 macos_config: &macos_config
   macos:
@@ -20,7 +30,7 @@ executors:
     working_directory: ~/project
 
 orbs:
-  android: circleci/android@2.5.0
+  android: circleci/android@1.0
 
 # Always run job
 run_always: &run_always
@@ -47,6 +57,7 @@ jobs:
   install-dependencies:
     <<: *macos_config
     steps:
+      - <<: *setup_ruby
       - checkout
       - attach_project
 
@@ -115,9 +126,9 @@ jobs:
       JAVA_OPTS: '-Xms512m -Xmx1024m'
     executor:
       name: android/android-machine
-      tag: 2023.07.1
     working_directory: ~/project
     steps:
+      - <<: *setup_ruby
       - checkout:
           path: ~/project
 
@@ -162,20 +173,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/project
-      - run:
-          name: Install Ruby
-          command: |
-            brew install rbenv ruby-build
-            echo 'eval "$(rbenv init -)"' >> $BASH_ENV
-            source $BASH_ENV
-
-            RUBY_VERSION=$(cat .ruby-version)
-            rbenv install -s $RUBY_VERSION
-            rbenv global $RUBY_VERSION
-            rbenv rehash
-
-            gem install bundler
-            gem install cocoapods
 
       - <<: *setup_env_file
 
