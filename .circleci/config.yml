@@ -21,7 +21,6 @@ executors:
 
 orbs:
   android: circleci/android@2.4.0
-  node: circleci/node@5.1.0
 
 # Always run job
 run_always: &run_always
@@ -117,13 +116,12 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: large
-      tag: default
+      tag: 2021.10.1
     working_directory: ~/project
     steps:
       - checkout:
           path: ~/project
-      - node/install:
-          node-version: '18.17.0'
+
       - attach_workspace:
           at: ~/project
 
@@ -148,6 +146,19 @@ jobs:
           avd-name: Android_29
           no-window: true
           post-emulator-launch-assemble-command: echo Emulator Started
+
+      - run:
+          name: Wait for emulator to boot completely
+          command: |
+            # Wait for emulator to fully boot
+            adb wait-for-device
+            # Wait until the device is fully booted
+            BOOT_COMPLETED=$(adb shell getprop sys.boot_completed | tr -d '\r')
+            while [ "$BOOT_COMPLETED" != "1" ]; do
+              sleep 5
+              BOOT_COMPLETED=$(adb shell getprop sys.boot_completed | tr -d '\r')
+              echo "Waiting for emulator to boot: $BOOT_COMPLETED"
+            done
 
       - run:
           working_directory: example/e2e
@@ -175,12 +186,10 @@ jobs:
       - run:
           name: Set Ruby Version
           command: |
-            # Check available Ruby versions
-            rbenv versions
-            # Try to install Ruby 3.3.5 if not available
-            rbenv install 3.3.5 || true
+            # Try to install Ruby 3.3.4 if not available
+            rbenv install 3.3.4 || true
             # Set global Ruby version
-            rbenv global 3.3.5
+            rbenv global 3.3.4
             rbenv rehash
             # Verify Ruby version
             ruby --version
