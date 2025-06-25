@@ -21,6 +21,7 @@ executors:
 
 orbs:
   android: circleci/android@2.4.0
+  node: circleci/node@5.1.0
 
 # Always run job
 run_always: &run_always
@@ -116,12 +117,13 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: large
-      tag: 2021.10.1
+      tag: default
     working_directory: ~/project
     steps:
       - checkout:
           path: ~/project
-
+      - node/install:
+          node-version: '18.17.0'
       - attach_workspace:
           at: ~/project
 
@@ -170,6 +172,9 @@ jobs:
           working_directory: example/e2e
           name: Install Maestro
           command: npm run maestro:install
+      - run:
+            name: Set Ruby Version
+            command: rbenv global 3.3.5 && rbenv rehash
 
       - restore_cache:
           keys:
