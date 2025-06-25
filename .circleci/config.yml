@@ -3,7 +3,7 @@ version: 2.1
 # Default VM config to be used for macOS builds
 macos_config: &macos_config
   macos:
-    xcode: 15.3.0
+    xcode: 16.0.0
   resource_class: macos.m1.large.gen1
   shell: /bin/bash --login -eo pipefail
 
@@ -202,6 +202,10 @@ jobs:
           working_directory: example/e2e
           name: Build
           command: npm run build:ios
+
+      - run:
+          name: List available simulators
+          command: xcrun simctl list
 
       - run:
           working_directory: example/e2e
