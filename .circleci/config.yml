@@ -165,6 +165,7 @@ jobs:
   ios-e2e-test:
     <<: *macos_config
     steps:
+      - <<: *setup_ruby
       - checkout
       - attach_workspace:
           at: ~/project
