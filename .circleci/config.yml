@@ -115,6 +115,7 @@ jobs:
       JAVA_OPTS: '-Xms512m -Xmx1024m'
     executor:
       name: android/android-machine
+      resource_class: large
     working_directory: ~/project
     steps:
       - checkout:
@@ -161,8 +162,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/project
-
-      # Install Ruby and CocoaPods
       - run:
           name: Install Ruby
           command: |
