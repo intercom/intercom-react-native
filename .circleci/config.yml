@@ -21,6 +21,7 @@ executors:
 
 orbs:
   android: circleci/android@2.4.0
+  node: circleci/node@5.1.0
 
 # Always run job
 run_always: &run_always
@@ -183,16 +184,6 @@ jobs:
           working_directory: example/e2e
           name: Install Maestro
           command: npm run maestro:install
-      - run:
-          name: Set Ruby Version
-          command: |
-            # Try to install Ruby 3.3.4 if not available
-            rbenv install 3.3.4 || true
-            # Set global Ruby version
-            rbenv global 3.3.4
-            rbenv rehash
-            # Verify Ruby version
-            ruby --version
 
       - restore_cache:
           keys:
