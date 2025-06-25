@@ -8,7 +8,7 @@
     "build:ios": "xcodebuild build -workspace ../ios/IntercomReactNativeExample.xcworkspace -scheme IntercomReactNativeExampleUI -configuration Release -sdk iphonesimulator -derivedDataPath ./build",
     "test:android": "maestro test ./maestro/android/*.yaml",
     "test:ios": "maestro test ./maestro/ios/*.yaml",
-    "maestro:install": "export MAESTRO_VERSION=1.36.0; curl -Ls \"https://get.maestro.mobile.dev\" | bash"
+    "maestro:install": "curl -Ls \"https://get.maestro.mobile.dev\" | bash"
   },
   "keywords": [],
   "author": "",
@@ -26,7 +26,6 @@
     "@wdio/mocha-framework": "^7.7.3",
     "@wdio/spec-reporter": "^9.5.0",
     "chromedriver": "^131.0.4",
-    "maestro-cli": "^1.40.3",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.2",
     "wdio-chromedriver-service": "^8.1.1"
