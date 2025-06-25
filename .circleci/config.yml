@@ -117,13 +117,13 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: large
-      tag: 2021.10.1
+      tag: default
     working_directory: ~/project
     steps:
       - checkout:
           path: ~/project
       - node/install:
-          node-version: '18.17.0'
+          node-version: 18.17.0
 
       - attach_workspace:
           at: ~/project
@@ -208,6 +208,11 @@ jobs:
       - run:
           name: List available simulators
           command: xcrun simctl list
+
+      - run:
+          working_directory: example/e2e
+          name: Check Maestro version
+          command: maestro -v
 
       - run:
           working_directory: example/e2e
