@@ -1,3 +1,4 @@
+
 version: 2.1
 
 # Default VM config to be used for macOS builds
@@ -56,7 +57,6 @@ jobs:
           command: |
             corepack enable
             yarn install --cwd example
-            yarn install --cwd example/e2e
             yarn install
       - save_cache:
           key: dependencies-{{ checksum "package.json" }}
@@ -64,9 +64,6 @@ jobs:
       - save_cache:
           key: dependencies-example-{{ checksum "example/package.json" }}
           paths: example/node_modules
-      - save_cache:
-          key: dependencies-example-e2e-{{ checksum "example/package.json" }}
-          paths: example/e2e/node_modules
       - persist_to_workspace:
           root: .
           paths: .
@@ -131,14 +128,13 @@ jobs:
       - <<: *setup_env_file
 
       - run:
-          working_directory: example/e2e
           name: Install Maestro
-          command: npm run maestro:install
+          command: curl -Ls "https://get.maestro.mobile.dev" | bash
 
       - run:
-          working_directory: example/e2e
+          working_directory: example/test
           name: Build android
-          command: npm run build:android
+          command:  npm run build:android
 
       - android/create-avd:
           avd-name: Android_29
@@ -156,7 +152,7 @@ jobs:
             adb install -r ~/project/example/android/app/build/outputs/apk/release/app-release.apk
 
       - run:
-          working_directory: example/e2e
+          working_directory: example/test
           name: Run UI Tests
           command: npm run test:android
 
@@ -177,7 +173,7 @@ jobs:
       - run:
           working_directory: example/e2e
           name: Install Maestro
-          command: npm run maestro:install
+          command: curl -Ls "https://get.maestro.mobile.dev" | bash
 
       - restore_cache:
           keys:
@@ -193,7 +189,7 @@ jobs:
             - ~/project/example/ios/Pods
 
       - run:
-          working_directory: example/e2e
+          working_directory: example/test
           name: Build
           command: npm run build:ios
 
@@ -207,10 +203,10 @@ jobs:
       - run:
           name: Install app on simulator
           command: |
-            xcrun simctl install booted ~/project/example/e2e/build/Build/Products/Release-iphonesimulator/IntercomReactNativeExampleUI.app
+            xcrun simctl install booted ~/project/example/test/build/Build/Products/Release-iphonesimulator/IntercomReactNativeExampleUI.app
 
       - run:
-          working_directory: example/e2e
+          working_directory: example/test
           name: Run UI Tests
           command: npm run test:ios
 

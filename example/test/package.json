@@ -1,0 +1,15 @@
+{
+  "name": "intercom-react-native-example-e2e-tests",
+  "description": "Running",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build:android": "../android/gradlew assembleRelease -Pfoss -p ../android",
+    "build:ios": "xcodebuild build -workspace ../ios/IntercomReactNativeExample.xcworkspace -scheme IntercomReactNativeExampleUI -configuration Release -sdk iphonesimulator -derivedDataPath ./build",
+    "test:android": "maestro test ./maestro/android/*.yaml",
+    "test:ios": "maestro test ./maestro/ios/*.yaml"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
