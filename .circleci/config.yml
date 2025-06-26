@@ -37,7 +37,6 @@ run_on_release: &run_on_release
     branches:
       ignore: /.*/
 
-
 commands:
   attach_project:
     steps:
@@ -140,15 +139,41 @@ jobs:
           system-image: system-images;android-29;default;x86
           install: true
 
-      - android/start-emulator:
+            - android/start-emulator:
           avd-name: Android_29
           no-window: true
           post-emulator-launch-assemble-command: echo Emulator Started
 
       - run:
+          name: Wait for emulator to finish booting
+          command: |
+            echo "⏳ Waiting for emulator to boot..."
+            adb wait-for-device
+            boot_completed=""
+            until [[ "$boot_completed" == "1" ]]; do
+              boot_completed=$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')
+              echo "boot_completed=$boot_completed"
+              sleep 5
+            done
+            echo "✅ Emulator boot complete"
+
+      - run:
+          name: Log emulator + Intercom info
+          command: |
+            echo "🛰 Connected ADB devices:"
+            adb devices
+
+            echo "📱 Installed packages:"
+            adb shell pm list packages | grep intercom || true
+
+            echo "📜 Last 100 lines of logcat:"
+            adb logcat -d | tail -n 100 || true
+
+      - run:
           name: Install app on emulator
           command: |
-            adb install -r ~/project/example/android/app/build/outputs/apk/debug/app-debug.apk
+            adb install -r ~/project/example/android/app/build/outputs/apk/release/app-release.apk
+
 
       - run:
           working_directory: example/test
@@ -236,7 +261,6 @@ jobs:
           name: Publish the package
           command: npm publish
 
-
 workflows:
   version: 2.1
   build-and-test:
@@ -260,21 +284,21 @@ workflows:
           requires:
             - install-dependencies
       - android-e2e-test:
-           <<: *run_always
-           requires:
-             - install-dependencies
-             - lint
-             - typescript
-             - unit-tests
-             - build-package
+          <<: *run_always
+          requires:
+            - install-dependencies
+            - lint
+            - typescript
+            - unit-tests
+            - build-package
       - ios-e2e-test:
-           <<: *run_always
-           requires:
-             - install-dependencies
-             - lint
-             - typescript
-             - unit-tests
-             - build-package
+          <<: *run_always
+          requires:
+            - install-dependencies
+            - lint
+            - typescript
+            - unit-tests
+            - build-package
 
       - release-to-npm:
           <<: *run_on_release
