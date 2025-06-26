@@ -4,11 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:android": "../android/gradlew assembleRelease -p ../android",
+    "build:android": "../android/gradlew assembleFossRelease -p ../android",
     "build:ios": "xcodebuild build -workspace ../ios/IntercomReactNativeExample.xcworkspace -scheme IntercomReactNativeExampleUI -configuration Release -sdk iphonesimulator -derivedDataPath ./build",
-    "test:android": "maestro test ./maestro/android/*.yaml",
-    "test:ios": "maestro test ./maestro/ios/*.yaml",
-    "maestro:install": "curl -Ls \"https://get.maestro.mobile.dev\" | bash"
+    "test:android": "npx wdio ./wdio.android.conf.ts",
+    "test:ios": "npx wdio ./wdio.ios.conf.ts"
   },
   "keywords": [],
   "author": "",
