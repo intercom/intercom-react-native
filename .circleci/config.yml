@@ -151,17 +151,9 @@ jobs:
           post-emulator-launch-assemble-command: echo Emulator Started
 
       - run:
-          name: Wait for emulator to boot completely
+          name: Install app on emulator
           command: |
-            # Wait for emulator to fully boot
-            adb wait-for-device
-            # Wait until the device is fully booted
-            BOOT_COMPLETED=$(adb shell getprop sys.boot_completed | tr -d '\r')
-            while [ "$BOOT_COMPLETED" != "1" ]; do
-              sleep 5
-              BOOT_COMPLETED=$(adb shell getprop sys.boot_completed | tr -d '\r')
-              echo "Waiting for emulator to boot: $BOOT_COMPLETED"
-            done
+            adb install -r ~/project/example/android/app/build/outputs/apk/release/app-release.apk
 
       - run:
           working_directory: example/e2e
@@ -206,10 +198,6 @@ jobs:
           command: npm run build:ios
 
       - run:
-          name: List available simulators
-          command: xcrun simctl list
-
-      - run:
           name: Create and boot iPhone 15 simulator
           command: |
             echo "Creating iPhone 15 simulator with runtime $RUNTIME"
@@ -220,11 +208,6 @@ jobs:
           name: Install app on simulator
           command: |
             xcrun simctl install booted ~/project/example/e2e/build/Build/Products/Release-iphonesimulator/IntercomReactNativeExampleUI.app
-
-      - run:
-          working_directory: example/e2e
-          name: Check Maestro version
-          command: maestro -v
 
       - run:
           working_directory: example/e2e
