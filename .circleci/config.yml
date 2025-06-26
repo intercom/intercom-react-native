@@ -139,7 +139,7 @@ jobs:
           system-image: system-images;android-29;default;x86
           install: true
 
-            - android/start-emulator:
+      - android/start-emulator:
           avd-name: Android_29
           no-window: true
           post-emulator-launch-assemble-command: echo Emulator Started
@@ -173,7 +173,6 @@ jobs:
           name: Install app on emulator
           command: |
             adb install -r ~/project/example/android/app/build/outputs/apk/release/app-release.apk
-
 
       - run:
           working_directory: example/test
