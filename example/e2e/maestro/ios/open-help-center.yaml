@@ -6,8 +6,8 @@ tags:
 - launchApp
 - tapOn: "Login as an Unidentified User"
 - assertVisible:
-      text: "Present Help Center"
-      enabled: true
+    text: "Present Help Center"
+    enabled: true
 - tapOn: "Present Help Center"
 - assertVisible: "Untitled collection"
 - tapOn: "Untitled collection"

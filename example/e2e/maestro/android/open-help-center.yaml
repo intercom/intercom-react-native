@@ -4,6 +4,9 @@ tags:
   - help-center
 ---
 - launchApp
+- assertVisible:
+    text: "Login as an Unidentified User"
+    enabled: true
 - tapOn: "Login as an Unidentified User"
 - assertVisible:
     text: "Present Help Center"

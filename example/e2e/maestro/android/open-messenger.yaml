@@ -9,5 +9,7 @@ tags:
     text: "Present Intercom"
     enabled: true
 - tapOn: "Present Intercom"
+- assertVisible:
+    text: "Messages"
 - tapOn: "Messages"
 
