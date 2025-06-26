@@ -210,6 +210,18 @@ jobs:
           command: xcrun simctl list
 
       - run:
+          name: Create and boot iPhone 15 simulator
+          command: |
+            echo "Creating iPhone 15 simulator with runtime $RUNTIME"
+            xcrun simctl create "iPhone 15" com.apple.CoreSimulator.SimDeviceType.iPhone-15 $RUNTIME
+            xcrun simctl boot "iPhone 15" || true
+
+      - run:
+          name: Install app on simulator
+          command: |
+            xcrun simctl install booted ~/project/example/e2e/build/Build/Products/Release-iphonesimulator/IntercomReactNativeExampleUI.app
+
+      - run:
           working_directory: example/e2e
           name: Check Maestro version
           command: maestro -v
