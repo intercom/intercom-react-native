@@ -5,6 +5,7 @@ tags:
 ---
 - launchApp
 - tapOn: "Login as an Unidentified User"
+- sleep: 2000
 - tapOn: "Present Help Center"
 - assertVisible: "Help"
 - assertVisible: "Untitled collection"
