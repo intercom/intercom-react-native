@@ -148,7 +148,7 @@ jobs:
       - run:
           name: Install app on emulator
           command: |
-            adb install -r ~/project/example/android/app/build/outputs/apk/debug/app-debug.apk
+            adb install -r ~/project/example/android/app/build/outputs/apk/release/app-release.apk
 
       - run:
           working_directory: example/test
