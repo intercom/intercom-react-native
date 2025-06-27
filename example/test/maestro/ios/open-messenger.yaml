@@ -9,4 +9,4 @@ tags:
     text: "Present Intercom"
     enabled: true
 - tapOn: "Present Intercom"
-- tapOn: "Messenger apps"
+- tapOn: "Messages"
