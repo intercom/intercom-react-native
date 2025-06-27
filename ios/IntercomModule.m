@@ -82,12 +82,18 @@ RCT_EXPORT_METHOD(sendTokenToIntercom:(NSString *)token
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
     @try {
+        __block BOOL isSettled = NO;
         NSData *data = [self dataFromHexString:token];
         [Intercom setDeviceToken:data failure:^(NSError * _Nullable error) {
-            reject(SEND_TOKEN_TO_INTERCOM, @"Error in sendTokenToIntercom", error);
+            if (!isSettled) {
+                isSettled = YES;
+                reject(SEND_TOKEN_TO_INTERCOM, @"Error in sendTokenToIntercom", error);
+            }
         }];
-
-        resolve(@(YES));
+        if (!isSettled) {
+            isSettled = YES;
+            resolve(@(YES));
+        }
     } @catch (NSException *exception) {
         reject(SEND_TOKEN_TO_INTERCOM, @"Error in sendTokenToIntercom", [self exceptionToError:exception :SEND_TOKEN_TO_INTERCOM :@"sendTokenToIntercom"]);
     }
