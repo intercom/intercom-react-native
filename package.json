@@ -81,6 +81,10 @@
   },
   "jest": {
     "preset": "react-native",
+    "setupFilesAfterEnv": ["<rootDir>/__tests__/setupTests.js"],
+    "testPathIgnorePatterns": [
+      "<rootDir>/__tests__/setupTests.js"
+    ],
     "modulePathIgnorePatterns": [
       "<rootDir>/example/node_modules",
       "<rootDir>/sandboxes/node_modules",

@@ -4,11 +4,12 @@ public class IntercomErrorCodes {
   public static final String UNIDENTIFIED_REGISTRATION = "101";
   public static final String IDENTIFIED_REGISTRATION = "102";
   public static final String SET_USER_HASH = "103";
-  public static final String UPDATE_USER_HASH = "104";
-  public static final String LOG_EVENT_HASH = "105";
-  public static final String LOGOUT = "106";
-  public static final String SET_LOG_LEVEL = "107";
-  public static final String GET_UNREAD_CONVERSATION = "108";
+  public static final String SET_USER_JWT = "104";
+  public static final String UPDATE_USER_HASH = "105";
+  public static final String LOG_EVENT_HASH = "106";
+  public static final String LOGOUT = "107";
+  public static final String SET_LOG_LEVEL = "108";
+  public static final String GET_UNREAD_CONVERSATION = "109";
   public static final String DISPLAY_MESSENGER = "201";
   public static final String DISPLAY_MESSENGER_COMPOSER = "202";
   public static final String DISPLAY_CONTENT = "203";
