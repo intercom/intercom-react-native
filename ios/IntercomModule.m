@@ -320,7 +320,7 @@ RCT_EXPORT_METHOD(setUserJwt:(NSString *)jwt
         [Intercom setUserJwt:jwt];
         resolve(@(YES));
     } @catch (NSException *exception) {
-        reject(@SET_USER_JWT, @"Error in setUserJwt", [self exceptionToError:exception :@"SET_USER_JWT" :@"setUserJwt"]);
+        reject(SET_USER_JWT, @"Error in setUserJwt", [self exceptionToError:exception :@"SET_USER_JWT" :@"setUserJwt"]);
     }
 };
 
