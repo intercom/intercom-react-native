@@ -178,6 +178,10 @@ jobs:
             - pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
       - run:
           working_directory: example/ios
+          name: Remove Podfile.lock to avoid version conflicts
+          command: rm -f Podfile.lock
+      - run:
+          working_directory: example/ios
           name: Install Pods
           command: pod install
 
