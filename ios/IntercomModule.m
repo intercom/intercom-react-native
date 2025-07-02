@@ -155,14 +155,14 @@ RCT_EXPORT_METHOD(setUserHash:(NSString *)userHash
     }
 };
 
-RCT_EXPORT_METHOD(setUserJWT:(NSString *)jwt
+RCT_EXPORT_METHOD(setUserJwt:(NSString *)jwt
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
     @try {
-        [Intercom setUserJWT:jwt];
+        [Intercom setUserJwt:jwt];
         resolve(@(YES));
     } @catch (NSException *exception) {
-        reject(UPDATE_USER, @"Error in setUserJWT", [self exceptionToError:exception :SET_USER_JWT :@"setUserJWT"]);
+        reject(UPDATE_USER, @"Error in setUserJwt", [self exceptionToError:exception :SET_USER_JWT :@"setUserJwt"]);
     }
 };
 

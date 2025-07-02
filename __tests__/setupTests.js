@@ -7,7 +7,7 @@ import { NativeModules } from 'react-native';
 // Mock the native modules
 const mockIntercomModule = {
   setUserHash: jest.fn(),
-  setUserJWT: jest.fn(),
+  setUserJwt: jest.fn(),
   loginUnidentifiedUser: jest.fn(),
   loginUserWithUserAttributes: jest.fn(),
   logout: jest.fn(),

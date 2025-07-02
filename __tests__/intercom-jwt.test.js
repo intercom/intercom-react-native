@@ -1,8 +1,8 @@
 /**
- * Tests for setUserJWT API specifically
+ * Tests for setUserJwt API specifically
  */
 
-describe('Intercom setUserJWT API', () => {
+describe('Intercom setUserJwt API', () => {
   let mockIntercomModule;
   let Intercom;
 
@@ -13,7 +13,7 @@ describe('Intercom setUserJWT API', () => {
     jest.doMock('react-native', () => ({
       NativeModules: {
         IntercomModule: {
-          setUserJWT: jest.fn(),
+          setUserJwt: jest.fn(),
           setUserHash: jest.fn(),
           loginUserWithUserAttributes: jest.fn(),
           logout: jest.fn(),
@@ -54,46 +54,46 @@ describe('Intercom setUserJWT API', () => {
     jest.clearAllMocks();
   });
 
-  describe('setUserJWT method', () => {
-    test('should call native setUserJWT with valid JWT', async () => {
+  describe('setUserJwt method', () => {
+    test('should call native setUserJwt with valid JWT', async () => {
       const testJWT =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.test';
-      mockIntercomModule.setUserJWT.mockResolvedValue(true);
+      mockIntercomModule.setUserJwt.mockResolvedValue(true);
 
-      const result = await Intercom.setUserJWT(testJWT);
+      const result = await Intercom.setUserJwt(testJWT);
 
-      expect(mockIntercomModule.setUserJWT).toHaveBeenCalledWith(testJWT);
+      expect(mockIntercomModule.setUserJwt).toHaveBeenCalledWith(testJWT);
       expect(result).toBe(true);
     });
 
     test('should handle JWT authentication errors', async () => {
       const invalidJWT = 'invalid.jwt';
       const error = new Error('JWT validation failed');
-      mockIntercomModule.setUserJWT.mockRejectedValue(error);
+      mockIntercomModule.setUserJwt.mockRejectedValue(error);
 
-      await expect(Intercom.setUserJWT(invalidJWT)).rejects.toThrow(
+      await expect(Intercom.setUserJwt(invalidJWT)).rejects.toThrow(
         'JWT validation failed'
       );
     });
 
     test('should work with empty JWT string', async () => {
       const emptyJWT = '';
-      mockIntercomModule.setUserJWT.mockResolvedValue(true);
+      mockIntercomModule.setUserJwt.mockResolvedValue(true);
 
-      const result = await Intercom.setUserJWT(emptyJWT);
+      const result = await Intercom.setUserJwt(emptyJWT);
 
-      expect(mockIntercomModule.setUserJWT).toHaveBeenCalledWith(emptyJWT);
+      expect(mockIntercomModule.setUserJwt).toHaveBeenCalledWith(emptyJWT);
       expect(result).toBe(true);
     });
 
     test('should handle long JWT tokens', async () => {
       const longJWT =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTIzNDU2Nzg5MCIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsIm5hbWUiOiJKb2huIERvZSIsImN1c3RvbV9hdHRyaWJ1dGVzIjp7InBsYW4iOiJwcmVtaXVtIiwiY29tcGFueSI6IkFjbWUgSW5jIn19.very_long_signature';
-      mockIntercomModule.setUserJWT.mockResolvedValue(true);
+      mockIntercomModule.setUserJwt.mockResolvedValue(true);
 
-      const result = await Intercom.setUserJWT(longJWT);
+      const result = await Intercom.setUserJwt(longJWT);
 
-      expect(mockIntercomModule.setUserJWT).toHaveBeenCalledWith(longJWT);
+      expect(mockIntercomModule.setUserJwt).toHaveBeenCalledWith(longJWT);
       expect(result).toBe(true);
     });
   });
@@ -104,18 +104,18 @@ describe('Intercom setUserJWT API', () => {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTIzIn0.test';
       const userAttributes = { email: 'test@example.com' };
 
-      mockIntercomModule.setUserJWT.mockResolvedValue(true);
+      mockIntercomModule.setUserJwt.mockResolvedValue(true);
       mockIntercomModule.loginUserWithUserAttributes.mockResolvedValue(true);
 
-      await Intercom.setUserJWT(jwt);
+      await Intercom.setUserJwt(jwt);
       await Intercom.loginUserWithUserAttributes(userAttributes);
 
-      expect(mockIntercomModule.setUserJWT).toHaveBeenCalledWith(jwt);
+      expect(mockIntercomModule.setUserJwt).toHaveBeenCalledWith(jwt);
       expect(
         mockIntercomModule.loginUserWithUserAttributes
       ).toHaveBeenCalledWith(userAttributes);
-      // Verify setUserJWT was called first by checking call counts
-      expect(mockIntercomModule.setUserJWT).toHaveBeenCalledTimes(1);
+      // Verify setUserJwt was called first by checking call counts
+      expect(mockIntercomModule.setUserJwt).toHaveBeenCalledTimes(1);
       expect(
         mockIntercomModule.loginUserWithUserAttributes
       ).toHaveBeenCalledTimes(1);
@@ -126,13 +126,13 @@ describe('Intercom setUserJWT API', () => {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTIzIn0.test';
       const hash = 'hmac_hash_123';
 
-      mockIntercomModule.setUserJWT.mockResolvedValue(true);
+      mockIntercomModule.setUserJwt.mockResolvedValue(true);
       mockIntercomModule.setUserHash.mockResolvedValue(true);
 
-      const jwtResult = await Intercom.setUserJWT(jwt);
+      const jwtResult = await Intercom.setUserJwt(jwt);
       const hashResult = await Intercom.setUserHash(hash);
 
-      expect(mockIntercomModule.setUserJWT).toHaveBeenCalledWith(jwt);
+      expect(mockIntercomModule.setUserJwt).toHaveBeenCalledWith(jwt);
       expect(mockIntercomModule.setUserHash).toHaveBeenCalledWith(hash);
       expect(jwtResult).toBe(true);
       expect(hashResult).toBe(true);
@@ -143,13 +143,13 @@ describe('Intercom setUserJWT API', () => {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTIzIn0.test';
       const userAttributes = { userId: '123', email: 'test@example.com' };
 
-      mockIntercomModule.setUserJWT.mockResolvedValue(true);
+      mockIntercomModule.setUserJwt.mockResolvedValue(true);
       mockIntercomModule.loginUserWithUserAttributes.mockResolvedValue(true);
       mockIntercomModule.isUserLoggedIn.mockResolvedValue(true);
       mockIntercomModule.updateUser.mockResolvedValue(true);
 
       // Set JWT first
-      await Intercom.setUserJWT(jwt);
+      await Intercom.setUserJwt(jwt);
 
       // Login user
       await Intercom.loginUserWithUserAttributes(userAttributes);
@@ -160,7 +160,7 @@ describe('Intercom setUserJWT API', () => {
       // Update user
       await Intercom.updateUser({ name: 'Updated Name' });
 
-      expect(mockIntercomModule.setUserJWT).toHaveBeenCalledWith(jwt);
+      expect(mockIntercomModule.setUserJwt).toHaveBeenCalledWith(jwt);
       expect(
         mockIntercomModule.loginUserWithUserAttributes
       ).toHaveBeenCalledWith(userAttributes);
@@ -175,9 +175,9 @@ describe('Intercom setUserJWT API', () => {
     test('should handle network errors', async () => {
       const jwt = 'test.jwt.token';
       const networkError = new Error('Network request failed');
-      mockIntercomModule.setUserJWT.mockRejectedValue(networkError);
+      mockIntercomModule.setUserJwt.mockRejectedValue(networkError);
 
-      await expect(Intercom.setUserJWT(jwt)).rejects.toThrow(
+      await expect(Intercom.setUserJwt(jwt)).rejects.toThrow(
         'Network request failed'
       );
     });
@@ -185,9 +185,9 @@ describe('Intercom setUserJWT API', () => {
     test('should handle invalid JWT format errors', async () => {
       const invalidJWT = 'not.a.valid.jwt';
       const formatError = new Error('Invalid JWT format');
-      mockIntercomModule.setUserJWT.mockRejectedValue(formatError);
+      mockIntercomModule.setUserJwt.mockRejectedValue(formatError);
 
-      await expect(Intercom.setUserJWT(invalidJWT)).rejects.toThrow(
+      await expect(Intercom.setUserJwt(invalidJWT)).rejects.toThrow(
         'Invalid JWT format'
       );
     });
@@ -196,9 +196,9 @@ describe('Intercom setUserJWT API', () => {
       const jwtWithBadSignature =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTIzIn0.bad_signature';
       const signatureError = new Error('JWT signature verification failed');
-      mockIntercomModule.setUserJWT.mockRejectedValue(signatureError);
+      mockIntercomModule.setUserJwt.mockRejectedValue(signatureError);
 
-      await expect(Intercom.setUserJWT(jwtWithBadSignature)).rejects.toThrow(
+      await expect(Intercom.setUserJwt(jwtWithBadSignature)).rejects.toThrow(
         'JWT signature verification failed'
       );
     });
