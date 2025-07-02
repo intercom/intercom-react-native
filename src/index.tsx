@@ -294,8 +294,8 @@ export type IntercomType = {
 
    Secure your Messenger to make sure that bad actors can't impersonate your users,
    see their conversation history or make unauthorised updates to data.
-   Add commentMore actions
-   This should be called before any user login takes place. Learn more [here](https://developers.intercom.com/installing-intercom/ios/secure-your-messenger)
+
+   This should be called before any user login takes place.
 
    Parameters:
    - jwt: A JWT token signed with your app's secret key.
