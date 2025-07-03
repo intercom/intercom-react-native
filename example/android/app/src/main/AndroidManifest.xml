@@ -31,9 +31,6 @@
       </activity>
 
 
-      <receiver
-        android:name="com.intercom.reactnative.RNIntercomPushBroadcastReceiver"
-        tools:replace="android:exported"
-        android:exported="true" />
+
     </application>
 </manifest>

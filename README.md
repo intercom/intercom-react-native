@@ -222,10 +222,6 @@ public class MainNotificationService extends FirebaseMessagingService {
       </intent-filter>
     </service>
 
-    <receiver
-      android:name="com.intercom.reactnative.RNIntercomPushBroadcastReceiver"
-      tools:replace="android:exported"
-      android:exported="true"/>
     <!-- END: Add this-->
 
   </application>
