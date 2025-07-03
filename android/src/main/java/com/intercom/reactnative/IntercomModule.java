@@ -513,6 +513,19 @@ public class IntercomModule extends ReactContextBaseJavaModule {
     }
   }
 
+  @ReactMethod
+  public void setUserJwt(String jwt, Promise promise) {
+    try {
+      Intercom.client().setUserJwt(jwt);
+      Log.d(NAME, "Setting JWT");
+      promise.resolve(true);
+    } catch (Exception err) {
+      Log.e(NAME, "Error Setting JWT:");
+      Log.e(NAME, err.toString());
+      promise.reject(IntercomErrorCodes.SET_USER_JWT, err.toString());
+    }
+  }
+
   public static synchronized void initialize(Application application, String apiKey, String appId) {
     String sdkVersion = BuildConfig.INTERCOM_VERSION_NAME;
     ReactNativeHeaderInterceptor.setReactNativeVersion(application.getApplicationContext(), sdkVersion);

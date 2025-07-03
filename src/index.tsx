@@ -289,6 +289,20 @@ export type IntercomType = {
   setLogLevel(logLevel: LogLevelType): Promise<boolean>;
 
   /**
+   Sets a JWT token for the user, necessary for using the Messenger
+   when Messenger Security is enforced. This is an improvement to Identity Verification.
+
+   Secure your Messenger to make sure that bad actors can't impersonate your users,
+   see their conversation history or make unauthorised updates to data.
+
+   This should be called before any user login takes place.
+
+   Parameters:
+   - jwt: A JWT token signed with your app's secret key.
+   */
+  setUserJwt(JWT: String): Promise<boolean>;
+
+  /**
    * Add an event listener for the supported event types.
    */
   addEventListener: (
@@ -342,7 +356,7 @@ const Intercom: IntercomType = {
 
   sendTokenToIntercom: (token) => IntercomModule.sendTokenToIntercom(token),
   setLogLevel: (logLevel) => IntercomModule.setLogLevel(logLevel),
-
+  setUserJwt: (jwt) => IntercomModule.setUserJwt(jwt),
   addEventListener: (event, callback) => {
     event === IntercomEvents.IntercomUnreadCountDidChange &&
       Platform.OS === 'android' &&

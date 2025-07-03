@@ -1092,6 +1092,27 @@ ___
 
 ___
 
+### `Intercom.setUserJwt(JWT)`
+
+Sets a JWT token for the user, necessary for using the Messenger when Messenger Security is enforced. This is an
+improvement to Identity Verification.
+
+Secure your Messenger to make sure that bad actors can't impersonate your users, see their conversation history or make
+unauthorized updates to data.
+
+This should be called before any user login takes place.
+
+### Options
+
+| Type | Type   | Required |
+|------|--------|----------|
+| JWT  | string | yes      |
+
+### Returns
+
+`Promise<boolean>`
+___
+
 ## Author
 
 👤 **Intercom (https://www.intercom.com/)**

@@ -15,6 +15,7 @@ NSString *SET_USER_HASH = @"103";
 NSString *UPDATE_USER = @"104";
 NSString *LOG_EVENT = @"105";
 NSString *UNREAD_CONVERSATION_COUNT = @"107";
+NSString *SET_USER_JWT = @"109";
 NSString *SEND_TOKEN_TO_INTERCOM = @"302";
 NSString *FETCH_HELP_CENTER_COLLECTIONS = @"901";
 NSString *FETCH_HELP_CENTER_COLLECTION = @"902";
@@ -153,7 +154,6 @@ RCT_EXPORT_METHOD(setUserHash:(NSString *)userHash
         reject(UPDATE_USER, @"Error in setUserHash", [self exceptionToError:exception :SET_USER_HASH :@"setUserHash"]);
     }
 };
-
 
 #pragma mark - Events
 
@@ -311,6 +311,17 @@ RCT_EXPORT_METHOD(setLauncherVisibility:(NSString *)visibility
     }
     [Intercom setLauncherVisible:isVisible];
     resolve(@(YES));
+};
+
+RCT_EXPORT_METHOD(setUserJwt:(NSString *)jwt
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    @try {
+        [Intercom setUserJwt:jwt];
+        resolve(@(YES));
+    } @catch (NSException *exception) {
+        reject(SET_USER_JWT, @"Error in setUserJwt", [self exceptionToError:exception :@"SET_USER_JWT" :@"setUserJwt"]);
+    }
 };
 
 RCT_EXPORT_METHOD(setInAppMessageVisibility:(NSString *)visibility
