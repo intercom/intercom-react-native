@@ -20,5 +20,5 @@ Pod::Spec.new do |s|
   s.pod_target_xcconfig = { "DEFINES_MODULE" => "YES" }
 
   s.dependency "React-Core"
-  s.dependency "Intercom", '~> 18.6.1'
+  s.dependency "Intercom", '~> 19.0.1'
 end
