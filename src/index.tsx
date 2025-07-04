@@ -140,6 +140,19 @@ export type IntercomType = {
   setUserHash(hash: string): Promise<boolean>;
 
   /**
+   * Sets a JWT token for the user, necessary for using the Messenger
+   * when Messenger Security is enforced. This is an improvement to Identity Verification.
+   *
+   * Secure your Messenger to make sure that bad actors can't impersonate your users,
+   * see their conversation history or make unauthorised updates to data.
+   *
+   * This should be called before any user login takes place.
+   *
+   * @param jwt A JWT token signed with your app's secret key.
+   */
+  setUserJwt(jwt: string): Promise<boolean>;
+
+  /**
    * Update a user in Intercom with data specified in {@link UserAttributes}.
    * Full details of the data data attributes that can be stored on a user can be found in {@link UserAttributes}.
    *
@@ -303,6 +316,7 @@ const Intercom: IntercomType = {
     IntercomModule.loginUserWithUserAttributes(userAttributes),
   logout: () => IntercomModule.logout(),
   setUserHash: (hash) => IntercomModule.setUserHash(hash),
+  setUserJwt: (jwt) => IntercomModule.setUserJwt(jwt),
   updateUser: (userAttributes) => IntercomModule.updateUser(userAttributes),
   isUserLoggedIn: () => IntercomModule.isUserLoggedIn(),
   fetchLoggedInUserAttributes: () =>

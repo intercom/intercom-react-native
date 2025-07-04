@@ -12,6 +12,7 @@
 NSString *UNIDENTIFIED_REGISTRATION = @"101";
 NSString *IDENTIFIED_REGISTRATION = @"102";
 NSString *SET_USER_HASH = @"103";
+NSString *SET_USER_JWT = @"106";
 NSString *UPDATE_USER = @"104";
 NSString *LOG_EVENT = @"105";
 NSString *UNREAD_CONVERSATION_COUNT = @"107";
@@ -151,6 +152,17 @@ RCT_EXPORT_METHOD(setUserHash:(NSString *)userHash
         resolve(@(YES));
     } @catch (NSException *exception) {
         reject(UPDATE_USER, @"Error in setUserHash", [self exceptionToError:exception :SET_USER_HASH :@"setUserHash"]);
+    }
+};
+
+RCT_EXPORT_METHOD(setUserJwt:(NSString *)userJwt
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    @try {
+        [Intercom setUserJwt:userJwt];
+        resolve(@(YES));
+    } @catch (NSException *exception) {
+        reject(SET_USER_JWT, @"Error in setUserJwt", [self exceptionToError:exception :SET_USER_JWT :@"setUserJwt"]);
     }
 };
 

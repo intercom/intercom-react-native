@@ -180,6 +180,18 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void setUserJwt(String userJwt, Promise promise) {
+    try {
+      Intercom.client().setUserJwt(userJwt);
+      promise.resolve(true);
+    } catch (Exception err) {
+      Log.e(NAME, "setUserJwt error:");
+      Log.e(NAME, err.toString());
+      promise.reject(IntercomErrorCodes.SET_USER_JWT, err.toString());
+    }
+  }
+
+  @ReactMethod
   public void updateUser(ReadableMap params, Promise promise) {
       UserAttributes userAttributes = IntercomHelpers.buildUserAttributes(params);
       Intercom.client().updateUser(userAttributes, new IntercomStatusCallback() {
