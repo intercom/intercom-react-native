@@ -176,10 +176,31 @@ jobs:
       - restore_cache:
           keys:
             - pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
+
       - run:
           working_directory: example/ios
           name: Install Pods
-          command: pod install
+          command: pod install --repo-update
+
+      - run:
+          name: Run pod install
+          working_directory: example/ios
+          command: |
+            pod install
+
+      - run:
+          name: Configure Git user
+          command: |
+            git config --global user.email "ci-build@intercom.io"
+            git config --global user.name "CircleCI Build"
+
+      - run:
+          name: Commit and push Podfile.lock
+          command: |
+            git add example/ios/Podfile.lock
+            git commit -m "chore: update Podfile.lock"
+            git push origin ${CIRCLE_BRANCH}
+            echo "Podfile.lock committed and pushed"
 
       - save_cache:
           key: pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
