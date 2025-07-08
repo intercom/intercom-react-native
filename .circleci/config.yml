@@ -189,17 +189,19 @@ jobs:
             pod install
 
       - run:
-          name: Configure Git user
-          command: |
-            git config --global user.email "ci-build@intercom.io"
-            git config --global user.name "CircleCI Build"
-
+        name: Debug environment variables
+        command: |
+          if [ -n "$GH_RW_TOKEN" ]; then
+            echo "GH_RW_TOKEN is set"
+          else
+            echo "GH_RW_TOKEN is NOT set"
+          fi
       - run:
           name: Commit and push Podfile.lock
           command: |
             git add example/ios/Podfile.lock
             git commit -m "chore: update Podfile.lock"
-            git remote set-url origin https://${GH_RW_TOKEN}@github.com/intercom/intercom-react-native.git
+            git remote set-url origin https://refactorer-bot:${GH_RW_TOKEN}@github.com/intercom/intercom-react-native.git
             git push origin ${CIRCLE_BRANCH}
             echo "Podfile.lock committed and pushed"
 
