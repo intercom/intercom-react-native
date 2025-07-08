@@ -187,15 +187,6 @@ jobs:
           working_directory: example/ios
           command: |
             pod install
-
-      - run:
-        name: Debug environment variables
-        command: |
-          if [ -n "$GH_RW_TOKEN" ]; then
-            echo "GH_RW_TOKEN is set"
-          else
-            echo "GH_RW_TOKEN is NOT set"
-          fi
       - run:
           name: Commit and push Podfile.lock
           command: |
