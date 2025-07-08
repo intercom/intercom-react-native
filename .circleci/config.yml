@@ -187,12 +187,19 @@ jobs:
           working_directory: example/ios
           command: |
             pod install
+
+      - run:
+          name: Configure Git user
+          command: |
+            git config --global user.email "github.refactorer.service.account@intercom.io"
+            git config --global user.name "refactorer-bot"
+
       - run:
           name: Commit and push Podfile.lock
           command: |
             git add example/ios/Podfile.lock
             git commit -m "chore: update Podfile.lock"
-            git remote set-url origin https://refactorer-bot:${GH_RW_TOKEN}@github.com/intercom/intercom-react-native.git
+            git remote set-url origin https://${GH_RW_TOKEN}@github.com/intercom/intercom-react-native.git
             git push origin ${CIRCLE_BRANCH}
             echo "Podfile.lock committed and pushed"
 
