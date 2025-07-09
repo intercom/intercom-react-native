@@ -143,7 +143,8 @@
     "@types/react": "18.2.6",
     "string-width": "4.2.3",
     "wrap-ansi": "7.0.0",
-    "undici": "^6.21.3"
+    "undici": "6.21.3",
+    "**/undici": "6.21.3"
   },
   "engines": {
     "node": ">=18"
