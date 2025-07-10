@@ -149,6 +149,15 @@
     "**/glob": "8.1.0",
     "**/rimraf": "3.0.2"
   },
+  "overrides": {
+    "@types/react": "18.2.6",
+    "string-width": "4.2.3",
+    "wrap-ansi": "7.0.0",
+    "undici": "6.21.3",
+    "@types/node": "20.12.12",
+    "glob": "8.1.0",
+    "rimraf": "3.0.2"
+  },
   "engines": {
     "node": ">=18"
   },
