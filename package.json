@@ -145,6 +145,11 @@
     "wrap-ansi": "7.0.0",
     "undici": "6.21.3",
     "**/undici": "6.21.3",
+    "webdriverio/cheerio/undici": "6.21.3",
+    "webdriverio/webdriver/undici": "6.21.3",
+    "@wdio/mocha-framework/**/undici": "6.21.3",
+    "@wdio/globals/**/undici": "6.21.3",
+    "cheerio": "1.0.0",
     "**/@types/node": "20.12.12",
     "**/glob": "8.1.0",
     "**/rimraf": "3.0.2"
