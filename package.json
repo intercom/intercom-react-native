@@ -1,6 +1,6 @@
 {
   "name": "@intercom/intercom-react-native",
-  "version": "8.6.0",
+  "version": "8.7.0",
   "description": "React Native wrapper to bridge our iOS and Android SDK",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -138,10 +138,30 @@
       ]
     ]
   },
+  "packageManager": "yarn@1.22.22",
   "resolutions": {
     "@types/react": "18.2.6",
     "string-width": "4.2.3",
-    "wrap-ansi": "7.0.0"
+    "wrap-ansi": "7.0.0",
+    "undici": "6.21.3",
+    "**/undici": "6.21.3",
+    "webdriverio/cheerio/undici": "6.21.3",
+    "webdriverio/webdriver/undici": "6.21.3",
+    "@wdio/mocha-framework/**/undici": "6.21.3",
+    "@wdio/globals/**/undici": "6.21.3",
+    "cheerio": "1.0.0",
+    "**/@types/node": "20.12.12",
+    "**/glob": "8.1.0",
+    "**/rimraf": "3.0.2"
+  },
+  "overrides": {
+    "@types/react": "18.2.6",
+    "string-width": "4.2.3",
+    "wrap-ansi": "7.0.0",
+    "undici": "6.21.3",
+    "@types/node": "20.12.12",
+    "glob": "8.1.0",
+    "rimraf": "3.0.2"
   },
   "engines": {
     "node": ">=18"

@@ -55,8 +55,8 @@ jobs:
           name: Install dependencies
           command: |
             corepack enable
-            yarn install --cwd example
-            yarn install
+            yarn install --cwd example --ignore-engines
+            yarn install --ignore-engines
       - save_cache:
           key: dependencies-{{ checksum "package.json" }}
           paths: node_modules
@@ -229,7 +229,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yarn install
+            yarn install --ignore-engines
 
       - run:
           name: Publish the package
