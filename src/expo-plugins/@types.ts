@@ -5,4 +5,5 @@ export type IntercomPluginProps = {
   androidApiKey: string;
   appId: string;
   intercomRegion?: IntercomRegion;
+  useManualInit?: boolean;
 };
