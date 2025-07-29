@@ -194,15 +194,31 @@ jobs:
       - run:
           name: Create and boot iPhone 15 simulator
           command: |
-            RUNTIME=$(xcrun simctl list runtimes | grep "iOS 18" | tail -1 | awk '{print $NF}' | sed 's/[()]//g')
+            # List available runtimes and find the latest iOS runtime
+            xcrun simctl list runtimes
+            RUNTIME=$(xcrun simctl list runtimes | grep "iOS" | grep -E "(18\.|17\.)" | tail -1 | awk '{print $NF}' | sed 's/[()]//g')
+            if [ -z "$RUNTIME" ]; then
+              echo "No iOS 17/18 runtime found, using default iOS runtime"
+              RUNTIME=$(xcrun simctl list runtimes | grep "iOS" | tail -1 | awk '{print $NF}' | sed 's/[()]//g')
+            fi
             echo "Creating iPhone 15 simulator with runtime $RUNTIME"
-            xcrun simctl create "iPhone 15" com.apple.CoreSimulator.SimDeviceType.iPhone-15 $RUNTIME
+            xcrun simctl create "iPhone 15" com.apple.CoreSimulator.SimDeviceType.iPhone-15 $RUNTIME || true
             xcrun simctl boot "iPhone 15" || true
 
       - run:
           name: Install app on simulator
           command: |
-            xcrun simctl install booted ~/project/example/test/build/Build/Products/Release-iphonesimulator/IntercomReactNativeExampleUI.app
+            # List available simulators
+            xcrun simctl list devices
+            # Find the built app
+            find ~/project/example/test/build -name "*.app" -type d
+            APP_PATH=$(find ~/project/example/test/build -name "IntercomReactNativeExampleUI.app" -type d | head -1)
+            if [ -z "$APP_PATH" ]; then
+              echo "App not found, trying alternative path"
+              APP_PATH=$(find ~/project/example/test/build -name "*.app" -type d | head -1)
+            fi
+            echo "Installing app from: $APP_PATH"
+            xcrun simctl install booted "$APP_PATH"
 
       - run:
           working_directory: example/test
