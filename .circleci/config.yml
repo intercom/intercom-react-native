@@ -135,12 +135,12 @@ jobs:
           command: npm run build:android
 
       - android/create-avd:
-          avd-name: Android_29
-          system-image: system-images;android-29;default;x86
+          avd-name: Android_34
+          system-image: system-images;android-34;default;x86_64
           install: true
 
       - android/start-emulator:
-          avd-name: Android_29
+          avd-name: Android_34
           no-window: true
           post-emulator-launch-assemble-command: echo Emulator Started
 
@@ -194,6 +194,7 @@ jobs:
       - run:
           name: Create and boot iPhone 15 simulator
           command: |
+            RUNTIME=$(xcrun simctl list runtimes | grep "iOS 18" | tail -1 | awk '{print $NF}' | sed 's/[()]//g')
             echo "Creating iPhone 15 simulator with runtime $RUNTIME"
             xcrun simctl create "iPhone 15" com.apple.CoreSimulator.SimDeviceType.iPhone-15 $RUNTIME
             xcrun simctl boot "iPhone 15" || true
