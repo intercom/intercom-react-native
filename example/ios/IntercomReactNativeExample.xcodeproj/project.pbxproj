@@ -10,6 +10,8 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		14650C044FFB85A4736C964C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0FD10144CF9F9A85F9D7916B /* PrivacyInfo.xcprivacy */; };
+		2B4180622838926B045C4B00 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 393D9D764EFC65E57682C939 /* PrivacyInfo.xcprivacy */; };
 		4C39C56BAD484C67AA576FFA /* libPods-IntercomReactNativeExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA3E69C5B9553B26FBA2DF04 /* libPods-IntercomReactNativeExample.a */; };
 		6B689CC9EE73F2BF0457728A /* libPods-IntercomReactNativeExampleUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBBD0C6D5A5B9C44EDCA9EB6 /* libPods-IntercomReactNativeExampleUI.a */; };
 		7D95B163267240E3008096E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -23,12 +25,14 @@
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		0DB6681325C508226B4F50DA /* Pods-IntercomReactNativeExampleUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntercomReactNativeExampleUI.release.xcconfig"; path = "Target Support Files/Pods-IntercomReactNativeExampleUI/Pods-IntercomReactNativeExampleUI.release.xcconfig"; sourceTree = "<group>"; };
+		0FD10144CF9F9A85F9D7916B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = IntercomReactNativeExample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* IntercomReactNativeExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntercomReactNativeExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = IntercomReactNativeExample/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = IntercomReactNativeExample/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = IntercomReactNativeExample/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = IntercomReactNativeExample/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = IntercomReactNativeExample/main.m; sourceTree = "<group>"; };
+		393D9D764EFC65E57682C939 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = IntercomReactNativeExample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		7D4EACBB265F79DC004A6F30 /* IntercomReactNativeExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = IntercomReactNativeExample.entitlements; path = IntercomReactNativeExample/IntercomReactNativeExample.entitlements; sourceTree = "<group>"; };
 		7D95B170267240E3008096E0 /* IntercomReactNativeExampleUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntercomReactNativeExampleUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D95B240267248C8008096E0 /* IntercomReactNativeExampleUIRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IntercomReactNativeExampleUIRelease.entitlements; sourceTree = "<group>"; };
@@ -75,6 +79,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				393D9D764EFC65E57682C939 /* PrivacyInfo.xcprivacy */,
 			);
 			name = IntercomReactNativeExample;
 			sourceTree = "<group>";
@@ -117,6 +122,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				6B9684456A2045ADE5A6E47E /* Pods */,
+				0FD10144CF9F9A85F9D7916B /* PrivacyInfo.xcprivacy */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -223,6 +229,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				DE090379E5BDFCC31EBBB1FC /* BuildFile in Resources */,
+				2B4180622838926B045C4B00 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +239,7 @@
 			files = (
 				7D95B168267240E3008096E0 /* LaunchScreen.storyboard in Resources */,
 				7D95B169267240E3008096E0 /* Images.xcassets in Resources */,
+				14650C044FFB85A4736C964C /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -651,6 +659,7 @@
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
 				USE_HERMES = false;
 			};
 			name = Debug;

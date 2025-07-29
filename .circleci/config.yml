@@ -3,7 +3,7 @@ version: 2.1
 # Default VM config to be used for macOS builds
 macos_config: &macos_config
   macos:
-    xcode: 16.0.0
+    xcode: 16.2.0
   resource_class: macos.m1.large.gen1
   shell: /bin/bash --login -eo pipefail
 
