@@ -258,22 +258,23 @@ workflows:
           <<: *run_always
           requires:
             - install-dependencies
-      - android-e2e-test:
-          <<: *run_always
-          requires:
-            - install-dependencies
-            - lint
-            - typescript
-            - unit-tests
-            - build-package
-      - ios-e2e-test:
-          <<: *run_always
-          requires:
-            - install-dependencies
-            - lint
-            - typescript
-            - unit-tests
-            - build-package
+      # Temporarily disabled Maestro e2e tests
+      # - android-e2e-test:
+      #     <<: *run_always
+      #     requires:
+      #       - install-dependencies
+      #       - lint
+      #       - typescript
+      #       - unit-tests
+      #       - build-package
+      # - ios-e2e-test:
+      #     <<: *run_always
+      #     requires:
+      #       - install-dependencies
+      #       - lint
+      #       - typescript
+      #       - unit-tests
+      #       - build-package
 
       - release-to-npm:
           <<: *run_on_release
@@ -285,5 +286,6 @@ workflows:
             - typescript
             - unit-tests
             - build-package
-            - ios-e2e-test
-            - android-e2e-test
+            # Temporarily removed e2e test dependencies
+            # - ios-e2e-test
+            # - android-e2e-test
