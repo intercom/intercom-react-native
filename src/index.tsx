@@ -106,6 +106,16 @@ export enum Space {
 
 export type IntercomType = {
   /**
+   * Initialize Intercom SDK with API key and App ID.
+   * This allows manual initialization from React Native instead of requiring native code setup.
+   *
+   * @param apiKey Your Intercom API key
+   * @param appId Your Intercom App ID
+   * @return {Promise<boolean>} A promise that resolves to true if initialization succeeds
+   */
+  initialize: (apiKey: string, appId: string) => Promise<boolean>;
+
+  /**
    * Login a unidentified user.
    * This is a user that doesn't have any identifiable information such as a `userId` or `email`.
    * @return {Promise<boolean>} A promise to the token.
@@ -312,6 +322,7 @@ export type IntercomType = {
 };
 
 const Intercom: IntercomType = {
+  initialize: (apiKey, appId) => IntercomModule.initialize(apiKey, appId),
   loginUnidentifiedUser: () => IntercomModule.loginUnidentifiedUser(),
   loginUserWithUserAttributes: (userAttributes) =>
     IntercomModule.loginUserWithUserAttributes(userAttributes),

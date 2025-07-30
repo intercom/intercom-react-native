@@ -16,6 +16,7 @@ NSString *UPDATE_USER = @"104";
 NSString *LOG_EVENT = @"105";
 NSString *UNREAD_CONVERSATION_COUNT = @"107";
 NSString *SET_USER_JWT = @"109";
+NSString *INITIALIZE_ERROR = @"110";
 NSString *SEND_TOKEN_TO_INTERCOM = @"302";
 NSString *FETCH_HELP_CENTER_COLLECTIONS = @"901";
 NSString *FETCH_HELP_CENTER_COLLECTION = @"902";
@@ -25,6 +26,20 @@ RCT_EXPORT_MODULE()
 
 - (dispatch_queue_t)methodQueue {
     return dispatch_get_main_queue();
+}
+
+RCT_EXPORT_METHOD(initialize:(NSString *)apiKey
+                  withAppId:(NSString *)appId
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    @try {
+        [IntercomModule initialize:apiKey withAppId:appId];
+        resolve(@(YES));
+        NSLog(@"Intercom initialized with API key and App ID");
+    } @catch (NSException *exception) {
+        NSLog(@"initialize error: %@", exception.reason);
+        reject(INITIALIZE_ERROR, @"Failed to initialize Intercom", nil);
+    }
 }
 
 + (void)initialize:(nonnull NSString *)apiKey withAppId:(nonnull NSString *)appId {

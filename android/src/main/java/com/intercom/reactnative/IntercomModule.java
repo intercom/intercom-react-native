@@ -526,6 +526,24 @@ public class IntercomModule extends ReactContextBaseJavaModule {
     }
   }
 
+  @ReactMethod
+  public void initialize(String apiKey, String appId, Promise promise) {
+    try {
+      Activity activity = getCurrentActivity();
+      if (activity != null) {
+        Intercom.initialize(activity.getApplication(), apiKey, appId);
+        promise.resolve(true);
+        Log.d(NAME, "Intercom initialized with API key and App ID");
+      } else {
+        promise.reject(IntercomErrorCodes.INITIALIZE_ERROR, "Activity is null");
+      }
+    } catch (Exception err) {
+      Log.e(NAME, "initialize error:");
+      Log.e(NAME, err.toString());
+      promise.reject(IntercomErrorCodes.INITIALIZE_ERROR, err.toString());
+    }
+  }
+
   public static synchronized void initialize(Application application, String apiKey, String appId) {
     String sdkVersion = BuildConfig.INTERCOM_VERSION_NAME;
     ReactNativeHeaderInterceptor.setReactNativeVersion(application.getApplicationContext(), sdkVersion);
