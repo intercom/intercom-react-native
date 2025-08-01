@@ -176,10 +176,32 @@ jobs:
       - restore_cache:
           keys:
             - pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
+
       - run:
           working_directory: example/ios
           name: Install Pods
-          command: pod install
+          command: pod install --repo-update
+
+      - run:
+          name: Run pod install
+          working_directory: example/ios
+          command: |
+            pod install
+
+      - run:
+          name: Configure Git user
+          command: |
+            git config --global user.email "github.refactorer.service.account@intercom.io"
+            git config --global user.name "refactorer-bot"
+
+      - run:
+          name: Commit and push Podfile.lock
+          command: |
+            git add example/ios/Podfile.lock
+            git commit -m "chore: update Podfile.lock"
+            git remote set-url origin https://refactorer-bot:${GH_RW_TOKEN}@github.com/intercom/intercom-react-native
+            git push origin ${CIRCLE_BRANCH}
+            echo "Podfile.lock committed and pushed"
 
       - save_cache:
           key: pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
