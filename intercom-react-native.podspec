@@ -3,6 +3,9 @@ require "json"
 
 package = JSON.parse(File.read(File.join(__dir__, "package.json")))
 
+# This is required to make install_modules_dependencies available
+require_relative 'node_modules/react-native/scripts/react_native_pods'
+
 Pod::Spec.new do |s|
   s.name         = "intercom-react-native"
   s.version      = package["version"]
@@ -19,6 +22,6 @@ Pod::Spec.new do |s|
 
   s.pod_target_xcconfig = { "DEFINES_MODULE" => "YES" }
 
-  s.dependency "React-Core"
+  install_modules_dependencies(s)
   s.dependency "Intercom", '~> 18.7.3'
 end

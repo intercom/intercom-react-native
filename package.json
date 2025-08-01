@@ -168,5 +168,13 @@
   },
   "dependencies": {
     "node-fetch": "^2.6.1"
+  },
+  "codegenConfig": {
+    "name": "intercom-react-native",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.intercom.reactnative"
+    }
   }
 }
