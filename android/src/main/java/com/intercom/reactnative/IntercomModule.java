@@ -56,7 +56,15 @@ public class IntercomModule extends ReactContextBaseJavaModule {
 
   public static boolean isIntercomPush(RemoteMessage remoteMessage) {
     try {
+      if (remoteMessage == null) {
+        Log.w(NAME, "isIntercomPush: null remoteMessage");
+        return false;
+      }
       Map message = remoteMessage.getData();
+      if (message == null) {
+        Log.w(NAME, "isIntercomPush: null message data");
+        return false;
+      }
       return intercomPushClient.isIntercomPush(message);
     } catch (Exception err) {
       Log.e(NAME, "isIntercomPush error:");
@@ -68,7 +76,15 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   public static void handleRemotePushMessage(@NonNull Application application, RemoteMessage
     remoteMessage) {
     try {
+      if (application == null || remoteMessage == null) {
+        Log.w(NAME, "handleRemotePushMessage: null application or remoteMessage");
+        return;
+      }
       Map message = remoteMessage.getData();
+      if (message == null) {
+        Log.w(NAME, "handleRemotePushMessage: null message data");
+        return;
+      }
       intercomPushClient.handlePush(application, message);
     } catch (Exception err) {
       Log.e(NAME, "handleRemotePushMessage error:");
@@ -77,8 +93,17 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   }
 
   public static void sendTokenToIntercom(Application application, @NonNull String token) {
-    intercomPushClient.sendTokenToIntercom(application, token);
-    Log.d(NAME, "sendTokenToIntercom");
+    try {
+      if (application == null || token == null || token.isEmpty()) {
+        Log.w(NAME, "sendTokenToIntercom: null application or invalid token");
+        return;
+      }
+      intercomPushClient.sendTokenToIntercom(application, token);
+      Log.d(NAME, "sendTokenToIntercom");
+    } catch (Exception err) {
+      Log.e(NAME, "sendTokenToIntercom error:");
+      Log.e(NAME, err.toString());
+    }
   }
 
   @ReactMethod
@@ -97,18 +122,23 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void sendTokenToIntercom(@NonNull String token, Promise promise) {
     try {
+      if (token == null || token.isEmpty()) {
+        Log.e(NAME, "sendTokenToIntercom: invalid token");
+        promise.reject(IntercomErrorCodes.SEND_TOKEN_TO_INTERCOM, "Invalid token");
+        return;
+      }
+      
       Activity activity = getCurrentActivity();
-      if (activity != null) {
+      if (activity != null && activity.getApplication() != null) {
         intercomPushClient.sendTokenToIntercom(activity.getApplication(), token);
         Log.d(NAME, "sendTokenToIntercom");
         promise.resolve(true);
       } else {
-        Log.e(NAME, "sendTokenToIntercom");
-        Log.e(NAME, "no current activity");
+        Log.e(NAME, "sendTokenToIntercom: no current activity or application");
+        promise.reject(IntercomErrorCodes.SEND_TOKEN_TO_INTERCOM, "No current activity");
       }
 
-    } catch (
-      Exception err) {
+    } catch (Exception err) {
       Log.e(NAME, "sendTokenToIntercom error:");
       Log.e(NAME, err.toString());
       promise.reject(IntercomErrorCodes.SEND_TOKEN_TO_INTERCOM, err.toString());
