@@ -9,5 +9,8 @@ tags:
     text: "Present Help Center"
     enabled: true
 - tapOn: "Present Help Center"
-- assertVisible: "React Native Test Article"
-- tapOn: "React Native Test Article"
+- assertVisible:
+    text: "Help"
+    timeout: 10000
+- assertVisible: "Untitled collection"
+- tapOn: "Untitled collection"
