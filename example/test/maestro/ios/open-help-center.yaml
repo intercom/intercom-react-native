@@ -11,6 +11,5 @@ tags:
 - tapOn: "Present Help Center"
 - assertVisible:
     text: "Help"
-    timeout: 10000
 - assertVisible: "Untitled collection"
 - tapOn: "Untitled collection"
