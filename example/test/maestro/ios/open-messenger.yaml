@@ -1,0 +1,12 @@
+appId: com.example.intercomreactnative
+tags:
+  - ios
+  - messenger
+---
+- launchApp
+- tapOn: "Login as an Unidentified User"
+- assertVisible:
+    text: "Present Intercom"
+    enabled: true
+- tapOn: "Present Intercom"
+- tapOn: "Messages"

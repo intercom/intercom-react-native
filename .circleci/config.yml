@@ -3,7 +3,7 @@ version: 2.1
 # Default VM config to be used for macOS builds
 macos_config: &macos_config
   macos:
-    xcode: 15.3.0
+    xcode: 16.0.0
   resource_class: macos.m1.large.gen1
   shell: /bin/bash --login -eo pipefail
 
@@ -20,7 +20,8 @@ executors:
     working_directory: ~/project
 
 orbs:
-  android: circleci/android@1.0
+  android: circleci/android@2.4.0
+  node: circleci/node@5.1.0
 
 # Always run job
 run_always: &run_always
@@ -54,18 +55,14 @@ jobs:
           name: Install dependencies
           command: |
             corepack enable
-            yarn install --cwd example
-            yarn install --cwd example/e2e
-            yarn install
+            yarn install --cwd example --ignore-engines
+            yarn install --ignore-engines
       - save_cache:
           key: dependencies-{{ checksum "package.json" }}
           paths: node_modules
       - save_cache:
           key: dependencies-example-{{ checksum "example/package.json" }}
           paths: example/node_modules
-      - save_cache:
-          key: dependencies-example-e2e-{{ checksum "example/package.json" }}
-          paths: example/e2e/node_modules
       - persist_to_workspace:
           root: .
           paths: .
@@ -115,10 +112,13 @@ jobs:
       JAVA_OPTS: '-Xms512m -Xmx1024m'
     executor:
       name: android/android-machine
+      tag: default
     working_directory: ~/project
     steps:
       - checkout:
           path: ~/project
+      - node/install:
+          node-version: 18.17.0
 
       - attach_workspace:
           at: ~/project
@@ -126,7 +126,11 @@ jobs:
       - <<: *setup_env_file
 
       - run:
-          working_directory: example/e2e
+          name: Install Maestro
+          command: curl -Ls "https://get.maestro.mobile.dev" | bash
+
+      - run:
+          working_directory: example/test
           name: Build android
           command: npm run build:android
 
@@ -141,9 +145,18 @@ jobs:
           post-emulator-launch-assemble-command: echo Emulator Started
 
       - run:
-          working_directory: example/e2e
+          name: Install app on emulator
+          command: |
+            adb install -r ~/project/example/android/app/build/outputs/apk/release/app-release.apk
+
+      - run:
+          working_directory: example/test
           name: Run UI Tests
           command: npm run test:android
+
+      - store_artifacts:
+          path: ~/.maestro/tests
+          destination: maestro-tests
 
   # Build the Test App used for UI Testing and save is to the workspace. This allows it to be used by other jobs.
   ios-e2e-test:
@@ -155,6 +168,11 @@ jobs:
 
       - <<: *setup_env_file
 
+      - run:
+          working_directory: example/e2e
+          name: Install Maestro
+          command: curl -Ls "https://get.maestro.mobile.dev" | bash
+
       - restore_cache:
           keys:
             - pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
@@ -162,21 +180,37 @@ jobs:
           working_directory: example/ios
           name: Install Pods
           command: pod install
+
       - save_cache:
           key: pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
           paths:
             - ~/project/example/ios/Pods
 
       - run:
-          working_directory: example/e2e
+          working_directory: example/test
           name: Build
           command: npm run build:ios
 
       - run:
-          working_directory: example/e2e
+          name: Create and boot iPhone 15 simulator
+          command: |
+            echo "Creating iPhone 15 simulator with runtime $RUNTIME"
+            xcrun simctl create "iPhone 15" com.apple.CoreSimulator.SimDeviceType.iPhone-15 $RUNTIME
+            xcrun simctl boot "iPhone 15" || true
+
+      - run:
+          name: Install app on simulator
+          command: |
+            xcrun simctl install booted ~/project/example/test/build/Build/Products/Release-iphonesimulator/IntercomReactNativeExampleUI.app
+
+      - run:
+          working_directory: example/test
           name: Run UI Tests
           command: npm run test:ios
 
+      - store_artifacts:
+          path: ~/.maestro/tests
+          destination: maestro-tests
 
   release-to-npm:
     executor: default
@@ -195,7 +229,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yarn install
+            yarn install --ignore-engines
 
       - run:
           name: Publish the package
@@ -224,6 +258,7 @@ workflows:
           <<: *run_always
           requires:
             - install-dependencies
+      # Temporarily disabled Maestro e2e tests
       # - android-e2e-test:
       #     <<: *run_always
       #     requires:
@@ -240,6 +275,7 @@ workflows:
       #       - typescript
       #       - unit-tests
       #       - build-package
+
       - release-to-npm:
           <<: *run_on_release
           context:
@@ -250,5 +286,6 @@ workflows:
             - typescript
             - unit-tests
             - build-package
+            # Temporarily removed e2e test dependencies
             # - ios-e2e-test
             # - android-e2e-test

@@ -1,0 +1,13 @@
+appId: com.example.intercomreactnative
+tags:
+  - android
+  - help-center
+---
+- launchApp
+- tapOn: "Login as an Unidentified User"
+- assertVisible:
+    text: "Present Help Center"
+    enabled: true
+- tapOn: "Present Help Center"
+- assertVisible: "React Native Test Article"
+- tapOn: "React Native Test Article"

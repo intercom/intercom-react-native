@@ -173,31 +173,61 @@ apply from: file("../../node_modules/@react-native-community/cli-platform-androi
 - Create `MainNotificationService.java` inside your app directory(`com.example.app`) with below content:
 
   ***Remember to replace `package com.example.app;`, with your app package name***
+  - Default Notification Behavior (Goes back to the parent default launcher activity when the user taps the notification):
 
-```java
-package com.example.app;
+    ```java
+    package com.example.app;
 
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
-import com.intercom.reactnative.IntercomModule;
+    import com.google.firebase.messaging.FirebaseMessagingService;
+    import com.google.firebase.messaging.RemoteMessage;
+    import com.intercom.reactnative.IntercomModule;
 
-public class MainNotificationService extends FirebaseMessagingService {
+    public class MainNotificationService extends FirebaseMessagingService {
 
-  @Override
-  public void onNewToken(String refreshedToken) {
-    IntercomModule.sendTokenToIntercom(getApplication(), refreshedToken);
-    //DO LOGIC HERE
-  }
+      @Override
+      public void onNewToken(String refreshedToken) {
+        IntercomModule.sendTokenToIntercom(getApplication(), refreshedToken);
+        //DO LOGIC HERE
+      }
 
-  public void onMessageReceived(RemoteMessage remoteMessage) {
-    if (IntercomModule.isIntercomPush(remoteMessage)) {
-      IntercomModule.handleRemotePushMessage(getApplication(), remoteMessage);
-    } else {
-      // HANDLE NON-INTERCOM MESSAGE
+      public void onMessageReceived(RemoteMessage remoteMessage) {
+        if (IntercomModule.isIntercomPush(remoteMessage)) {
+          IntercomModule.handleRemotePushMessage(getApplication(), remoteMessage);
+        } else {
+          // HANDLE NON-INTERCOM MESSAGE
+        }
+      }
     }
-  }
-}
-```
+    ```
+
+  - Custom Stack:
+
+    ```java
+    package com.example.app;
+
+    import com.google.firebase.messaging.FirebaseMessagingService;
+    import com.google.firebase.messaging.RemoteMessage;
+    import com.intercom.reactnative.IntercomModule;
+
+    public class MainNotificationService extends FirebaseMessagingService {
+
+      @Override
+      public void onNewToken(String refreshedToken) {
+        IntercomModule.sendTokenToIntercom(getApplication(), refreshedToken);
+        //DO LOGIC HERE
+      }
+
+      public void onMessageReceived(RemoteMessage remoteMessage) {
+        if (IntercomModule.isIntercomPush(remoteMessage)) {
+          TaskStackBuilder customStack = TaskStackBuilder.create(getApplication());
+          customStack.addNextIntent(new Intent(getApplication(), MainActivity.class)); // Replace with your custom activity
+          IntercomModule.handleRemotePushWithCustomStack(getApplication(), remoteMessage, customStack);
+        } else {
+          // HANDLE NON-INTERCOM MESSAGE
+        }
+      }
+    }
+    ```
 
 - Edit `AndroidManifest.xml`. Add below content inside `<application>` below `<activity/>`
 
@@ -222,10 +252,6 @@ public class MainNotificationService extends FirebaseMessagingService {
       </intent-filter>
     </service>
 
-    <receiver
-      android:name="com.intercom.reactnative.RNIntercomPushBroadcastReceiver"
-      tools:replace="android:exported"
-      android:exported="true"/>
     <!-- END: Add this-->
 
   </application>
@@ -1090,6 +1116,27 @@ ___
     jest.mock('@intercom/intercom-react-native', () => jest.fn());
     ```
 
+___
+
+### `Intercom.setUserJwt(JWT)`
+
+Sets a JWT token for the user, necessary for using the Messenger when Messenger Security is enforced. This is an
+improvement to Identity Verification.
+
+Secure your Messenger to make sure that bad actors can't impersonate your users, see their conversation history or make
+unauthorized updates to data.
+
+This should be called before any user login takes place.
+
+### Options
+
+| Type | Type   | Required |
+|------|--------|----------|
+| JWT  | string | yes      |
+
+### Returns
+
+`Promise<boolean>`
 ___
 
 ## Author

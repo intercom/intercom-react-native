@@ -2,6 +2,7 @@ package com.intercom.reactnative;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ import io.intercom.android.sdk.helpcenter.collections.HelpCenterCollection;
 import io.intercom.android.sdk.helpcenter.sections.HelpCenterCollectionContent;
 import io.intercom.android.sdk.identity.Registration;
 import io.intercom.android.sdk.push.IntercomPushClient;
+import android.app.TaskStackBuilder;
 
 @ReactModule(name = IntercomModule.NAME)
 public class IntercomModule extends ReactContextBaseJavaModule {
@@ -65,11 +67,25 @@ public class IntercomModule extends ReactContextBaseJavaModule {
     }
   }
 
-  public static void handleRemotePushMessage(@NonNull Application application, RemoteMessage
-    remoteMessage) {
+  public static void handleRemotePushWithCustomStack(@NonNull Application application, RemoteMessage remoteMessage,
+      TaskStackBuilder customStack) {
     try {
-      Map message = remoteMessage.getData();
-      intercomPushClient.handlePush(application, message);
+      Map<String, String> message = remoteMessage.getData();
+      intercomPushClient.handlePushWithCustomStack(application, message, customStack);
+    } catch (Exception err) {
+      Log.e(NAME, "handlePushWithCustomStack error:");
+      Log.e(NAME, err.toString());
+    }
+  }
+
+  public static void handleRemotePushMessage(@NonNull Application application, RemoteMessage remoteMessage) {
+    try {
+      TaskStackBuilder customStack = TaskStackBuilder.create(application);
+      Intent launchIntent = application.getPackageManager().getLaunchIntentForPackage(application.getPackageName());
+      if (launchIntent != null) {
+        customStack.addNextIntent(launchIntent);
+      }
+      handleRemotePushWithCustomStack(application, remoteMessage, customStack);
     } catch (Exception err) {
       Log.e(NAME, "handleRemotePushMessage error:");
       Log.e(NAME, err.toString());
@@ -107,8 +123,7 @@ public class IntercomModule extends ReactContextBaseJavaModule {
         Log.e(NAME, "no current activity");
       }
 
-    } catch (
-      Exception err) {
+    } catch (Exception err) {
       Log.e(NAME, "sendTokenToIntercom error:");
       Log.e(NAME, err.toString());
       promise.reject(IntercomErrorCodes.SEND_TOKEN_TO_INTERCOM, err.toString());
@@ -117,24 +132,25 @@ public class IntercomModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void loginUnidentifiedUser(Promise promise) {
-      Intercom.client().loginUnidentifiedUser(new IntercomStatusCallback() {
-        @Override
-        public void onSuccess() {
-          promise.resolve(true);
-        }
+    Intercom.client().loginUnidentifiedUser(new IntercomStatusCallback() {
+      @Override
+      public void onSuccess() {
+        promise.resolve(true);
+      }
 
-        @Override
-        public void onFailure(@NonNull IntercomError intercomError) {
-          Log.e("ERROR", intercomError.getErrorMessage());
-          promise.reject(String.valueOf(intercomError.getErrorCode()), intercomError.getErrorMessage());
-        }
-      });
+      @Override
+      public void onFailure(@NonNull IntercomError intercomError) {
+        Log.e("ERROR", intercomError.getErrorMessage());
+        promise.reject(String.valueOf(intercomError.getErrorCode()), intercomError.getErrorMessage());
+      }
+    });
   }
 
   @ReactMethod
   public void loginUserWithUserAttributes(ReadableMap params, Promise promise) {
     Boolean hasEmail = params.hasKey("email") && IntercomHelpers.getValueAsStringForKey(params, "email").length() > 0;
-    Boolean hasUserId = params.hasKey("userId") && IntercomHelpers.getValueAsStringForKey(params, "userId").length() > 0;
+    Boolean hasUserId = params.hasKey("userId")
+        && IntercomHelpers.getValueAsStringForKey(params, "userId").length() > 0;
     Registration registration = null;
     if (hasEmail && hasUserId) {
       String email = IntercomHelpers.getValueAsStringForKey(params, "email");
@@ -181,19 +197,19 @@ public class IntercomModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void updateUser(ReadableMap params, Promise promise) {
-      UserAttributes userAttributes = IntercomHelpers.buildUserAttributes(params);
-      Intercom.client().updateUser(userAttributes, new IntercomStatusCallback() {
-        @Override
-        public void onSuccess() {
-          promise.resolve(true);
-        }
+    UserAttributes userAttributes = IntercomHelpers.buildUserAttributes(params);
+    Intercom.client().updateUser(userAttributes, new IntercomStatusCallback() {
+      @Override
+      public void onSuccess() {
+        promise.resolve(true);
+      }
 
-        @Override
-        public void onFailure(@NonNull IntercomError intercomError) {
-          Log.e("ERROR", intercomError.getErrorMessage());
-          promise.reject(String.valueOf(intercomError.getErrorCode()), intercomError.getErrorMessage());
-        }
-      });
+      @Override
+      public void onFailure(@NonNull IntercomError intercomError) {
+        Log.e("ERROR", intercomError.getErrorMessage());
+        promise.reject(String.valueOf(intercomError.getErrorCode()), intercomError.getErrorMessage());
+      }
+    });
   }
 
   @ReactMethod
@@ -358,7 +374,6 @@ public class IntercomModule extends ReactContextBaseJavaModule {
     }
   }
 
-
   @ReactMethod
   public void fetchHelpCenterCollections(Promise promise) {
     try {
@@ -400,7 +415,8 @@ public class IntercomModule extends ReactContextBaseJavaModule {
         CollectionContentRequestCallback collectionContentCallback = new CollectionContentRequestCallback() {
           @Override
           public void onComplete(@NotNull HelpCenterCollectionContent helpCenterCollectionContent) {
-            promise.resolve(IntercomHelpCenterHelpers.parseHelpCenterCollectionsContentToReadableMap(helpCenterCollectionContent));
+            promise.resolve(
+                IntercomHelpCenterHelpers.parseHelpCenterCollectionsContentToReadableMap(helpCenterCollectionContent));
           }
 
           @Override
@@ -435,7 +451,8 @@ public class IntercomModule extends ReactContextBaseJavaModule {
         SearchRequestCallback collectionContentCallback = new SearchRequestCallback() {
           @Override
           public void onComplete(@NotNull List<HelpCenterArticleSearchResult> helpCenterArticleSearchResult) {
-            promise.resolve(IntercomHelpCenterHelpers.parseHelpCenterArticleSearchToReadableArray(helpCenterArticleSearchResult));
+            promise.resolve(
+                IntercomHelpCenterHelpers.parseHelpCenterArticleSearchToReadableArray(helpCenterArticleSearchResult));
           }
 
           @Override
@@ -510,6 +527,19 @@ public class IntercomModule extends ReactContextBaseJavaModule {
       Log.e(NAME, "setBottomPadding error:");
       Log.e(NAME, err.toString());
       promise.reject(IntercomErrorCodes.SET_BOTTOM_PADDING, err.toString());
+    }
+  }
+
+  @ReactMethod
+  public void setUserJwt(String jwt, Promise promise) {
+    try {
+      Intercom.client().setUserJwt(jwt);
+      Log.d(NAME, "Setting JWT");
+      promise.resolve(true);
+    } catch (Exception err) {
+      Log.e(NAME, "Error Setting JWT:");
+      Log.e(NAME, err.toString());
+      promise.reject(IntercomErrorCodes.SET_USER_JWT, err.toString());
     }
   }
 

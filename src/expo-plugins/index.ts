@@ -8,6 +8,8 @@ import {
   withMainApplication,
 } from '@expo/config-plugins';
 
+import { mergeContents } from '@expo/config-plugins/build/utils/generateCode';
+
 import {
   addImports,
   appendContentsInsideDeclarationBlock,
@@ -15,6 +17,7 @@ import {
 import {
   addObjcImports,
   insertContentsInsideObjcFunctionBlock,
+  insertContentsInsideSwiftFunctionBlock,
 } from '@expo/config-plugins/build/ios/codeMod';
 import type { IntercomPluginProps, IntercomRegion } from './@types';
 import { withIntercomPushNotification } from './withPushNotifications';
@@ -92,20 +95,40 @@ const withIntercomAndroid: ConfigPlugin<IntercomPluginProps> = (
 const appDelegate: ConfigPlugin<IntercomPluginProps> = (_config, props) =>
   withAppDelegate(_config, (config) => {
     let stringContents = config.modResults.contents;
-    stringContents = addObjcImports(stringContents, ['<IntercomModule.h>']);
+    const isSwift = config.modResults.language === 'swift';
+
+    stringContents = isSwift
+      ? mergeContents({
+          src: stringContents,
+          newSrc: 'import intercom_react_native',
+          comment: '//',
+          tag: 'Intercom header',
+          anchor: /import Expo/,
+          offset: 1,
+        }).contents
+      : addObjcImports(stringContents, ['<IntercomModule.h>']);
 
     // Remove previous code
-    stringContents = stringContents.replace(
-      /\s*\[IntercomModule initialize:@"(.*)" withAppId:@"(.*)"];/g,
-      ''
-    );
+    stringContents = stringContents
+      .replace(
+        /\s*\[IntercomModule initialize:@"(.*)" withAppId:@"(.*)"];/g,
+        ''
+      )
+      .replace(/\s*IntercomModule\.initialize\((.*), withAppId: (.*)\)/g, '');
 
-    stringContents = insertContentsInsideObjcFunctionBlock(
-      stringContents,
-      'application didFinishLaunchingWithOptions:',
-      `[IntercomModule initialize:@"${props.iosApiKey}" withAppId:@"${props.appId}"];`,
-      { position: 'tailBeforeLastReturn' }
-    );
+    stringContents = isSwift
+      ? insertContentsInsideSwiftFunctionBlock(
+          stringContents,
+          'application(_:didFinishLaunchingWithOptions:)',
+          `IntercomModule.initialize("${props.iosApiKey}", withAppId: "${props.appId}")`,
+          { position: 'tailBeforeLastReturn' }
+        )
+      : insertContentsInsideObjcFunctionBlock(
+          stringContents,
+          'application didFinishLaunchingWithOptions:',
+          `[IntercomModule initialize:@"${props.iosApiKey}" withAppId:@"${props.appId}"];`,
+          { position: 'tailBeforeLastReturn' }
+        );
 
     config.modResults.contents = stringContents;
     return config;
