@@ -173,31 +173,61 @@ apply from: file("../../node_modules/@react-native-community/cli-platform-androi
 - Create `MainNotificationService.java` inside your app directory(`com.example.app`) with below content:
 
   ***Remember to replace `package com.example.app;`, with your app package name***
+  - Default Notification Behavior (Goes back to the parent default launcher activity when the user taps the notification):
 
-```java
-package com.example.app;
+    ```java
+    package com.example.app;
 
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
-import com.intercom.reactnative.IntercomModule;
+    import com.google.firebase.messaging.FirebaseMessagingService;
+    import com.google.firebase.messaging.RemoteMessage;
+    import com.intercom.reactnative.IntercomModule;
 
-public class MainNotificationService extends FirebaseMessagingService {
+    public class MainNotificationService extends FirebaseMessagingService {
 
-  @Override
-  public void onNewToken(String refreshedToken) {
-    IntercomModule.sendTokenToIntercom(getApplication(), refreshedToken);
-    //DO LOGIC HERE
-  }
+      @Override
+      public void onNewToken(String refreshedToken) {
+        IntercomModule.sendTokenToIntercom(getApplication(), refreshedToken);
+        //DO LOGIC HERE
+      }
 
-  public void onMessageReceived(RemoteMessage remoteMessage) {
-    if (IntercomModule.isIntercomPush(remoteMessage)) {
-      IntercomModule.handleRemotePushMessage(getApplication(), remoteMessage);
-    } else {
-      // HANDLE NON-INTERCOM MESSAGE
+      public void onMessageReceived(RemoteMessage remoteMessage) {
+        if (IntercomModule.isIntercomPush(remoteMessage)) {
+          IntercomModule.handleRemotePushMessage(getApplication(), remoteMessage);
+        } else {
+          // HANDLE NON-INTERCOM MESSAGE
+        }
+      }
     }
-  }
-}
-```
+    ```
+
+  - Custom Stack:
+
+    ```java
+    package com.example.app;
+
+    import com.google.firebase.messaging.FirebaseMessagingService;
+    import com.google.firebase.messaging.RemoteMessage;
+    import com.intercom.reactnative.IntercomModule;
+
+    public class MainNotificationService extends FirebaseMessagingService {
+
+      @Override
+      public void onNewToken(String refreshedToken) {
+        IntercomModule.sendTokenToIntercom(getApplication(), refreshedToken);
+        //DO LOGIC HERE
+      }
+
+      public void onMessageReceived(RemoteMessage remoteMessage) {
+        if (IntercomModule.isIntercomPush(remoteMessage)) {
+          TaskStackBuilder customStack = TaskStackBuilder.create(getApplication());
+          customStack.addNextIntent(new Intent(getApplication(), MainActivity.class)); // Replace with your custom activity
+          IntercomModule.handleRemotePushWithCustomStack(getApplication(), remoteMessage, customStack);
+        } else {
+          // HANDLE NON-INTERCOM MESSAGE
+        }
+      }
+    }
+    ```
 
 - Edit `AndroidManifest.xml`. Add below content inside `<application>` below `<activity/>`
 
