@@ -26,6 +26,14 @@ export enum LogLevel {
 
 type LogLevelType = keyof typeof LogLevel;
 
+export enum ThemeMode {
+  LIGHT = 'LIGHT',
+  DARK = 'DARK',
+  SYSTEM = 'SYSTEM',
+}
+
+type ThemeModeType = keyof typeof ThemeMode;
+
 export const IntercomEvents = {
   IntercomUnreadCountDidChange:
     IntercomEventEmitter.UNREAD_COUNT_CHANGE_NOTIFICATION,
@@ -291,6 +299,17 @@ export type IntercomType = {
   setLogLevel(logLevel: LogLevelType): Promise<boolean>;
 
   /**
+   * Sets the theme mode for the Intercom SDK.
+   *
+   * This allows you to override the server-provided theme setting for the current session only.
+   * The theme mode controls whether the SDK displays in light mode, dark mode, or follows the system theme.
+   * The theme selection will be reset when the app restarts.
+   *
+   * @param themeMode The theme mode to set (LIGHT, DARK, or SYSTEM).
+   */
+  setThemeMode(themeMode: ThemeModeType): Promise<boolean>;
+
+  /**
    Sets a JWT token for the user, necessary for using the Messenger
    when Messenger Security is enforced. This is an improvement to Identity Verification.
 
@@ -358,6 +377,7 @@ const Intercom: IntercomType = {
 
   sendTokenToIntercom: (token) => IntercomModule.sendTokenToIntercom(token),
   setLogLevel: (logLevel) => IntercomModule.setLogLevel(logLevel),
+  setThemeMode: (themeMode) => IntercomModule.setThemeMode(themeMode),
   setUserJwt: (jwt) => IntercomModule.setUserJwt(jwt),
   addEventListener: (event, callback) => {
     event === IntercomEvents.IntercomUnreadCountDidChange &&

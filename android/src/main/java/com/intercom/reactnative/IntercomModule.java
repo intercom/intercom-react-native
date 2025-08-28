@@ -38,6 +38,7 @@ import io.intercom.android.sdk.helpcenter.collections.HelpCenterCollection;
 import io.intercom.android.sdk.helpcenter.sections.HelpCenterCollectionContent;
 import io.intercom.android.sdk.identity.Registration;
 import io.intercom.android.sdk.push.IntercomPushClient;
+import io.intercom.android.sdk.ui.theme.ThemeMode;
 import android.app.TaskStackBuilder;
 
 @ReactModule(name = IntercomModule.NAME)
@@ -527,6 +528,42 @@ public class IntercomModule extends ReactContextBaseJavaModule {
       Log.e(NAME, "setBottomPadding error:");
       Log.e(NAME, err.toString());
       promise.reject(IntercomErrorCodes.SET_BOTTOM_PADDING, err.toString());
+    }
+  }
+
+  @ReactMethod
+  public void setThemeMode(String themeMode, Promise promise) {
+    try {
+      ThemeMode themeModeEnum = null;
+
+      if (themeMode == null || themeMode.trim().isEmpty()) {
+        promise.reject(IntercomErrorCodes.SET_THEME_MODE,
+            "Theme mode cannot be null or empty. Use 'LIGHT', 'DARK', or 'SYSTEM'.");
+        return;
+      }
+
+      switch (themeMode) {
+        case "SYSTEM":
+          themeModeEnum = ThemeMode.SYSTEM;
+          break;
+        case "LIGHT":
+          themeModeEnum = ThemeMode.LIGHT;
+          break;
+        case "DARK":
+          themeModeEnum = ThemeMode.DARK;
+          break;
+        default:
+          promise.reject(IntercomErrorCodes.SET_THEME_MODE,
+              "Invalid theme mode: '" + themeMode + "'. Use 'LIGHT', 'DARK', or 'SYSTEM'.");
+          return;
+      }
+
+      Intercom.client().setThemeMode(themeModeEnum);
+      promise.resolve(true);
+    } catch (Exception err) {
+      Log.e(NAME, "setThemeMode error:");
+      Log.e(NAME, err.toString());
+      promise.reject(IntercomErrorCodes.SET_THEME_MODE, "Error in setThemeMode: " + err.toString());
     }
   }
 

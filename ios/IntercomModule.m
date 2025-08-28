@@ -365,6 +365,35 @@ RCT_EXPORT_METHOD(setNeedsStatusBarAppearanceUpdate:(RCTPromiseResolveBlock)reso
     resolve(@(YES));
 };
 
+RCT_EXPORT_METHOD(setThemeMode:(NSString *)themeMode
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    @try {
+        if (themeMode == nil || [themeMode isKindOfClass:[NSNull class]] || [themeMode length] == 0) {
+            reject(@"SET_THEME_MODE", @"Theme mode cannot be null or empty. Use 'LIGHT', 'DARK', or 'SYSTEM'.", nil);
+            return;
+        }
+
+        ICMThemeOverride themeOverride;
+
+        if ([themeMode isEqualToString:@"LIGHT"]) {
+            themeOverride = ICMThemeOverrideLight;
+        } else if ([themeMode isEqualToString:@"DARK"]) {
+            themeOverride = ICMThemeOverrideDark;
+        } else if ([themeMode isEqualToString:@"SYSTEM"]) {
+            themeOverride = ICMThemeOverrideSystem;
+        } else {
+            reject(@"SET_THEME_MODE", [NSString stringWithFormat:@"Invalid theme mode: '%@'. Use 'LIGHT', 'DARK', or 'SYSTEM'.", themeMode], nil);
+            return;
+        }
+
+        [Intercom setThemeOverride:themeOverride];
+        resolve(@(YES));
+    } @catch (NSException *exception) {
+        reject(@"SET_THEME_MODE", @"Error in setThemeMode", [self exceptionToError:exception :@"SET_THEME_MODE" :@"setThemeMode"]);
+    }
+};
+
 - (NSError *)exceptionToError:(NSException *)exception :(NSString *)code :(NSString *)domain {
     NSMutableDictionary *info = [NSMutableDictionary dictionary];
     [info setValue:exception.name forKey:@"ExceptionName"];

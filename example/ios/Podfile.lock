@@ -5,7 +5,7 @@ PODS:
   - fmt (9.1.0)
   - glog (0.3.5)
   - Intercom (19.1.2)
-  - intercom-react-native (8.7.0):
+  - intercom-react-native (8.8.0):
     - Intercom (~> 19.1.2)
     - React-Core
   - RCT-Folly (2024.01.01.00):
@@ -915,8 +915,6 @@ PODS:
     - react-native-config/App (= 1.5.7)
   - react-native-config/App (1.5.7):
     - React-Core
-  - react-native-notifications (5.1.0):
-    - React-Core
   - React-nativeconfig (0.74.0)
   - React-NativeModulesApple (0.74.0):
     - glog
@@ -1167,7 +1165,6 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - react-native-config (from `../node_modules/react-native-config`)
-  - react-native-notifications (from `../node_modules/react-native-notifications`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -1261,8 +1258,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   react-native-config:
     :path: "../node_modules/react-native-config"
-  react-native-notifications:
-    :path: "../node_modules/react-native-notifications"
   React-nativeconfig:
     :path: "../node_modules/react-native/ReactCommon"
   React-NativeModulesApple:
@@ -1319,14 +1314,14 @@ SPEC CHECKSUMS:
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
   glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
   Intercom: 0643528ea72515fb47096ad38fe455780441881b
-  intercom-react-native: 13c59dd7882e6b60a1d23e4071210c1a828e5d98
+  intercom-react-native: 15a322d6032f91058563a02e049f4d7246aad1a0
   RCT-Folly: 5f972de9f7d384c7d0e7380dd7da506228e568f5
   RCTDeprecation: 3ca8b6c36bfb302e1895b72cfe7db0de0c92cd47
   RCTRequired: 9fc183af555fd0c89a366c34c1ae70b7e03b1dc5
   RCTTypeSafety: db1dd5ad1081a5e160d30bb29ef922693d5ac4b1
   React: 8650d592d90b99097504b8dcfebab883972aed71
   React-callinvoker: 6bb8b399ab8cec59e52458c3a592aa1fca130b68
-  React-Codegen: 253c0e9d0326adb08ee46e6941199ad47370038b
+  React-Codegen: fbad87d0dc7c5bc1536b25bc5cf2f19a1449e438
   React-Core: ab1b60c382b7b79c374b68918f856826ec7f02a9
   React-CoreModules: c5791800e490979b15b819e13ceaee42aa4a2672
   React-cxxreact: 7a5de9c31527a3a36b02caa3540ab55080a6448a
@@ -1345,7 +1340,6 @@ SPEC CHECKSUMS:
   React-logger: 5ae0978955199c132e71e8cf7797f619a6d17164
   React-Mapbuffer: 3b85b3778e447cd1f06d353b8e967af50f272829
   react-native-config: 963b5efabc864cf69412e54b5de49b6a23e4af03
-  react-native-notifications: 3bafa1237ae8a47569a84801f17d80242fe9f6a5
   React-nativeconfig: 951ec32f632e81cbd7d40aebb3211313251c092e
   React-NativeModulesApple: 612f931b1e79736f2d59353979042a424fb314c8
   React-perflogger: 271f1111779fef70f9502d1d38da5132e5585230

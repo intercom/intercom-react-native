@@ -18,6 +18,7 @@ import Intercom, {
   type UserAttributes,
   Visibility,
   IntercomContent,
+  ThemeMode,
 } from '@intercom/intercom-react-native';
 
 import {
@@ -48,6 +49,7 @@ export default function App() {
     useState<boolean>(true);
   const [launcherVisibility, setLauncherVisibility] = useState<boolean>(false);
   const [user, setUser] = useState<UserAttributes>({ email: '' });
+  const [currentTheme, setCurrentTheme] = useState<ThemeMode>(ThemeMode.SYSTEM);
 
   const [conversationId, setConversationId] = useState<string | undefined>(
     CONVERSATION_ID
@@ -580,6 +582,54 @@ export default function App() {
           intercom_title="Reset Attributes"
           intercom_onPress={() => {
             resetAttributes();
+          }}
+        />
+        <Button
+          intercom_accessibilityLabel="set-theme-light"
+          intercom_title={`Set Theme: Light ${
+            currentTheme === 'LIGHT' ? '✓' : ''
+          }`}
+          intercom_onPress={() => {
+            Intercom.setThemeMode(ThemeMode.LIGHT)
+              .then(() => {
+                setCurrentTheme(ThemeMode.LIGHT);
+              })
+              .catch((e) => {
+                showErrorAlert(e);
+                console.error(e);
+              });
+          }}
+        />
+        <Button
+          intercom_accessibilityLabel="set-theme-dark"
+          intercom_title={`Set Theme: Dark ${
+            currentTheme === 'DARK' ? '✓' : ''
+          }`}
+          intercom_onPress={() => {
+            Intercom.setThemeMode(ThemeMode.DARK)
+              .then(() => {
+                setCurrentTheme(ThemeMode.DARK);
+              })
+              .catch((e) => {
+                showErrorAlert(e);
+                console.error(e);
+              });
+          }}
+        />
+        <Button
+          intercom_accessibilityLabel="set-theme-system"
+          intercom_title={`Set Theme: System ${
+            currentTheme === 'SYSTEM' ? '✓' : ''
+          }`}
+          intercom_onPress={() => {
+            Intercom.setThemeMode(ThemeMode.SYSTEM)
+              .then(() => {
+                setCurrentTheme(ThemeMode.SYSTEM);
+              })
+              .catch((e) => {
+                showErrorAlert(e);
+                console.error(e);
+              });
           }}
         />
         <Button
