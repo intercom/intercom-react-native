@@ -1022,37 +1022,48 @@ Set the level of the native logger
 `Promise<boolean>`
 ___
 
-### `Intercom.addEventListener(event,callback)`
+### `Intercom.bootstrapEventListeners()`
 
-Sets a listener for listed events:
-
-| Event    | Platform        |
-| ------- | --------    |
-| IntercomUnreadConversationCountDidChangeNotification| IOS, Android  |
-| IntercomHelpCenterDidShowNotification| IOS  |
-| IntercomHelpCenterDidHideNotification| IOS  |
-| IntercomWindowDidShowNotification| IOS  |      |
-| IntercomWindowDidHideNotification| IOS  |
-
-```javascript
-useEffect(() => {
-  const listener = Intercom.addEventListener('IntercomUnreadConversationCountDidChangeNotification', ({count}) => alert(count));
-  return () => {
-    listener.remove();
-  }
-}, [])
-```
-
-### Options
-
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| event| string (`IntercomEvents`)  |yes        |
-| callback| function `({count?: number, visible?: boolean}) => void`  |yes        |
+Bootstrap event listeners (Only for Android). This handles platform-specific setup and returns a cleanup function.
+This must be called before setting up your own NativeEventEmitter.
 
 ### Returns
 
-`EmitterSubscription`
+`() => void` - Cleanup function
+
+### Usage
+
+```javascript
+import { NativeEventEmitter, NativeModules } from 'react-native';
+import Intercom, { IntercomEvents } from '@intercom/intercom-react-native';
+
+useEffect(() => {
+  const cleanupIntercomEventListeners = Intercom.bootstrapEventListeners();
+
+  const eventEmitter = new NativeEventEmitter(NativeModules.IntercomEventEmitter);
+
+  // Listen to unread conversation count changes
+  const unreadCountEventName = IntercomEvents.IntercomUnreadCountDidChange;
+  const countListener = eventEmitter.addListener(unreadCountEventName, (response) => {
+    console.log('Unread count:', response.count);
+  });
+
+  return () => {
+    countListener.remove();
+    cleanupIntercomEventListeners();
+  };
+}, []);
+```
+
+### Available Events
+
+| Event    | Platform        |
+| ------- | --------    |
+| IntercomUnreadConversationCountDidChangeNotification| iOS, Android  |
+| IntercomHelpCenterDidShowNotification| iOS  |
+| IntercomHelpCenterDidHideNotification| iOS  |
+| IntercomWindowDidShowNotification| iOS  |
+| IntercomWindowDidHideNotification| iOS  |
 
 ___
 ### Types

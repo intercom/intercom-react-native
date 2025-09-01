@@ -1,9 +1,4 @@
-import {
-  NativeModules,
-  NativeEventEmitter,
-  Platform,
-  type EmitterSubscription,
-} from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 
 const { IntercomModule, IntercomEventEmitter } = NativeModules;
 
@@ -44,11 +39,6 @@ export const IntercomEvents = {
   IntercomHelpCenterWindowDidHide:
     IntercomEventEmitter.WINDOW_DID_HIDE_NOTIFICATION,
 };
-
-type EventType =
-  | 'IntercomUnreadConversationCountDidChangeNotification'
-  | 'IntercomWindowDidHideNotification'
-  | 'IntercomWindowDidShowNotification';
 
 export type CustomAttributes = {
   [key: string]: boolean | string | number;
@@ -324,12 +314,11 @@ export type IntercomType = {
   setUserJwt(JWT: String): Promise<boolean>;
 
   /**
-   * Add an event listener for the supported event types.
+   * [Android Only] Bootstrap event listeners for Android. Call this before setting up your own NativeEventEmitter
+   *
+   * @returns cleanup function for Android
    */
-  addEventListener: (
-    event: EventType,
-    callback: (response: { count?: number; visible: boolean }) => void
-  ) => EmitterSubscription;
+  bootstrapEventListeners: () => () => void;
 };
 
 const Intercom: IntercomType = {
@@ -379,20 +368,17 @@ const Intercom: IntercomType = {
   setLogLevel: (logLevel) => IntercomModule.setLogLevel(logLevel),
   setThemeMode: (themeMode) => IntercomModule.setThemeMode(themeMode),
   setUserJwt: (jwt) => IntercomModule.setUserJwt(jwt),
-  addEventListener: (event, callback) => {
-    event === IntercomEvents.IntercomUnreadCountDidChange &&
-      Platform.OS === 'android' &&
+
+  bootstrapEventListeners: () => {
+    if (Platform.OS === 'android') {
       IntercomEventEmitter.startEventListener();
-    const eventEmitter = new NativeEventEmitter(IntercomEventEmitter);
-    const listener = eventEmitter.addListener(event, callback);
-    const originalRemove = listener.remove;
-    listener.remove = () => {
-      event === IntercomEvents.IntercomUnreadCountDidChange &&
-        Platform.OS === 'android' &&
+    }
+
+    return () => {
+      if (Platform.OS === 'android') {
         IntercomEventEmitter.removeEventListener();
-      originalRemove();
+      }
     };
-    return listener;
   },
 };
 

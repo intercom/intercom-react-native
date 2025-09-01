@@ -5,6 +5,8 @@ import {
   AppState,
   Image,
   Linking,
+  NativeEventEmitter,
+  NativeModules,
   Platform,
   ScrollView,
   StatusBar,
@@ -13,11 +15,11 @@ import {
   View,
 } from 'react-native';
 import Intercom, {
-  IntercomEvents,
   Space,
   type UserAttributes,
   Visibility,
   IntercomContent,
+  IntercomEvents,
   ThemeMode,
 } from '@intercom/intercom-react-native';
 
@@ -156,10 +158,20 @@ export default function App() {
       .catch((e) => console.log(e));
 
     /**
-     * Handle message count changed
+     * Bootstrap Intercom event listeners
      */
-    const countListener = Intercom.addEventListener(
-      IntercomEvents.IntercomUnreadCountDidChange,
+    const cleanupIntercomEventListeners = Intercom.bootstrapEventListeners();
+
+    const eventEmitter = new NativeEventEmitter(
+      NativeModules.IntercomEventEmitter
+    );
+
+    /**
+     * Unread notification count changed listener
+     */
+    const unreadCountEventName = IntercomEvents.IntercomUnreadCountDidChange;
+    const countListener = eventEmitter.addListener(
+      unreadCountEventName,
       (response) => {
         setCount(response.count as number);
       }
@@ -167,6 +179,7 @@ export default function App() {
 
     return () => {
       countListener.remove();
+      cleanupIntercomEventListeners();
 
       // @ts-ignore - type definitions haven't been updated to 0.65 yet
       urlListener.remove(); // <- for RN 0.65+
