@@ -20,13 +20,20 @@ buildscript {
 
     dependencies {
       classpath("com.android.tools.build:gradle:8.6.1")
-      classpath("com.facebook.react:react-native-gradle-plugin")
       classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
     }
   }
 }
 
 apply plugin: 'com.android.library'
+
+def isNewArchitectureEnabled() {
+  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+}
+
+if (isNewArchitectureEnabled()) {
+  apply plugin: "com.facebook.react"
+}
 
 def safeExtGet(prop, fallback) {
   rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
@@ -52,6 +59,18 @@ android {
   }
   lintOptions {
     disable 'GradleCompatible'
+  }
+  buildFeatures {
+    buildConfig true
+  }
+  sourceSets {
+    main {
+      if (isNewArchitectureEnabled()) {
+        java.srcDirs += ["src/newarch"]
+      } else {
+        java.srcDirs += ["src/oldarch"]
+      }
+    }
   }
 }
 

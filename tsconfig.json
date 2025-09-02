@@ -4,7 +4,7 @@
     "paths": {
       "@intercom/intercom-react-native": ["./src/index"],
     },
-    "types": ["node", "mocha", "@wdio/globals/types", "@wdio/mocha-framework"],
+    "types": ["node"],
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "esModuleInterop": true,

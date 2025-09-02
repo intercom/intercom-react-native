@@ -1,6 +1,25 @@
-import { NativeModules, Platform } from 'react-native';
+import { Platform } from 'react-native';
+import { IntercomModule, IntercomEventEmitter } from './nativeModules';
+import type {
+  MetaData,
+  HelpCenterCollectionItem,
+  HelpCenterCollectionContent,
+  HelpCenterArticleSearchResult,
+} from './types';
+import type { UserAttributes } from './NativeIntercomSpec';
 
-const { IntercomModule, IntercomEventEmitter } = NativeModules;
+export type {
+  Company,
+  CustomAttributes,
+  MetaData,
+  HelpCenterArticle,
+  HelpCenterSection,
+  HelpCenterCollectionItem,
+  HelpCenterCollectionContent,
+  HelpCenterArticleSearchResult,
+} from './types';
+
+export type { UserAttributes } from './NativeIntercomSpec';
 
 export enum Visibility {
   GONE = 'GONE',
@@ -38,61 +57,6 @@ export const IntercomEvents = {
     IntercomEventEmitter.WINDOW_DID_SHOW_NOTIFICATION,
   IntercomHelpCenterWindowDidHide:
     IntercomEventEmitter.WINDOW_DID_HIDE_NOTIFICATION,
-};
-
-export type CustomAttributes = {
-  [key: string]: boolean | string | number;
-};
-export type MetaData = {
-  [key: string]: any;
-};
-
-export type UserAttributes = {
-  companies?: Company[];
-  customAttributes?: CustomAttributes;
-  email?: string;
-  languageOverride?: string;
-  name?: string;
-  phone?: string;
-  signedUpAt?: number;
-  unsubscribedFromEmails?: boolean;
-  userId?: string;
-};
-
-export type Company = {
-  createdAt?: number;
-  customAttributes?: CustomAttributes;
-  id: string;
-  monthlySpend?: number;
-  name?: string;
-  plan?: string;
-};
-
-export type HelpCenterArticle = {
-  id: string;
-  title: string;
-};
-export type HelpCenterSection = {
-  title: string;
-  articles: HelpCenterArticle;
-};
-export type HelpCenterCollectionItem = {
-  id: string;
-  title: string;
-  summary: string;
-};
-export type HelpCenterCollectionContent = {
-  id: string;
-  title: string;
-  summary: string;
-  articles: HelpCenterArticle[];
-  sections: HelpCenterSection[];
-};
-export type HelpCenterArticleSearchResult = {
-  id: string;
-  title: string;
-  matchingSnippet: string;
-  summary: string;
 };
 
 export enum Space {
@@ -311,7 +275,7 @@ export type IntercomType = {
    Parameters:
    - jwt: A JWT token signed with your app's secret key.
    */
-  setUserJwt(JWT: String): Promise<boolean>;
+  setUserJwt(jwt: string): Promise<boolean>;
 
   /**
    * [Android Only] Bootstrap event listeners for Android. Call this before setting up your own NativeEventEmitter
@@ -370,12 +334,15 @@ const Intercom: IntercomType = {
   setUserJwt: (jwt) => IntercomModule.setUserJwt(jwt),
 
   bootstrapEventListeners: () => {
-    if (Platform.OS === 'android') {
+    if (Platform.OS === 'android' && IntercomEventEmitter?.startEventListener) {
       IntercomEventEmitter.startEventListener();
     }
 
     return () => {
-      if (Platform.OS === 'android') {
+      if (
+        Platform.OS === 'android' &&
+        IntercomEventEmitter?.removeEventListener
+      ) {
         IntercomEventEmitter.removeEventListener();
       }
     };

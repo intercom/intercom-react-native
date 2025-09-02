@@ -55,8 +55,7 @@ jobs:
           name: Install dependencies
           command: |
             corepack enable
-            yarn install --cwd example --ignore-engines
-            yarn install --ignore-engines
+            yarn install
       - save_cache:
           key: dependencies-{{ checksum "package.json" }}
           paths: node_modules
@@ -118,7 +117,7 @@ jobs:
       - checkout:
           path: ~/project
       - node/install:
-          node-version: 18.17.0
+          node-version: 22.14.0
 
       - attach_workspace:
           at: ~/project
@@ -189,7 +188,7 @@ jobs:
       - run:
           working_directory: example/test
           name: Build
-          command: npm run build:ios
+          command: yarn run build:ios
 
       - run:
           name: Create and boot iPhone 15 simulator
@@ -206,7 +205,7 @@ jobs:
       - run:
           working_directory: example/test
           name: Run UI Tests
-          command: npm run test:ios
+          command: yarn run test:ios
 
       - store_artifacts:
           path: ~/.maestro/tests
@@ -229,7 +228,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yarn install --ignore-engines
+            yarn install
 
       - run:
           name: Publish the package

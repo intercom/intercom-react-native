@@ -2,30 +2,44 @@
   "name": "@intercom/intercom-react-native",
   "version": "9.0.0-beta.1",
   "description": "React Native wrapper to bridge our iOS and Android SDK",
-  "main": "lib/commonjs/index",
-  "module": "lib/module/index",
-  "types": "lib/typescript/index.d.ts",
-  "react-native": "src/index",
-  "source": "src/index",
+  "main": "./lib/module/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/index.d.ts",
+  "source": "./src/index.tsx",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/index.d.ts",
+      "default": "./lib/module/index.js",
+      "require": "./lib/commonjs/index.js",
+      "import": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
     "src",
     "lib",
     "android",
     "ios",
     "cpp",
-    "app.plugin.js",
-    "intercom-react-native.podspec",
-    "!lib/typescript/example",
-    "!android/build",
+    "*.podspec",
+    "react-native.config.js",
     "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
     "!**/__tests__",
     "!**/__fixtures__",
-    "!**/__mocks__"
+    "!**/__mocks__",
+    "!**/.*"
   ],
   "scripts": {
     "test": "jest",
     "typescript": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
@@ -58,10 +72,8 @@
     "@react-native-community/eslint-config": "3.2.0",
     "@react-native/typescript-config": "0.73.1",
     "@types/jest": "29.5.12",
-    "@types/mocha": "10.0.6",
     "@types/react": "18.2.6",
-    "@wdio/globals": "9.5.1",
-    "@wdio/mocha-framework": "8.33.1",
+    "del-cli": "^5.1.0",
     "eslint": "8.19.0",
     "eslint-config-prettier": "8.10.0",
     "eslint-plugin-prettier": "5.1.3",
@@ -70,15 +82,17 @@
     "pod-install": "0.2.0",
     "prettier": "3.0.0",
     "react": "18.2.0",
-    "react-native": "^0.74.0",
+    "react-native": "^0.81.0",
     "react-native-builder-bob": "0.23.2",
-    "typescript": "5.0.4",
-    "webdriverio": "9.5.1"
+    "typescript": "5.0.4"
   },
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
   },
+  "workspaces": [
+    "example"
+  ],
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
@@ -129,7 +143,12 @@
     "output": "lib",
     "targets": [
       "commonjs",
-      "module",
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
       [
         "typescript",
         {
@@ -138,35 +157,17 @@
       ]
     ]
   },
-  "packageManager": "yarn@1.22.22",
-  "resolutions": {
-    "@types/react": "18.2.6",
-    "string-width": "4.2.3",
-    "wrap-ansi": "7.0.0",
-    "undici": "6.21.3",
-    "**/undici": "6.21.3",
-    "webdriverio/cheerio/undici": "6.21.3",
-    "webdriverio/webdriver/undici": "6.21.3",
-    "@wdio/mocha-framework/**/undici": "6.21.3",
-    "@wdio/globals/**/undici": "6.21.3",
-    "cheerio": "1.0.0",
-    "**/@types/node": "20.12.12",
-    "**/glob": "8.1.0",
-    "**/rimraf": "3.0.2"
-  },
-  "overrides": {
-    "@types/react": "18.2.6",
-    "string-width": "4.2.3",
-    "wrap-ansi": "7.0.0",
-    "undici": "6.21.3",
-    "@types/node": "20.12.12",
-    "glob": "8.1.0",
-    "rimraf": "3.0.2"
-  },
+  "packageManager": "yarn@3.6.1",
   "engines": {
-    "node": ">=18"
+    "node": ">=18",
+    "yarn": ">=3"
   },
-  "dependencies": {
-    "node-fetch": "^2.6.1"
+  "codegenConfig": {
+    "name": "IntercomReactNativeSpec",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.intercom.reactnative"
+    }
   }
 }
