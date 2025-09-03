@@ -37,13 +37,16 @@ const mainApplication: ConfigPlugin<IntercomPluginProps> = (_config, props) =>
       ''
     );
 
-    stringContents = appendContentsInsideDeclarationBlock(
-      stringContents,
-      'onCreate',
-      `IntercomModule.initialize(this, "${props.androidApiKey}", "${
-        props.appId
-      }")${config.modResults.language === 'java' ? ';' : ''}\n`
-    );
+    // Only auto-initialize if useManualInit is not true
+    if (!props.useManualInit) {
+      stringContents = appendContentsInsideDeclarationBlock(
+        stringContents,
+        'onCreate',
+        `IntercomModule.initialize(this, "${props.androidApiKey}", "${
+          props.appId
+        }")${config.modResults.language === 'java' ? ';' : ''}\n`
+      );
+    }
 
     config.modResults.contents = stringContents;
     return config;
@@ -116,19 +119,22 @@ const appDelegate: ConfigPlugin<IntercomPluginProps> = (_config, props) =>
       )
       .replace(/\s*IntercomModule\.initialize\((.*), withAppId: (.*)\)/g, '');
 
-    stringContents = isSwift
-      ? insertContentsInsideSwiftFunctionBlock(
-          stringContents,
-          'application(_:didFinishLaunchingWithOptions:)',
-          `IntercomModule.initialize("${props.iosApiKey}", withAppId: "${props.appId}")`,
-          { position: 'tailBeforeLastReturn' }
-        )
-      : insertContentsInsideObjcFunctionBlock(
-          stringContents,
-          'application didFinishLaunchingWithOptions:',
-          `[IntercomModule initialize:@"${props.iosApiKey}" withAppId:@"${props.appId}"];`,
-          { position: 'tailBeforeLastReturn' }
-        );
+    // Only auto-initialize if useManualInit is not true
+    if (!props.useManualInit) {
+      stringContents = isSwift
+        ? insertContentsInsideSwiftFunctionBlock(
+            stringContents,
+            'application(_:didFinishLaunchingWithOptions:)',
+            `IntercomModule.initialize("${props.iosApiKey}", withAppId: "${props.appId}")`,
+            { position: 'tailBeforeLastReturn' }
+          )
+        : insertContentsInsideObjcFunctionBlock(
+            stringContents,
+            'application didFinishLaunchingWithOptions:',
+            `[IntercomModule initialize:@"${props.iosApiKey}" withAppId:@"${props.appId}"];`,
+            { position: 'tailBeforeLastReturn' }
+          );
+    }
 
     config.modResults.contents = stringContents;
     return config;
