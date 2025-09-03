@@ -33,6 +33,7 @@
     "android",
     "ios",
     "cpp",
+    "app.plugin.js",
     "*.podspec",
     "react-native.config.js",
     "!ios/build",
