@@ -1,11 +1,32 @@
 {
-  "extends": "@react-native/typescript-config",
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@intercom/intercom-react-native": ["./src/index"]
+      "@intercom/intercom-react-native": ["./src/index"],
     },
-    "types": ["node"]
+    "types": ["node"],
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "esModuleInterop": true,
+    "verbatimModuleSyntax": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
+    "lib": ["esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noImplicitUseStrict": false,
+    "noStrictGenericChecks": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "esnext",
   },
-  "exclude": ["example/e2e/**"]
+  "exclude": [
+    "examples",
+    "sandboxes"
+  ]
 }
