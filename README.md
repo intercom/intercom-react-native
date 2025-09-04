@@ -317,8 +317,6 @@ Add the following in your `MainActivity`
   }
 ```
 
-See the [example app](https://github.com/intercom/intercom-react-native/blob/main/sandboxes/NotificationsSandbox/App.tsx) for an example of how to handle deep linking in your app.
-
 ### IOS
 
 Intercom for iOS requires a **minimum iOS version of 15.**
@@ -469,7 +467,7 @@ Setup of React Native deep links can be found [Here](https://reactnative.dev/doc
 @end
 ```
 
-See the [example app](https://github.com/intercom/intercom-react-native/blob/main/example/src/App.tsx) for an example of how to handle deep linking in your app.
+See the [example app](https://github.com/intercom/intercom-react-native/blob/main/examples/example/src/App.tsx) for an example of how to handle deep linking in your app.
 
 ___
 
@@ -1099,7 +1097,7 @@ ___
 
 ## Usage
 
-[Check example app](./example/src/App.tsx)
+[Check example app](./examples/example/src/App.tsx)
 ___
 
 ## Troubleshooting

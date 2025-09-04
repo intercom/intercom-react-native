@@ -175,7 +175,7 @@ show_progress
 # Step 7: iOS Dependencies
 step_start "Installing iOS dependencies" "📱"
 step_info "Installing CocoaPods dependencies..."
-cd example/ios
+cd examples/example/ios
 pod install
 cd -
 step_success "iOS dependencies installed"

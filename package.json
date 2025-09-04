@@ -1,6 +1,6 @@
 {
   "name": "@intercom/intercom-react-native",
-  "version": "9.0.0-beta.3",
+  "version": "9.0.0-beta.1",
   "description": "React Native wrapper to bridge our iOS and Android SDK",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
@@ -52,11 +52,11 @@
     "test": "jest",
     "typescript": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
-    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "clean": "del-cli android/build examples/example/android/build examples/example/android/app/build examples/example/ios/build lib",
     "prepare": "bob build",
-    "example": "yarn --cwd example",
-    "pods": "cd example && pod-install --quiet",
-    "bootstrap": "yarn example && yarn && yarn pods"
+    "example": "yarn --cwd examples/example",
+    "pods": "cd examples/example && pod-install --quiet",
+    "bootstrap": "yarn examples/example && yarn && yarn pods"
   },
   "keywords": [
     "react-native",
@@ -84,7 +84,7 @@
     "@expo/config-plugins": "^7.9.1",
     "@react-native-community/eslint-config": "3.2.0",
     "@react-native/babel-preset": "0.81.0",
-    "@react-native/typescript-config": "0.73.1",
+    "@react-native/typescript-config": "0.81.0",
     "@types/jest": "29.5.12",
     "@types/react": "18.2.6",
     "del-cli": "^5.1.0",
@@ -105,20 +105,20 @@
     "react-native": "*"
   },
   "workspaces": [
-    "example"
+    "examples/*",
+    "!examples/expo-example"
   ],
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
-      "<rootDir>/example/node_modules",
-      "<rootDir>/sandboxes/node_modules",
+      "<rootDir>/examples/*/node_modules",
       "<rootDir>/lib/"
     ]
   },
   "eslintConfig": {
     "root": true,
     "ignorePatterns": [
-      "example/e2e/**"
+      "examples/*/e2e/**"
     ],
     "env": {
       "mocha": true
@@ -143,7 +143,7 @@
   "eslintIgnore": [
     "node_modules/",
     "lib/",
-    "sandboxes/"
+    "examples/*/node_modules/"
   ],
   "prettier": {
     "quoteProps": "consistent",
