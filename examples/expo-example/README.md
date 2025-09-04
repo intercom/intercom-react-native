@@ -17,7 +17,7 @@ This is an [Expo](https://expo.dev) project demonstrating the integration of @in
 
 1. Install dependencies:
    ```bash
-   yarn install
+   pnpm install
    ```
 
 ## Configuration
@@ -61,7 +61,7 @@ This is an [Expo](https://expo.dev) project demonstrating the integration of @in
 
 2. Start the development server:
    ```bash
-   yarn start
+   pnpm start
    ```
 
 ### Expo Go (Limited functionality)
@@ -69,7 +69,7 @@ This is an [Expo](https://expo.dev) project demonstrating the integration of @in
 Note: Push notifications and some native features may not work in Expo Go.
 
 ```bash
-yarn start
+pnpm start
 ```
 
 Then scan the QR code with Expo Go app on your device.

@@ -1097,7 +1097,14 @@ ___
 
 ## Usage
 
-[Check example app](./examples/example/src/App.tsx)
+### Example Apps
+
+We provide two example applications to help you get started:
+
+1. **[Standard Example](./examples/example/)** - A full-featured React Native app demonstrating all Intercom features (Runs Old React Native Architecture)
+2. **[Expo Example](./examples/expo-example/)** - An Expo-based example (Runs New React Native Architecture)
+
+[View the main example app code](./examples/example/src/App.tsx)
 ___
 
 ## Troubleshooting

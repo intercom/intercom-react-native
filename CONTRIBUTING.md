@@ -12,7 +12,12 @@ yarn
 
 > While it's possible to use [`npm`](https://github.com/npm/cli), the tooling is built around [`yarn`](https://classic.yarnpkg.com/), so you'll have an easier time if you use `yarn` for development.
 
-While developing, you can run the [example app](/example/) to test your changes. Any changes you make in your library's JavaScript code will be reflected in the example app without a rebuild. If you change any native code, then you'll need to rebuild the example app.
+While developing, you can run the example apps to test your changes:
+
+- **[Standard Example](/examples/example/)** - Full React Native app (Runs on Old React Native Architecture)
+- **[Expo Example](/examples/expo-example/)** - Expo-based app (Runs on New React Native Architecture)
+
+Any changes you make in your library's JavaScript code will be reflected in the example apps without a rebuild. If you change any native code, then you'll need to rebuild the example apps.
 
 To start the packager:
 
@@ -51,9 +56,9 @@ Remember to add tests for your change if possible. Run the unit tests by:
 yarn test
 ```
 
-To edit the Objective-C files, open `example/ios/IntercomReactNativeExample.xcworkspace` in XCode and find the source files at `Pods > Development Pods > intercom-react-native`.
+To edit the Objective-C files, open `examples/example/ios/IntercomReactNativeExample.xcworkspace` in XCode and find the source files at `Pods > Development Pods > intercom-react-native`.
 
-To edit the Kotlin files, open `example/android` in Android studio and find the source files at `intercomreactnative` under `Android`.
+To edit the Kotlin files, open `examples/example/android` in Android studio and find the source files at `intercomreactnative` under `Android`.
 
 ### Commit message convention
 
@@ -104,7 +109,7 @@ The `package.json` file contains various scripts for common tasks:
 
 When you're sending a pull request:
 
-### Make sure that Pull Request target is `dev` branch.
+### Make sure that Pull Request target is `dev` branch
 
 - Prefer small pull requests focused on one change.
 - Verify that linters and tests are passing.
@@ -188,11 +193,11 @@ Community leaders will follow these Community Impact Guidelines in determining t
 ### Attribution
 
 This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 2.0,
-available at https://www.contributor-covenant.org/version/2/0/code_of_conduct.html.
+available at [https://www.contributor-covenant.org/version/2/0/code_of_conduct.html](https://www.contributor-covenant.org/version/2/0/code_of_conduct.html).
 
 Community Impact Guidelines were inspired by [Mozilla's code of conduct enforcement ladder](https://github.com/mozilla/diversity).
 
 [homepage]: https://www.contributor-covenant.org
 
 For answers to common questions about this code of conduct, see the FAQ at
-https://www.contributor-covenant.org/faq. Translations are available at https://www.contributor-covenant.org/translations.
+[https://www.contributor-covenant.org/faq](https://www.contributor-covenant.org/faq). Translations are available at [https://www.contributor-covenant.org/translations](https://www.contributor-covenant.org/translations).
