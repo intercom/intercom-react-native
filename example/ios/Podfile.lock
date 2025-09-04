@@ -5,9 +5,28 @@ PODS:
   - fmt (9.1.0)
   - glog (0.3.5)
   - Intercom (19.1.2)
-  - intercom-react-native (8.8.0):
+  - intercom-react-native (9.0.0-beta.1):
+    - DoubleConversion
+    - glog
     - Intercom (~> 19.1.2)
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
     - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RCT-Folly (2024.01.01.00):
     - boost
     - DoubleConversion
@@ -911,9 +930,9 @@ PODS:
   - React-Mapbuffer (0.74.0):
     - glog
     - React-debug
-  - react-native-config (1.5.7):
-    - react-native-config/App (= 1.5.7)
-  - react-native-config/App (1.5.7):
+  - react-native-config (1.5.9):
+    - react-native-config/App (= 1.5.9)
+  - react-native-config/App (1.5.9):
     - React-Core
   - React-nativeconfig (0.74.0)
   - React-NativeModulesApple (0.74.0):
@@ -1314,7 +1333,7 @@ SPEC CHECKSUMS:
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
   glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
   Intercom: 0643528ea72515fb47096ad38fe455780441881b
-  intercom-react-native: 15a322d6032f91058563a02e049f4d7246aad1a0
+  intercom-react-native: 1dda3698eeff99bfaff77bf2ae33ac637100da52
   RCT-Folly: 5f972de9f7d384c7d0e7380dd7da506228e568f5
   RCTDeprecation: 3ca8b6c36bfb302e1895b72cfe7db0de0c92cd47
   RCTRequired: 9fc183af555fd0c89a366c34c1ae70b7e03b1dc5
@@ -1339,7 +1358,7 @@ SPEC CHECKSUMS:
   React-jsitracing: d30048b056e8c9673dfbe67813bdb874c03558a5
   React-logger: 5ae0978955199c132e71e8cf7797f619a6d17164
   React-Mapbuffer: 3b85b3778e447cd1f06d353b8e967af50f272829
-  react-native-config: 963b5efabc864cf69412e54b5de49b6a23e4af03
+  react-native-config: d08b60865268872495a43e211059b4606131fe01
   React-nativeconfig: 951ec32f632e81cbd7d40aebb3211313251c092e
   React-NativeModulesApple: 612f931b1e79736f2d59353979042a424fb314c8
   React-perflogger: 271f1111779fef70f9502d1d38da5132e5585230

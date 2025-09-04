@@ -16,7 +16,7 @@ setup_env_file: &setup_env_file
 executors:
   default:
     docker:
-      - image: cimg/node:22.2.0
+      - image: cimg/node:22.14.0
     working_directory: ~/project
 
 orbs:
@@ -37,7 +37,6 @@ run_on_release: &run_on_release
     branches:
       ignore: /.*/
 
-
 commands:
   attach_project:
     steps:
@@ -50,13 +49,14 @@ jobs:
     steps:
       - checkout
       - attach_project
+      - node/install:
+          node-version: 22.14.0
 
       - run:
           name: Install dependencies
           command: |
             corepack enable
-            yarn install --cwd example --ignore-engines
-            yarn install --ignore-engines
+            yarn install
       - save_cache:
           key: dependencies-{{ checksum "package.json" }}
           paths: node_modules
@@ -115,13 +115,7 @@ jobs:
       tag: default
     working_directory: ~/project
     steps:
-      - checkout:
-          path: ~/project
-      - node/install:
-          node-version: 18.17.0
-
-      - attach_workspace:
-          at: ~/project
+      - attach_project
 
       - <<: *setup_env_file
 
@@ -132,7 +126,7 @@ jobs:
       - run:
           working_directory: example/test
           name: Build android
-          command: npm run build:android
+          command: yarn run build:android
 
       - android/create-avd:
           avd-name: Android_29
@@ -152,7 +146,7 @@ jobs:
       - run:
           working_directory: example/test
           name: Run UI Tests
-          command: npm run test:android
+          command: yarn run test:android
 
       - store_artifacts:
           path: ~/.maestro/tests
@@ -162,9 +156,7 @@ jobs:
   ios-e2e-test:
     <<: *macos_config
     steps:
-      - checkout
-      - attach_workspace:
-          at: ~/project
+      - attach_project
 
       - <<: *setup_env_file
 
@@ -189,7 +181,7 @@ jobs:
       - run:
           working_directory: example/test
           name: Build
-          command: npm run build:ios
+          command: yarn run build:ios
 
       - run:
           name: Create and boot iPhone 15 simulator
@@ -206,7 +198,7 @@ jobs:
       - run:
           working_directory: example/test
           name: Run UI Tests
-          command: npm run test:ios
+          command: yarn run test:ios
 
       - store_artifacts:
           path: ~/.maestro/tests
@@ -229,12 +221,11 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yarn install --ignore-engines
+            yarn install
 
       - run:
           name: Publish the package
           command: npm publish
-
 
 workflows:
   version: 2.1
