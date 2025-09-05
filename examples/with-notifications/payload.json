@@ -1,0 +1,15 @@
+{
+  "aps": {
+    "alert": {
+      "title": "Test Notification",
+      "subtitle": "From Intercom",
+      "body": "This is a test notification from Intercom React Native SDK"
+    },
+    "badge": 1,
+    "sound": "default"
+  },
+  "data": {
+    "intercom": true,
+    "test": "payload"
+  }
+}

@@ -106,7 +106,8 @@
   },
   "workspaces": [
     "examples/*",
-    "!examples/expo-example"
+    "!examples/expo-example",
+    "!examples/with-notifications"
   ],
   "jest": {
     "preset": "react-native",
