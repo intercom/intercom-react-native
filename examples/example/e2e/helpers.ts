@@ -39,7 +39,9 @@ const boot = async () => {
 driver.addCommand('boot', boot);
 
 const closeOverlay = async (customCloseButtonId?: string) => {
-  const buttonId = browser.isAndroid ? `~Close` : customCloseButtonId || `~intercom close button`;
+  const buttonId = browser.isAndroid
+    ? `~Close`
+    : customCloseButtonId || `~intercom close button`;
 
   const closeButton = await $(buttonId);
   await closeButton.waitForDisplayed({ timeout: 22000 });
@@ -47,7 +49,9 @@ const closeOverlay = async (customCloseButtonId?: string) => {
 };
 
 const closeModalOverlay = async (customCloseButtonId?: string) => {
-  const buttonId = browser.isAndroid ? `~Close` : customCloseButtonId || `~intercom modal close button`;
+  const buttonId = browser.isAndroid
+    ? `~Close`
+    : customCloseButtonId || `~intercom modal close button`;
 
   const closeButton = await $(buttonId);
   await closeButton.waitForDisplayed({ timeout: 22000 });

@@ -26,16 +26,19 @@ export function useNotifications() {
         });
       }
 
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
-      
+
       if (existingStatus !== 'granted') {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
-      
+
       if (finalStatus !== 'granted') {
-        handleRegistrationError('Permission not granted to get push token for push notification!');
+        handleRegistrationError(
+          'Permission not granted to get push token for push notification!'
+        );
         return;
       }
 
@@ -79,11 +82,10 @@ export function useNotifications() {
       }
     );
 
-    const responseListener = Notifications.addNotificationResponseReceivedListener(
-      (response) => {
+    const responseListener =
+      Notifications.addNotificationResponseReceivedListener((response) => {
         console.log('Notification response:', response);
-      }
-    );
+      });
 
     return () => {
       notificationListener.remove();

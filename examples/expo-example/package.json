@@ -1,14 +1,13 @@
 {
-  "name": "expo-example",
+  "name": "@intercom/intercom-react-native-expo-example",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "build:package": "cd ../../ && yarn prepare",
     "start": "pnpm build:package && expo start",
-    "reset-project": "node ./scripts/reset-project.js",
-    "android": "npx expo run:android",
-    "ios": "npx expo run:ios",
+    "android": "pnpm build:package && npx expo run:android",
+    "ios": "pnpm build:package && npx expo run:ios",
     "web": "pnpm build:package && expo start --web",
     "lint": "expo lint"
   },

@@ -9,12 +9,12 @@ interface InputProps {
   keyboardType?: 'default' | 'email-address';
 }
 
-export default function Input({ 
-  label, 
-  value, 
-  onChangeText, 
-  placeholder, 
-  keyboardType = 'default' 
+export default function Input({
+  label,
+  value,
+  onChangeText,
+  placeholder,
+  keyboardType = 'default',
 }: InputProps) {
   return (
     <View className="mb-4">

@@ -34,7 +34,7 @@ export default function App() {
       <SafeAreaView className="flex-1 bg-gray-50">
         <StatusBar barStyle="dark-content" backgroundColor="#f9fafb" />
 
-        <Header 
+        <Header
           architectureType={intercom.architectureType}
           loggedUser={intercom.loggedUser}
           count={intercom.count}
@@ -64,14 +64,16 @@ export default function App() {
             updateBottomPadding={intercom.updateBottomPadding}
           />
 
-          <UtilitiesSection 
+          <UtilitiesSection
             loggedUser={intercom.loggedUser}
             architectureType={intercom.architectureType}
           />
 
           <NotificationsSection
             loggedUser={intercom.loggedUser}
-            registerForPushNotificationsAsync={notifications.registerForPushNotificationsAsync}
+            registerForPushNotificationsAsync={
+              notifications.registerForPushNotificationsAsync
+            }
             sendTestNotification={notifications.sendTestNotification}
             isLoading={notifications.isLoading}
           />

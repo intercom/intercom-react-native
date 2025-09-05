@@ -7,7 +7,11 @@ interface HeaderProps {
   count: number;
 }
 
-export default function Header({ architectureType, loggedUser, count }: HeaderProps) {
+export default function Header({
+  architectureType,
+  loggedUser,
+  count,
+}: HeaderProps) {
   return (
     <View className="bg-white border-b border-gray-200 px-6 py-4">
       <Text className="text-2xl font-bold text-gray-900">

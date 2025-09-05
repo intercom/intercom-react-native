@@ -4,10 +4,9 @@ tags:
   - messenger
 ---
 - launchApp
-- tapOn: "Login as an Unidentified User"
+- tapOn: 'Login as an Unidentified User'
 - assertVisible:
-    text: "Present Intercom"
+    text: 'Present Intercom'
     enabled: true
-- tapOn: "Present Intercom"
-- tapOn: "Messages"
-
+- tapOn: 'Present Intercom'
+- tapOn: 'Messages'

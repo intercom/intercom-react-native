@@ -8,9 +8,13 @@
 > React Native wrapper to bridge our iOS and Android SDK
 
 ### 🏠 [Website](https://intercom.com/)
+
 ### 📚 [Developer Docs](https://developers.intercom.com/installing-intercom/docs/intercom-for-react-native)
-___
+
+---
+
 ### 📂 [Homepage](https://github.com/intercom/intercom-react-native#readme)
+
 - [Installation](#installation)
   - [Android](#android)
     - [Automatic linking (React Native <=0.59)](#android-automatic-linking-with-react-native-v059-and-below)
@@ -43,7 +47,9 @@ ___
 ```sh
 $ npm install @intercom/intercom-react-native
 ```
+
 or
+
 ```sh
 yarn add @intercom/intercom-react-native
 ```
@@ -121,7 +127,7 @@ dependencies {
 
 #### Android: Permissions
 
-You will need to include the [READ\_EXTERNAL\_STORAGE](http://developer.android.com/reference/android/Manifest.permission.html#READ_EXTERNAL_STORAGE) permission in `android/app/src/main/AndroidManifest.xml` if you have enabled attachments:
+You will need to include the [READ_EXTERNAL_STORAGE](http://developer.android.com/reference/android/Manifest.permission.html#READ_EXTERNAL_STORAGE) permission in `android/app/src/main/AndroidManifest.xml` if you have enabled attachments:
 
 ```xml
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -172,7 +178,8 @@ apply from: file("../../node_modules/@react-native-community/cli-platform-androi
 
 - Create `MainNotificationService.java` inside your app directory(`com.example.app`) with below content:
 
-  ***Remember to replace `package com.example.app;`, with your app package name***
+  **_Remember to replace `package com.example.app;`, with your app package name_**
+
   - Default Notification Behavior (Goes back to the parent default launcher activity when the user taps the notification):
 
     ```java
@@ -261,19 +268,17 @@ apply from: file("../../node_modules/@react-native-community/cli-platform-androi
 - Add below code to your React Native app
 
 ```jsx
-  useEffect(() => {
-    /**
-     * Handle PushNotification
-     */
-    const appStateListener = AppState.addEventListener(
-      'change',
-      (nextAppState) =>
-        nextAppState === 'active' && Intercom.handlePushMessage()
-    );
-    return () => AppState.removeEventListener('change', () => true); // <- for RN < 0.65
-    return () => appStateListener.remove() // <- for RN >= 0.65
-  }
-  , [])
+useEffect(() => {
+  /**
+   * Handle PushNotification
+   */
+  const appStateListener = AppState.addEventListener(
+    'change',
+    (nextAppState) => nextAppState === 'active' && Intercom.handlePushMessage()
+  );
+  return () => AppState.removeEventListener('change', () => true); // <- for RN < 0.65
+  return () => appStateListener.remove(); // <- for RN >= 0.65
+}, []);
 ```
 
 #### Android: Push notification deep links support
@@ -347,7 +352,9 @@ See [How to manually link IOS Intercom SDK](docs/IOS-MANUAL-LINKING.md)
 // ...
 #import <IntercomModule.h> // <-- Add This
 ```
+
 - Inside `didFinishLaunchingWithOptions` before `return YES` add, remember to replace `apiKey` and `appId` which can be found in your [workspace settings](https://app.intercom.com/a/apps/_/settings/ios):
+
 ```Objective-C
   // ...
   self.window.rootViewController = rootViewController;
@@ -369,11 +376,10 @@ Add this permission to your `Info.plist`
 
 #### iOS: Push Notifications
 
->**Note**: You should request user permission to display push notifications.
-e.g. [react-native-permissions](https://github.com/zoontek/react-native-permissions)
+> **Note**: You should request user permission to display push notifications.
+> e.g. [react-native-permissions](https://github.com/zoontek/react-native-permissions)
 
 Add **Push Notifications** and **Background Modes > Remote Notifications** [Details HERE](https://developer.apple.com/documentation/xcode/adding-capabilities-to-your-app)
-
 
 **Option 1: In your JavaScript code**
 
@@ -469,7 +475,7 @@ Setup of React Native deep links can be found [Here](https://reactnative.dev/doc
 
 See the [example app](https://github.com/intercom/intercom-react-native/blob/main/examples/example/src/App.tsx) for an example of how to handle deep linking in your app.
 
-___
+---
 
 ### Expo
 
@@ -544,8 +550,8 @@ Add the necessary permission descriptions to infoPlist key.
 }
 ```
 
->**Note**: You should request user permission to display push notifications.
-e.g. [react-native-permissions](https://github.com/zoontek/react-native-permissions)
+> **Note**: You should request user permission to display push notifications.
+> e.g. [react-native-permissions](https://github.com/zoontek/react-native-permissions)
 
 Next, rebuild your app as described in the ["Adding custom native code"](https://docs.expo.io/workflow/customizing/) guide.
 
@@ -559,7 +565,7 @@ Next, rebuild your app as described in the ["Adding custom native code"](https:/
 {
   "expo": {
     "android": {
-       "intentFilters": [
+      "intentFilters": [
         {
           "action": "VIEW",
           "data": [
@@ -627,22 +633,23 @@ Next, rebuild your app as described in the ["Adding custom native code"](https:/
   }
 }
 ```
-___
+
+---
 
 ### Versioning in dependencies
 
 We define the iOS and Android versions used in React Native with optimistic operators
-i.e. ``` ~> for iOS ``` and ``` + for Android ```, ensuring compatibility while allowing for non-breaking updates:
+i.e. `~> for iOS` and `+ for Android`, ensuring compatibility while allowing for non-breaking updates:
 
 iOS (~> in CocoaPods):
-We use a version constraint e.g.``` ~> 18.6.1 ``` which allows updates from ``` 18.6.1 to 18.6.x ``` (up to but not including 18.7.0).
+We use a version constraint e.g.`~> 18.6.1` which allows updates from `18.6.1 to 18.6.x` (up to but not including 18.7.0).
 
 Android (+ in Gradle):
-We use a version constraint e.g. ``` 18.6.+ ``` which allows updates to any patch version within 18.6.x
+We use a version constraint e.g. `18.6.+` which allows updates to any patch version within 18.6.x
 
 This means that by removing and reinstalling dependencies, you’ll automatically get the latest compatible patch version, which includes any fixes while avoiding breaking changes from a major version.
 
-___
+---
 
 ## Methods
 
@@ -650,24 +657,24 @@ ___
 
 ### `import Intercom, { IntercomContent, Space } from '@intercom/intercom-react-native';`
 
-___
+---
 
 ### `Intercom.setUserHash(userHash) (Optional)`
 
 Sets the user hash necessary for validation when Identity Verification is enabled.
-***This should be called before any registration calls.***
+**_This should be called before any registration calls._**
 
 ### Options
 
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| userHash   | string   |yes        |
+| Type     | Type   | Required |
+| -------- | ------ | -------- |
+| userHash | string | yes      |
 
 ### Returns
 
 `Promise<boolean>`
 
-___
+---
 
 ### `Intercom.loginUnidentifiedUser()`
 
@@ -678,7 +685,7 @@ This is a user that doesn't have any identifiable information such as a userId o
 
 `Promise<boolean>`
 
-___
+---
 
 ### `Intercom.loginUserWithUserAttributes({email,userId})`
 
@@ -688,16 +695,16 @@ Login a user with identifiable information.
 
 One of below fields is required.
 
-| Type    | Type     | Required |
-| ------- | -------- | -------- |
-| email   | string   |no        |
-| userId  | string   |no        |
+| Type   | Type   | Required |
+| ------ | ------ | -------- |
+| email  | string | no       |
+| userId | string | no       |
 
 ### Returns
 
 `Promise<boolean>`
 
-___
+---
 
 ### `Intercom.updateUser(userAttributes)`
 
@@ -705,8 +712,8 @@ Updates a user in Intercom.
 
 ###### You can send any data you like to Intercom. Typically our customers see a lot of value in sending data that
 
-* ###### relates to customer development, such as price plan, value of purchases, etc. Once these have been sent to
-* ###### Intercom you can then apply filters based on these attributes.
+- ###### relates to customer development, such as price plan, value of purchases, etc. Once these have been sent to
+- ###### Intercom you can then apply filters based on these attributes.
 
 ```javascript
 Intercom.updateUser({
@@ -717,41 +724,44 @@ Intercom.updateUser({
   languageOverride: 'languageOverride',
   signedUpAt: 1621844451,
   unsubscribedFromEmails: true,
-  companies: [{
-    createdAt: 1621844451,
-    id: 'companyId',
-    monthlySpend: 100,
-    name: 'CompanyName',
-    plan: "plan",
-    customAttributes: {
-      city: "New York"
+  companies: [
+    {
+      createdAt: 1621844451,
+      id: 'companyId',
+      monthlySpend: 100,
+      name: 'CompanyName',
+      plan: 'plan',
+      customAttributes: {
+        city: 'New York',
+      },
     },
-  }],
+  ],
   customAttributes: {
     userCustomAttribute: 123,
-    hasUserCustomAttribute: true
-  }
+    hasUserCustomAttribute: true,
+  },
 });
 ```
 
 ### Options
 
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| userId   | string      |no        |
-| email   | string      |no        |
-| name   | string      |no        |
-| phone   | string      |no        |
-| languageOverride   | string      |no        |
-| signedUpAt   | number (timestamp)      |no        |
-| unsubscribedFromEmails   |boolean      |no        |
-| companies   |array      |no        |
-| customAttributes   | object `{key: boolean,string, number}`     |no        |
+| Type                   | Type                                   | Required |
+| ---------------------- | -------------------------------------- | -------- |
+| userId                 | string                                 | no       |
+| email                  | string                                 | no       |
+| name                   | string                                 | no       |
+| phone                  | string                                 | no       |
+| languageOverride       | string                                 | no       |
+| signedUpAt             | number (timestamp)                     | no       |
+| unsubscribedFromEmails | boolean                                | no       |
+| companies              | array                                  | no       |
+| customAttributes       | object `{key: boolean,string, number}` | no       |
 
 ### Returns
 
 `Promise<boolean>`
-___
+
+---
 
 ### `Intercom.logout()`
 
@@ -762,7 +772,8 @@ further registration is made.
 ### Returns
 
 `Promise<boolean>`
-___
+
+---
 
 ### `Intercom.logEvent(eventName, metaData)`
 
@@ -770,15 +781,16 @@ Logs an event with a given name and some metadata.
 
 ### Options
 
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| eventName| string  |yes        |
-| metaData| object `{key: boolean,string,number}`  |no        |
+| Type      | Type                                  | Required |
+| --------- | ------------------------------------- | -------- |
+| eventName | string                                | yes      |
+| metaData  | object `{key: boolean,string,number}` | no       |
 
 ### Returns
 
 `Promise<boolean>`
-___
+
+---
 
 ### `Intercom.sendTokenToIntercom(token)`
 
@@ -786,15 +798,15 @@ This takes a push registration token to send to Intercom to enable this device t
 
 ### Options
 
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| token| string  |yes        |
+| Type  | Type   | Required |
+| ----- | ------ | -------- |
+| token | string | yes      |
 
 ### Returns
 
 `Promise<boolean>`
 
-___
+---
 
 ### `Intercom.getUnreadConversationCount()`
 
@@ -803,21 +815,21 @@ Gets the number of unread conversations for a user.
 ### Returns
 
 `Promise<number>`
-___
+
+---
 
 ### `Intercom.handlePushMessage()`
 
 Handles the opening of an Intercom push message. This will retrieve the URI from the last Intercom push message.
 
 ```javascript
-  useEffect(() => {
+useEffect(() => {
   /**
    * Handle PushNotification Open
    */
   const appStateListener = AppState.addEventListener(
     'change',
-    (nextAppState) =>
-      nextAppState === 'active' && Intercom.handlePushMessage()
+    (nextAppState) => nextAppState === 'active' && Intercom.handlePushMessage()
   );
 
   return () => AppState.removeEventListener('change', () => {}); // <- for RN < 0.65
@@ -828,7 +840,8 @@ Handles the opening of an Intercom push message. This will retrieve the URI from
 ### Returns
 
 `Promise<boolean>`
-___
+
+---
 
 ### `Intercom.present()`
 
@@ -837,7 +850,8 @@ Opens the Intercom Messenger automatically to the best place for your users.
 ### Returns
 
 `Promise<boolean>`
-___
+
+---
 
 ### `Intercom.presentMessageComposer(initialMessage)`
 
@@ -845,15 +859,15 @@ Open the conversation screen with the composer pre-populated text.
 
 ### Options
 
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| initialMessage| string  |no        |
+| Type           | Type   | Required |
+| -------------- | ------ | -------- |
+| initialMessage | string | no       |
 
 ### Returns
 
 `Promise<boolean>`
 
-___
+---
 
 ### `Intercom.presentSpace(Space.helpCenter);`
 
@@ -863,76 +877,81 @@ Open up your apps help center
 
 `Promise<boolean>`
 
-___
+---
+
 ### `Intercom.presentContent(IntercomContent.helpCenterCollectionsWithIds(collections))`
 
 Present the help center with specific collections only .
 
 ###### Note: If the requested collections cannot be found, the full help center will be shown instead.
+
 ### Options
 
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| collections| string[]  |no        |
+| Type        | Type     | Required |
+| ----------- | -------- | -------- |
+| collections | string[] | no       |
 
 ### Returns
 
 `Promise<boolean>`
 
-___
+---
+
 ### `Intercom.fetchHelpCenterCollections()`
 
 Fetch a list of all Collections.
 
-
 ### Returns
+
 `Promise<HelpCenterCollectionItem[]>`
 
+---
 
-___
 ### `Intercom.fetchHelpCenterCollection(collectionId)`
 
 Get a list of subcollections/articles for a collection.
 
 ### Options
 
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| collectionId| string  |yes        |
+| Type         | Type   | Required |
+| ------------ | ------ | -------- |
+| collectionId | string | yes      |
 
 ### Returns
 
 `Promise<HelpCenterCollectionContent>`
 
-___
+---
+
 ### `Intercom.searchHelpCenter(searchTerm)`
 
 Get a list of articles in the Help Center, filtered by a search term
 
 ### Options
 
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| searchTerm| string  |yes        |
+| Type       | Type   | Required |
+| ---------- | ------ | -------- |
+| searchTerm | string | yes      |
 
 ### Returns
 
 `Promise<HelpCenterArticleSearchResult[]>`
 
-___
+---
+
 ### `Intercom.presentContent(IntercomContent.articleWithArticleId(articleId))`
 
 Displays article with given id.
 
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| articleId| string  |yes        |
+| Type      | Type   | Required |
+| --------- | ------ | -------- |
+| articleId | string | yes      |
 
 ### Returns
 
 `Promise<boolean>`
 
-___
+---
 
 ### `Intercom.presentContent(IntercomContent.carouselWithCarouselId(carouselId))`
 
@@ -940,9 +959,9 @@ Displays carousel
 
 ### Options
 
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| carouselId| string  |yes        |
+| Type       | Type   | Required |
+| ---------- | ------ | -------- |
+| carouselId | string | yes      |
 
 ### Returns
 
@@ -952,7 +971,7 @@ Displays carousel
 
 `Promise<boolean>`
 
-___
+---
 
 ### `Intercom.setInAppMessageVisibility(visibility)`
 
@@ -960,14 +979,15 @@ Toggles visibility of in-app messages.
 
 ### Options
 
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| visibility| string  `GONE, VISIBLE` |yes        |
+| Type       | Type                   | Required |
+| ---------- | ---------------------- | -------- |
+| visibility | string `GONE, VISIBLE` | yes      |
 
 ### Returns
 
 `Promise<boolean>`
-___
+
+---
 
 ### `Intercom.setLauncherVisibility(visibility)`
 
@@ -976,15 +996,15 @@ be visible.
 
 ### Options
 
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| visibility| string  `GONE, VISIBLE` |yes        |
+| Type       | Type                   | Required |
+| ---------- | ---------------------- | -------- |
+| visibility | string `GONE, VISIBLE` | yes      |
 
 ### Returns
 
 `Promise<boolean>`
 
-___
+---
 
 ### `Intercom.setBottomPadding(bottomPadding)`
 
@@ -995,15 +1015,15 @@ will appear
 
 ### Options
 
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| bottomPadding| number |yes        |
+| Type          | Type   | Required |
+| ------------- | ------ | -------- |
+| bottomPadding | number | yes      |
 
 ### Returns
 
 `Promise<boolean>`
 
-___
+---
 
 ### `Intercom.setLogLevel(logLevel)`
 
@@ -1011,14 +1031,15 @@ Set the level of the native logger
 
 ### Options
 
-| Type    | Type        | Required |
-| ------- | --------    | -------- |
-| logLevel| string(`ASSERT, DEBUG, DISABLED, ERROR, INFO, VERBOSE, WARN`) |yes        |
+| Type     | Type                                                          | Required |
+| -------- | ------------------------------------------------------------- | -------- |
+| logLevel | string(`ASSERT, DEBUG, DISABLED, ERROR, INFO, VERBOSE, WARN`) | yes      |
 
 ### Returns
 
 `Promise<boolean>`
-___
+
+---
 
 ### `Intercom.bootstrapEventListeners()`
 
@@ -1038,13 +1059,18 @@ import Intercom, { IntercomEvents } from '@intercom/intercom-react-native';
 useEffect(() => {
   const cleanupIntercomEventListeners = Intercom.bootstrapEventListeners();
 
-  const eventEmitter = new NativeEventEmitter(NativeModules.IntercomEventEmitter);
+  const eventEmitter = new NativeEventEmitter(
+    NativeModules.IntercomEventEmitter
+  );
 
   // Listen to unread conversation count changes
   const unreadCountEventName = IntercomEvents.IntercomUnreadCountDidChange;
-  const countListener = eventEmitter.addListener(unreadCountEventName, (response) => {
-    console.log('Unread count:', response.count);
-  });
+  const countListener = eventEmitter.addListener(
+    unreadCountEventName,
+    (response) => {
+      console.log('Unread count:', response.count);
+    }
+  );
 
   return () => {
     countListener.remove();
@@ -1055,15 +1081,16 @@ useEffect(() => {
 
 ### Available Events
 
-| Event    | Platform        |
-| ------- | --------    |
-| IntercomUnreadConversationCountDidChangeNotification| iOS, Android  |
-| IntercomHelpCenterDidShowNotification| iOS  |
-| IntercomHelpCenterDidHideNotification| iOS  |
-| IntercomWindowDidShowNotification| iOS  |
-| IntercomWindowDidHideNotification| iOS  |
+| Event                                                | Platform     |
+| ---------------------------------------------------- | ------------ |
+| IntercomUnreadConversationCountDidChangeNotification | iOS, Android |
+| IntercomHelpCenterDidShowNotification                | iOS          |
+| IntercomHelpCenterDidHideNotification                | iOS          |
+| IntercomWindowDidShowNotification                    | iOS          |
+| IntercomWindowDidHideNotification                    | iOS          |
 
-___
+---
+
 ### Types
 
 ```typescript
@@ -1093,7 +1120,8 @@ type HelpCenterArticleSearchResult = {
   summary: string;
 };
 ```
-___
+
+---
 
 ## Usage
 
@@ -1105,25 +1133,26 @@ We provide two example applications to help you get started:
 2. **[Expo Example](./examples/expo-example/)** - An Expo-based example (Runs New React Native Architecture)
 
 [View the main example app code](./examples/example/src/App.tsx)
-___
+
+---
 
 ## Troubleshooting
 
 - #### This project uses AndroidX dependencies, but the 'android.useAndroidX' property is not enabled.
+
   - To enable `jetifier`, add those two lines to your `gradle.properties` file:
     ```
     android.useAndroidX=true
     android.enableJetifier=true
     ```
 
-
 - #### When Android app keeps stopping (E/AndroidRuntime: FATAL EXCEPTION: mqt_native_modules)
+
   - Add those lines to `dependencies` in `./android/app/build.gradle`:
     ```
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha03'
     ```
-
 
 - #### When tests with Jest fail mentioning "Cannot read property 'UNREAD_CHANGE_NOTIFICATION' of undefined"
   - Make a `jest.mock` function with the library:
@@ -1132,7 +1161,7 @@ ___
     jest.mock('@intercom/intercom-react-native', () => jest.fn());
     ```
 
-___
+---
 
 ### `Intercom.setUserJwt(JWT)`
 
@@ -1147,18 +1176,18 @@ This should be called before any user login takes place.
 ### Options
 
 | Type | Type   | Required |
-|------|--------|----------|
+| ---- | ------ | -------- |
 | JWT  | string | yes      |
 
 ### Returns
 
 `Promise<boolean>`
-___
+
+---
 
 ## Author
 
 👤 **Intercom (https://www.intercom.com/)**
-
 
 ## Show your support
 
@@ -1168,5 +1197,6 @@ Give a ⭐️ if this project helped you!
 
 This project is [MIT](LICENSE) licensed.
 
-***
+---
+
 Created with ❤️ by [Intercom](https://intercom.com/)

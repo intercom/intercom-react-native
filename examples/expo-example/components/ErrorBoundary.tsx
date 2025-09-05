@@ -38,7 +38,9 @@ export default class ErrorBoundary extends Component<Props, State> {
             </Text>
             <Button
               title="Try Again"
-              onPress={() => this.setState({ hasError: false, error: undefined })}
+              onPress={() =>
+                this.setState({ hasError: false, error: undefined })
+              }
               variant="primary"
             />
           </View>

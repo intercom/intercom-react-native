@@ -5,6 +5,7 @@ This is an [Expo](https://expo.dev) project demonstrating the integration of @in
 ## Prerequisites
 
 1. Install [Expo CLI](https://docs.expo.dev/get-started/installation/#installing-expo-cli):
+
    ```bash
    npm install -g @expo/cli
    ```
@@ -23,6 +24,7 @@ This is an [Expo](https://expo.dev) project demonstrating the integration of @in
 ## Configuration
 
 1. Update `app.json` with your Intercom credentials:
+
    ```json
    {
      "plugins": [
@@ -39,6 +41,7 @@ This is an [Expo](https://expo.dev) project demonstrating the integration of @in
    ```
 
 2. Update the bundle identifier and package name:
+
    - iOS: Change `ios.bundleIdentifier` in `app.json`
    - Android: Change `android.package` in `app.json`
 
@@ -51,6 +54,7 @@ This is an [Expo](https://expo.dev) project demonstrating the integration of @in
 ### Development Build (Recommended)
 
 1. Create a development build:
+
    ```bash
    # For iOS
    npx expo run:ios
@@ -88,6 +92,7 @@ This example app demonstrates all major Intercom features:
 ## Architecture Support
 
 This example supports both:
+
 - **New Architecture** (TurboModules/Fabric) - React Native 0.79+
 - **Legacy Architecture** (Bridge) - React Native 0.68+
 
@@ -96,17 +101,20 @@ The app automatically detects and displays which architecture is active.
 ## Troubleshooting
 
 1. **Build errors**: Try clearing cache and rebuilding:
+
    ```bash
    npx expo run:ios --clear
    npx expo run:android --clear
    ```
 
 2. **Pod install issues** (iOS):
+
    ```bash
    cd ios && pod install --repo-update
    ```
 
 3. **Metro bundler issues**:
+
    ```bash
    npx expo start --clear
    ```

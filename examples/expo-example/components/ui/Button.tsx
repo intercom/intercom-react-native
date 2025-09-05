@@ -8,11 +8,11 @@ interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'success' | 'danger';
 }
 
-export default function Button({ 
-  title, 
-  onPress, 
-  disabled = false, 
-  variant = 'primary' 
+export default function Button({
+  title,
+  onPress,
+  disabled = false,
+  variant = 'primary',
 }: ButtonProps) {
   const variantClasses = {
     primary: disabled ? 'bg-gray-300' : 'bg-blue-600',

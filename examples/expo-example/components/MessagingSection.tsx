@@ -7,7 +7,9 @@ interface MessagingSectionProps {
   loggedUser: boolean;
 }
 
-export default function MessagingSection({ loggedUser }: MessagingSectionProps) {
+export default function MessagingSection({
+  loggedUser,
+}: MessagingSectionProps) {
   return (
     <Section title="💬 Messaging">
       <Button

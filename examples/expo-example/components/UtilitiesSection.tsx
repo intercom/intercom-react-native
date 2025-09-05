@@ -14,7 +14,7 @@ interface UtilitiesSectionProps {
 
 export default function UtilitiesSection({
   loggedUser,
-  architectureType
+  architectureType,
 }: UtilitiesSectionProps) {
   const [eventName, setEventName] = useState<string>(EVENT_NAME);
 
