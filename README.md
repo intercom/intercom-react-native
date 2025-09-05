@@ -372,18 +372,19 @@ If you're using Swift, update your `AppDelegate.swift`:
 - Add the import at the top:
 
 ```Swift
-import intercom_react_native
+import Intercom
 ```
 
-- Inside `didFinishLaunchingWithOptions` before `return super.application(...)`:
+- Inside `didFinishLaunchingWithOptions` before `return true`:
 
 ```Swift
-  // ...
-  
-  IntercomModule.initialize("ios_sdk-YOUR_IOS_API_KEY", withAppId: "YOUR_APP_ID") // <-- Add this (Remember to replace with your API keys)
-  
-  return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-```
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+  ....
+     Intercom.setApiKey("<Your iOS API Key>", forAppId: "<Your App ID>")
+  ....
+}
+ 
+ ```
 
 #### iOS: Permissions
 
