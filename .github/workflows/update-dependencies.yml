@@ -26,8 +26,10 @@ jobs:
         with:
           node-version: '22.14.0'
 
-      - name: 📦 Enable Corepack
-        run: corepack enable
+      - name: 📦 Enable Corepack and install semver
+        run: |
+          corepack enable
+          npm install -g semver@7.7.2
 
       - name: 🔍 Get current dependency versions
         id: current-versions
@@ -285,10 +287,31 @@ jobs:
             git add android/build.gradle
           fi
           
+          # Determine version bump type using semver script
+          echo "📈 Analyzing version bump requirements..."
+          VERSION_BUMP_TYPE=$(node semver.js analyze \
+            "${{ steps.current-versions.outputs.ios_version }}" \
+            "${{ steps.update-analysis.outputs.ios_new_version }}" \
+            "${{ steps.current-versions.outputs.android_version }}" \
+            "${{ steps.update-analysis.outputs.android_new_version }}")
+          
+          # Get current version and increment using semver script
+          echo "📈 Applying $VERSION_BUMP_TYPE version bump..."
+          CURRENT_VERSION=$(node semver.js current)
+          NEW_VERSION=$(node semver.js inc "$CURRENT_VERSION" "$VERSION_BUMP_TYPE")
+          
+          # Update package.json version using semver script
+          node semver.js update "$NEW_VERSION"
+          
+          echo "📈 Version bumped ($VERSION_BUMP_TYPE): $CURRENT_VERSION → $NEW_VERSION"
+          git add package.json semver.js
+          
           # Update yarn.lock
           echo "📦 Installing dependencies to update lockfile..."
           yarn install --immutable
           git add yarn.lock
+          
+          CHANGES="$CHANGES\\n- Bumped version from $CURRENT_VERSION to $NEW_VERSION ($VERSION_BUMP_TYPE)"
           
           # Store for next steps
           echo "changes<<EOF" >> $GITHUB_OUTPUT
