@@ -1,9 +1,15 @@
-import React, {useEffect} from 'react';
-import {AppState, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import Intercom, {Visibility} from '@intercom/intercom-react-native';
-import {requestNotifications} from 'react-native-permissions';
-import {useIntercom} from '../hooks/useIntercom';
-import {styles} from '../styles/App.styles';
+import React, { useEffect } from 'react';
+import {
+  AppState,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Intercom, { Visibility } from '@intercom/intercom-react-native';
+import { requestNotifications } from 'react-native-permissions';
+import { useIntercom } from '../hooks/useIntercom';
+import { styles } from '../styles/App.styles';
 
 export function HomeScreen(): React.JSX.Element {
   useEffect(() => {
@@ -52,7 +58,8 @@ export function HomeScreen(): React.JSX.Element {
             />
             <TouchableOpacity
               style={styles.button}
-              onPress={handleLoginIdentifiedUser}>
+              onPress={handleLoginIdentifiedUser}
+            >
               <Text style={styles.buttonText}>Login Identified User</Text>
             </TouchableOpacity>
 
@@ -60,7 +67,8 @@ export function HomeScreen(): React.JSX.Element {
 
             <TouchableOpacity
               style={styles.button}
-              onPress={handleLoginUnidentifiedUser}>
+              onPress={handleLoginUnidentifiedUser}
+            >
               <Text style={styles.buttonText}>Login Unidentified User</Text>
             </TouchableOpacity>
           </>

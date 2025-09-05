@@ -25,6 +25,7 @@ yarn install
 This should match the package name for the project in Firebase and Intercom configured apps.
 
 **Current identifiers:**
+
 - **Android Package**: `com.example.withnotifications`
 - **iOS Bundle ID**: `org.reactjs.native.example.withnotification`
 
@@ -33,11 +34,12 @@ To customize for your own app, update the following files:
 **iOS**: Update bundle identifier in `ios/withnotification.xcodeproj`
 
 **Android**: Update package name in:
+
 - `android/app/src/main/AndroidManifest.xml`
 - `android/app/src/main/java/com/example/withnotifications/` directory name
 - `MainActivity.kt` and `MainApplication.kt` package declarations
 
->**Note**: This package does not attempt to properly rename build artifacts such as ios/build or Cocoa Pod installation targets. After renaming your project you should clean, build, and reinstall third party dependencies to get it running properly with the new name.
+> **Note**: This package does not attempt to properly rename build artifacts such as ios/build or Cocoa Pod installation targets. After renaming your project you should clean, build, and reinstall third party dependencies to get it running properly with the new name.
 
 ## Step 3: Run pod install
 
@@ -52,7 +54,8 @@ cd ios && pod install && cd ..
 ## Step 4: Initialize Intercom
 
 ### Android
->**MainApplication.kt**
+
+> **MainApplication.kt**
 
 ```kotlin
 override fun onCreate() {
@@ -64,7 +67,8 @@ override fun onCreate() {
 ```
 
 ### iOS
->**AppDelegate.mm**
+
+> **AppDelegate.mm**
 
 ```objective-c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -81,13 +85,14 @@ override fun onCreate() {
 ## Step 5: Setup Push Notifications
 
 ### Android
+
 > Move your **google-services.json** file into the **android/app** directory
 
 > You can find more details on how to configure firebase with Intercom [here](https://developers.intercom.com/installing-intercom/react-native/push-notifications).
 
 # Running the the app
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+> **Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
 ```
 cd ios && pod install
@@ -117,7 +122,7 @@ pnpm run android
 
 ### For iOS
 
->**Note**: Remote push notifications do not work on iOS Simulator. Run the app on a physical device.
+> **Note**: Remote push notifications do not work on iOS Simulator. Run the app on a physical device.
 
 ```shell
 # using pnpm
@@ -126,13 +131,14 @@ pnpm run ios
 
 # Local notifications testing
 
->**Note**: We can use this method to test if notifications are working locally (e.g. debugging issue with notification permissions).
+> **Note**: We can use this method to test if notifications are working locally (e.g. debugging issue with notification permissions).
 
 ## Option 1: Drag payload.apns to the running simulator.
 
 Modify the bundle ID inside `payload.apns` to match yours (`org.reactjs.native.example.withnotification`).
 
 ## Option 2: Terminal
+
 ```shell
 xcrun simctl push booted org.reactjs.native.example.withnotification payload.json
 ```
@@ -152,7 +158,7 @@ Configured Paths:
   /settings
 ```
 
->**Note:** Universal and App Links require setup in the server to work.
+> **Note:** Universal and App Links require setup in the server to work.
 
 [Apple - Supporting Associated Domains](https://developer.apple.com/documentation/xcode/supporting-associated-domains)
 
@@ -163,6 +169,7 @@ Configured Paths:
 [React Navigation Documentation - Configuring Links](https://reactnavigation.org/docs/configuring-links)
 
 ## Option 1: uri-scheme
+
 The uri-scheme package can be used to test deep links on both Android and iOS.
 
 ```shell
@@ -170,6 +177,7 @@ npx uri-scheme open [your deep link] --[ios|android]
 ```
 
 Example:
+
 ```shell
 npx uri-scheme open "app://settings" --ios
 
@@ -177,6 +185,7 @@ npx uri-scheme open "https://app.fake/settings" --ios
 ```
 
 ## Option 2: xcrun for iOS
+
 The xcrun command can be used to test deep links with the iOS simulator:
 
 ```shell
@@ -184,6 +193,7 @@ xcrun simctl openurl booted [your deep link]
 ```
 
 Example:
+
 ```shell
 xcrun simctl openurl booted "app://settings"
 
@@ -191,6 +201,7 @@ xcrun simctl openurl booted "https://app.fake/settings"
 ```
 
 ## Option 3: adb for Android
+
 The adb command can be used to test deep links with the Android emulator or a connected device:
 
 ```shell
@@ -198,6 +209,7 @@ adb shell am start -W -a android.intent.action.VIEW -d [your deep link] [your an
 ```
 
 Example:
+
 ```shell
 adb shell am start -W -a android.intent.action.VIEW -d "app://settings" com.example.withnotifications
 
