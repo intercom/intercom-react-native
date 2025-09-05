@@ -1,0 +1,440 @@
+name: Update Intercom SDK Dependencies
+
+on:
+  schedule:
+    # Run daily at 9 AM UTC
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-dependencies:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: read
+      actions: read
+
+    steps:
+      - name: 🔍 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.14.0'
+
+      - name: 📦 Enable Corepack and install semver
+        run: |
+          corepack enable
+          npm install -g semver@7.7.2
+
+      - name: 🔍 Get current dependency versions
+        id: current-versions
+        run: |
+          # Extract current iOS version from podspec
+          IOS_VERSION=$(grep -E "s\.dependency.*Intercom" intercom-react-native.podspec | sed -E "s/.*'([^']+)'.*/\1/" | sed 's/~> //')
+          
+          # Extract current Android version from build.gradle
+          ANDROID_VERSION=$(grep -E "io\.intercom\.android:intercom-sdk:" android/build.gradle | head -1 | sed -E "s/.*:([^']+)'.*/\1/")
+          
+          echo "📱 Current iOS SDK: $IOS_VERSION"
+          echo "🤖 Current Android SDK: $ANDROID_VERSION"
+          
+          echo "ios_version=$IOS_VERSION" >> $GITHUB_OUTPUT
+          echo "android_version=$ANDROID_VERSION" >> $GITHUB_OUTPUT
+
+      - name: 🚀 Get latest SDK releases
+        id: latest-versions
+        run: |
+          echo "🔄 Fetching latest releases..."
+          
+          # Get iOS release
+          IOS_RELEASE=$(curl -s https://api.github.com/repos/intercom/intercom-ios/releases/latest)
+          IOS_VERSION=$(echo "$IOS_RELEASE" | jq -r '.tag_name // "null"')
+          IOS_CHANGELOG=$(echo "$IOS_RELEASE" | jq -r '.body // "No changelog available"')
+          
+          # Get Android release
+          ANDROID_RELEASE=$(curl -s https://api.github.com/repos/intercom/intercom-android/releases/latest)
+          ANDROID_VERSION=$(echo "$ANDROID_RELEASE" | jq -r '.tag_name // "null"')
+          ANDROID_CHANGELOG=$(echo "$ANDROID_RELEASE" | jq -r '.body // "No changelog available"')
+          
+          echo "📱 Latest iOS SDK: $IOS_VERSION"
+          echo "🤖 Latest Android SDK: $ANDROID_VERSION"
+          
+          echo "ios_version=$IOS_VERSION" >> $GITHUB_OUTPUT
+          echo "android_version=$ANDROID_VERSION" >> $GITHUB_OUTPUT
+          echo "ios_changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$IOS_CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          echo "android_changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$ANDROID_CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: 🧮 Analyze update requirements
+        id: update-analysis
+        run: |
+          CURRENT_IOS="${{ steps.current-versions.outputs.ios_version }}"
+          LATEST_IOS="${{ steps.latest-versions.outputs.ios_version }}"
+          CURRENT_ANDROID="${{ steps.current-versions.outputs.android_version }}"
+          LATEST_ANDROID="${{ steps.latest-versions.outputs.android_version }}"
+          
+          echo "📊 Version Analysis:"
+          echo "   iOS: $CURRENT_IOS → $LATEST_IOS"
+          echo "   Android: $CURRENT_ANDROID → $LATEST_ANDROID"
+          
+          # Determine updates needed
+          IOS_NEEDS_UPDATE=false
+          ANDROID_NEEDS_UPDATE=false
+          OVERALL_UPDATE_NEEDED=false
+          
+          # Check iOS
+          if [ "$LATEST_IOS" != "null" ] && [ -n "$LATEST_IOS" ]; then
+            CURRENT_IOS_CLEAN=$(echo "$CURRENT_IOS" | sed 's/^v//')
+            LATEST_IOS_CLEAN=$(echo "$LATEST_IOS" | sed 's/^v//')
+            
+            if [ "$CURRENT_IOS_CLEAN" != "$LATEST_IOS_CLEAN" ]; then
+              IOS_NEEDS_UPDATE=true
+              OVERALL_UPDATE_NEEDED=true
+              echo "✅ iOS update needed: $CURRENT_IOS_CLEAN → $LATEST_IOS_CLEAN"
+            else
+              echo "ℹ️  iOS already up to date"
+            fi
+          else
+            echo "⚠️  No iOS release available - skipping"
+            LATEST_IOS_CLEAN="null"
+          fi
+          
+          # Check Android
+          if [ "$LATEST_ANDROID" != "null" ] && [ -n "$LATEST_ANDROID" ]; then
+            CURRENT_ANDROID_CLEAN=$(echo "$CURRENT_ANDROID" | sed 's/^v//')
+            LATEST_ANDROID_CLEAN=$(echo "$LATEST_ANDROID" | sed 's/^v//')
+            
+            if [ "$CURRENT_ANDROID_CLEAN" != "$LATEST_ANDROID_CLEAN" ]; then
+              ANDROID_NEEDS_UPDATE=true
+              OVERALL_UPDATE_NEEDED=true
+              echo "✅ Android update needed: $CURRENT_ANDROID_CLEAN → $LATEST_ANDROID_CLEAN"
+            else
+              echo "ℹ️  Android already up to date"
+            fi
+          else
+            echo "⚠️  No Android release available - skipping"
+            LATEST_ANDROID_CLEAN="null"
+          fi
+          
+          # Output results
+          echo "ios_needs_update=$IOS_NEEDS_UPDATE" >> $GITHUB_OUTPUT
+          echo "android_needs_update=$ANDROID_NEEDS_UPDATE" >> $GITHUB_OUTPUT
+          echo "overall_update_needed=$OVERALL_UPDATE_NEEDED" >> $GITHUB_OUTPUT
+          echo "ios_new_version=${LATEST_IOS_CLEAN:-null}" >> $GITHUB_OUTPUT
+          echo "android_new_version=${LATEST_ANDROID_CLEAN:-null}" >> $GITHUB_OUTPUT
+          
+          if [ "$OVERALL_UPDATE_NEEDED" = false ]; then
+            echo "🎯 No updates needed - workflow will exit cleanly"
+          fi
+
+      - name: 🔍 Check existing PRs
+        if: steps.update-analysis.outputs.overall_update_needed == 'true'
+        id: pr-analysis
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TARGET_IOS="${{ steps.update-analysis.outputs.ios_new_version }}"
+          TARGET_ANDROID="${{ steps.update-analysis.outputs.android_new_version }}"
+          IOS_NEEDS_UPDATE="${{ steps.update-analysis.outputs.ios_needs_update }}"
+          ANDROID_NEEDS_UPDATE="${{ steps.update-analysis.outputs.android_needs_update }}"
+          
+          echo "🔍 Checking for existing dependency PRs..."
+          echo "   Target: iOS=$TARGET_IOS, Android=$TARGET_ANDROID"
+          
+          # Find existing PRs
+          EXISTING_PRS=$(gh pr list --state open --search "update Intercom SDK dependencies" --json number,title,headRefName 2>/dev/null || echo "[]")
+          
+          if [ "$EXISTING_PRS" = "[]" ] || [ "$(echo "$EXISTING_PRS" | jq 'length')" -eq 0 ]; then
+            echo "✅ No existing PRs found - proceeding with update"
+            echo "should_create_pr=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          echo "📋 Found existing dependency PRs:"
+          echo "$EXISTING_PRS" | jq -r '.[] | "   PR #\(.number): \(.title)"'
+          
+          SHOULD_CREATE_PR=true
+          
+          # Analyze each existing PR
+          for pr_data in $(echo "$EXISTING_PRS" | jq -r '.[] | @base64'); do
+            PR_INFO=$(echo "$pr_data" | base64 --decode)
+            PR_NUMBER=$(echo "$PR_INFO" | jq -r '.number')
+            PR_TITLE=$(echo "$PR_INFO" | jq -r '.title')
+            PR_BRANCH=$(echo "$PR_INFO" | jq -r '.headRefName')
+            
+            echo "🔍 Analyzing PR #$PR_NUMBER: $PR_TITLE"
+            
+            # Check if this PR already targets our exact versions
+            IOS_MATCHES=true
+            ANDROID_MATCHES=true
+            
+            if [ "$IOS_NEEDS_UPDATE" = "true" ]; then
+              if echo "$PR_TITLE" | grep -q "iOS:.*→"; then
+                EXISTING_IOS_TARGET=$(echo "$PR_TITLE" | sed -n 's/.*iOS:[^→]*→ *\([^,)]*\).*/\1/p' | tr -d ' ')
+                if [ "$EXISTING_IOS_TARGET" != "$TARGET_IOS" ]; then
+                  IOS_MATCHES=false
+                  echo "   📱 iOS version mismatch: PR has $EXISTING_IOS_TARGET, need $TARGET_IOS"
+                fi
+              else
+                IOS_MATCHES=false
+              fi
+            fi
+            
+            if [ "$ANDROID_NEEDS_UPDATE" = "true" ]; then
+              if echo "$PR_TITLE" | grep -q "Android:.*→"; then
+                EXISTING_ANDROID_TARGET=$(echo "$PR_TITLE" | sed -n 's/.*Android:[^→]*→ *\([^,)]*\).*/\1/p' | tr -d ' ')
+                if [ "$EXISTING_ANDROID_TARGET" != "$TARGET_ANDROID" ]; then
+                  ANDROID_MATCHES=false
+                  echo "   🤖 Android version mismatch: PR has $EXISTING_ANDROID_TARGET, need $TARGET_ANDROID"
+                fi
+              else
+                ANDROID_MATCHES=false
+              fi
+            fi
+            
+            # Decision logic
+            if [ "$IOS_MATCHES" = true ] && [ "$ANDROID_MATCHES" = true ]; then
+              echo "   🎯 PR #$PR_NUMBER already targets correct versions - no action needed"
+              SHOULD_CREATE_PR=false
+              break
+            else
+              echo "   🗑️  Closing outdated PR #$PR_NUMBER"
+              gh pr close "$PR_NUMBER" --comment "Closing this PR as newer SDK versions are available. A new PR will be created with the latest versions." || true
+              
+              if [ "$PR_BRANCH" != "null" ] && [ "$PR_BRANCH" != "main" ]; then
+                echo "   🗑️  Deleting branch: $PR_BRANCH"
+                git push origin --delete "$PR_BRANCH" 2>/dev/null || true
+              fi
+            fi
+          done
+          
+          echo "should_create_pr=$SHOULD_CREATE_PR" >> $GITHUB_OUTPUT
+          
+          if [ "$SHOULD_CREATE_PR" = true ]; then
+            echo "🚀 Ready to create new PR"
+          else
+            echo "⏭️  Skipping PR creation - existing PR is current"
+          fi
+
+      - name: 🔧 Setup Ruby for CocoaPods
+        if: steps.update-analysis.outputs.overall_update_needed == 'true' && steps.pr-analysis.outputs.should_create_pr == 'true'
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: 🛠️  Create update branch
+        if: steps.update-analysis.outputs.overall_update_needed == 'true' && steps.pr-analysis.outputs.should_create_pr == 'true'
+        id: create-branch
+        run: |
+          # Configure git
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # Create unique branch
+          BRANCH_NAME="update-intercom-sdks-$(date +%Y%m%d-%H%M%S)"
+          git checkout -b "$BRANCH_NAME"
+          
+          echo "🌿 Created branch: $BRANCH_NAME"
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+
+      - name: 📝 Update dependency files
+        if: steps.update-analysis.outputs.overall_update_needed == 'true' && steps.pr-analysis.outputs.should_create_pr == 'true'
+        id: update-files
+        run: |
+          CHANGES=""
+          PR_TITLE_PARTS=""
+          
+          # Update iOS if needed
+          if [ "${{ steps.update-analysis.outputs.ios_needs_update }}" = "true" ]; then
+            NEW_IOS="${{ steps.update-analysis.outputs.ios_new_version }}"
+            OLD_IOS="${{ steps.current-versions.outputs.ios_version }}"
+            
+            echo "📱 Updating iOS SDK: $OLD_IOS → $NEW_IOS"
+            sed -i '' "s/s\.dependency \"Intercom\", '~> [^']*'/s.dependency \"Intercom\", '~> $NEW_IOS'/" intercom-react-native.podspec
+            
+            CHANGES="$CHANGES\\n- Updated iOS SDK from $OLD_IOS to $NEW_IOS"
+            PR_TITLE_PARTS="iOS: $OLD_IOS → $NEW_IOS"
+            
+            git add intercom-react-native.podspec
+          fi
+          
+          # Update Android if needed
+          if [ "${{ steps.update-analysis.outputs.android_needs_update }}" = "true" ]; then
+            NEW_ANDROID="${{ steps.update-analysis.outputs.android_new_version }}"
+            OLD_ANDROID="${{ steps.current-versions.outputs.android_version }}"
+            
+            echo "🤖 Updating Android SDK: $OLD_ANDROID → $NEW_ANDROID"
+            sed -i '' "s/io\.intercom\.android:intercom-sdk:[^']*/io.intercom.android:intercom-sdk:$NEW_ANDROID/" android/build.gradle
+            sed -i '' "s/io\.intercom\.android:intercom-sdk-ui:[^']*/io.intercom.android:intercom-sdk-ui:$NEW_ANDROID/" android/build.gradle
+            
+            CHANGES="$CHANGES\\n- Updated Android SDK from $OLD_ANDROID to $NEW_ANDROID"
+            
+            if [ -n "$PR_TITLE_PARTS" ]; then
+              PR_TITLE_PARTS="$PR_TITLE_PARTS, Android: $OLD_ANDROID → $NEW_ANDROID"
+            else
+              PR_TITLE_PARTS="Android: $OLD_ANDROID → $NEW_ANDROID"
+            fi
+            
+            git add android/build.gradle
+          fi
+          
+          # Determine version bump type using semver script
+          echo "📈 Analyzing version bump requirements..."
+          VERSION_BUMP_TYPE=$(node semver.js analyze \
+            "${{ steps.current-versions.outputs.ios_version }}" \
+            "${{ steps.update-analysis.outputs.ios_new_version }}" \
+            "${{ steps.current-versions.outputs.android_version }}" \
+            "${{ steps.update-analysis.outputs.android_new_version }}")
+          
+          # Get current version and increment using semver script
+          echo "📈 Applying $VERSION_BUMP_TYPE version bump..."
+          CURRENT_VERSION=$(node semver.js current)
+          NEW_VERSION=$(node semver.js inc "$CURRENT_VERSION" "$VERSION_BUMP_TYPE")
+          
+          # Update package.json version using semver script
+          node semver.js update "$NEW_VERSION"
+          
+          echo "📈 Version bumped ($VERSION_BUMP_TYPE): $CURRENT_VERSION → $NEW_VERSION"
+          git add package.json semver.js
+          
+          # Update yarn.lock
+          echo "📦 Installing dependencies to update lockfile..."
+          yarn install --immutable
+          git add yarn.lock
+          
+          CHANGES="$CHANGES\\n- Bumped version from $CURRENT_VERSION to $NEW_VERSION ($VERSION_BUMP_TYPE)"
+          
+          # Store for next steps
+          echo "changes<<EOF" >> $GITHUB_OUTPUT
+          echo -e "$CHANGES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          echo "pr_title_parts=$PR_TITLE_PARTS" >> $GITHUB_OUTPUT
+
+      - name: 📦 Update iOS Example Pod Dependencies
+        if: steps.update-analysis.outputs.overall_update_needed == 'true' && steps.pr-analysis.outputs.should_create_pr == 'true' && steps.update-analysis.outputs.ios_needs_update == 'true'
+        run: |
+          # Find iOS example directories with Podfiles
+          IOS_EXAMPLE_DIRS=$(find examples -name "Podfile" -exec dirname {} \; | grep -E "(ios|example)" | head -5)
+          
+          for dir in $IOS_EXAMPLE_DIRS; do
+            if [ -f "$dir/Podfile" ]; then
+              echo "📱 Updating pods in $dir"
+              cd "$dir"
+              bundle exec pod install --repo-update || pod install --repo-update || echo "Pod install failed in $dir"
+              cd - > /dev/null
+              
+              # Add any updated Podfile.lock files
+              git add "$dir/Podfile.lock" 2>/dev/null || true
+            fi
+          done
+
+      - name: 💾 Commit and push changes
+        if: steps.update-analysis.outputs.overall_update_needed == 'true' && steps.pr-analysis.outputs.should_create_pr == 'true'
+        run: |
+          # Check if we have changes to commit
+          if git diff --cached --quiet; then
+            echo "❌ No changes to commit - this should not happen!"
+            exit 1
+          fi
+          
+          echo "💾 Committing changes..."
+          git commit -m "chore: update Intercom SDK dependencies (${{ steps.update-files.outputs.pr_title_parts }})
+
+          ${{ steps.update-files.outputs.changes }}
+          - Updated lockfiles and example projects
+          
+          echo "🚀 Pushing branch: ${{ steps.create-branch.outputs.branch_name }}"
+          git push origin "${{ steps.create-branch.outputs.branch_name }}"
+
+      - name: 🎯 Create Pull Request
+        if: steps.update-analysis.outputs.overall_update_needed == 'true' && steps.pr-analysis.outputs.should_create_pr == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🎯 Creating pull request..."
+          
+          # Build PR description
+          cat > pr_body.md << 'EOF'
+          ## 🔄 Automated Intercom SDK Dependency Update
+
+          This PR updates the Intercom SDK dependencies to their latest versions.
+
+          ### 📋 Changes Made:
+          ${{ steps.update-files.outputs.changes }}
+
+          ### 📚 Release Notes:
+          EOF
+          
+          # Add iOS release notes if updated
+          if [ "${{ steps.update-analysis.outputs.ios_needs_update }}" = "true" ]; then
+            cat >> pr_body.md << 'EOF'
+
+          #### 📱 iOS SDK ${{ steps.update-analysis.outputs.ios_new_version }}
+          [View Release Notes](https://github.com/intercom/intercom-ios/releases/tag/${{ steps.latest-versions.outputs.ios_version }})
+
+          ```
+          ${{ steps.latest-versions.outputs.ios_changelog }}
+          ```
+          EOF
+          fi
+          
+          # Add Android release notes if updated
+          if [ "${{ steps.update-analysis.outputs.android_needs_update }}" = "true" ]; then
+            cat >> pr_body.md << 'EOF'
+
+          #### 🤖 Android SDK ${{ steps.update-analysis.outputs.android_new_version }}
+          [View Release Notes](https://github.com/intercom/intercom-android/releases/tag/${{ steps.latest-versions.outputs.android_version }})
+
+          ```
+          ${{ steps.latest-versions.outputs.android_changelog }}
+          ```
+          EOF
+          fi
+          
+          cat >> pr_body.md << 'EOF'
+
+          ---
+          🤖 This PR was automatically created by the [Update Dependencies workflow](.github/workflows/update-dependencies.yml).
+          EOF
+          
+          # Create PR
+          if gh pr create \
+            --title "chore: update Intercom SDK dependencies (${{ steps.update-files.outputs.pr_title_parts }})" \
+            --body-file pr_body.md \
+            --head "${{ steps.create-branch.outputs.branch_name }}" \
+            --base "main"; then
+            echo "✅ Pull request created successfully!"
+          else
+            echo "❌ Failed to create pull request"
+            echo "📋 Branch pushed: ${{ steps.create-branch.outputs.branch_name }}"
+            echo "📋 Title: chore: update Intercom SDK dependencies (${{ steps.update-files.outputs.pr_title_parts }})"
+            exit 1
+          fi
+
+      - name: 📊 Summary
+        if: always()
+        run: |
+          echo "## 📊 Workflow Summary"
+          
+          if [ "${{ steps.update-analysis.outputs.overall_update_needed }}" != "true" ]; then
+            echo "ℹ️  No dependency updates needed - all SDKs are current"
+            echo "   📱 iOS: ${{ steps.current-versions.outputs.ios_version }}"
+            echo "   🤖 Android: ${{ steps.current-versions.outputs.android_version }}"
+          elif [ "${{ steps.pr-analysis.outputs.should_create_pr }}" != "true" ]; then
+            echo "⏭️  Updates available but existing PR already covers latest versions"
+          elif [ "${{ job.status }}" = "success" ]; then
+            echo "✅ Successfully created dependency update PR!"
+            echo "   📋 Title: chore: update Intercom SDK dependencies (${{ steps.update-files.outputs.pr_title_parts }})"
+            echo "   🌿 Branch: ${{ steps.create-branch.outputs.branch_name }}"
+          else
+            echo "❌ Workflow failed - check logs above"
+          fi
