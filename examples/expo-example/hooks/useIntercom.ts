@@ -29,8 +29,8 @@ export function useIntercom() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const validateEmail = useCallback((email: string | undefined) => {
-    return String(email)
+  const validateEmail = useCallback((em: string | undefined) => {
+    return String(em)
       .toLowerCase()
       .match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
   }, []);
@@ -55,8 +55,8 @@ export function useIntercom() {
   }, [setLoggedUser, handleError]);
 
   const loginWithEmail = useCallback(
-    async (email: string) => {
-      if (!validateEmail(email)) {
+    async (em: string) => {
+      if (!validateEmail(em)) {
         Alert.alert('Error', 'Please enter a valid email');
         return;
       }
@@ -64,7 +64,7 @@ export function useIntercom() {
       try {
         setIsLoading(true);
         setError(null);
-        await Intercom.loginUserWithUserAttributes({ email });
+        await Intercom.loginUserWithUserAttributes({ email: em });
         setLoggedUser(true);
         Alert.alert('Success', 'Logged in with email');
       } catch (e) {

@@ -3,7 +3,7 @@ import '../global.css';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Alert, AppState, Linking } from 'react-native';
 import 'react-native-reanimated';
 

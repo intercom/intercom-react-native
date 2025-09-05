@@ -6,12 +6,12 @@ export function useIntercom() {
   const [userIdentifier, setUserIdentifier] = useMMKVStorage<string>(
     'id',
     storage,
-    '',
+    ''
   );
   const [isLoggedIn, setIsLoggedIn] = useMMKVStorage<boolean>(
     'login',
     storage,
-    false,
+    false
   );
 
   const handleLoginIdentifiedUser = async () => {

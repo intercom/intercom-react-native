@@ -15,7 +15,7 @@ export function HomeScreen(): React.JSX.Element {
   useEffect(() => {
     const subscription = AppState.addEventListener(
       'change',
-      nextStatus => nextStatus === 'active' && Intercom?.handlePushMessage(),
+      nextStatus => nextStatus === 'active' && Intercom?.handlePushMessage()
     );
     return subscription.remove;
   }, []);
