@@ -365,6 +365,27 @@ See [How to manually link IOS Intercom SDK](docs/IOS-MANUAL-LINKING.md)
   }
 ```
 
+**Swift Alternative:**
+
+If you're using Swift, update your `AppDelegate.swift`:
+
+- Add the import at the top:
+
+```Swift
+import intercom_react_native
+```
+
+- Inside `didFinishLaunchingWithOptions` before `return true`:
+
+```Swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+  ....
+     Intercom.setApiKey("<Your iOS API Key>", forAppId: "<Your App ID>")
+  ....
+}
+ 
+ ```
+
 #### iOS: Permissions
 
 Add this permission to your `Info.plist`
