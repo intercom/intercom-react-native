@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@intercom/intercom-react-native": ["./src/index"],
+      "@intercom/intercom-react-native": ["./src/index"]
     },
     "types": ["node"],
     "allowUnreachableCode": false,
@@ -23,10 +23,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "esnext",
+    "target": "esnext"
   },
-  "exclude": [
-    "example/e2e/**",
-    "sandboxes"
-  ]
+  "exclude": ["examples"]
 }
