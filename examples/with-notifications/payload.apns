@@ -1,0 +1,9 @@
+{
+  "Simulator Target Bundle": "org.reactjs.native.example.withnotification",
+  "aps": {
+    "alert": {
+      "title": "Testing push notifications",
+      "body": "Local notifications are working"
+    }
+  }
+}

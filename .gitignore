@@ -41,11 +41,11 @@ local.properties
 android.iml
 
 # Ruby
-example/vendor/
+examples/*/vendor/
 
 # Cocoapods
 #
-example/ios/Pods
+examples/*/ios/Pods
 
 # node.js
 #

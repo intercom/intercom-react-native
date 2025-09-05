@@ -124,7 +124,7 @@ jobs:
           command: curl -Ls "https://get.maestro.mobile.dev" | bash
 
       - run:
-          working_directory: example/test
+          working_directory: examples/example/test
           name: Build android
           command: yarn run build:android
 
@@ -141,10 +141,10 @@ jobs:
       - run:
           name: Install app on emulator
           command: |
-            adb install -r ~/project/example/android/app/build/outputs/apk/release/app-release.apk
+            adb install -r ~/project/examples/example/android/app/build/outputs/apk/release/app-release.apk
 
       - run:
-          working_directory: example/test
+          working_directory: examples/example/test
           name: Run UI Tests
           command: yarn run test:android
 
@@ -161,25 +161,25 @@ jobs:
       - <<: *setup_env_file
 
       - run:
-          working_directory: example/e2e
+          working_directory: examples/example/e2e
           name: Install Maestro
           command: curl -Ls "https://get.maestro.mobile.dev" | bash
 
       - restore_cache:
           keys:
-            - pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
+            - pod-dependencies-{{ checksum "~/project/examples/example/ios/Podfile" }}
       - run:
-          working_directory: example/ios
+          working_directory: examples/example/ios
           name: Install Pods
           command: pod install
 
       - save_cache:
-          key: pod-dependencies-{{ checksum "~/project/example/ios/Podfile" }}
+          key: pod-dependencies-{{ checksum "~/project/examples/example/ios/Podfile" }}
           paths:
-            - ~/project/example/ios/Pods
+            - ~/project/examples/example/ios/Pods
 
       - run:
-          working_directory: example/test
+          working_directory: examples/example/test
           name: Build
           command: yarn run build:ios
 
@@ -193,10 +193,10 @@ jobs:
       - run:
           name: Install app on simulator
           command: |
-            xcrun simctl install booted ~/project/example/test/build/Build/Products/Release-iphonesimulator/IntercomReactNativeExampleUI.app
+            xcrun simctl install booted ~/project/examples/example/test/build/Build/Products/Release-iphonesimulator/IntercomReactNativeExampleUI.app
 
       - run:
-          working_directory: example/test
+          working_directory: examples/example/test
           name: Run UI Tests
           command: yarn run test:ios
 
