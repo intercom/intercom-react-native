@@ -372,7 +372,7 @@ If you're using Swift, update your `AppDelegate.swift`:
 - Add the import at the top:
 
 ```Swift
-import Intercom
+import intercom_react_native
 ```
 
 - Inside `didFinishLaunchingWithOptions` before `return true`:
