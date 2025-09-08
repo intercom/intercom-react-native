@@ -71,7 +71,15 @@ public class IntercomModule extends NativeIntercomSpecSpec {
   public static void handleRemotePushWithCustomStack(@NonNull Application application, RemoteMessage remoteMessage,
       TaskStackBuilder customStack) {
     try {
+      if (remoteMessage == null) {
+        Log.w(NAME, "handleRemotePushWithCustomStack: remoteMessage is null");
+        return;
+      }
       Map<String, String> message = remoteMessage.getData();
+      if (message == null) {
+        Log.w(NAME, "handleRemotePushWithCustomStack: message is null");
+        return;
+      }
       intercomPushClient.handlePushWithCustomStack(application, message, customStack);
     } catch (Exception err) {
       Log.e(NAME, "handlePushWithCustomStack error:");
@@ -94,8 +102,17 @@ public class IntercomModule extends NativeIntercomSpecSpec {
   }
 
   public static void sendTokenToIntercom(Application application, @NonNull String token) {
-    intercomPushClient.sendTokenToIntercom(application, token);
-    Log.d(NAME, "sendTokenToIntercom");
+    if (application == null || token == null || token.isEmpty()) {
+      Log.w(NAME, "sendTokenToIntercom: application or token is null or empty");
+      return;
+    }
+    try {
+      intercomPushClient.sendTokenToIntercom(application, token);
+      Log.d(NAME, "sendTokenToIntercom");
+    } catch (Exception err) {
+      Log.e(NAME, "sendTokenToIntercom error:");
+      Log.e(NAME, err.toString());
+    }
   }
 
   @ReactMethod
@@ -114,14 +131,20 @@ public class IntercomModule extends NativeIntercomSpecSpec {
   @ReactMethod
   public void sendTokenToIntercom(@NonNull String token, Promise promise) {
     try {
+      if (token == null || token.isEmpty()) {
+        Log.w(NAME, "sendTokenToIntercom: token is null or empty");
+        promise.reject(IntercomErrorCodes.SEND_TOKEN_TO_INTERCOM, "token is null or empty");
+        return;
+      }
       Activity activity = getCurrentActivity();
-      if (activity != null) {
+      if (activity != null && activity.getApplication() != null) {
         intercomPushClient.sendTokenToIntercom(activity.getApplication(), token);
         Log.d(NAME, "sendTokenToIntercom");
         promise.resolve(true);
       } else {
         Log.e(NAME, "sendTokenToIntercom");
         Log.e(NAME, "no current activity");
+        promise.reject(IntercomErrorCodes.SEND_TOKEN_TO_INTERCOM, "no current activity");
       }
 
     } catch (Exception err) {
@@ -521,7 +544,7 @@ public class IntercomModule extends NativeIntercomSpecSpec {
   @ReactMethod
   public void setBottomPadding(double paddingBottom, Promise promise) {
     try {
-      Intercom.client().setBottomPadding((int)paddingBottom);
+      Intercom.client().setBottomPadding((int) paddingBottom);
       Log.d(NAME, "setBottomPadding");
       promise.resolve(true);
     } catch (Exception err) {
