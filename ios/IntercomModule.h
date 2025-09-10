@@ -1,7 +1,7 @@
 #import <React/RCTBridgeModule.h>
 
 #ifdef RCT_NEW_ARCH_ENABLED
-#import "IntercomReactNativeSpec.h"
+#import <IntercomReactNativeSpec/IntercomReactNativeSpec.h>
 @interface IntercomModule : NSObject <NativeIntercomSpecSpec>
 #else
 @interface IntercomModule : NSObject <RCTBridgeModule>
