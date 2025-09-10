@@ -4,13 +4,13 @@ import { TurboModuleRegistry } from 'react-native';
 export interface UserAttributes {
   companies?: Array<{
     createdAt?: number;
-    customAttributes?: { [key: string]: boolean | string | number };
+    customAttributes?: Object; // { [key: string]: boolean | string | number };
     id: string;
     monthlySpend?: number;
     name?: string;
     plan?: string;
   }>;
-  customAttributes?: { [key: string]: boolean | string | number };
+  customAttributes?: Object; // { [key: string]: boolean | string | number };
   email?: string;
   languageOverride?: string;
   name?: string;
@@ -21,12 +21,7 @@ export interface UserAttributes {
 }
 
 interface TurboModuleContent {
-  type:
-    | 'ARTICLE'
-    | 'CAROUSEL'
-    | 'SURVEY'
-    | 'HELP_CENTER_COLLECTIONS'
-    | 'CONVERSATION';
+  type: string; // ARTICLE, CAROUSEL, SURVEY, HELP_CENTER_COLLECTIONS, CONVERSATION
   id?: string;
   ids?: Array<string>;
 }
