@@ -35,10 +35,6 @@ if (isNewArchitectureEnabled()) {
   apply plugin: "com.facebook.react"
 }
 
-def safeExtGet(prop, fallback) {
-  rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
-}
-
 android {
   namespace 'com.intercom.reactnative'
   compileSdk rootProject.ext.compileSdkVersion
@@ -87,7 +83,7 @@ repositories {
 dependencies {
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"  // From node_modules
-  implementation "com.google.firebase:firebase-messaging:${safeExtGet('firebaseMessagingVersion', '20.2.+')}"
+  implementation "com.google.firebase:firebase-messaging:24.1.2"
   implementation 'io.intercom.android:intercom-sdk:17.1.0'
   implementation 'io.intercom.android:intercom-sdk-ui:17.1.0'
 }
