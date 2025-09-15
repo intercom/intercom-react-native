@@ -363,7 +363,7 @@ jobs:
           git commit -m "chore: update Intercom SDK dependencies (${{ steps.update-files.outputs.pr_title_parts }})
 
           ${{ steps.update-files.outputs.changes }}
-          - Updated lockfiles and example projects
+          - Updated lockfiles and example projects"
 
           echo "🚀 Pushing branch: ${{ steps.create-branch.outputs.branch_name }}"
           git push origin "${{ steps.create-branch.outputs.branch_name }}"
