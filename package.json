@@ -180,8 +180,7 @@
   },
   "packageManager": "yarn@3.6.1",
   "engines": {
-    "node": ">=18",
-    "yarn": ">=3"
+    "node": ">=18"
   },
   "codegenConfig": {
     "name": "IntercomReactNativeSpec",
