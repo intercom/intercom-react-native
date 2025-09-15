@@ -228,7 +228,6 @@ jobs:
         if: steps.update-analysis.outputs.overall_update_needed == 'true' && steps.pr-analysis.outputs.should_create_pr == 'true'
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2'
           bundler-cache: true
 
       - name: 🛠️  Create update branch
