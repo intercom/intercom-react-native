@@ -26,10 +26,10 @@ jobs:
         with:
           node-version: '22.14.0'
 
-      - name: 📦 Enable Corepack and install semver
+      - name: 📦 Enable Corepack and install dependencies
         run: |
           corepack enable
-          npm install -g semver@7.7.2
+          yarn install --immutable
 
       - name: 🔍 Get current dependency versions
         id: current-versions
