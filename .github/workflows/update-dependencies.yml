@@ -26,10 +26,10 @@ jobs:
         with:
           node-version: '22.14.0'
 
-      - name: 📦 Enable Corepack and install semver
+      - name: 📦 Enable Corepack and install dependencies
         run: |
           corepack enable
-          npm install -g semver@7.7.2
+          yarn install --immutable
 
       - name: 🔍 Get current dependency versions
         id: current-versions
@@ -228,7 +228,6 @@ jobs:
         if: steps.update-analysis.outputs.overall_update_needed == 'true' && steps.pr-analysis.outputs.should_create_pr == 'true'
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2'
           bundler-cache: true
 
       - name: 🛠️  Create update branch
@@ -364,7 +363,7 @@ jobs:
           git commit -m "chore: update Intercom SDK dependencies (${{ steps.update-files.outputs.pr_title_parts }})
 
           ${{ steps.update-files.outputs.changes }}
-          - Updated lockfiles and example projects
+          - Updated lockfiles and example projects"
 
           echo "🚀 Pushing branch: ${{ steps.create-branch.outputs.branch_name }}"
           git push origin "${{ steps.create-branch.outputs.branch_name }}"

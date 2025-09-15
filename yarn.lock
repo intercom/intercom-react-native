@@ -2303,6 +2303,7 @@ __metadata:
     react: 18.2.0
     react-native: ^0.81.0
     react-native-builder-bob: 0.40.13
+    semver: ^7.7.2
     typescript: 5.0.4
   peerDependencies:
     react: "*"
