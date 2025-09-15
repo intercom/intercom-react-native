@@ -31,10 +31,6 @@ jobs:
           corepack enable
           npm install -g semver@7.7.2
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
       - name: 🔍 Get current dependency versions
         id: current-versions
         run: |
@@ -321,6 +317,8 @@ jobs:
           for dir in $PNPM_EXAMPLE_DIRS; do
             echo "📦 Installing dependencies to update lockfile..."
             cd "$dir"
+            corepack install
+            corepack enable
             pnpm install
             git add pnpm-lock.yaml
             cd - > /dev/null
