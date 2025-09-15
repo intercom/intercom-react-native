@@ -51,8 +51,13 @@ RCT_EXPORT_MODULE()
 }
 
 + (void)setDeviceToken:(nonnull NSData *)deviceToken {
-    [Intercom setDeviceToken:deviceToken failure:nil];
-    NSLog(@"setDeviceToken");
+    [Intercom setDeviceToken:deviceToken
+                     success:^{
+                         NSLog(@"Device token registered successfully");
+                     }
+                     failure:^(NSError * _Nullable error) {
+                         NSLog(@"Failed to register device token: %@", error.localizedDescription);
+                     }];
 }
 
 + (BOOL)isIntercomPushNotification:(NSDictionary *)userInfo {
@@ -84,11 +89,13 @@ RCT_EXPORT_METHOD(sendTokenToIntercom:(NSString *)token
                   rejecter:(RCTPromiseRejectBlock)reject) {
     @try {
         NSData *data = [self dataFromHexString:token];
-        [Intercom setDeviceToken:data failure:^(NSError * _Nullable error) {
-            reject(SEND_TOKEN_TO_INTERCOM, @"Error in sendTokenToIntercom", error);
-        }];
-
-        resolve(@(YES));
+        [Intercom setDeviceToken:data
+                         success:^{
+                             resolve(@(YES));
+                         }
+                         failure:^(NSError * _Nullable error) {
+                             reject(SEND_TOKEN_TO_INTERCOM, @"Error in sendTokenToIntercom", error);
+                         }];
     } @catch (NSException *exception) {
         reject(SEND_TOKEN_TO_INTERCOM, @"Error in sendTokenToIntercom", [self exceptionToError:exception :SEND_TOKEN_TO_INTERCOM :@"sendTokenToIntercom"]);
     }

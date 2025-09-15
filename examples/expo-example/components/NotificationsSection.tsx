@@ -35,13 +35,19 @@ export default function NotificationsSection({
     try {
       const token = await registerForPushNotificationsAsync();
       if (token) {
-        Intercom.sendTokenToIntercom(token.data.toString());
-        Alert.alert('Success', 'Token sent');
+        try {
+          await Intercom.sendTokenToIntercom(token.data.toString());
+          Alert.alert('Success', 'Token sent');
+        } catch (error) {
+          console.error(error);
+          Alert.alert('Oops... Something went wrong');
+        }
       } else {
         Alert.alert('Error', 'No token found');
       }
     } catch (error) {
-      Alert.alert('Error', (error as Error).message);
+      console.error(error);
+      Alert.alert('Oops... Something went wrong');
     }
   };
 
