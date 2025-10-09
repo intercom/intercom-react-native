@@ -383,7 +383,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
      Intercom.setApiKey("<Your iOS API Key>", forAppId: "<Your App ID>")
   ....
 }
- 
+
  ```
 
 #### iOS: Permissions
@@ -1199,6 +1199,39 @@ This should be called before any user login takes place.
 | Type | Type   | Required |
 | ---- | ------ | -------- |
 | JWT  | string | yes      |
+
+### Returns
+
+`Promise<boolean>`
+
+---
+
+### `Intercom.setAuthTokens(authTokens)`
+
+Provide Intercom with your auth tokens which can be used for functionality such as Custom Actions with Data Connectors. You can provide multiple
+tokens at once. To create tokens:
+1. Go to Settings > Integrations > Authentication in your Intercom workspace
+2. Create a new token with "User" type
+3. Configure the token prefix and header as needed
+
+Learn more: https://www.intercom.com/help/en/articles/6615543-setting-up-data-connectors-authentication
+
+This should be called after any user login takes place.
+
+**Note:** This is separate from `setUserJwt()` which is for Messenger Security. `setAuthTokens()` passes JWT tokens to
+Data Connectors (e.g., Fin Actions), which use these in `Authorization: Bearer <token>` headers for API requests.
+
+### Options
+
+| Name       | Type                            | Required | Description                                         |
+| ---------- | ------------------------------- | -------- | --------------------------------------------------- |
+| authTokens | `{ [key: string]: string }`     | yes      | An object with token names as keys and JWT strings as values |
+
+### Example
+
+```typescript
+Intercom.setAuthTokens({ security_token: "jwt_here" });
+```
 
 ### Returns
 

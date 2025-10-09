@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.intercom.android.sdk.AuthToken;
 import io.intercom.android.sdk.Company;
 import io.intercom.android.sdk.Intercom;
 import io.intercom.android.sdk.UserAttributes;
@@ -254,5 +255,24 @@ public class IntercomHelpers {
       registrationMap.putString("userId", registration.getUserId());
     }
     return registrationMap;
+  }
+
+  public static List<AuthToken> buildAuthTokensList(ReadableMap readableMap) {
+    List<AuthToken> authTokens = new ArrayList<>();
+    ReadableMapKeySetIterator iterator = readableMap.keySetIterator();
+
+    while (iterator.hasNextKey()) {
+      String key = iterator.nextKey();
+      ReadableType type = readableMap.getType(key);
+
+      if (type == ReadableType.String) {
+        String value = readableMap.getString(key);
+        if (key != null && value != null && !key.isEmpty() && !value.isEmpty()) {
+          authTokens.add(new AuthToken(key, value));
+        }
+      }
+    }
+
+    return authTokens;
   }
 }

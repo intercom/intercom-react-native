@@ -84,6 +84,7 @@ export interface Spec extends TurboModule {
   setLogLevel(logLevel: string): Promise<boolean>;
   setThemeMode(themeMode: string): Promise<boolean>;
   setUserJwt(jwt: string): Promise<boolean>;
+  setAuthTokens(authTokens: Object): Promise<boolean>;
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('IntercomModule');
