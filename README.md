@@ -45,7 +45,7 @@
 ## Installation
 
 ```sh
-$ npm install @intercom/intercom-react-native
+npm install @intercom/intercom-react-native
 ```
 
 or
@@ -61,7 +61,7 @@ If you're using React Native v0.60 or above, the library will be linked automati
 #### Android: Automatic linking with React Native v0.59 and below
 
 ```
-$ react-native link @intercom/intercom-react-native
+react-native link @intercom/intercom-react-native
 ```
 
 #### Android: Manual linking with React Native v0.59 and below
@@ -80,6 +80,16 @@ implementation project(':intercom-react-native')
 ```
 
 #### Android: Setup
+
+You have two options for initializing Intercom:
+
+**Option 1: Native Initialization (Recommended)**
+Initialize at app startup in your native code for the best user experience.
+
+**Option 2: JavaScript Initialization**
+Initialize manually from JavaScript for more control over timing. If you choose this option, skip the native initialization code below and see the [`initialize` method documentation](#intercomintializeapikey-appid) for implementation details.
+
+**For Native Initialization:**
 
 - Add below lines to `android/app/src/main/java/com/YOUR_APP/app/MainApplication.java` inside `onCreate` method, replacing `apiKey` and `appId` which can be found in your [workspace settings](https://app.intercom.com/a/apps/_/settings/android).
 
@@ -340,6 +350,16 @@ See [How to manually link IOS Intercom SDK](docs/IOS-MANUAL-LINKING.md)
 
 #### iOS: Setup
 
+You have two options for initializing Intercom:
+
+**Option 1: Native Initialization (Recommended)**
+Initialize at app startup in your native code for the best user experience.
+
+**Option 2: JavaScript Initialization**
+Initialize manually from JavaScript for more control over timing. If you choose this option, skip the native initialization code below and see the [`initialize` method documentation](#intercomintializeapikey-appid) for implementation details with platform-specific API key handling.
+
+**For Native Initialization:**
+
 - Open `ios/AppDelegate.m` then add below code:
 
 - At the top of file add the following:
@@ -359,7 +379,7 @@ See [How to manually link IOS Intercom SDK](docs/IOS-MANUAL-LINKING.md)
   // ...
   self.window.rootViewController = rootViewController;
 
-  [IntercomModule initialize:@"apiKey" withAppId:@"appId"]; // <-- Add this (Remember to replace strings with your api keys)
+  [IntercomModule initialize:@"apiKey" withAppId:@"appId"]; // <-- Add this
 
   return YES;
   }
@@ -384,7 +404,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
   ....
 }
 
- ```
+```
 
 #### iOS: Permissions
 
@@ -518,6 +538,7 @@ The plugin provides props for extra customization. Every time you change the pro
 - `androidApiKey` (_string_): Android API Key from Intercom.
 - `iosApiKey` (_string_): iOS API Key from Intercom.
 - `intercomRegion` (_string_): Region for Intercom `US`, `EU`, `AU`. Optional. Defaults to `US`.
+- `useManualInit` (_boolean_): Set to `true` to manually initialize Intercom from JavaScript instead of at app startup. Optional. Defaults to `false`.
 
 ```json
 {
@@ -535,6 +556,41 @@ The plugin provides props for extra customization. Every time you change the pro
     ]
   }
 }
+```
+
+#### Manual Initialization with Expo
+
+If you want to delay Intercom initialization and manually initialize it from JavaScript, you set the `useManualInit` option to `true`:
+
+```json
+{
+  "expo": {
+    "plugins": [
+      [
+        "@intercom/intercom-react-native",
+        {
+          "useManualInit": true
+        }
+      ]
+    ]
+  }
+}
+```
+
+Then initialize Intercom manually in your JavaScript code with the platform-specific API keys:
+
+```javascript
+import Intercom from '@intercom/intercom-react-native';
+import { Platform } from 'react-native';
+
+// You can find your API keys in your Intercom workspace settings
+// https://app.intercom.com/a/apps/<your-app-id>/settings/channels/messenger/install?tab=ios
+const apiKey = Platform.select({
+  ios: 'ios_sdk-abc123',
+  android: 'android_sdk-abc123',
+});
+
+await Intercom.initialize(apiKey, 'abc123');
 ```
 
 #### Expo: Push notifications
@@ -690,6 +746,36 @@ Sets the user hash necessary for validation when Identity Verification is enable
 | Type     | Type   | Required |
 | -------- | ------ | -------- |
 | userHash | string | yes      |
+
+### Returns
+
+`Promise<boolean>`
+
+---
+
+### `Intercom.initialize(apiKey, appId)`
+
+Initialize the Intercom SDK manually. This is useful when you want to delay initialization until after your app has started, or when using Expo with the `useManualInit` plugin option.
+
+### Options
+
+| Name   | Type   | Required | Description                             |
+| ------ | ------ | -------- | --------------------------------------- |
+| apiKey | string | yes      | Your Platform-specific Intercom API key |
+| appId  | string | yes      | Your Intercom App ID                    |
+
+### Examples
+
+```javascript
+import { Platform } from 'react-native';
+
+const apiKey = Platform.select({
+  ios: 'ios_sdk-abc123',
+  android: 'android_sdk-xyz789',
+});
+
+await Intercom.initialize(apiKey, 'your_app_id');
+```
 
 ### Returns
 
@@ -1223,9 +1309,9 @@ Data Connectors (e.g., Fin Actions), which use these in `Authorization: Bearer <
 
 ### Options
 
-| Name       | Type                            | Required | Description                                         |
-| ---------- | ------------------------------- | -------- | --------------------------------------------------- |
-| authTokens | `{ [key: string]: string }`     | yes      | An object with token names as keys and JWT strings as values |
+| Name       | Type                        | Required | Description                                                  |
+| ---------- | --------------------------- | -------- | ------------------------------------------------------------ |
+| authTokens | `{ [key: string]: string }` | yes      | An object with token names as keys and JWT strings as values |
 
 ### Example
 

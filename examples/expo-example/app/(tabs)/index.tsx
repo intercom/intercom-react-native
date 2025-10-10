@@ -1,11 +1,13 @@
-import React from 'react';
-import { SafeAreaView, ScrollView, StatusBar } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, ScrollView, StatusBar, View, Text } from 'react-native';
 import * as Notifications from 'expo-notifications';
 
 import { useIntercom } from '../../hooks/useIntercom';
 import { useNotifications } from '../../hooks/useNotifications';
+import { INTERCOM_CONFIG } from '../../config/intercom.config';
 
 import Header from '../../components/Header';
+import Intercom from '@intercom/intercom-react-native';
 import AuthenticationSection from '../../components/AuthenticationSection';
 import MessagingSection from '../../components/MessagingSection';
 import ContentSection from '../../components/ContentSection';
@@ -28,6 +30,33 @@ Notifications.setNotificationHandler({
 export default function App() {
   const intercom = useIntercom();
   const notifications = useNotifications();
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [initError, setInitError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function initializeIntercom() {
+      try {
+        console.log('Initializing Intercom...');
+        if (!INTERCOM_CONFIG.apiKey || !INTERCOM_CONFIG.appId) {
+          console.error('Intercom API key and app ID are required');
+          return;
+        }
+        if (!isInitialized) {
+          await Intercom.initialize(
+            INTERCOM_CONFIG.apiKey,
+            INTERCOM_CONFIG.appId
+          );
+          setIsInitialized(true);
+          console.log('Intercom initialized successfully');
+        }
+      } catch (error) {
+        console.error('Failed to initialize Intercom:', error);
+        setInitError(error instanceof Error ? error.message : 'Unknown error');
+      }
+    }
+
+    initializeIntercom();
+  }, [isInitialized]);
 
   return (
     <ErrorBoundary>
@@ -41,6 +70,20 @@ export default function App() {
         />
 
         <ScrollView className="flex-1 px-6 py-4">
+          <View className="mb-4 p-3 rounded-lg bg-gray-100">
+            <Text className="text-sm font-semibold text-gray-700">
+              Intercom Status:{' '}
+              {initError && (
+                <Text className="text-red-600">Failed: {initError}</Text>
+              )}
+              {isInitialized ? (
+                <Text className="text-green-600">Initialized</Text>
+              ) : (
+                <Text className="text-yellow-600">Initializing...</Text>
+              )}
+            </Text>
+          </View>
+
           <AuthenticationSection
             loggedUser={intercom.loggedUser}
             email={intercom.email}

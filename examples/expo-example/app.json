@@ -39,9 +39,7 @@
       [
         "@intercom/intercom-react-native",
         {
-          "appId": "YOUR_APP_ID",
-          "androidApiKey": "android_sdk-YOUR_ANDROID_API_KEY",
-          "iosApiKey": "ios_sdk-YOUR_IOS_API_KEY"
+          "useManualInit": true
         }
       ],
       "expo-router",
