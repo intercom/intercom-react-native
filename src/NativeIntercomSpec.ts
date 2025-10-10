@@ -27,6 +27,7 @@ interface TurboModuleContent {
 }
 
 export interface Spec extends TurboModule {
+  initialize(apiKey: string, appId: string): Promise<boolean>;
   loginUnidentifiedUser(): Promise<boolean>;
   loginUserWithUserAttributes(userAttributes: UserAttributes): Promise<boolean>;
   logout(): Promise<boolean>;
@@ -84,6 +85,7 @@ export interface Spec extends TurboModule {
   setLogLevel(logLevel: string): Promise<boolean>;
   setThemeMode(themeMode: string): Promise<boolean>;
   setUserJwt(jwt: string): Promise<boolean>;
+  setAuthTokens(authTokens: Object): Promise<boolean>;
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('IntercomModule');

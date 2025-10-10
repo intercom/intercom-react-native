@@ -16,6 +16,8 @@ NSString *UPDATE_USER = @"104";
 NSString *LOG_EVENT = @"105";
 NSString *UNREAD_CONVERSATION_COUNT = @"107";
 NSString *SET_USER_JWT = @"109";
+NSString *SET_AUTH_TOKENS = @"110";
+NSString *INITIALIZE_ERROR = @"111";
 NSString *SEND_TOKEN_TO_INTERCOM = @"302";
 NSString *FETCH_HELP_CENTER_COLLECTIONS = @"901";
 NSString *FETCH_HELP_CENTER_COLLECTION = @"902";
@@ -25,6 +27,19 @@ RCT_EXPORT_MODULE()
 
 - (dispatch_queue_t)methodQueue {
     return dispatch_get_main_queue();
+}
+
+RCT_EXPORT_METHOD(initialize:(NSString *)apiKey
+                  withAppId:(NSString *)appId
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    @try {
+        [IntercomModule initialize:apiKey withAppId:appId];
+        resolve(@(YES));
+    } @catch (NSException *exception) {
+        NSLog(@"initialize error: %@", exception.reason);
+        reject(INITIALIZE_ERROR, @"Failed to initialize Intercom", [self exceptionToError:exception :INITIALIZE_ERROR :@"initialize"]);
+    }
 }
 
 + (void)initialize:(nonnull NSString *)apiKey withAppId:(nonnull NSString *)appId {
@@ -328,6 +343,22 @@ RCT_EXPORT_METHOD(setUserJwt:(NSString *)jwt
         resolve(@(YES));
     } @catch (NSException *exception) {
         reject(SET_USER_JWT, @"Error in setUserJwt", [self exceptionToError:exception :@"SET_USER_JWT" :@"setUserJwt"]);
+    }
+};
+
+RCT_EXPORT_METHOD(setAuthTokens:(NSDictionary *)authTokens
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    @try {
+        [Intercom setAuthTokens:authTokens
+                        success:^{
+                            resolve(@(YES));
+                        }
+                        failure:^(NSError * _Nonnull error) {
+                            reject(SET_AUTH_TOKENS, @"Error in setAuthTokens", [self removeNullUnderlyingError:error]);
+                        }];
+    } @catch (NSException *exception) {
+        reject(SET_AUTH_TOKENS, @"Error in setAuthTokens", [self exceptionToError:exception :SET_AUTH_TOKENS :@"setAuthTokens"]);
     }
 };
 

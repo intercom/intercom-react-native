@@ -68,6 +68,28 @@ export enum Space {
 
 export type IntercomType = {
   /**
+   * Initialize Intercom SDK with API key and App ID.
+   * This allows manual initialization from React Native instead of requiring native code setup.
+   *
+   * For platform-specific API keys, use Platform.select:
+   * ```typescript
+   * import { Platform } from 'react-native';
+   *
+   * const apiKey = Platform.select({
+   *   ios: 'ios_sdk-abc123',
+   *   android: 'android_sdk-xyz789',
+   * });
+   *
+   * await Intercom.initialize(apiKey, 'your_app_id');
+   * ```
+   *
+   * @param apiKey Your Intercom API key
+   * @param appId Your Intercom App ID
+   * @return {Promise<boolean>} A promise that resolves to true if initialization succeeds
+   */
+  initialize: (apiKey: string, appId: string) => Promise<boolean>;
+
+  /**
    * Login a unidentified user.
    * This is a user that doesn't have any identifiable information such as a `userId` or `email`.
    * @return {Promise<boolean>} A promise to the token.
@@ -278,6 +300,21 @@ export type IntercomType = {
   setUserJwt(jwt: string): Promise<boolean>;
 
   /**
+   * Provide Intercom with your auth tokens which can be used for functionality
+   * such as Custom Actions with Data Connectors. You can provide multiple tokens at once. To create tokens:
+   * 1. Go to Settings > Integrations > Authentication in your Intercom workspace
+   * 2. Create a new token with "User" type
+   * 3. Configure the token prefix and header as needed
+   * Learn more: https://www.intercom.com/help/en/articles/6615543-setting-up-data-connectors-authentication
+   *
+   * This should be called after any user login takes place.
+   *
+   * @param authTokens An object containing auth token names and values (e.g., { security_token: "jwt_here" })
+   * @return {Promise<boolean>} A promise that resolves to true on success.
+   */
+  setAuthTokens(authTokens: { [key: string]: string }): Promise<boolean>;
+
+  /**
    * [Android Only] Bootstrap event listeners for Android. Call this before setting up your own NativeEventEmitter
    *
    * @returns cleanup function for Android
@@ -286,6 +323,52 @@ export type IntercomType = {
 };
 
 const Intercom: IntercomType = {
+  initialize: (apiKey, appId) => {
+    if (!apiKey || typeof apiKey !== 'string' || apiKey.trim() === '') {
+      return Promise.reject(
+        new Error('Intercom: apiKey is required and must be a string')
+      );
+    }
+    if (!appId || typeof appId !== 'string' || appId.trim() === '') {
+      return Promise.reject(
+        new Error('Intercom: appId is required and must be a string')
+      );
+    }
+
+    const platform = Platform.OS as 'ios' | 'android';
+    const platformRules = {
+      ios: { prefix: 'ios_sdk-', minLength: 48 },
+      android: { prefix: 'android_sdk-', minLength: 52 },
+    };
+
+    const rules = platformRules[platform];
+
+    if (!rules) {
+      return Promise.reject(
+        new Error(
+          `Intercom: Platform "${platform}" is not supported. Only iOS and Android are supported.`
+        )
+      );
+    }
+
+    if (!apiKey.startsWith(rules.prefix)) {
+      return Promise.reject(
+        new Error(
+          `Intercom: ${platform} API key must start with "${rules.prefix}"`
+        )
+      );
+    }
+
+    if (apiKey.length < rules.minLength) {
+      return Promise.reject(
+        new Error(
+          `Intercom: ${platform} API key must be at least ${rules.minLength} characters long`
+        )
+      );
+    }
+
+    return IntercomModule.initialize(apiKey, appId);
+  },
   loginUnidentifiedUser: () => IntercomModule.loginUnidentifiedUser(),
   loginUserWithUserAttributes: (userAttributes) =>
     IntercomModule.loginUserWithUserAttributes(userAttributes),
@@ -332,6 +415,7 @@ const Intercom: IntercomType = {
   setLogLevel: (logLevel) => IntercomModule.setLogLevel(logLevel),
   setThemeMode: (themeMode) => IntercomModule.setThemeMode(themeMode),
   setUserJwt: (jwt) => IntercomModule.setUserJwt(jwt),
+  setAuthTokens: (authTokens) => IntercomModule.setAuthTokens(authTokens),
 
   bootstrapEventListeners: () => {
     if (Platform.OS === 'android' && IntercomEventEmitter?.startEventListener) {
