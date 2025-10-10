@@ -324,44 +324,46 @@ export type IntercomType = {
 
 const Intercom: IntercomType = {
   initialize: (apiKey, appId) => {
-    if (!apiKey || typeof apiKey !== 'string') {
+    if (!apiKey || typeof apiKey !== 'string' || apiKey.trim() === '') {
       return Promise.reject(
         new Error('Intercom: apiKey is required and must be a string')
       );
     }
-
-    const isIOS = Platform.OS === 'ios';
-    const isAndroid = Platform.OS === 'android';
-
-    if (isIOS) {
-      if (!apiKey.startsWith('ios_sdk-')) {
-        return Promise.reject(
-          new Error('Intercom: iOS API key must start with "ios_sdk-"')
-        );
-      }
-      if (apiKey.length < 48) {
-        return Promise.reject(
-          new Error('Intercom: iOS API key must be at least 48 characters long')
-        );
-      }
-    } else if (isAndroid) {
-      if (!apiKey.startsWith('android_sdk-')) {
-        return Promise.reject(
-          new Error('Intercom: Android API key must start with "android_sdk-"')
-        );
-      }
-      if (apiKey.length < 52) {
-        return Promise.reject(
-          new Error(
-            'Intercom: Android API key must be at least 52 characters long'
-          )
-        );
-      }
-    }
-
     if (!appId || typeof appId !== 'string' || appId.trim() === '') {
       return Promise.reject(
-        new Error('Intercom: appId is required and must be a non-empty string')
+        new Error('Intercom: appId is required and must be a string')
+      );
+    }
+
+    const platform = Platform.OS as 'ios' | 'android';
+    const platformRules = {
+      ios: { prefix: 'ios_sdk-', minLength: 48 },
+      android: { prefix: 'android_sdk-', minLength: 52 },
+    };
+
+    const rules = platformRules[platform];
+
+    if (!rules) {
+      return Promise.reject(
+        new Error(
+          `Intercom: Platform "${platform}" is not supported. Only iOS and Android are supported.`
+        )
+      );
+    }
+
+    if (!apiKey.startsWith(rules.prefix)) {
+      return Promise.reject(
+        new Error(
+          `Intercom: ${platform} API key must start with "${rules.prefix}"`
+        )
+      );
+    }
+
+    if (apiKey.length < rules.minLength) {
+      return Promise.reject(
+        new Error(
+          `Intercom: ${platform} API key must be at least ${rules.minLength} characters long`
+        )
       );
     }
 
