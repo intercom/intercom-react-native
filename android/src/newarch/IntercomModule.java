@@ -604,6 +604,29 @@ public class IntercomModule extends NativeIntercomSpecSpec {
   }
 
   @ReactMethod
+  public void setAuthTokens(ReadableMap authTokens, Promise promise) {
+    try {
+      List<io.intercom.android.sdk.AuthToken> authTokensList = IntercomHelpers.buildAuthTokensList(authTokens);
+      Intercom.client().setAuthTokens(authTokensList, new IntercomStatusCallback() {
+        @Override
+        public void onSuccess() {
+          promise.resolve(true);
+        }
+
+        @Override
+        public void onFailure(@NonNull IntercomError intercomError) {
+          Log.e("ERROR", intercomError.getErrorMessage());
+          promise.reject(String.valueOf(intercomError.getErrorCode()), intercomError.getErrorMessage());
+        }
+      });
+    } catch (Exception err) {
+      Log.e(NAME, "setAuthTokens error:");
+      Log.e(NAME, err.toString());
+      promise.reject(IntercomErrorCodes.SET_AUTH_TOKENS, err.toString());
+    }
+  }
+
+  @ReactMethod
   public void setNeedsStatusBarAppearanceUpdate(Promise promise) {
     // iOS-only method, no-op on Android
     promise.resolve(true);

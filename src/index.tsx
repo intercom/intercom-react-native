@@ -278,6 +278,21 @@ export type IntercomType = {
   setUserJwt(jwt: string): Promise<boolean>;
 
   /**
+   * Provide Intercom with your auth tokens which can be used for functionality
+   * such as Custom Actions with Data Connectors. You can provide multiple tokens at once. To create tokens:
+   * 1. Go to Settings > Integrations > Authentication in your Intercom workspace
+   * 2. Create a new token with "User" type
+   * 3. Configure the token prefix and header as needed
+   * Learn more: https://www.intercom.com/help/en/articles/6615543-setting-up-data-connectors-authentication
+   *
+   * This should be called after any user login takes place.
+   *
+   * @param authTokens An object containing auth token names and values (e.g., { security_token: "jwt_here" })
+   * @return {Promise<boolean>} A promise that resolves to true on success.
+   */
+  setAuthTokens(authTokens: { [key: string]: string }): Promise<boolean>;
+
+  /**
    * [Android Only] Bootstrap event listeners for Android. Call this before setting up your own NativeEventEmitter
    *
    * @returns cleanup function for Android
@@ -332,6 +347,7 @@ const Intercom: IntercomType = {
   setLogLevel: (logLevel) => IntercomModule.setLogLevel(logLevel),
   setThemeMode: (themeMode) => IntercomModule.setThemeMode(themeMode),
   setUserJwt: (jwt) => IntercomModule.setUserJwt(jwt),
+  setAuthTokens: (authTokens) => IntercomModule.setAuthTokens(authTokens),
 
   bootstrapEventListeners: () => {
     if (Platform.OS === 'android' && IntercomEventEmitter?.startEventListener) {
