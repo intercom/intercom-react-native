@@ -1,6 +1,6 @@
 {
   "name": "@intercom/intercom-react-native",
-  "version": "9.2.0",
+  "version": "9.1.2",
   "description": "React Native wrapper to bridge our iOS and Android SDK",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
