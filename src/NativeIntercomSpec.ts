@@ -27,6 +27,7 @@ interface TurboModuleContent {
 }
 
 export interface Spec extends TurboModule {
+  initialize(apiKey: string, appId: string): Promise<boolean>;
   loginUnidentifiedUser(): Promise<boolean>;
   loginUserWithUserAttributes(userAttributes: UserAttributes): Promise<boolean>;
   logout(): Promise<boolean>;

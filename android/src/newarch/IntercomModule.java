@@ -627,6 +627,23 @@ public class IntercomModule extends NativeIntercomSpecSpec {
   }
 
   @ReactMethod
+  public void initialize(String apiKey, String appId, Promise promise) {
+    try {
+      Activity activity = getCurrentActivity();
+      if (activity != null && activity.getApplication() != null) {
+        IntercomModule.initialize(activity.getApplication(), apiKey, appId);
+        promise.resolve(true);
+      } else {
+        promise.reject(IntercomErrorCodes.INITIALIZE_ERROR, "Activity is null");
+      }
+    } catch (Exception err) {
+      Log.e(NAME, "initialize error:");
+      Log.e(NAME, err.toString());
+      promise.reject(IntercomErrorCodes.INITIALIZE_ERROR, err.toString());
+    }
+  }
+
+  @ReactMethod
   public void setNeedsStatusBarAppearanceUpdate(Promise promise) {
     // iOS-only method, no-op on Android
     promise.resolve(true);

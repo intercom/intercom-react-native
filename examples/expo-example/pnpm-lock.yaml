@@ -792,7 +792,7 @@ packages:
 
   '@intercom/intercom-react-native@file:../..':
     resolution: {directory: ../.., type: directory}
-    engines: {node: '>=18', yarn: '>=3'}
+    engines: {node: '>=18'}
     peerDependencies:
       react: '*'
       react-native: '*'
