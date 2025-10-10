@@ -47,6 +47,7 @@ export default function App() {
             INTERCOM_CONFIG.appId
           );
           setIsInitialized(true);
+          setInitError(null);
           console.log('Intercom initialized successfully');
         }
       } catch (error) {

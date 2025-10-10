@@ -757,6 +757,8 @@ Sets the user hash necessary for validation when Identity Verification is enable
 
 Initialize the Intercom SDK manually. This is useful when you want to delay initialization until after your app has started, or when using Expo with the `useManualInit` plugin option.
 
+**Important:** This method configures the SDK but does NOT validate your credentials with Intercom's servers. Invalid API keys or App IDs will only be detected when you attempt to use Intercom features (e.g., login, show messenger). The method will return `true` if the SDK is successfully configured, regardless of credential validity.
+
 ### Options
 
 | Name   | Type   | Required | Description                             |

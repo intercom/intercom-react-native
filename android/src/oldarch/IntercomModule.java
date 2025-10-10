@@ -607,7 +607,7 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   public void initialize(String apiKey, String appId, Promise promise) {
     try {
       Activity activity = getCurrentActivity();
-      if (activity != null) {
+      if (activity != null && activity.getApplication() != null) {
         IntercomModule.initialize(activity.getApplication(), apiKey, appId);
         promise.resolve(true);
       } else {
