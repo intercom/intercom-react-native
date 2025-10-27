@@ -33,6 +33,12 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Send photos to support center</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Access your camera to take photos within a conversation</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Access your microphone to transcribe voice messages in conversations</string>
 	<key>RCTNewArchEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
