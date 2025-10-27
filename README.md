@@ -408,12 +408,19 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 
 #### iOS: Permissions
 
-Add this permission to your `Info.plist`
+Add these permissions to your `Info.plist`:
 
 ```xml
+<!-- Optional: Camera access for taking photos in conversations -->
 <key>NSCameraUsageDescription</key>
 <string>Access your camera to take photos within a conversation</string>
+
+<!-- Optional: Microphone access for voice message transcription (v9.3.0+) -->
+<key>NSMicrophoneUsageDescription</key>
+<string>Access your microphone to transcribe voice messages in conversations</string>
 ```
+
+**Note:** These permissions are only requested when the user attempts to use the respective feature. You can customize the description strings to match your app's use case.
 
 #### iOS: Push Notifications
 
@@ -592,6 +599,27 @@ const apiKey = Platform.select({
 
 await Intercom.initialize(apiKey, 'abc123');
 ```
+
+#### Expo: iOS Permissions
+
+To enable camera and microphone features in your Expo app, add the following to your `app.json` or `app.config.js`:
+
+```json
+{
+  "expo": {
+    "ios": {
+      "infoPlist": {
+        "NSCameraUsageDescription": "Access your camera to take photos within a conversation",
+        "NSMicrophoneUsageDescription": "Access your microphone to transcribe voice messages in conversations"
+      }
+    }
+  }
+}
+```
+
+**Note:** These permissions are required for iOS SDK 19.3.0+. The microphone permission enables voice message transcription. You can customize the description strings to match your app's use case.
+
+After adding these permissions, run `npx expo prebuild` to regenerate the native iOS project with the updated Info.plist.
 
 #### Expo: Push notifications
 

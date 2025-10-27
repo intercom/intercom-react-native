@@ -13,6 +13,10 @@
       "bundleIdentifier": "com.example.intercomreactnative", // Change this to your app's bundle identifier
       "entitlements": {
         "aps-environment": "production" // Change this to your app's environment
+      },
+      "infoPlist": {
+        "NSCameraUsageDescription": "Access your camera to take photos within a conversation",
+        "NSMicrophoneUsageDescription": "Access your microphone to transcribe voice messages in conversations"
       }
     },
     "android": {
