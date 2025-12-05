@@ -425,7 +425,8 @@ jobs:
             --body-file pr_body.md \
             --head "${{ steps.create-branch.outputs.branch_name }}" \
             --base "main" \
-            --assignee "@intercom/team-messenger"; then
+            --assignee "@intercom/team-messenger" \
+            --reviewer "intercom/team-messenger"; then
             echo "✅ Pull request created successfully!"
           else
             echo "❌ Failed to create pull request"
