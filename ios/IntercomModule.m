@@ -152,7 +152,29 @@ RCT_EXPORT_METHOD(updateUser:(NSDictionary *)userAttributesDict
     [Intercom updateUser:userAttributes success:^{
         resolve(@(YES));
     } failure:^(NSError * _Nonnull error) {
-        failureCallback(UPDATE_USER, @"Error in updateUser", [self removeNullUnderlyingError:error]);
+        NSString *errorMessage = [NSString stringWithFormat:@"updateUser failed with error code %ld: %@. Domain: %@",
+                                 (long)error.code,
+                                 error.localizedDescription ?: @"<no description>",
+                                 error.domain ?: @"<no domain>"];
+
+        NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithDictionary:error.userInfo ?: @{}];
+        userInfo[@"detailedMessage"] = errorMessage;
+        userInfo[@"errorCode"] = @(error.code);
+        userInfo[@"errorDomain"] = error.domain ?: @"";
+
+        if (error.userInfo[@"NSUnderlyingError"]) {
+            NSError *underlyingError = error.userInfo[@"NSUnderlyingError"];
+            if (![underlyingError isKindOfClass:[NSNull class]]) {
+                userInfo[@"underlyingErrorDescription"] = underlyingError.localizedDescription ?: @"";
+                userInfo[@"underlyingErrorCode"] = @(underlyingError.code);
+            }
+        }
+
+        NSError *enrichedError = [NSError errorWithDomain:error.domain
+                                                     code:error.code
+                                                 userInfo:userInfo];
+
+        failureCallback(UPDATE_USER, errorMessage, [self removeNullUnderlyingError:enrichedError]);
     }];
 };
 
