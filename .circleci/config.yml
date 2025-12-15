@@ -3,7 +3,7 @@ version: 2.1
 # Default VM config to be used for macOS builds
 macos_config: &macos_config
   macos:
-    xcode: 16.0.0
+    xcode: 26.2.0
   resource_class: m4pro.medium
   shell: /bin/bash --login -eo pipefail
 
