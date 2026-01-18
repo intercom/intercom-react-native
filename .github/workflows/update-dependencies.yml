@@ -424,9 +424,7 @@ jobs:
             --title "chore: update Intercom SDK dependencies (${{ steps.update-files.outputs.pr_title_parts }})" \
             --body-file pr_body.md \
             --head "${{ steps.create-branch.outputs.branch_name }}" \
-            --base "main" \
-            --assignee "@intercom/team-messenger" \
-            --reviewer "intercom/team-messenger"; then
+            --base "main"; then
             echo "✅ Pull request created successfully!"
           else
             echo "❌ Failed to create pull request"
