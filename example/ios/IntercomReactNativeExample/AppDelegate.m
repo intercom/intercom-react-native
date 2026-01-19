@@ -78,7 +78,8 @@ static void InitializeFlipper(UIApplication *application) {
     NSString *apiKey = [RNCConfig envFor:@"IOS_INTERCOM_KEY"];
     NSString *appId = [RNCConfig envFor:@"IOS_INTERCOM_APP_ID"];
 
-    [IntercomModule initialize:apiKey withAppId:appId];
+//    [IntercomModule initialize:apiKey withAppId:appId];
+  [IntercomModule initialize:@"ios_sdk-adc9042202780151dc7f61147911b49999539bed" withAppId:@"odymwnr8"];
 
     [self.window makeKeyAndVisible];
 

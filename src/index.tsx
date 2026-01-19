@@ -7,6 +7,45 @@ import {
 
 const { IntercomModule, IntercomEventEmitter } = NativeModules;
 
+const createUnavailableError = (methodName: string) =>
+  new Error(
+    `Intercom native module is unavailable. Cannot call ${methodName}. ` +
+      'Make sure the native module is correctly linked and initialized.'
+  );
+
+const rejectUnavailable = (methodName: string) =>
+  Promise.reject(createUnavailableError(methodName));
+
+const safeNativeCall = <T,>(
+  methodName: string,
+  call?: () => Promise<T>
+): Promise<T> => {
+  if (!call) {
+    return rejectUnavailable(methodName);
+  }
+  try {
+    return call();
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+const ensureString = (value: string, fallback = '') =>
+  typeof value === 'string' ? value : fallback;
+
+const ensureNumber = (value: number, fallback = 0) =>
+  typeof value === 'number' && Number.isFinite(value) ? value : fallback;
+
+const ensureArray = <T,>(value: T[] | undefined, fallback: T[] = []) =>
+  Array.isArray(value) ? value : fallback;
+
+const ensureObject = function <T extends object>(
+  value: T | undefined,
+  fallback: T
+): T {
+  return value && typeof value === 'object' ? value : fallback;
+};
+
 export enum Visibility {
   GONE = 'GONE',
   VISIBLE = 'VISIBLE',
@@ -28,13 +67,20 @@ type LogLevelType = keyof typeof LogLevel;
 
 export const IntercomEvents = {
   IntercomUnreadCountDidChange:
-    IntercomEventEmitter.UNREAD_COUNT_CHANGE_NOTIFICATION,
-  IntercomWindowDidHide: IntercomEventEmitter.WINDOW_DID_HIDE_NOTIFICATION,
-  IntercomWindowDidShow: IntercomEventEmitter.WINDOW_DID_SHOW_NOTIFICATION,
+    IntercomEventEmitter?.UNREAD_COUNT_CHANGE_NOTIFICATION ??
+    'IntercomUnreadConversationCountDidChangeNotification',
+  IntercomWindowDidHide:
+    IntercomEventEmitter?.WINDOW_DID_HIDE_NOTIFICATION ??
+    'IntercomWindowDidHideNotification',
+  IntercomWindowDidShow:
+    IntercomEventEmitter?.WINDOW_DID_SHOW_NOTIFICATION ??
+    'IntercomWindowDidShowNotification',
   IntercomHelpCenterWindowDidShow:
-    IntercomEventEmitter.WINDOW_DID_SHOW_NOTIFICATION,
+    IntercomEventEmitter?.WINDOW_DID_SHOW_NOTIFICATION ??
+    'IntercomWindowDidShowNotification',
   IntercomHelpCenterWindowDidHide:
-    IntercomEventEmitter.WINDOW_DID_HIDE_NOTIFICATION,
+    IntercomEventEmitter?.WINDOW_DID_HIDE_NOTIFICATION ??
+    'IntercomWindowDidHideNotification',
 };
 
 type EventType =
@@ -298,62 +344,156 @@ export type IntercomType = {
 };
 
 const Intercom: IntercomType = {
-  loginUnidentifiedUser: () => IntercomModule.loginUnidentifiedUser(),
+  loginUnidentifiedUser: () =>
+    safeNativeCall(
+      'loginUnidentifiedUser',
+      IntercomModule?.loginUnidentifiedUser
+    ),
   loginUserWithUserAttributes: (userAttributes) =>
-    IntercomModule.loginUserWithUserAttributes(userAttributes),
-  logout: () => IntercomModule.logout(),
-  setUserHash: (hash) => IntercomModule.setUserHash(hash),
-  updateUser: (userAttributes) => IntercomModule.updateUser(userAttributes),
-  isUserLoggedIn: () => IntercomModule.isUserLoggedIn(),
+    safeNativeCall(
+      'loginUserWithUserAttributes',
+      () =>
+        IntercomModule?.loginUserWithUserAttributes?.(
+          ensureObject(userAttributes, {})
+        )
+    ),
+  logout: () => safeNativeCall('logout', IntercomModule?.logout),
+  setUserHash: (hash) =>
+    safeNativeCall(
+      'setUserHash',
+      () => IntercomModule?.setUserHash?.(ensureString(hash))
+    ),
+  updateUser: (userAttributes) =>
+    safeNativeCall(
+      'updateUser',
+      () => IntercomModule?.updateUser?.(ensureObject(userAttributes, {}))
+    ),
+  isUserLoggedIn: () =>
+    safeNativeCall('isUserLoggedIn', IntercomModule?.isUserLoggedIn),
   fetchLoggedInUserAttributes: () =>
-    IntercomModule.fetchLoggedInUserAttributes(),
+    safeNativeCall(
+      'fetchLoggedInUserAttributes',
+      IntercomModule?.fetchLoggedInUserAttributes
+    ),
   logEvent: (eventName, metaData = undefined) =>
-    IntercomModule.logEvent(eventName, metaData),
+    safeNativeCall(
+      'logEvent',
+      () =>
+        IntercomModule?.logEvent?.(
+          ensureString(eventName),
+          metaData === undefined ? undefined : ensureObject(metaData, {})
+        )
+    ),
 
-  fetchHelpCenterCollections: () => IntercomModule.fetchHelpCenterCollections(),
+  fetchHelpCenterCollections: () =>
+    safeNativeCall(
+      'fetchHelpCenterCollections',
+      IntercomModule?.fetchHelpCenterCollections
+    ),
   fetchHelpCenterCollection: (id = '') =>
-    IntercomModule.fetchHelpCenterCollection(id),
-  searchHelpCenter: (term = '') => IntercomModule.searchHelpCenter(term),
+    safeNativeCall(
+      'fetchHelpCenterCollection',
+      () => IntercomModule?.fetchHelpCenterCollection?.(ensureString(id))
+    ),
+  searchHelpCenter: (term = '') =>
+    safeNativeCall(
+      'searchHelpCenter',
+      () => IntercomModule?.searchHelpCenter?.(ensureString(term))
+    ),
 
-  present: () => IntercomModule.presentIntercom(),
-  presentSpace: (space) => IntercomModule.presentIntercomSpace(space),
-  presentContent: (content) => IntercomModule.presentContent(content),
+  present: () =>
+    safeNativeCall('presentIntercom', IntercomModule?.presentIntercom),
+  presentSpace: (space) =>
+    safeNativeCall(
+      'presentIntercomSpace',
+      () => IntercomModule?.presentIntercomSpace?.(space)
+    ),
+  presentContent: (content) =>
+    safeNativeCall(
+      'presentContent',
+      () =>
+        IntercomModule?.presentContent?.(
+          ensureObject(content, { type: ContentType.Article })
+        )
+    ),
   presentMessageComposer: (initialMessage = undefined) =>
-    IntercomModule.presentMessageComposer(initialMessage),
-  getUnreadConversationCount: () => IntercomModule.getUnreadConversationCount(),
+    safeNativeCall(
+      'presentMessageComposer',
+      () =>
+        IntercomModule?.presentMessageComposer?.(
+          initialMessage === undefined
+            ? undefined
+            : ensureString(initialMessage)
+        )
+    ),
+  getUnreadConversationCount: () =>
+    safeNativeCall(
+      'getUnreadConversationCount',
+      IntercomModule?.getUnreadConversationCount
+    ),
 
-  hideIntercom: () => IntercomModule.hideIntercom(),
+  hideIntercom: () =>
+    safeNativeCall('hideIntercom', IntercomModule?.hideIntercom),
   setBottomPadding: (paddingBottom) =>
-    IntercomModule.setBottomPadding(paddingBottom),
+    safeNativeCall(
+      'setBottomPadding',
+      () => IntercomModule?.setBottomPadding?.(ensureNumber(paddingBottom))
+    ),
   setInAppMessageVisibility: (visibility) =>
-    IntercomModule.setInAppMessageVisibility(visibility),
+    safeNativeCall(
+      'setInAppMessageVisibility',
+      () => IntercomModule?.setInAppMessageVisibility?.(visibility)
+    ),
   setLauncherVisibility: (visibility) =>
-    IntercomModule.setLauncherVisibility(visibility),
+    safeNativeCall(
+      'setLauncherVisibility',
+      () => IntercomModule?.setLauncherVisibility?.(visibility)
+    ),
 
   setNeedsStatusBarAppearanceUpdate: Platform.select({
-    ios: IntercomModule.setNeedsStatusBarAppearanceUpdate,
+    ios: () =>
+      safeNativeCall(
+        'setNeedsStatusBarAppearanceUpdate',
+        IntercomModule?.setNeedsStatusBarAppearanceUpdate
+      ),
     default: async () => true,
   }),
 
   handlePushMessage: Platform.select({
-    android: IntercomModule.handlePushMessage,
+    android: () =>
+      safeNativeCall('handlePushMessage', IntercomModule?.handlePushMessage),
     default: async () => true,
   }),
 
-  sendTokenToIntercom: (token) => IntercomModule.sendTokenToIntercom(token),
-  setLogLevel: (logLevel) => IntercomModule.setLogLevel(logLevel),
+  sendTokenToIntercom: (token) =>
+    safeNativeCall(
+      'sendTokenToIntercom',
+      () => IntercomModule?.sendTokenToIntercom?.(ensureString(token))
+    ),
+  setLogLevel: (logLevel) =>
+    safeNativeCall(
+      'setLogLevel',
+      () => IntercomModule?.setLogLevel?.(logLevel)
+    ),
 
   addEventListener: (event, callback) => {
+    if (!IntercomEventEmitter) {
+      return {
+        remove: () => undefined,
+      } as EmitterSubscription;
+    }
     event === IntercomEvents.IntercomUnreadCountDidChange &&
       Platform.OS === 'android' &&
-      IntercomEventEmitter.startEventListener();
+      IntercomEventEmitter.startEventListener?.();
     const eventEmitter = new NativeEventEmitter(IntercomEventEmitter);
-    const listener = eventEmitter.addListener(event, callback);
+    const safeCallback =
+      typeof callback === 'function' ? callback : () => undefined;
+    const listener = eventEmitter.addListener(event, safeCallback);
     const originalRemove = listener.remove;
     listener.remove = () => {
       event === IntercomEvents.IntercomUnreadCountDidChange &&
         Platform.OS === 'android' &&
-        IntercomEventEmitter.removeEventListener();
+        IntercomEventEmitter.removeEventListener?.();
       originalRemove();
     };
     return listener;
@@ -411,35 +551,35 @@ export const IntercomContent: IntercomContentType = {
   articleWithArticleId(articleId) {
     let articleContent = {} as Article;
     articleContent.type = ContentType.Article;
-    articleContent.id = articleId;
+    articleContent.id = ensureString(articleId);
     return articleContent;
   },
 
   carouselWithCarouselId(carouselId) {
     let carouselContent = {} as Carousel;
     carouselContent.type = ContentType.Carousel;
-    carouselContent.id = carouselId;
+    carouselContent.id = ensureString(carouselId);
     return carouselContent;
   },
 
   surveyWithSurveyId(surveyId) {
     let surveyContent = {} as Survey;
     surveyContent.type = ContentType.Survey;
-    surveyContent.id = surveyId;
+    surveyContent.id = ensureString(surveyId);
     return surveyContent;
   },
 
   helpCenterCollectionsWithIds(collectionIds) {
     let helpCenterCollectionsContent = {} as HelpCenterCollections;
     helpCenterCollectionsContent.type = ContentType.HelpCenterCollections;
-    helpCenterCollectionsContent.ids = collectionIds;
+    helpCenterCollectionsContent.ids = ensureArray(collectionIds);
     return helpCenterCollectionsContent;
   },
 
   conversationWithConversationId(conversationId) {
     let conversationContent = {} as Conversation;
     conversationContent.type = ContentType.Conversation;
-    conversationContent.id = conversationId;
+    conversationContent.id = ensureString(conversationId);
     return conversationContent;
   },
 };

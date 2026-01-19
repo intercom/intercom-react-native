@@ -216,23 +216,68 @@ RCT_EXPORT_METHOD(presentIntercomSpace:(NSString *)space
 RCT_EXPORT_METHOD(presentContent:(NSDictionary *)content
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
+    // Validate content dictionary
+    if (!content || ![content isKindOfClass:[NSDictionary class]]) {
+        reject(@"INVALID_CONTENT", @"Content must be a valid dictionary", nil);
+        return;
+    }
+
     IntercomContent *intercomContent;
     NSString *contentType = content[@"type"];
+
+    // Add nil check before calling methods
+    if (!contentType || ![contentType isKindOfClass:[NSString class]]) {
+        reject(@"INVALID_CONTENT_TYPE", @"Content type must be a valid string", nil);
+        return;
+    }
+
     if ([contentType isEqualToString:@"ARTICLE"]) {
-        intercomContent = [IntercomContent articleWithId:content[@"id"]];
+        NSString *articleId = content[@"id"];
+        if (!articleId || ![articleId isKindOfClass:[NSString class]]) {
+            reject(@"INVALID_ARTICLE_ID", @"Article ID must be a valid string", nil);
+            return;
+        }
+        intercomContent = [IntercomContent articleWithId:articleId];
     } else if ([contentType isEqualToString:@"CAROUSEL"]) {
-        intercomContent = [IntercomContent carouselWithId:content[@"id"]];
+        NSString *carouselId = content[@"id"];
+        if (!carouselId || ![carouselId isKindOfClass:[NSString class]]) {
+            reject(@"INVALID_CAROUSEL_ID", @"Carousel ID must be a valid string", nil);
+            return;
+        }
+        intercomContent = [IntercomContent carouselWithId:carouselId];
     } else if ([contentType isEqualToString:@"SURVEY"]) {
-        intercomContent = [IntercomContent surveyWithId:content[@"id"]];
+        NSString *surveyId = content[@"id"];
+        if (!surveyId || ![surveyId isKindOfClass:[NSString class]]) {
+            reject(@"INVALID_SURVEY_ID", @"Survey ID must be a valid string", nil);
+            return;
+        }
+        intercomContent = [IntercomContent surveyWithId:surveyId];
     } else if ([contentType isEqualToString:@"HELP_CENTER_COLLECTIONS"]) {
-        NSArray<NSString *> *collectionIds = content[@"ids"];
+        NSArray *collectionIds = content[@"ids"];
+        if (!collectionIds || ![collectionIds isKindOfClass:[NSArray class]]) {
+            reject(@"INVALID_COLLECTION_IDS", @"Collection IDs must be a valid array", nil);
+            return;
+        }
         intercomContent = [IntercomContent helpCenterCollectionsWithIds:collectionIds];
     } else if ([contentType isEqualToString:@"CONVERSATION"]) {
-        intercomContent = [IntercomContent conversationWithId:content[@"id"]];
+        NSString *conversationId = content[@"id"];
+        if (!conversationId || ![conversationId isKindOfClass:[NSString class]]) {
+            reject(@"INVALID_CONVERSATION_ID", @"Conversation ID must be a valid string", nil);
+            return;
+        }
+        intercomContent = [IntercomContent conversationWithId:conversationId];
+    } else {
+        reject(@"INVALID_CONTENT_TYPE",
+               [NSString stringWithFormat:@"Unknown content type: %@", contentType],
+               nil);
+        return;
     }
+
     if (intercomContent) {
         [Intercom presentContent:intercomContent];
         resolve(@(YES));
+    } else {
+        reject(@"CONTENT_CREATION_FAILED", @"Failed to create Intercom content", nil);
     }
 };
 
