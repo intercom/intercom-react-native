@@ -48,7 +48,7 @@ static void InitializeFlipper(UIApplication *application) {
 #endif
 
     NSMutableDictionary *newLaunchOptions = [NSMutableDictionary dictionaryWithDictionary:launchOptions];
-    
+
     // Modifying launchOptions to facilitate deep linking.
     if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
        NSDictionary *remoteNotif = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
@@ -59,7 +59,7 @@ static void InitializeFlipper(UIApplication *application) {
            }
        }
     }
-  
+
     RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:newLaunchOptions];
     RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                      moduleName:@"IntercomReactNativeExample"
@@ -78,9 +78,7 @@ static void InitializeFlipper(UIApplication *application) {
     NSString *apiKey = [RNCConfig envFor:@"IOS_INTERCOM_KEY"];
     NSString *appId = [RNCConfig envFor:@"IOS_INTERCOM_APP_ID"];
 
-//    [IntercomModule initialize:apiKey withAppId:appId];
-  [IntercomModule initialize:@"ios_sdk-adc9042202780151dc7f61147911b49999539bed" withAppId:@"odymwnr8"];
-
+    [IntercomModule initialize:apiKey withAppId:appId];
     [self.window makeKeyAndVisible];
 
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
