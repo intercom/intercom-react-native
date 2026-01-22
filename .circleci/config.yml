@@ -29,14 +29,6 @@ run_always: &run_always
     tags:
       only: /.*/
 
-# Only run on release
-run_on_release: &run_on_release
-  filters:
-    tags:
-      only: /.*/
-    branches:
-      ignore: /.*/
-
 commands:
   attach_project:
     steps:
@@ -204,29 +196,6 @@ jobs:
           path: ~/.maestro/tests
           destination: maestro-tests
 
-  release-to-npm:
-    executor: default
-    steps:
-      - checkout
-      - run:
-          name: Add npm registry auth key
-          command: |
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/project/.npmrc
-            npm config set scope $ORG_NAME
-
-      - restore_cache:
-          keys:
-            - dependencies-{{ checksum "package.json" }}
-
-      - run:
-          name: Install dependencies
-          command: |
-            yarn install
-
-      - run:
-          name: Publish the package
-          command: npm publish
-
 workflows:
   version: 2.1
   build-and-test:
@@ -266,17 +235,3 @@ workflows:
       #       - typescript
       #       - unit-tests
       #       - build-package
-
-      - release-to-npm:
-          <<: *run_on_release
-          context:
-            - react-native-context
-          requires:
-            - install-dependencies
-            - lint
-            - typescript
-            - unit-tests
-            - build-package
-            # Temporarily removed e2e test dependencies
-            # - ios-e2e-test
-            # - android-e2e-test
