@@ -84,6 +84,6 @@ dependencies {
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"  // From node_modules
   implementation "com.google.firebase:firebase-messaging:24.1.2"
-  implementation 'io.intercom.android:intercom-sdk:17.4.3'
-  implementation 'io.intercom.android:intercom-sdk-ui:17.4.3'
+  implementation 'io.intercom.android:intercom-sdk:17.4.4'
+  implementation 'io.intercom.android:intercom-sdk-ui:17.4.4'
 }
