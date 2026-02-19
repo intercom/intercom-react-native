@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.ProcessLifecycleOwner;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -90,14 +92,31 @@ public class IntercomModule extends NativeIntercomSpecSpec {
   public static void handleRemotePushMessage(@NonNull Application application, RemoteMessage remoteMessage) {
     try {
       TaskStackBuilder customStack = TaskStackBuilder.create(application);
-      Intent launchIntent = application.getPackageManager().getLaunchIntentForPackage(application.getPackageName());
-      if (launchIntent != null) {
-        customStack.addNextIntent(launchIntent);
+
+      if (!isAppInForeground(application)) {
+        Intent launchIntent = application.getPackageManager().getLaunchIntentForPackage(application.getPackageName());
+        if (launchIntent != null) {
+          customStack.addNextIntent(launchIntent);
+        }
       }
+
       handleRemotePushWithCustomStack(application, remoteMessage, customStack);
     } catch (Exception err) {
       Log.e(NAME, "handleRemotePushMessage error:");
       Log.e(NAME, err.toString());
+    }
+  }
+
+  private static boolean isAppInForeground(@NonNull Application application) {
+    try {
+      return ProcessLifecycleOwner.get()
+          .getLifecycle()
+          .getCurrentState()
+          .isAtLeast(Lifecycle.State.STARTED);
+    } catch (Exception err) {
+      Log.e(NAME, "isAppInForeground error:");
+      Log.e(NAME, err.toString());
+      return false;
     }
   }
 
