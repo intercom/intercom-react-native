@@ -4,7 +4,7 @@ version: 2.1
 macos_config: &macos_config
   macos:
     xcode: 16.0.0
-  resource_class: macos.m1.large.gen1
+  resource_class: macos.m4pro.medium
   shell: /bin/bash --login -eo pipefail
 
 setup_env_file: &setup_env_file
