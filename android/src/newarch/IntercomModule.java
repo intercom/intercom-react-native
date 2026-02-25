@@ -1,6 +1,7 @@
 package com.intercom.reactnative;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Intent;
 import android.util.Log;
@@ -90,14 +91,43 @@ public class IntercomModule extends NativeIntercomSpecSpec {
   public static void handleRemotePushMessage(@NonNull Application application, RemoteMessage remoteMessage) {
     try {
       TaskStackBuilder customStack = TaskStackBuilder.create(application);
-      Intent launchIntent = application.getPackageManager().getLaunchIntentForPackage(application.getPackageName());
-      if (launchIntent != null) {
-        customStack.addNextIntent(launchIntent);
+
+      if (!isAppInForeground(application)) {
+        Intent launchIntent = application.getPackageManager().getLaunchIntentForPackage(application.getPackageName());
+        if (launchIntent != null) {
+          customStack.addNextIntent(launchIntent);
+        }
       }
+
       handleRemotePushWithCustomStack(application, remoteMessage, customStack);
     } catch (Exception err) {
       Log.e(NAME, "handleRemotePushMessage error:");
       Log.e(NAME, err.toString());
+    }
+  }
+
+  private static boolean isAppInForeground(@NonNull Application application) {
+    try {
+      ActivityManager activityManager = (ActivityManager) application.getSystemService(android.content.Context.ACTIVITY_SERVICE);
+      if (activityManager == null) {
+        return false;
+      }
+      java.util.List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+      if (appProcesses == null) {
+        return false;
+      }
+      String packageName = application.getPackageName();
+      for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+        if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND
+            && appProcess.processName.equals(packageName)) {
+          return true;
+        }
+      }
+      return false;
+    } catch (Exception err) {
+      Log.e(NAME, "isAppInForeground error:");
+      Log.e(NAME, err.toString());
+      return false;
     }
   }
 
