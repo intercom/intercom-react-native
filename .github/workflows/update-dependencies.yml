@@ -12,8 +12,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      issues: read
-      actions: read
 
     steps:
       - name: 🔍 Checkout repository
@@ -48,16 +46,18 @@ jobs:
 
       - name: 🚀 Get latest SDK releases
         id: latest-versions
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "🔄 Fetching latest releases..."
 
           # Get iOS release
-          IOS_RELEASE=$(curl -s https://api.github.com/repos/intercom/intercom-ios/releases/latest)
+          IOS_RELEASE=$(gh api repos/intercom/intercom-ios/releases/latest 2>/dev/null || echo '{}')
           IOS_VERSION=$(echo "$IOS_RELEASE" | jq -r '.tag_name // "null"')
           IOS_CHANGELOG=$(echo "$IOS_RELEASE" | jq -r '.body // "No changelog available"')
 
           # Get Android release
-          ANDROID_RELEASE=$(curl -s https://api.github.com/repos/intercom/intercom-android/releases/latest)
+          ANDROID_RELEASE=$(gh api repos/intercom/intercom-android/releases/latest 2>/dev/null || echo '{}')
           ANDROID_VERSION=$(echo "$ANDROID_RELEASE" | jq -r '.tag_name // "null"')
           ANDROID_CHANGELOG=$(echo "$ANDROID_RELEASE" | jq -r '.body // "No changelog available"')
 
@@ -419,7 +419,7 @@ jobs:
           🤖 This PR was automatically created by the [Update Dependencies workflow](.github/workflows/update-dependencies.yml).
           EOF
 
-          # Create PR
+          # Create PR and assign to team
           if gh pr create \
             --title "chore: update Intercom SDK dependencies (${{ steps.update-files.outputs.pr_title_parts }})" \
             --body-file pr_body.md \
