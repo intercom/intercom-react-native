@@ -1981,8 +1981,8 @@ packages:
   fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
 
-  fast-xml-parser@4.5.3:
-    resolution: {integrity: sha512-RKihhV+SHsIUGXObeVy9AXiBbFwkVk7Syp8XgwN5U3JV416+Gwp/GO9i0JYKmikykgz/UHRrrV4ROuZEo/T0ig==}
+  fast-xml-parser@4.5.4:
+    resolution: {integrity: sha512-jE8ugADnYOBsu1uaoayVl1tVKAMNOXyjwvv2U6udEA2ORBhDooJDWoGxTkhd4Qn4yh59JVVt/pKXtjPwx9OguQ==}
     hasBin: true
 
   fastq@1.19.1:
@@ -4826,7 +4826,7 @@ snapshots:
       '@react-native-community/cli-tools': 20.0.0
       chalk: 4.1.2
       fast-glob: 3.3.3
-      fast-xml-parser: 4.5.3
+      fast-xml-parser: 4.5.4
 
   '@react-native-community/cli-config-apple@20.0.0':
     dependencies:
@@ -4880,7 +4880,7 @@ snapshots:
       '@react-native-community/cli-tools': 20.0.0
       chalk: 4.1.2
       execa: 5.1.1
-      fast-xml-parser: 4.5.3
+      fast-xml-parser: 4.5.4
 
   '@react-native-community/cli-platform-ios@20.0.0':
     dependencies:
@@ -6272,7 +6272,7 @@ snapshots:
 
   fast-levenshtein@2.0.6: {}
 
-  fast-xml-parser@4.5.3:
+  fast-xml-parser@4.5.4:
     dependencies:
       strnum: 1.1.2
 
