@@ -87,9 +87,7 @@ describe('withAndroidPushNotifications', () => {
       expect(content).toContain(
         'IntercomModule.sendTokenToIntercom(application, refreshedToken)'
       );
-      expect(content).toContain(
-        'IntercomModule.isIntercomPush(remoteMessage)'
-      );
+      expect(content).toContain('IntercomModule.isIntercomPush(remoteMessage)');
       expect(content).toContain(
         'IntercomModule.handleRemotePushMessage(application, remoteMessage)'
       );
@@ -205,7 +203,7 @@ describe('withAndroidPushNotifications', () => {
       const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
 
       config.modResults.manifest.application[0].service.push({
-        $: {
+        '$': {
           'android:name': '.ExistingFcmService',
           'android:exported': 'true',
         },

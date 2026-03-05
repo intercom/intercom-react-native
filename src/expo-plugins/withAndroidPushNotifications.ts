@@ -86,8 +86,9 @@ const registerServiceInManifest: ConfigPlugin<IntercomPluginProps> = (
   _config
 ) =>
   withAndroidManifest(_config, (config) => {
-    const mainApplication =
-      AndroidConfig.Manifest.getMainApplicationOrThrow(config.modResults);
+    const mainApplication = AndroidConfig.Manifest.getMainApplicationOrThrow(
+      config.modResults
+    );
 
     const packageName = config.android?.package;
     if (!packageName) {
@@ -105,11 +106,12 @@ const registerServiceInManifest: ConfigPlugin<IntercomPluginProps> = (
     const hasExistingFcmService = mainApplication.service?.some(
       (s) =>
         s.$?.['android:name'] !== serviceName &&
-        s['intent-filter']?.some((f: any) =>
-          f.action?.some(
-            (a: any) =>
-              a.$?.['android:name'] === 'com.google.firebase.MESSAGING_EVENT'
-          )
+        s['intent-filter']?.some(
+          (f: any) =>
+            f.action?.some(
+              (a: any) =>
+                a.$?.['android:name'] === 'com.google.firebase.MESSAGING_EVENT'
+            )
         )
     );
 
@@ -128,7 +130,7 @@ const registerServiceInManifest: ConfigPlugin<IntercomPluginProps> = (
       }
 
       mainApplication.service.push({
-        $: {
+        '$': {
           'android:name': serviceName,
           'android:exported': 'false' as any,
         },
