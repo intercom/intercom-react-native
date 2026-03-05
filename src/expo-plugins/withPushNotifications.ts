@@ -60,10 +60,8 @@ export const withIntercomPushNotification: ConfigPlugin<IntercomPluginProps> = (
   props
 ) => {
   let newConfig = config;
-  // iOS push notification setup
   newConfig = appDelegate(newConfig, props);
   newConfig = infoPlist(newConfig, props);
-  // Android push notification setup
   newConfig = withAndroidPushNotifications(newConfig, props);
   return newConfig;
 };

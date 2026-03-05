@@ -70,7 +70,8 @@ const writeFirebaseService: ConfigPlugin<IntercomPluginProps> = (_config) =>
       fs.mkdirSync(serviceDir, { recursive: true });
       fs.writeFileSync(
         path.join(serviceDir, `${SERVICE_CLASS_NAME}.kt`),
-        generateFirebaseServiceKotlin(packageName)
+        generateFirebaseServiceKotlin(packageName),
+        'utf-8'
       );
 
       return config;
@@ -97,7 +98,6 @@ const registerServiceInManifest: ConfigPlugin<IntercomPluginProps> = (
 
     const serviceName = `.${SERVICE_CLASS_NAME}`;
 
-    // Check if the service is already registered (idempotency)
     const existingService = mainApplication.service?.find(
       (s) => s.$?.['android:name'] === serviceName
     );
@@ -114,6 +114,9 @@ const registerServiceInManifest: ConfigPlugin<IntercomPluginProps> = (
         },
         'intent-filter': [
           {
+            $: {
+              'android:priority': '10',
+            } as any,
             action: [
               {
                 $: {
