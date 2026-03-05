@@ -102,6 +102,26 @@ const registerServiceInManifest: ConfigPlugin<IntercomPluginProps> = (
       (s) => s.$?.['android:name'] === serviceName
     );
 
+    const hasExistingFcmService = mainApplication.service?.some(
+      (s) =>
+        s.$?.['android:name'] !== serviceName &&
+        s['intent-filter']?.some((f: any) =>
+          f.action?.some(
+            (a: any) =>
+              a.$?.['android:name'] === 'com.google.firebase.MESSAGING_EVENT'
+          )
+        )
+    );
+
+    if (hasExistingFcmService) {
+      console.warn(
+        '@intercom/intercom-react-native: An existing FirebaseMessagingService was found in AndroidManifest.xml. ' +
+          'Skipping automatic Intercom service registration to avoid conflicts. ' +
+          'You will need to route Intercom pushes manually using IntercomModule.isIntercomPush() and IntercomModule.handleRemotePushMessage().'
+      );
+      return config;
+    }
+
     if (!existingService) {
       if (!mainApplication.service) {
         mainApplication.service = [];

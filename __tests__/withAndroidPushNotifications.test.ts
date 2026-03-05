@@ -199,6 +199,40 @@ describe('withAndroidPushNotifications', () => {
       const services = config.modResults.manifest.application[0].service;
       expect(services).toHaveLength(1);
     });
+
+    test('skips registration and warns when another FCM service exists', () => {
+      const config = createMockConfig('com.example.myapp');
+      const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      config.modResults.manifest.application[0].service.push({
+        $: {
+          'android:name': '.ExistingFcmService',
+          'android:exported': 'true',
+        },
+        'intent-filter': [
+          {
+            action: [
+              {
+                $: {
+                  'android:name': 'com.google.firebase.MESSAGING_EVENT',
+                },
+              },
+            ],
+          },
+        ],
+      } as any);
+
+      withAndroidPushNotifications(config as any, {} as any);
+
+      const services = config.modResults.manifest.application[0].service;
+      expect(services).toHaveLength(1);
+      expect(services[0].$['android:name']).toBe('.ExistingFcmService');
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('existing FirebaseMessagingService')
+      );
+
+      warnSpy.mockRestore();
+    });
   });
 
   describe('error handling', () => {
