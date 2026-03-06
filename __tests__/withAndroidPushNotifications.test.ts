@@ -4,6 +4,13 @@ import fs from 'fs';
 jest.mock('@expo/config-plugins', () => ({
   withDangerousMod: (config: any, [_platform, callback]: [string, Function]) =>
     callback(config),
+  withAndroidManifest: (config: any, callback: Function) => callback(config),
+  AndroidConfig: {
+    Manifest: {
+      getMainApplicationOrThrow: (modResults: any) =>
+        modResults.manifest.application[0],
+    },
+  },
 }));
 
 import { withAndroidPushNotifications } from '../src/expo-plugins/withAndroidPushNotifications';
@@ -15,6 +22,17 @@ function createMockConfig(packageName?: string) {
     android: packageName ? { package: packageName } : undefined,
     modRequest: {
       projectRoot: '/mock/project',
+    },
+    modResults: {
+      manifest: {
+        application: [
+          {
+            $: { 'android:name': '.MainApplication' },
+            activity: [],
+            service: [] as any[],
+          },
+        ],
+      },
     },
   };
 }
@@ -175,6 +193,100 @@ dependencies {
         (call[0] as string).includes('build.gradle')
       );
       expect(gradleWriteCall).toBeUndefined();
+    });
+  });
+
+  describe('AndroidManifest service registration', () => {
+    test('adds service entry with correct attributes', () => {
+      const config = createMockConfig('com.example.myapp');
+      withAndroidPushNotifications(config as any, {} as any);
+
+      const services = config.modResults.manifest.application[0].service;
+      expect(services).toHaveLength(1);
+
+      const service = services[0];
+      expect(service.$['android:name']).toBe(
+        '.IntercomFirebaseMessagingService'
+      );
+      expect(service.$['android:exported']).toBe('false');
+    });
+
+    test('registers MESSAGING_EVENT intent filter with priority', () => {
+      const config = createMockConfig('com.example.myapp');
+      withAndroidPushNotifications(config as any, {} as any);
+
+      const service = config.modResults.manifest.application[0].service[0];
+      const intentFilter = service['intent-filter'][0];
+      const action = intentFilter.action[0];
+
+      expect(action.$['android:name']).toBe(
+        'com.google.firebase.MESSAGING_EVENT'
+      );
+      expect(intentFilter.$['android:priority']).toBe('10');
+    });
+
+    test('preserves existing services when adding Intercom service', () => {
+      const config = createMockConfig('com.example.myapp');
+
+      config.modResults.manifest.application[0].service.push({
+        $: {
+          'android:name': '.SomeOtherService',
+          'android:exported': 'false',
+        },
+      } as any);
+
+      withAndroidPushNotifications(config as any, {} as any);
+
+      const services = config.modResults.manifest.application[0].service;
+      expect(services).toHaveLength(2);
+      expect(services[0].$['android:name']).toBe('.SomeOtherService');
+      expect(services[1].$['android:name']).toBe(
+        '.IntercomFirebaseMessagingService'
+      );
+    });
+
+    test('does not duplicate service on repeated runs (idempotency)', () => {
+      const config = createMockConfig('com.example.myapp');
+
+      withAndroidPushNotifications(config as any, {} as any);
+      withAndroidPushNotifications(config as any, {} as any);
+
+      const services = config.modResults.manifest.application[0].service;
+      expect(services).toHaveLength(1);
+    });
+
+    test('skips registration and warns when another FCM service exists', () => {
+      const config = createMockConfig('com.example.myapp');
+      const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      config.modResults.manifest.application[0].service.push({
+        '$': {
+          'android:name': '.ExistingFcmService',
+          'android:exported': 'true',
+        },
+        'intent-filter': [
+          {
+            action: [
+              {
+                $: {
+                  'android:name': 'com.google.firebase.MESSAGING_EVENT',
+                },
+              },
+            ],
+          },
+        ],
+      } as any);
+
+      withAndroidPushNotifications(config as any, {} as any);
+
+      const services = config.modResults.manifest.application[0].service;
+      expect(services).toHaveLength(1);
+      expect(services[0].$['android:name']).toBe('.ExistingFcmService');
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('existing FirebaseMessagingService')
+      );
+
+      warnSpy.mockRestore();
     });
   });
 
