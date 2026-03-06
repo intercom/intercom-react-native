@@ -79,8 +79,12 @@ const writeFirebaseService: ConfigPlugin<IntercomPluginProps> = (_config) =>
       // service lives in the app module, we need firebase-messaging on the
       // app's compile classpath too. We read the version from the native
       // module's build.gradle so it stays in sync automatically.
+      const packageRoot = path.resolve(
+        require.resolve('@intercom/intercom-react-native/package.json'),
+        '..'
+      );
       const nativeBuildGradle = fs.readFileSync(
-        path.join(__dirname, '..', '..', 'android', 'build.gradle'),
+        path.join(packageRoot, 'android', 'build.gradle'),
         'utf-8'
       );
       const versionMatch = nativeBuildGradle.match(
