@@ -158,8 +158,8 @@ dependencies {
       const config = createMockConfig('com.example.myapp');
       withAndroidPushNotifications(config as any, {} as any);
 
-      const gradleWriteCall = writeFileSyncSpy.mock.calls.find(
-        (call: any[]) => (call[0] as string).includes('build.gradle')
+      const gradleWriteCall = writeFileSyncSpy.mock.calls.find((call: any[]) =>
+        (call[0] as string).includes('build.gradle')
       );
       expect(gradleWriteCall).toBeDefined();
       expect(gradleWriteCall[1]).toContain('firebase-messaging');
@@ -172,8 +172,8 @@ dependencies {
       const config = createMockConfig('com.example.myapp');
       withAndroidPushNotifications(config as any, {} as any);
 
-      const gradleWriteCall = writeFileSyncSpy.mock.calls.find(
-        (call: any[]) => (call[0] as string).includes('build.gradle')
+      const gradleWriteCall = writeFileSyncSpy.mock.calls.find((call: any[]) =>
+        (call[0] as string).includes('build.gradle')
       );
       expect(gradleWriteCall).toBeUndefined();
     });
