@@ -40,12 +40,26 @@ function createMockConfig(packageName?: string) {
 describe('withAndroidPushNotifications', () => {
   let mkdirSyncSpy: jest.SpyInstance;
   let writeFileSyncSpy: jest.SpyInstance;
+  let readFileSyncSpy: jest.SpyInstance;
+
+  const fakeBuildGradle = `
+android {
+    compileSdkVersion 34
+}
+
+dependencies {
+    implementation("com.facebook.react:react-native:+")
+}
+`;
 
   beforeEach(() => {
     mkdirSyncSpy = jest.spyOn(fs, 'mkdirSync').mockReturnValue(undefined);
     writeFileSyncSpy = jest
       .spyOn(fs, 'writeFileSync')
       .mockReturnValue(undefined);
+    readFileSyncSpy = jest
+      .spyOn(fs, 'readFileSync')
+      .mockReturnValue(fakeBuildGradle);
   });
 
   afterEach(() => {
@@ -136,6 +150,32 @@ describe('withAndroidPushNotifications', () => {
         expect.any(String),
         'utf-8'
       );
+    });
+  });
+
+  describe('Gradle dependency', () => {
+    test('adds firebase-messaging when not present', () => {
+      const config = createMockConfig('com.example.myapp');
+      withAndroidPushNotifications(config as any, {} as any);
+
+      const gradleWriteCall = writeFileSyncSpy.mock.calls.find(
+        (call: any[]) => (call[0] as string).includes('build.gradle')
+      );
+      expect(gradleWriteCall).toBeDefined();
+      expect(gradleWriteCall[1]).toContain('firebase-messaging');
+    });
+
+    test('skips adding firebase-messaging when already present', () => {
+      readFileSyncSpy.mockReturnValue(
+        'dependencies {\n    implementation("com.google.firebase:firebase-messaging:23.0.0")\n}'
+      );
+      const config = createMockConfig('com.example.myapp');
+      withAndroidPushNotifications(config as any, {} as any);
+
+      const gradleWriteCall = writeFileSyncSpy.mock.calls.find(
+        (call: any[]) => (call[0] as string).includes('build.gradle')
+      );
+      expect(gradleWriteCall).toBeUndefined();
     });
   });
 

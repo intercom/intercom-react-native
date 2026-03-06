@@ -74,6 +74,25 @@ const writeFirebaseService: ConfigPlugin<IntercomPluginProps> = (_config) =>
         'utf-8'
       );
 
+      // The native module declares firebase-messaging as an `implementation`
+      // dependency, which keeps it private to the library. Since our generated
+      // service lives in the app module, we need firebase-messaging on the
+      // app's compile classpath too.
+      const buildGradlePath = path.join(
+        projectRoot,
+        'android',
+        'app',
+        'build.gradle'
+      );
+      const buildGradle = fs.readFileSync(buildGradlePath, 'utf-8');
+      if (!buildGradle.includes('firebase-messaging')) {
+        const updatedBuildGradle = buildGradle.replace(
+          /dependencies\s*\{/,
+          `dependencies {\n    implementation("com.google.firebase:firebase-messaging:24.1.2")`
+        );
+        fs.writeFileSync(buildGradlePath, updatedBuildGradle, 'utf-8');
+      }
+
       return config;
     },
   ]);
