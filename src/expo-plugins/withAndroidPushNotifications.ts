@@ -77,7 +77,19 @@ const writeFirebaseService: ConfigPlugin<IntercomPluginProps> = (_config) =>
       // The native module declares firebase-messaging as an `implementation`
       // dependency, which keeps it private to the library. Since our generated
       // service lives in the app module, we need firebase-messaging on the
-      // app's compile classpath too.
+      // app's compile classpath too. We read the version from the native
+      // module's build.gradle so it stays in sync automatically.
+      const nativeBuildGradle = fs.readFileSync(
+        path.join(__dirname, '..', '..', 'android', 'build.gradle'),
+        'utf-8'
+      );
+      const versionMatch = nativeBuildGradle.match(
+        /com\.google\.firebase:firebase-messaging:([\d.]+)/
+      );
+      const firebaseMessagingVersion = versionMatch
+        ? versionMatch[1]
+        : '24.1.2';
+
       const buildGradlePath = path.join(
         projectRoot,
         'android',
@@ -88,7 +100,7 @@ const writeFirebaseService: ConfigPlugin<IntercomPluginProps> = (_config) =>
       if (!buildGradle.includes('firebase-messaging')) {
         const updatedBuildGradle = buildGradle.replace(
           /dependencies\s*\{/,
-          `dependencies {\n    implementation("com.google.firebase:firebase-messaging:24.1.2")`
+          `dependencies {\n    implementation("com.google.firebase:firebase-messaging:${firebaseMessagingVersion}")`
         );
         fs.writeFileSync(buildGradlePath, updatedBuildGradle, 'utf-8');
       }

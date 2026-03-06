@@ -42,7 +42,14 @@ describe('withAndroidPushNotifications', () => {
   let writeFileSyncSpy: jest.SpyInstance;
   let readFileSyncSpy: jest.SpyInstance;
 
-  const fakeBuildGradle = `
+  const fakeNativeBuildGradle = `
+dependencies {
+    implementation "com.google.firebase:firebase-messaging:24.1.2"
+    implementation 'io.intercom.android:intercom-sdk:17.4.5'
+}
+`;
+
+  const fakeAppBuildGradle = `
 android {
     compileSdkVersion 34
 }
@@ -59,7 +66,13 @@ dependencies {
       .mockReturnValue(undefined);
     readFileSyncSpy = jest
       .spyOn(fs, 'readFileSync')
-      .mockReturnValue(fakeBuildGradle);
+      .mockImplementation((filePath: any) => {
+        const p = String(filePath);
+        if (p.includes(path.join('app', 'build.gradle'))) {
+          return fakeAppBuildGradle;
+        }
+        return fakeNativeBuildGradle;
+      });
   });
 
   afterEach(() => {
@@ -154,7 +167,7 @@ dependencies {
   });
 
   describe('Gradle dependency', () => {
-    test('adds firebase-messaging when not present', () => {
+    test('adds firebase-messaging with version from native module', () => {
       const config = createMockConfig('com.example.myapp');
       withAndroidPushNotifications(config as any, {} as any);
 
@@ -162,13 +175,17 @@ dependencies {
         (call[0] as string).includes('build.gradle')
       );
       expect(gradleWriteCall).toBeDefined();
-      expect(gradleWriteCall[1]).toContain('firebase-messaging');
+      expect(gradleWriteCall[1]).toContain('firebase-messaging:24.1.2');
     });
 
     test('skips adding firebase-messaging when already present', () => {
-      readFileSyncSpy.mockReturnValue(
-        'dependencies {\n    implementation("com.google.firebase:firebase-messaging:23.0.0")\n}'
-      );
+      readFileSyncSpy.mockImplementation((filePath: any) => {
+        const p = String(filePath);
+        if (p.includes(path.join('app', 'build.gradle'))) {
+          return 'dependencies {\n    implementation("com.google.firebase:firebase-messaging:23.0.0")\n}';
+        }
+        return fakeNativeBuildGradle;
+      });
       const config = createMockConfig('com.example.myapp');
       withAndroidPushNotifications(config as any, {} as any);
 
