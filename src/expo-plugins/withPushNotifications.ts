@@ -8,6 +8,7 @@ import {
   findObjcFunctionCodeBlock,
   insertContentsInsideObjcFunctionBlock,
 } from '@expo/config-plugins/build/ios/codeMod';
+import { withAndroidPushNotifications } from './withAndroidPushNotifications';
 
 const appDelegate: ConfigPlugin<IntercomPluginProps> = (_config) =>
   withAppDelegate(_config, (config) => {
@@ -61,5 +62,6 @@ export const withIntercomPushNotification: ConfigPlugin<IntercomPluginProps> = (
   let newConfig = config;
   newConfig = appDelegate(newConfig, props);
   newConfig = infoPlist(newConfig, props);
+  newConfig = withAndroidPushNotifications(newConfig, props);
   return newConfig;
 };
