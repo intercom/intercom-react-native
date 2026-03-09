@@ -149,12 +149,16 @@ dependencies {
       jest.resetModules();
       jest.mock('expo-notifications', () => ({}), { virtual: true });
       jest.mock('@expo/config-plugins', () => ({
-        withDangerousMod: (config: any, [_platform, callback]: [string, Function]) =>
-          callback(config),
+        withDangerousMod: (
+          config: any,
+          [_platform, callback]: [string, Function]
+        ) => callback(config),
       }));
 
       jest.spyOn(fs, 'mkdirSync').mockReturnValue(undefined);
-      const localWriteSpy = jest.spyOn(fs, 'writeFileSync').mockReturnValue(undefined);
+      const localWriteSpy = jest
+        .spyOn(fs, 'writeFileSync')
+        .mockReturnValue(undefined);
       jest.spyOn(fs, 'readFileSync').mockImplementation((filePath: any) => {
         const p = String(filePath);
         if (p.includes(path.join('app', 'build.gradle'))) {
@@ -163,7 +167,9 @@ dependencies {
         return fakeNativeBuildGradle;
       });
 
-      const { withAndroidPushNotifications: freshPlugin } = require('../src/expo-plugins/withAndroidPushNotifications');
+      const {
+        withAndroidPushNotifications: freshPlugin,
+      } = require('../src/expo-plugins/withAndroidPushNotifications');
 
       const config = createMockConfig('com.example.myapp');
       freshPlugin(config as any, {} as any);
@@ -184,12 +190,16 @@ dependencies {
       jest.unmock('expo-notifications');
       jest.resetModules();
       jest.mock('@expo/config-plugins', () => ({
-        withDangerousMod: (config: any, [_platform, callback]: [string, Function]) =>
-          callback(config),
+        withDangerousMod: (
+          config: any,
+          [_platform, callback]: [string, Function]
+        ) => callback(config),
       }));
 
       jest.spyOn(fs, 'mkdirSync').mockReturnValue(undefined);
-      const localWriteSpy = jest.spyOn(fs, 'writeFileSync').mockReturnValue(undefined);
+      const localWriteSpy = jest
+        .spyOn(fs, 'writeFileSync')
+        .mockReturnValue(undefined);
       jest.spyOn(fs, 'readFileSync').mockImplementation((filePath: any) => {
         const p = String(filePath);
         if (p.includes(path.join('app', 'build.gradle'))) {
@@ -198,7 +208,9 @@ dependencies {
         return fakeNativeBuildGradle;
       });
 
-      const { withAndroidPushNotifications: freshPlugin } = require('../src/expo-plugins/withAndroidPushNotifications');
+      const {
+        withAndroidPushNotifications: freshPlugin,
+      } = require('../src/expo-plugins/withAndroidPushNotifications');
 
       const config = createMockConfig('com.example.myapp');
       freshPlugin(config as any, {} as any);
