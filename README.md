@@ -660,6 +660,10 @@ Add the necessary permission descriptions to infoPlist key.
 
 Next, rebuild your app as described in the ["Adding custom native code"](https://docs.expo.io/workflow/customizing/) guide.
 
+The Expo plugin automatically generates a `FirebaseMessagingService` for Android that routes Intercom pushes to the SDK and passes non-Intercom messages through to other handlers (e.g. `expo-notifications`).
+
+> **Note**: If your app uses another SDK that registers its own `FirebaseMessagingService` (e.g. OneSignal, Braze), list `@intercom/intercom-react-native` **before** that SDK in your `plugins` array. This allows the plugin to detect the other service and skip its own registration, avoiding conflicts.
+
 #### Expo: Push notification deep links support
 
 > **Note**: You can read more on Expo [documentation](https://docs.expo.dev/guides/deep-linking)
