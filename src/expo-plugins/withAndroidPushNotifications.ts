@@ -10,8 +10,8 @@ function hasExpoNotifications(): boolean {
   try {
     require('expo-notifications');
     return true;
-  } catch {
-    return false;
+  } catch (e: any) {
+    return e?.code !== 'MODULE_NOT_FOUND';
   }
 }
 
@@ -94,10 +94,7 @@ export const withAndroidPushNotifications: ConfigPlugin<IntercomPluginProps> = (
       // service lives in the app module, we need firebase-messaging on the
       // app's compile classpath too. We read the version from the native
       // module's build.gradle so it stays in sync automatically.
-      const packageRoot = path.resolve(
-        require.resolve('@intercom/intercom-react-native/package.json'),
-        '..'
-      );
+      const packageRoot = path.resolve(__dirname, '..', '..', '..');
       const nativeBuildGradle = fs.readFileSync(
         path.join(packageRoot, 'android', 'build.gradle'),
         'utf-8'
