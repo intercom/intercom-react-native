@@ -7,9 +7,7 @@ const libraryRoot = path.resolve(__dirname, '..', '..');
 const config = getDefaultConfig(__dirname);
 config.resolver.unstable_enableSymlinks = true;
 config.watchFolders = [libraryRoot];
-config.resolver.nodeModulesPaths = [
-  path.resolve(__dirname, 'node_modules'),
-];
+config.resolver.nodeModulesPaths = [path.resolve(__dirname, 'node_modules')];
 config.resolver.blockList = [
   new RegExp(path.resolve(libraryRoot, 'node_modules') + '/.*'),
 ];
