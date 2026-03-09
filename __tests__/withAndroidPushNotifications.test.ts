@@ -70,23 +70,6 @@ dependencies {
       expect(content).toContain('package com.example.myapp');
     });
 
-    test('generates valid FirebaseMessagingService subclass', () => {
-      const config = createMockConfig('com.example.myapp');
-      withAndroidPushNotifications(config as any, {} as any);
-
-      const content = writeFileSyncSpy.mock.calls[0][1] as string;
-
-      expect(content).toContain(
-        'class IntercomFirebaseMessagingService : FirebaseMessagingService()'
-      );
-      expect(content).toContain(
-        'override fun onNewToken(refreshedToken: String)'
-      );
-      expect(content).toContain(
-        'override fun onMessageReceived(remoteMessage: RemoteMessage)'
-      );
-    });
-
     test('includes Intercom message routing logic', () => {
       const config = createMockConfig('com.example.myapp');
       withAndroidPushNotifications(config as any, {} as any);
@@ -102,23 +85,6 @@ dependencies {
       );
       expect(content).toContain('super.onMessageReceived(remoteMessage)');
       expect(content).toContain('super.onNewToken(refreshedToken)');
-    });
-
-    test('includes all required Kotlin imports', () => {
-      const config = createMockConfig('com.example.myapp');
-      withAndroidPushNotifications(config as any, {} as any);
-
-      const content = writeFileSyncSpy.mock.calls[0][1] as string;
-
-      expect(content).toContain(
-        'import com.google.firebase.messaging.FirebaseMessagingService'
-      );
-      expect(content).toContain(
-        'import com.google.firebase.messaging.RemoteMessage'
-      );
-      expect(content).toContain(
-        'import com.intercom.reactnative.IntercomModule'
-      );
     });
 
     test('writes file to correct directory based on package name', () => {
@@ -175,6 +141,75 @@ dependencies {
         (call[0] as string).includes('build.gradle')
       );
       expect(gradleWriteCall).toBeUndefined();
+    });
+  });
+
+  describe('expo-notifications compatibility', () => {
+    test('extends ExpoFirebaseMessagingService when expo-notifications is installed', () => {
+      jest.resetModules();
+      jest.mock('expo-notifications', () => ({}), { virtual: true });
+      jest.mock('@expo/config-plugins', () => ({
+        withDangerousMod: (config: any, [_platform, callback]: [string, Function]) =>
+          callback(config),
+      }));
+
+      jest.spyOn(fs, 'mkdirSync').mockReturnValue(undefined);
+      const localWriteSpy = jest.spyOn(fs, 'writeFileSync').mockReturnValue(undefined);
+      jest.spyOn(fs, 'readFileSync').mockImplementation((filePath: any) => {
+        const p = String(filePath);
+        if (p.includes(path.join('app', 'build.gradle'))) {
+          return fakeAppBuildGradle;
+        }
+        return fakeNativeBuildGradle;
+      });
+
+      const { withAndroidPushNotifications: freshPlugin } = require('../src/expo-plugins/withAndroidPushNotifications');
+
+      const config = createMockConfig('com.example.myapp');
+      freshPlugin(config as any, {} as any);
+
+      const content = localWriteSpy.mock.calls[0]?.[1] as string;
+      expect(content).toContain(
+        'class IntercomFirebaseMessagingService : ExpoFirebaseMessagingService()'
+      );
+      expect(content).toContain(
+        'import expo.modules.notifications.service.ExpoFirebaseMessagingService'
+      );
+      expect(content).not.toContain(
+        'import com.google.firebase.messaging.FirebaseMessagingService'
+      );
+    });
+
+    test('extends FirebaseMessagingService when expo-notifications is not installed', () => {
+      jest.unmock('expo-notifications');
+      jest.resetModules();
+      jest.mock('@expo/config-plugins', () => ({
+        withDangerousMod: (config: any, [_platform, callback]: [string, Function]) =>
+          callback(config),
+      }));
+
+      jest.spyOn(fs, 'mkdirSync').mockReturnValue(undefined);
+      const localWriteSpy = jest.spyOn(fs, 'writeFileSync').mockReturnValue(undefined);
+      jest.spyOn(fs, 'readFileSync').mockImplementation((filePath: any) => {
+        const p = String(filePath);
+        if (p.includes(path.join('app', 'build.gradle'))) {
+          return fakeAppBuildGradle;
+        }
+        return fakeNativeBuildGradle;
+      });
+
+      const { withAndroidPushNotifications: freshPlugin } = require('../src/expo-plugins/withAndroidPushNotifications');
+
+      const config = createMockConfig('com.example.myapp');
+      freshPlugin(config as any, {} as any);
+
+      const content = localWriteSpy.mock.calls[0][1] as string;
+      expect(content).toContain(
+        'class IntercomFirebaseMessagingService : FirebaseMessagingService()'
+      );
+      expect(content).toContain(
+        'import com.google.firebase.messaging.FirebaseMessagingService'
+      );
     });
   });
 

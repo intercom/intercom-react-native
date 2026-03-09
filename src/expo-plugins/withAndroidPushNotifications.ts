@@ -6,18 +6,35 @@ import type { IntercomPluginProps } from './@types';
 
 const SERVICE_CLASS_NAME = 'IntercomFirebaseMessagingService';
 
+function hasExpoNotifications(): boolean {
+  try {
+    require('expo-notifications');
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Generates the Kotlin source for the FirebaseMessagingService that
  * forwards FCM tokens and Intercom push messages to the Intercom SDK.
  */
 function generateFirebaseServiceKotlin(packageName: string): string {
+  const extendsExpo = hasExpoNotifications();
+  const baseClass = extendsExpo
+    ? 'ExpoFirebaseMessagingService'
+    : 'FirebaseMessagingService';
+  const baseImport = extendsExpo
+    ? 'import expo.modules.notifications.service.ExpoFirebaseMessagingService'
+    : 'import com.google.firebase.messaging.FirebaseMessagingService';
+
   return `package ${packageName}
 
-import com.google.firebase.messaging.FirebaseMessagingService
+${baseImport}
 import com.google.firebase.messaging.RemoteMessage
 import com.intercom.reactnative.IntercomModule
 
-class ${SERVICE_CLASS_NAME} : FirebaseMessagingService() {
+class ${SERVICE_CLASS_NAME} : ${baseClass}() {
 
     override fun onNewToken(refreshedToken: String) {
         IntercomModule.sendTokenToIntercom(application, refreshedToken)
