@@ -131,6 +131,13 @@ const writeFirebaseService: ConfigPlugin<IntercomPluginProps> = (_config) =>
 /**
  * Adds the FirebaseMessagingService entry to the AndroidManifest.xml
  * so Android knows to route FCM events to our service.
+ *
+ * If another FirebaseMessagingService is already registered (from another
+ * SDK or manual setup), skips registration and warns. Note: due to Expo's
+ * LIFO mod execution order, this detection only works when the conflicting
+ * plugin is listed AFTER @intercom/intercom-react-native in the plugins
+ * array. If your app has another FCM-handling SDK, list Intercom first
+ * in the plugins array to ensure conflict detection works correctly.
  */
 const registerServiceInManifest: ConfigPlugin<IntercomPluginProps> = (
   _config
