@@ -9,7 +9,7 @@ PODS:
     - hermes-engine/Pre-built (= 0.81.1)
   - hermes-engine/Pre-built (0.81.1)
   - Intercom (19.5.3)
-  - intercom-react-native (9.6.4):
+  - intercom-react-native (9.6.5):
     - boost
     - DoubleConversion
     - fast_float
