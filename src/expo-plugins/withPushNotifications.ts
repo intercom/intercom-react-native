@@ -59,7 +59,7 @@ export const withIntercomPushNotification: ConfigPlugin<IntercomPluginProps> = (
   props
 ) => {
   let newConfig = config;
-  newConfig = appDelegate(config, props);
-  newConfig = infoPlist(config, props);
+  newConfig = appDelegate(newConfig, props);
+  newConfig = infoPlist(newConfig, props);
   return newConfig;
 };
