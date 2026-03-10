@@ -102,7 +102,7 @@ export type IntercomType = {
    * @param params The {@link UserAttributes} object that contains the user's `email` or `userId`.
    */
   loginUserWithUserAttributes: (
-    params: Pick<UserAttributes, 'email' | 'userId'>
+    params: UserAttributes & ({ email: string } | { userId: string })
   ) => Promise<boolean>;
 
   /**
