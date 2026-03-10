@@ -3844,8 +3844,8 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
 
-  tar@7.5.9:
-    resolution: {integrity: sha512-BTLcK0xsDh2+PUe9F6c2TlRp4zOOBMTkoQHQIWSIzI0R7KG46uEwq4OPk2W7bZcprBMsuaeFsqwYr7pjh6CuHg==}
+  tar@7.5.11:
+    resolution: {integrity: sha512-ChjMH33/KetonMTAtpYdgUFr0tbz69Fp2v7zWxQfYZX4g5ZN2nOBXm1R2xyA+lMIKrLKIoKAwFj93jE/avX9cQ==}
     engines: {node: '>=18'}
 
   temp-dir@2.0.0:
@@ -4923,7 +4923,7 @@ snapshots:
       source-map-support: 0.5.21
       stacktrace-parser: 0.1.11
       structured-headers: 0.4.1
-      tar: 7.5.9
+      tar: 7.5.11
       terminal-link: 2.1.1
       undici: 6.23.0
       wrap-ansi: 7.0.0
@@ -8721,7 +8721,7 @@ snapshots:
     transitivePeerDependencies:
       - ts-node
 
-  tar@7.5.9:
+  tar@7.5.11:
     dependencies:
       '@isaacs/fs-minipass': 4.0.1
       chownr: 3.0.0
