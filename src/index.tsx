@@ -101,9 +101,7 @@ export type IntercomType = {
    * Valid identifiers are `userId` and `email` which must be set in the {@link UserAttributes} object.
    * @param params The {@link UserAttributes} object that contains the user's `email` or `userId`.
    */
-  loginUserWithUserAttributes: (
-    params: UserAttributes & ({ email: string } | { userId: string })
-  ) => Promise<boolean>;
+  loginUserWithUserAttributes: (params: UserAttributes) => Promise<boolean>;
 
   /**
    * Log a user out of their Intercom session.
