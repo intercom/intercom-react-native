@@ -169,6 +169,9 @@ public class IntercomModule extends ReactContextBaseJavaModule {
       promise.reject(IntercomErrorCodes.IDENTIFIED_REGISTRATION, "Invalid userId or email");
     }
     if (registration != null) {
+      UserAttributes userAttributes = IntercomHelpers.buildUserAttributes(params);
+      registration.withUserAttributes(userAttributes);
+
       Intercom.client().loginIdentifiedUser(registration, new IntercomStatusCallback() {
         @Override
         public void onSuccess() {
