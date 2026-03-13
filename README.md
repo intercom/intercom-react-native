@@ -828,18 +828,55 @@ This is a user that doesn't have any identifiable information such as a userId o
 
 ---
 
-### `Intercom.loginUserWithUserAttributes({email,userId})`
+### `Intercom.loginUserWithUserAttributes(userAttributes)`
 
-Login a user with identifiable information.
+Login a user with identifiable information. You can pass any user attributes at login time, allowing you to set user data in a single call rather than requiring a separate `updateUser` call.
+
+###### One of `email` or `userId` is required.
+
+```javascript
+Intercom.loginUserWithUserAttributes({
+  email: 'name@intercom.com',
+  userId: 'userId',
+  name: 'Name',
+  phone: '010-1234-5678',
+  languageOverride: 'languageOverride',
+  signedUpAt: 1621844451,
+  unsubscribedFromEmails: true,
+  companies: [
+    {
+      createdAt: 1621844451,
+      id: 'companyId',
+      monthlySpend: 100,
+      name: 'CompanyName',
+      plan: 'plan',
+      customAttributes: {
+        city: 'New York',
+      },
+    },
+  ],
+  customAttributes: {
+    userCustomAttribute: 123,
+    hasUserCustomAttribute: true,
+  },
+});
+```
 
 ### Options
 
-One of below fields is required.
+| Type                   | Type                                   | Required |
+| ---------------------- | -------------------------------------- | -------- |
+| userId                 | string                                 | yes*     |
+| email                  | string                                 | yes*     |
+| name                   | string                                 | no       |
+| phone                  | string                                 | no       |
+| languageOverride       | string                                 | no       |
+| signedUpAt             | number (timestamp)                     | no       |
+| unsubscribedFromEmails | boolean                                | no       |
+| companies              | array                                  | no       |
+| customAttributes       | object `{key: boolean,string, number}` | no       |
 
-| Type   | Type   | Required |
-| ------ | ------ | -------- |
-| email  | string | no       |
-| userId | string | no       |
+\* One of `email` or `userId` is required.
 
 ### Returns
 
