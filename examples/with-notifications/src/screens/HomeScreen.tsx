@@ -1,10 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Intercom, { Visibility } from '@intercom/intercom-react-native';
 import { requestNotifications } from 'react-native-permissions';
 import { useIntercom } from '../hooks/useIntercom';
