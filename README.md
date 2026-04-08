@@ -111,16 +111,16 @@ public void onCreate() {
 }
 ```
 
-- Open `android/build.gradle` and change `minSdkVersion` to **23**, `compileSdkVersion` and `targetSdkVersion` to **35**
+- Open `android/build.gradle` and change `minSdkVersion` to **23**, `compileSdkVersion` and `targetSdkVersion` to **36**
 
 ```Gradle
 buildscript {
     // ...
     ext {
-        buildToolsVersion = "35.0.0"
+        buildToolsVersion = "36.0.0"
         minSdkVersion = 23 // <-- Here
-        compileSdkVersion = 35 // <-- Here
-        targetSdkVersion = 35 // <-- Here
+        compileSdkVersion = 36 // <-- Here
+        targetSdkVersion = 36 // <-- Here
     }
     // ...
 }
@@ -273,22 +273,6 @@ apply from: file("../../node_modules/@react-native-community/cli-platform-androi
 
   </application>
 </manifest>
-```
-
-- Add below code to your React Native app
-
-```jsx
-useEffect(() => {
-  /**
-   * Handle PushNotification
-   */
-  const appStateListener = AppState.addEventListener(
-    'change',
-    (nextAppState) => nextAppState === 'active' && Intercom.handlePushMessage()
-  );
-  return () => AppState.removeEventListener('change', () => true); // <- for RN < 0.65
-  return () => appStateListener.remove(); // <- for RN >= 0.65
-}, []);
 ```
 
 #### Android: Push notification deep links support
@@ -993,31 +977,6 @@ Gets the number of unread conversations for a user.
 ### Returns
 
 `Promise<number>`
-
----
-
-### `Intercom.handlePushMessage()`
-
-Handles the opening of an Intercom push message. This will retrieve the URI from the last Intercom push message.
-
-```javascript
-useEffect(() => {
-  /**
-   * Handle PushNotification Open
-   */
-  const appStateListener = AppState.addEventListener(
-    'change',
-    (nextAppState) => nextAppState === 'active' && Intercom.handlePushMessage()
-  );
-
-  return () => AppState.removeEventListener('change', () => {}); // <- for RN < 0.65
-  return () => appStateListener.remove(); // <- for RN >= 0.65
-}, []);
-```
-
-### Returns
-
-`Promise<boolean>`
 
 ---
 
