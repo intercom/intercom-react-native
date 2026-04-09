@@ -152,13 +152,17 @@ const registerServiceInManifest: ConfigPlugin<IntercomPluginProps> = (
     const hasExistingFcmService = mainApplication.service?.some(
       (s) =>
         s.$?.['android:name'] !== serviceName &&
-        s['intent-filter']?.some(
-          (f: any) =>
-            f.action?.some(
-              (a: any) =>
-                a.$?.['android:name'] === 'com.google.firebase.MESSAGING_EVENT'
-            )
-        )
+        ([] as any[])
+          .concat(s['intent-filter'] ?? [])
+          .some((f: any) =>
+            ([] as any[])
+              .concat(f.action ?? [])
+              .some(
+                (a: any) =>
+                  a.$?.['android:name'] ===
+                  'com.google.firebase.MESSAGING_EVENT'
+              )
+          )
     );
 
     if (hasExistingFcmService) {
