@@ -154,15 +154,14 @@ const registerServiceInManifest: ConfigPlugin<IntercomPluginProps> = (
         s.$?.['android:name'] !== serviceName &&
         ([] as any[])
           .concat(s['intent-filter'] ?? [])
-          .some(
-            (f: any) =>
-              ([] as any[])
-                .concat(f.action ?? [])
-                .some(
-                  (a: any) =>
-                    a.$?.['android:name'] ===
-                    'com.google.firebase.MESSAGING_EVENT'
-                )
+          .some((f: any) =>
+            ([] as any[])
+              .concat(f.action ?? [])
+              .some(
+                (a: any) =>
+                  a.$?.['android:name'] ===
+                  'com.google.firebase.MESSAGING_EVENT'
+              )
           )
     );
 
