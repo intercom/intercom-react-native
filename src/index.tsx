@@ -252,13 +252,6 @@ export type IntercomType = {
   setNeedsStatusBarAppearanceUpdate(): Promise<boolean>;
 
   /**
-   * Handle an Android push notification payload sent by Intercom.
-   *
-   * @note Android only. iOS handles push notifications automatically.
-   */
-  handlePushMessage(): Promise<boolean>;
-
-  /**
    * Send a device token to Intercom to enable push notifications to be sent to the User.
    * @param token The device token to send to the server.
    */
@@ -401,11 +394,6 @@ const Intercom: IntercomType = {
 
   setNeedsStatusBarAppearanceUpdate: Platform.select({
     ios: IntercomModule.setNeedsStatusBarAppearanceUpdate,
-    default: async () => true,
-  }),
-
-  handlePushMessage: Platform.select({
-    android: IntercomModule.handlePushMessage,
     default: async () => true,
   }),
 
