@@ -131,9 +131,6 @@ export default function App() {
     });
 
     /**
-     * Handle PushNotification
-     */
-    /**
      * Handle Push Notification deep links
      */
     const urlListener = Linking.addEventListener('url', (event) => {
