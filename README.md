@@ -7,6 +7,13 @@
 
 > React Native wrapper to bridge our iOS and Android SDK
 
+
+## ⚠️ May 1st Codesigning issue ⚠️ 
+If you are running iOS SDK [v19.5.6](https://github.com/intercom/intercom-ios/releases/tag/19.5.6) or [v19.5.7](https://github.com/intercom/intercom-ios/releases/tag/19.5.7) and are experiecing a codesigning issue, [please follow these steps](https://github.com/intercom/intercom-ios/wiki/Codesigning-Issue) to resolve it.
+
+
+
+
 ### 🏠 [Website](https://intercom.com/)
 
 ### 📚 [Developer Docs](https://developers.intercom.com/installing-intercom/docs/intercom-for-react-native)
