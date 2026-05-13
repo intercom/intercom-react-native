@@ -98,16 +98,10 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void sendTokenToIntercom(@NonNull String token, Promise promise) {
     try {
-      Activity activity = getCurrentActivity();
-      if (activity != null) {
-        intercomPushClient.sendTokenToIntercom(activity.getApplication(), token);
-        Log.d(NAME, "sendTokenToIntercom");
-        promise.resolve(true);
-      } else {
-        Log.e(NAME, "sendTokenToIntercom");
-        Log.e(NAME, "no current activity");
-      }
-
+      Application application = (Application) getReactApplicationContext().getApplicationContext();
+      intercomPushClient.sendTokenToIntercom(application, token);
+      Log.d(NAME, "sendTokenToIntercom");
+      promise.resolve(true);
     } catch (Exception err) {
       Log.e(NAME, "sendTokenToIntercom error:");
       Log.e(NAME, err.toString());
@@ -593,13 +587,9 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void initialize(String apiKey, String appId, Promise promise) {
     try {
-      Activity activity = getCurrentActivity();
-      if (activity != null && activity.getApplication() != null) {
-        IntercomModule.initialize(activity.getApplication(), apiKey, appId);
-        promise.resolve(true);
-      } else {
-        promise.reject(IntercomErrorCodes.INITIALIZE_ERROR, "Activity is null");
-      }
+      Application application = (Application) getReactApplicationContext().getApplicationContext();
+      IntercomModule.initialize(application, apiKey, appId);
+      promise.resolve(true);
     } catch (Exception err) {
       Log.e(NAME, "initialize error:");
       Log.e(NAME, err.toString());
