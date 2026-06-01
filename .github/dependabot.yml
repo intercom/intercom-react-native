@@ -1,0 +1,23 @@
+version: 2
+updates:
+  # Keeps SHA-pinned GitHub Actions current. Cooldown delays adoption of newly
+  # published versions so malicious releases have time to be caught and yanked
+  # before we pull them in. Note: GitHub does not generate security advisories
+  # for SHA-pinned actions, so all updates go through the cooldown window.
+  - package-ecosystem: "github-actions"
+    directories:
+      - "/"
+      - "/.github/actions/*"
+    schedule:
+      interval: "daily"
+      time: "12:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 6
+    cooldown:
+      default-days: 7
+    groups:
+      github-actions:
+        patterns: ["*"]
+    labels:
+      - "dependabot-version-update"
+      - "github-actions"
