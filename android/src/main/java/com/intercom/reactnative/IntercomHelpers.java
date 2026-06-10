@@ -248,6 +248,9 @@ public class IntercomHelpers {
 
   public static WritableMap deconstructRegistration(Registration registration) {
     WritableMap registrationMap = Arguments.createMap();
+    if (registration == null) {
+      return registrationMap;
+    }
     if (registration.getEmail() != null) {
       registrationMap.putString("email", registration.getEmail());
     }
