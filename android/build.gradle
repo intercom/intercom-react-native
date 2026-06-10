@@ -68,6 +68,13 @@ android {
       }
     }
   }
+
+  testOptions {
+    unitTests {
+      includeAndroidResources = false
+      returnDefaultValues = true
+    }
+  }
 }
 
 repositories {
@@ -86,4 +93,7 @@ dependencies {
   implementation "com.google.firebase:firebase-messaging:24.1.2"
   implementation 'io.intercom.android:intercom-sdk:18.2.0'
   implementation 'io.intercom.android:intercom-sdk-ui:18.2.0'
+
+  testImplementation 'junit:junit:4.13.2'
+  testImplementation 'org.mockito:mockito-core:5.11.0'
 }
