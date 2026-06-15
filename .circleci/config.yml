@@ -4,7 +4,7 @@ version: 2.1
 macos_config: &macos_config
   macos:
     xcode: 16.0.0
-  resource_class: macos.m1.large.gen1
+  resource_class: m4pro.medium
   shell: /bin/bash --login -eo pipefail
 
 setup_env_file: &setup_env_file
@@ -43,6 +43,13 @@ jobs:
       - attach_project
       - node/install:
           node-version: 22.14.0
+
+      - run:
+          name: Verify Socket Firewall registry is active
+          command: |
+            REGISTRY=$(npm config get registry)
+            echo "npm registry: $REGISTRY"
+            echo "$REGISTRY" | grep -q socket-firewall-registry || { echo "FAIL: npm not routed through Socket Firewall"; exit 1; }
 
       - run:
           name: Install dependencies
