@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -13,7 +11,6 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.module.annotations.ReactModule;
 import com.google.firebase.messaging.RemoteMessage;
@@ -99,31 +96,12 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void handlePushMessage(Promise promise) {
-    try {
-      Intercom.client().handlePushMessage();
-      promise.resolve(true);
-      Log.d(NAME, "handlePushMessage");
-    } catch (Exception err) {
-      Log.e(NAME, "handlePushMessage error:");
-      Log.e(NAME, err.toString());
-      promise.reject(IntercomErrorCodes.HANDLE_PUSH_MESSAGE, err.toString());
-    }
-  }
-
-  @ReactMethod
   public void sendTokenToIntercom(@NonNull String token, Promise promise) {
     try {
-      Activity activity = getCurrentActivity();
-      if (activity != null) {
-        intercomPushClient.sendTokenToIntercom(activity.getApplication(), token);
-        Log.d(NAME, "sendTokenToIntercom");
-        promise.resolve(true);
-      } else {
-        Log.e(NAME, "sendTokenToIntercom");
-        Log.e(NAME, "no current activity");
-      }
-
+      Application application = (Application) getReactApplicationContext().getApplicationContext();
+      intercomPushClient.sendTokenToIntercom(application, token);
+      Log.d(NAME, "sendTokenToIntercom");
+      promise.resolve(true);
     } catch (Exception err) {
       Log.e(NAME, "sendTokenToIntercom error:");
       Log.e(NAME, err.toString());
@@ -169,6 +147,9 @@ public class IntercomModule extends ReactContextBaseJavaModule {
       promise.reject(IntercomErrorCodes.IDENTIFIED_REGISTRATION, "Invalid userId or email");
     }
     if (registration != null) {
+      UserAttributes userAttributes = IntercomHelpers.buildUserAttributes(params);
+      registration.withUserAttributes(userAttributes);
+
       Intercom.client().loginIdentifiedUser(registration, new IntercomStatusCallback() {
         @Override
         public void onSuccess() {
@@ -606,13 +587,9 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void initialize(String apiKey, String appId, Promise promise) {
     try {
-      Activity activity = getCurrentActivity();
-      if (activity != null && activity.getApplication() != null) {
-        IntercomModule.initialize(activity.getApplication(), apiKey, appId);
-        promise.resolve(true);
-      } else {
-        promise.reject(IntercomErrorCodes.INITIALIZE_ERROR, "Activity is null");
-      }
+      Application application = (Application) getReactApplicationContext().getApplicationContext();
+      IntercomModule.initialize(application, apiKey, appId);
+      promise.resolve(true);
     } catch (Exception err) {
       Log.e(NAME, "initialize error:");
       Log.e(NAME, err.toString());

@@ -4,10 +4,8 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
-import { Alert, AppState, Linking } from 'react-native';
+import { Alert, Linking } from 'react-native';
 import 'react-native-reanimated';
-
-import Intercom from '@intercom/intercom-react-native';
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -15,12 +13,6 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    // Handle push notifications when app is active
-    const subscription = AppState.addEventListener(
-      'change',
-      (nextStatus) => nextStatus === 'active' && Intercom.handlePushMessage()
-    );
-
     // Handle deep links
     const urlListener = Linking.addEventListener('url', (event) => {
       if (event) {
@@ -29,7 +21,6 @@ export default function RootLayout() {
     });
 
     return () => {
-      subscription.remove();
       urlListener.remove();
     };
   }, []);

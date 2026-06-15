@@ -101,9 +101,7 @@ export type IntercomType = {
    * Valid identifiers are `userId` and `email` which must be set in the {@link UserAttributes} object.
    * @param params The {@link UserAttributes} object that contains the user's `email` or `userId`.
    */
-  loginUserWithUserAttributes: (
-    params: Pick<UserAttributes, 'email' | 'userId'>
-  ) => Promise<boolean>;
+  loginUserWithUserAttributes: (params: UserAttributes) => Promise<boolean>;
 
   /**
    * Log a user out of their Intercom session.
@@ -254,13 +252,6 @@ export type IntercomType = {
   setNeedsStatusBarAppearanceUpdate(): Promise<boolean>;
 
   /**
-   * Handle an Android push notification payload sent by Intercom.
-   *
-   * @note Android only. iOS handles push notifications automatically.
-   */
-  handlePushMessage(): Promise<boolean>;
-
-  /**
    * Send a device token to Intercom to enable push notifications to be sent to the User.
    * @param token The device token to send to the server.
    */
@@ -403,11 +394,6 @@ const Intercom: IntercomType = {
 
   setNeedsStatusBarAppearanceUpdate: Platform.select({
     ios: IntercomModule.setNeedsStatusBarAppearanceUpdate,
-    default: async () => true,
-  }),
-
-  handlePushMessage: Platform.select({
-    android: IntercomModule.handlePushMessage,
     default: async () => true,
   }),
 

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import {
   Alert,
-  AppState,
   Image,
   Linking,
   NativeEventEmitter,
@@ -132,15 +131,6 @@ export default function App() {
     });
 
     /**
-     * Handle PushNotification
-     */
-    const appChangeListener = AppState.addEventListener(
-      'change',
-      (nextAppState) =>
-        nextAppState === 'active' && Intercom.handlePushMessage()
-    );
-
-    /**
      * Handle Push Notification deep links
      */
     const urlListener = Linking.addEventListener('url', (event) => {
@@ -184,10 +174,6 @@ export default function App() {
       // @ts-ignore - type definitions haven't been updated to 0.65 yet
       urlListener.remove(); // <- for RN 0.65+
       // Linking.removeEventListener('url', () => {}); <- for RN < 0.65
-
-      // @ts-ignore - type definitions haven't been updated to 0.65 yet
-      appChangeListener.remove(); // <- for RN 0.65+
-      //AppState.removeEventListener('change', () => {}); <- for RN < 0.65
     };
   }, []);
 

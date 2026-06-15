@@ -80,7 +80,6 @@ export interface Spec extends TurboModule {
   setInAppMessageVisibility(visibility: string): Promise<boolean>;
   setLauncherVisibility(visibility: string): Promise<boolean>;
   setNeedsStatusBarAppearanceUpdate(): Promise<boolean>;
-  handlePushMessage(): Promise<boolean>;
   sendTokenToIntercom(token: string): Promise<boolean>;
   setLogLevel(logLevel: string): Promise<boolean>;
   setThemeMode(themeMode: string): Promise<boolean>;

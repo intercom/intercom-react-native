@@ -7,6 +7,13 @@
 
 > React Native wrapper to bridge our iOS and Android SDK
 
+
+## ⚠️ May 1st Codesigning issue ⚠️ 
+If you are running iOS SDK [v19.5.6](https://github.com/intercom/intercom-ios/releases/tag/19.5.6) or [v19.5.7](https://github.com/intercom/intercom-ios/releases/tag/19.5.7) and are experiecing a codesigning issue, [please follow these steps](https://github.com/intercom/intercom-ios/wiki/Codesigning-Issue) to resolve it.
+
+
+
+
 ### 🏠 [Website](https://intercom.com/)
 
 ### 📚 [Developer Docs](https://developers.intercom.com/installing-intercom/docs/intercom-for-react-native)
@@ -111,16 +118,16 @@ public void onCreate() {
 }
 ```
 
-- Open `android/build.gradle` and change `minSdkVersion` to **23**, `compileSdkVersion` and `targetSdkVersion` to **35**
+- Open `android/build.gradle` and change `minSdkVersion` to **23**, `compileSdkVersion` and `targetSdkVersion` to **36**
 
 ```Gradle
 buildscript {
     // ...
     ext {
-        buildToolsVersion = "35.0.0"
+        buildToolsVersion = "36.0.0"
         minSdkVersion = 23 // <-- Here
-        compileSdkVersion = 35 // <-- Here
-        targetSdkVersion = 35 // <-- Here
+        compileSdkVersion = 36 // <-- Here
+        targetSdkVersion = 36 // <-- Here
     }
     // ...
 }
@@ -273,22 +280,6 @@ apply from: file("../../node_modules/@react-native-community/cli-platform-androi
 
   </application>
 </manifest>
-```
-
-- Add below code to your React Native app
-
-```jsx
-useEffect(() => {
-  /**
-   * Handle PushNotification
-   */
-  const appStateListener = AppState.addEventListener(
-    'change',
-    (nextAppState) => nextAppState === 'active' && Intercom.handlePushMessage()
-  );
-  return () => AppState.removeEventListener('change', () => true); // <- for RN < 0.65
-  return () => appStateListener.remove(); // <- for RN >= 0.65
-}, []);
 ```
 
 #### Android: Push notification deep links support
@@ -660,6 +651,10 @@ Add the necessary permission descriptions to infoPlist key.
 
 Next, rebuild your app as described in the ["Adding custom native code"](https://docs.expo.io/workflow/customizing/) guide.
 
+The Expo plugin automatically generates a `FirebaseMessagingService` for Android that routes Intercom pushes to the SDK and passes non-Intercom messages through to other handlers (e.g. `expo-notifications`).
+
+> **Note**: If your app uses another SDK that registers its own `FirebaseMessagingService` (e.g. OneSignal, Braze), list `@intercom/intercom-react-native` **before** that SDK in your `plugins` array. This allows the plugin to detect the other service and skip its own registration, avoiding conflicts.
+
 #### Expo: Push notification deep links support
 
 > **Note**: You can read more on Expo [documentation](https://docs.expo.dev/guides/deep-linking)
@@ -824,18 +819,55 @@ This is a user that doesn't have any identifiable information such as a userId o
 
 ---
 
-### `Intercom.loginUserWithUserAttributes({email,userId})`
+### `Intercom.loginUserWithUserAttributes(userAttributes)`
 
-Login a user with identifiable information.
+Login a user with identifiable information. You can pass any user attributes at login time, allowing you to set user data in a single call rather than requiring a separate `updateUser` call.
+
+###### One of `email` or `userId` is required.
+
+```javascript
+Intercom.loginUserWithUserAttributes({
+  email: 'name@intercom.com',
+  userId: 'userId',
+  name: 'Name',
+  phone: '010-1234-5678',
+  languageOverride: 'languageOverride',
+  signedUpAt: 1621844451,
+  unsubscribedFromEmails: true,
+  companies: [
+    {
+      createdAt: 1621844451,
+      id: 'companyId',
+      monthlySpend: 100,
+      name: 'CompanyName',
+      plan: 'plan',
+      customAttributes: {
+        city: 'New York',
+      },
+    },
+  ],
+  customAttributes: {
+    userCustomAttribute: 123,
+    hasUserCustomAttribute: true,
+  },
+});
+```
 
 ### Options
 
-One of below fields is required.
+| Type                   | Type                                   | Required |
+| ---------------------- | -------------------------------------- | -------- |
+| userId                 | string                                 | yes*     |
+| email                  | string                                 | yes*     |
+| name                   | string                                 | no       |
+| phone                  | string                                 | no       |
+| languageOverride       | string                                 | no       |
+| signedUpAt             | number (timestamp)                     | no       |
+| unsubscribedFromEmails | boolean                                | no       |
+| companies              | array                                  | no       |
+| customAttributes       | object `{key: boolean,string, number}` | no       |
 
-| Type   | Type   | Required |
-| ------ | ------ | -------- |
-| email  | string | no       |
-| userId | string | no       |
+\* One of `email` or `userId` is required.
 
 ### Returns
 
@@ -952,31 +984,6 @@ Gets the number of unread conversations for a user.
 ### Returns
 
 `Promise<number>`
-
----
-
-### `Intercom.handlePushMessage()`
-
-Handles the opening of an Intercom push message. This will retrieve the URI from the last Intercom push message.
-
-```javascript
-useEffect(() => {
-  /**
-   * Handle PushNotification Open
-   */
-  const appStateListener = AppState.addEventListener(
-    'change',
-    (nextAppState) => nextAppState === 'active' && Intercom.handlePushMessage()
-  );
-
-  return () => AppState.removeEventListener('change', () => {}); // <- for RN < 0.65
-  return () => appStateListener.remove(); // <- for RN >= 0.65
-}, []);
-```
-
-### Returns
-
-`Promise<boolean>`
 
 ---
 
