@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
+      sha: ${{ steps.resolve.outputs.sha }}
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -45,13 +46,15 @@ jobs:
 
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Refuse releases not on the default branch
+      - name: Refuse releases not on the default branch, pin SHA
+        id: resolve
         env:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
           HEAD_SHA="$(git rev-parse HEAD)"
           git merge-base --is-ancestor "$HEAD_SHA" "origin/$DEFAULT_BRANCH" \
             || { echo "release commit $HEAD_SHA not reachable from $DEFAULT_BRANCH — refusing"; exit 1; }
+          echo "sha=$HEAD_SHA" >> "$GITHUB_OUTPUT"
 
   test:
     name: Test
@@ -61,7 +64,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          ref: ${{ github.event.release.tag_name }}
+          ref: ${{ needs.validate.outputs.sha }}
           persist-credentials: false
 
       - name: Setup Node.js
@@ -100,7 +103,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          ref: ${{ github.event.release.tag_name }}
+          ref: ${{ needs.validate.outputs.sha }}
           persist-credentials: false
 
       - name: Setup Node.js
