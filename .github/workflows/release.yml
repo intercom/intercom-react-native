@@ -3,12 +3,6 @@ name: Release to npm
 on:
   release:
     types: [published]
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Tag to publish (e.g., 9.5.0)'
-        required: true
-        type: string
 
 permissions:
   contents: read
@@ -27,14 +21,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          ref: ${{ github.event.release.tag_name || github.event.inputs.tag }}
+          ref: ${{ github.event.release.tag_name }}
           persist-credentials: false
           fetch-depth: 0
 
       - name: Extract and validate version
         id: version
         env:
-          RELEASE_TAG: ${{ github.event.release.tag_name || github.event.inputs.tag }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
         run: |
           VERSION="${RELEASE_TAG#v}"
 
@@ -67,7 +61,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          ref: ${{ github.event.release.tag_name || github.event.inputs.tag }}
+          ref: ${{ github.event.release.tag_name }}
           persist-credentials: false
 
       - name: Setup Node.js
@@ -106,7 +100,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
-          ref: ${{ github.event.release.tag_name || github.event.inputs.tag }}
+          ref: ${{ github.event.release.tag_name }}
           persist-credentials: false
 
       - name: Setup Node.js
