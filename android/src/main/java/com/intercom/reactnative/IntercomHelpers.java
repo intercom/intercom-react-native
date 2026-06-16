@@ -246,8 +246,15 @@ public class IntercomHelpers {
     return value;
   }
 
-  public static WritableMap deconstructRegistration(Registration registration) {
+  public static WritableMap deconstructRegistration(@Nullable Registration registration) {
     WritableMap registrationMap = Arguments.createMap();
+    if (registration == null) {
+      // Intercom.client().fetchLoggedInUserAttributes() returns null when no user is
+      // logged in (e.g. after the OS kills and restarts the process, clearing the session).
+      // Return an empty map to match the iOS bridge, which resolves an empty dictionary
+      // for the same "no logged-in user" case instead of crashing.
+      return registrationMap;
+    }
     if (registration.getEmail() != null) {
       registrationMap.putString("email", registration.getEmail());
     }
