@@ -102,8 +102,14 @@
     "typescript": "5.0.4"
   },
   "peerDependencies": {
+    "@expo/config-plugins": "*",
     "react": "*",
     "react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "@expo/config-plugins": {
+      "optional": true
+    }
   },
   "workspaces": [
     "examples/*",
