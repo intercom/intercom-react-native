@@ -179,6 +179,12 @@
     ]
   },
   "packageManager": "yarn@3.6.1",
+  "resolutions": {
+    "qs@npm:6.13.0": "6.15.2",
+    "serialize-javascript@npm:^6.0.2": "7.0.5",
+    "uuid@npm:^7.0.3": "11.1.1",
+    "tar-fs@npm:3.0.4": "3.1.1"
+  },
   "engines": {
     "node": ">=18"
   },
