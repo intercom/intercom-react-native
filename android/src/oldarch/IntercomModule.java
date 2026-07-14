@@ -11,12 +11,14 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.module.annotations.ReactModule;
 import com.google.firebase.messaging.RemoteMessage;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -470,6 +472,28 @@ public class IntercomModule extends ReactContextBaseJavaModule {
       Log.e(NAME, "setInAppMessageVisibility error:");
       Log.e(NAME, err.toString());
       promise.reject(IntercomErrorCodes.SET_IN_APP_MESSAGE_VISIBILITY, err.toString());
+    }
+  }
+
+  @ReactMethod
+  public void suppressProactiveContent(ReadableArray types, Promise promise) {
+    try {
+      List<Intercom.ContentType> contentTypes = new ArrayList<>();
+      for (int i = 0; i < types.size(); i++) {
+        String type = types.getString(i);
+        if ("CAROUSEL".equals(type)) {
+          contentTypes.add(Intercom.ContentType.CAROUSEL);
+        } else if ("SURVEY".equals(type)) {
+          contentTypes.add(Intercom.ContentType.SURVEY);
+        }
+      }
+      Intercom.client().suppressProactiveContent(contentTypes);
+      Log.d(NAME, "suppressProactiveContent");
+      promise.resolve(true);
+    } catch (Exception err) {
+      Log.e(NAME, "suppressProactiveContent error:");
+      Log.e(NAME, err.toString());
+      promise.reject(IntercomErrorCodes.SUPPRESS_PROACTIVE_CONTENT, err.toString());
     }
   }
 
