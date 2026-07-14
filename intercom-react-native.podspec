@@ -19,7 +19,9 @@ Pod::Spec.new do |s|
 
   s.pod_target_xcconfig = { "DEFINES_MODULE" => "YES" }
 
-  s.dependency "Intercom", '~> 19.6.4'
+  # Prerelease test build: Intercom version left unconstrained so the consumer Podfile's
+  # external :podspec (a pre-release) resolves. Restore the '~> 19.6.x' pin before any real release.
+  s.dependency "Intercom"
 
   is_new_arch_enabled = ENV["RCT_NEW_ARCH_ENABLED"] == "1"
   folly_compiler_flags = '-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -Wno-comma -Wno-shorten-64-to-32'

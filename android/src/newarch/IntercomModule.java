@@ -11,6 +11,7 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.module.annotations.ReactModule;
 import com.google.firebase.messaging.RemoteMessage;
@@ -493,6 +494,12 @@ public class IntercomModule extends NativeIntercomSpecSpec {
       Log.e(NAME, err.toString());
       promise.reject(IntercomErrorCodes.SET_IN_APP_MESSAGE_VISIBILITY, err.toString());
     }
+  }
+
+  @ReactMethod
+  public void suppressProactiveContent(ReadableArray types, Promise promise) {
+    Log.d(NAME, "suppressProactiveContent is not supported on Android");
+    promise.resolve(true);
   }
 
   @ReactMethod
