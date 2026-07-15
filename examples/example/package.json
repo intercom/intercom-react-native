@@ -38,7 +38,21 @@
   },
   "engines": {
     "node": ">=18",
-    "yarn": ">=3"
+    "yarn": ">=4"
   },
-  "packageManager": "yarn@3.6.4"
+  "packageManager": "yarn@4.10.0",
+  "dependenciesMeta": {
+    "chromedriver": {
+      "built": true
+    },
+    "edgedriver": {
+      "built": true
+    },
+    "esbuild": {
+      "built": true
+    },
+    "geckodriver": {
+      "built": true
+    }
+  }
 }
