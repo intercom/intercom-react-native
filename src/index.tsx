@@ -237,6 +237,14 @@ export type IntercomType = {
   setInAppMessageVisibility(visibility: VisibilityType): Promise<boolean>;
 
   /**
+   * Suppress the given proactive content types (carousels and/or surveys).
+   * @note All proactive content is visible by default. Pass an empty array to unsuppress all types.
+   *
+   * @param types The proactive content types to suppress.
+   */
+  suppressProactiveContent(types: ProactiveContentType[]): Promise<boolean>;
+
+  /**
    * Show or hide the Intercom Launcher in your app.
    * @note The Launcher is hidden by default.
    *
@@ -389,6 +397,8 @@ const Intercom: IntercomType = {
     IntercomModule.setBottomPadding(paddingBottom),
   setInAppMessageVisibility: (visibility) =>
     IntercomModule.setInAppMessageVisibility(visibility),
+  suppressProactiveContent: (types) =>
+    IntercomModule.suppressProactiveContent(types),
   setLauncherVisibility: (visibility) =>
     IntercomModule.setLauncherVisibility(visibility),
 
@@ -420,6 +430,11 @@ const Intercom: IntercomType = {
 };
 
 export default Intercom;
+
+export enum ProactiveContentType {
+  Carousel = 'CAROUSEL',
+  Survey = 'SURVEY',
+}
 
 export enum ContentType {
   Article = 'ARTICLE',
