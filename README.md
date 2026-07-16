@@ -1133,6 +1133,22 @@ Toggles visibility of in-app messages.
 
 ---
 
+### `Intercom.suppressProactiveContent(types)`
+
+Suppresses the given proactive content types (carousels and/or surveys). All proactive content is visible by default. Pass an empty array to unsuppress all types.
+
+### Options
+
+| Type  | Type                                          | Required |
+| ----- | --------------------------------------------- | -------- |
+| types | array of strings `CAROUSEL, SURVEY`           | yes      |
+
+### Returns
+
+`Promise<boolean>`
+
+---
+
 ### `Intercom.setLauncherVisibility(visibility)`
 
 Toggles visibility of the launcher view. Set as Intercom.Visibility.GONE to hide the launcher when you don't want it to

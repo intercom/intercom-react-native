@@ -374,6 +374,25 @@ RCT_EXPORT_METHOD(setInAppMessageVisibility:(NSString *)visibility
     resolve(@(YES));
 };
 
+RCT_EXPORT_METHOD(suppressProactiveContent:(NSArray *)types
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+
+    NSMutableArray<NSNumber *> *mappedTypes = [NSMutableArray array];
+    for (id type in types) {
+        if (![type isKindOfClass:[NSString class]]) {
+            continue;
+        }
+        if ([type isEqualToString:@"CAROUSEL"]) {
+            [mappedTypes addObject:@(IntercomProactiveContentTypeCarousel)];
+        } else if ([type isEqualToString:@"SURVEY"]) {
+            [mappedTypes addObject:@(IntercomProactiveContentTypeSurvey)];
+        }
+    }
+    [Intercom suppressProactiveContent:mappedTypes];
+    resolve(@(YES));
+};
+
 
 #pragma mark - Unread Conversation Count
 

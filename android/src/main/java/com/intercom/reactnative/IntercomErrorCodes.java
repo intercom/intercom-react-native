@@ -17,6 +17,7 @@ public class IntercomErrorCodes {
   public static final String DISPLAY_CONTENT = "203";
   public static final String SET_IN_APP_MESSAGE_VISIBILITY = "205";
   public static final String HIDE_INTERCOM = "206";
+  public static final String SUPPRESS_PROACTIVE_CONTENT = "207";
   public static final String SET_LAUNCHER_VISIBILITY = "208";
   public static final String SET_BOTTOM_PADDING = "209";
   public static final String SET_THEME_MODE = "210";

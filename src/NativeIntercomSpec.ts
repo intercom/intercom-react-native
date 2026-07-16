@@ -78,6 +78,7 @@ export interface Spec extends TurboModule {
   hideIntercom(): Promise<boolean>;
   setBottomPadding(paddingBottom: number): Promise<boolean>;
   setInAppMessageVisibility(visibility: string): Promise<boolean>;
+  suppressProactiveContent(types: string[]): Promise<boolean>;
   setLauncherVisibility(visibility: string): Promise<boolean>;
   setNeedsStatusBarAppearanceUpdate(): Promise<boolean>;
   sendTokenToIntercom(token: string): Promise<boolean>;
