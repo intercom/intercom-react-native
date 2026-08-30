@@ -160,7 +160,6 @@ jobs:
       - <<: *setup_env_file
 
       - run:
-          working_directory: examples/example/e2e
           name: Install Maestro
           command: curl -Ls "https://get.maestro.mobile.dev" | bash
 
