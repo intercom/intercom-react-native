@@ -7,12 +7,6 @@ macos_config: &macos_config
   resource_class: m4pro.medium
   shell: /bin/bash --login -eo pipefail
 
-setup_env_file: &setup_env_file
-  run:
-    working_directory: example/
-    name: Setup .env
-    command: sh scripts/generateEnv.sh
-
 executors:
   default:
     docker:
@@ -20,7 +14,6 @@ executors:
     working_directory: ~/project
 
 orbs:
-  android: circleci/android@2.4.0
   node: circleci/node@5.1.0
 
 # Always run job
@@ -104,103 +97,6 @@ jobs:
           name: Build package
           command: |
             yarn prepare
-  # Build and Test android version of module
-  android-e2e-test:
-    environment:
-      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
-      JAVA_OPTS: '-Xms512m -Xmx1024m'
-    executor:
-      name: android/android-machine
-      tag: default
-    working_directory: ~/project
-    steps:
-      - attach_project
-
-      - <<: *setup_env_file
-
-      - run:
-          name: Install Maestro
-          command: curl -Ls "https://get.maestro.mobile.dev" | bash
-
-      - run:
-          working_directory: examples/example/test
-          name: Build android
-          command: yarn run build:android
-
-      - android/create-avd:
-          avd-name: Android_29
-          system-image: system-images;android-29;default;x86
-          install: true
-
-      - android/start-emulator:
-          avd-name: Android_29
-          no-window: true
-          post-emulator-launch-assemble-command: echo Emulator Started
-
-      - run:
-          name: Install app on emulator
-          command: |
-            adb install -r ~/project/examples/example/android/app/build/outputs/apk/release/app-release.apk
-
-      - run:
-          working_directory: examples/example/test
-          name: Run UI Tests
-          command: yarn run test:android
-
-      - store_artifacts:
-          path: ~/.maestro/tests
-          destination: maestro-tests
-
-  # Build the Test App used for UI Testing and save is to the workspace. This allows it to be used by other jobs.
-  ios-e2e-test:
-    <<: *macos_config
-    steps:
-      - attach_project
-
-      - <<: *setup_env_file
-
-      - run:
-          name: Install Maestro
-          command: curl -Ls "https://get.maestro.mobile.dev" | bash
-
-      - restore_cache:
-          keys:
-            - pod-dependencies-{{ checksum "~/project/examples/example/ios/Podfile" }}
-      - run:
-          working_directory: examples/example/ios
-          name: Install Pods
-          command: pod install
-
-      - save_cache:
-          key: pod-dependencies-{{ checksum "~/project/examples/example/ios/Podfile" }}
-          paths:
-            - ~/project/examples/example/ios/Pods
-
-      - run:
-          working_directory: examples/example/test
-          name: Build
-          command: yarn run build:ios
-
-      - run:
-          name: Create and boot iPhone 15 simulator
-          command: |
-            echo "Creating iPhone 15 simulator with runtime $RUNTIME"
-            xcrun simctl create "iPhone 15" com.apple.CoreSimulator.SimDeviceType.iPhone-15 $RUNTIME
-            xcrun simctl boot "iPhone 15" || true
-
-      - run:
-          name: Install app on simulator
-          command: |
-            xcrun simctl install booted ~/project/examples/example/test/build/Build/Products/Release-iphonesimulator/IntercomReactNativeExampleUI.app
-
-      - run:
-          working_directory: examples/example/test
-          name: Run UI Tests
-          command: yarn run test:ios
-
-      - store_artifacts:
-          path: ~/.maestro/tests
-          destination: maestro-tests
 
 workflows:
   version: 2.1
@@ -224,20 +120,3 @@ workflows:
           <<: *run_always
           requires:
             - install-dependencies
-      # Temporarily disabled Maestro e2e tests
-      # - android-e2e-test:
-      #     <<: *run_always
-      #     requires:
-      #       - install-dependencies
-      #       - lint
-      #       - typescript
-      #       - unit-tests
-      #       - build-package
-      # - ios-e2e-test:
-      #     <<: *run_always
-      #     requires:
-      #       - install-dependencies
-      #       - lint
-      #       - typescript
-      #       - unit-tests
-      #       - build-package
