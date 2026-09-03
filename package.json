@@ -119,9 +119,6 @@
   },
   "eslintConfig": {
     "root": true,
-    "ignorePatterns": [
-      "examples/*/e2e/**"
-    ],
     "env": {
       "mocha": true
     },
