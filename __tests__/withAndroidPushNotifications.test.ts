@@ -257,6 +257,104 @@ dependencies {
         'import com.google.firebase.messaging.FirebaseMessagingService'
       );
     });
+
+    test("extends FirebaseMessagingService when androidPushFallback is 'none', even with expo-notifications installed", () => {
+      jest.resetModules();
+      jest.mock('expo-notifications', () => ({}), { virtual: true });
+      jest.mock('@expo/config-plugins', () => ({
+        withDangerousMod: (
+          config: any,
+          [_platform, callback]: [string, Function]
+        ) => callback(config),
+        withAndroidManifest: (config: any, callback: Function) =>
+          callback(config),
+        AndroidConfig: {
+          Manifest: {
+            getMainApplicationOrThrow: (modResults: any) =>
+              modResults.manifest.application[0],
+          },
+        },
+      }));
+
+      jest.spyOn(fs, 'mkdirSync').mockReturnValue(undefined);
+      const localWriteSpy = jest
+        .spyOn(fs, 'writeFileSync')
+        .mockReturnValue(undefined);
+      jest.spyOn(fs, 'readFileSync').mockImplementation((filePath: any) => {
+        const p = String(filePath);
+        if (p.includes(path.join('app', 'build.gradle'))) {
+          return fakeAppBuildGradle;
+        }
+        return fakeNativeBuildGradle;
+      });
+
+      const {
+        withAndroidPushNotifications: freshPlugin,
+      } = require('../src/expo-plugins/withAndroidPushNotifications');
+
+      const config = createMockConfig('com.example.myapp');
+      freshPlugin(config as any, { androidPushFallback: 'none' } as any);
+
+      const content = localWriteSpy.mock.calls[0]?.[1] as string;
+      expect(content).toContain(
+        'class IntercomFirebaseMessagingService : FirebaseMessagingService()'
+      );
+      expect(content).toContain(
+        'import com.google.firebase.messaging.FirebaseMessagingService'
+      );
+      expect(content).not.toContain('ExpoFirebaseMessagingService');
+    });
+
+    test("extends ExpoFirebaseMessagingService when androidPushFallback is 'expo-notifications', even without expo-notifications installed", () => {
+      jest.unmock('expo-notifications');
+      jest.resetModules();
+      jest.mock('@expo/config-plugins', () => ({
+        withDangerousMod: (
+          config: any,
+          [_platform, callback]: [string, Function]
+        ) => callback(config),
+        withAndroidManifest: (config: any, callback: Function) =>
+          callback(config),
+        AndroidConfig: {
+          Manifest: {
+            getMainApplicationOrThrow: (modResults: any) =>
+              modResults.manifest.application[0],
+          },
+        },
+      }));
+
+      jest.spyOn(fs, 'mkdirSync').mockReturnValue(undefined);
+      const localWriteSpy = jest
+        .spyOn(fs, 'writeFileSync')
+        .mockReturnValue(undefined);
+      jest.spyOn(fs, 'readFileSync').mockImplementation((filePath: any) => {
+        const p = String(filePath);
+        if (p.includes(path.join('app', 'build.gradle'))) {
+          return fakeAppBuildGradle;
+        }
+        return fakeNativeBuildGradle;
+      });
+
+      const {
+        withAndroidPushNotifications: freshPlugin,
+      } = require('../src/expo-plugins/withAndroidPushNotifications');
+
+      const config = createMockConfig('com.example.myapp');
+      freshPlugin(
+        config as any,
+        {
+          androidPushFallback: 'expo-notifications',
+        } as any
+      );
+
+      const content = localWriteSpy.mock.calls[0]?.[1] as string;
+      expect(content).toContain(
+        'class IntercomFirebaseMessagingService : ExpoFirebaseMessagingService()'
+      );
+      expect(content).toContain(
+        'import expo.modules.notifications.service.ExpoFirebaseMessagingService'
+      );
+    });
   });
 
   describe('AndroidManifest service registration', () => {
@@ -424,6 +522,28 @@ dependencies {
       expect(() => {
         withAndroidPushNotifications(config as any, {} as any);
       }).toThrow('android.package must be defined');
+    });
+
+    test('throws on an unknown androidPushFallback value', () => {
+      const config = createMockConfig('com.example.myapp');
+
+      expect(() => {
+        withAndroidPushNotifications(
+          config as any,
+          {
+            androidPushFallback: 'onesignal',
+          } as any
+        );
+      }).toThrow('invalid androidPushFallback "onesignal"');
+
+      expect(() => {
+        withAndroidPushNotifications(
+          config as any,
+          {
+            androidPushFallback: 'toString',
+          } as any
+        );
+      }).toThrow('invalid androidPushFallback "toString"');
     });
   });
 });

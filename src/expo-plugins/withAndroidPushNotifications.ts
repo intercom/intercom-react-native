@@ -7,9 +7,30 @@ import {
   withAndroidManifest,
   AndroidConfig,
 } from '@expo/config-plugins';
-import type { IntercomPluginProps } from './@types';
+import type { AndroidPushFallback, IntercomPluginProps } from './@types';
 
 const SERVICE_CLASS_NAME = 'IntercomFirebaseMessagingService';
+
+/**
+ * The base class of the generated messaging service decides what happens to
+ * push messages that are not from Intercom: ExpoFirebaseMessagingService
+ * forwards them to expo-notifications, the plain FirebaseMessagingService
+ * ignores them.
+ */
+const PUSH_FALLBACK_BASE_CLASSES: Record<
+  AndroidPushFallback,
+  { className: string; import: string }
+> = {
+  'expo-notifications': {
+    className: 'ExpoFirebaseMessagingService',
+    import:
+      'import expo.modules.notifications.service.ExpoFirebaseMessagingService',
+  },
+  'none': {
+    className: 'FirebaseMessagingService',
+    import: 'import com.google.firebase.messaging.FirebaseMessagingService',
+  },
+};
 
 function hasExpoNotifications(): boolean {
   try {
@@ -20,26 +41,39 @@ function hasExpoNotifications(): boolean {
   }
 }
 
+function getPushNotificationsFallback(
+  props: IntercomPluginProps | undefined
+): AndroidPushFallback {
+  const fallback = props?.androidPushFallback;
+  if (fallback === undefined) {
+    return hasExpoNotifications() ? 'expo-notifications' : 'none';
+  }
+  if (!Object.hasOwn(PUSH_FALLBACK_BASE_CLASSES, fallback)) {
+    throw new Error(
+      `@intercom/intercom-react-native: invalid androidPushFallback "${fallback}". Expected 'expo-notifications' or 'none'.`
+    );
+  }
+  return fallback;
+}
+
 /**
  * Generates the Kotlin source for the FirebaseMessagingService that
  * forwards FCM tokens and Intercom push messages to the Intercom SDK.
+ * Non-Intercom messages go to the pushFallback handler.
  */
-function generateFirebaseServiceKotlin(packageName: string): string {
-  const extendsExpo = hasExpoNotifications();
-  const baseClass = extendsExpo
-    ? 'ExpoFirebaseMessagingService'
-    : 'FirebaseMessagingService';
-  const baseImport = extendsExpo
-    ? 'import expo.modules.notifications.service.ExpoFirebaseMessagingService'
-    : 'import com.google.firebase.messaging.FirebaseMessagingService';
+function generateFirebaseServiceKotlin(
+  packageName: string,
+  pushFallback: AndroidPushFallback
+): string {
+  const baseClass = PUSH_FALLBACK_BASE_CLASSES[pushFallback];
 
   return `package ${packageName}
 
-${baseImport}
+${baseClass.import}
 import com.google.firebase.messaging.RemoteMessage
 import com.intercom.reactnative.IntercomModule
 
-class ${SERVICE_CLASS_NAME} : ${baseClass}() {
+class ${SERVICE_CLASS_NAME} : ${baseClass.className}() {
 
     override fun onNewToken(refreshedToken: String) {
         IntercomModule.sendTokenToIntercom(application, refreshedToken)
@@ -62,7 +96,10 @@ class ${SERVICE_CLASS_NAME} : ${baseClass}() {
  * into the app's Android source directory, and ensures firebase-messaging
  * is on the app module's compile classpath.
  */
-const writeFirebaseService: ConfigPlugin<IntercomPluginProps> = (_config) =>
+const writeFirebaseService: ConfigPlugin<IntercomPluginProps> = (
+  _config,
+  props
+) =>
   withDangerousMod(_config, [
     'android',
     (config) => {
@@ -72,6 +109,8 @@ const writeFirebaseService: ConfigPlugin<IntercomPluginProps> = (_config) =>
           '@intercom/intercom-react-native: android.package must be defined in your Expo config to use Android push notifications.'
         );
       }
+
+      const pushFallback = getPushNotificationsFallback(props);
 
       const projectRoot = config.modRequest.projectRoot;
       const packagePath = packageName.replace(/\./g, '/');
@@ -88,7 +127,7 @@ const writeFirebaseService: ConfigPlugin<IntercomPluginProps> = (_config) =>
       fs.mkdirSync(serviceDir, { recursive: true });
       fs.writeFileSync(
         path.join(serviceDir, `${SERVICE_CLASS_NAME}.kt`),
-        generateFirebaseServiceKotlin(packageName),
+        generateFirebaseServiceKotlin(packageName, pushFallback),
         'utf-8'
       );
 
