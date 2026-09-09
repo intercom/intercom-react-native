@@ -537,6 +537,7 @@ The plugin provides props for extra customization. Every time you change the pro
 - `iosApiKey` (_string_): iOS API Key from Intercom.
 - `intercomRegion` (_string_): Region for Intercom `US`, `EU`, `AU`. Optional. Defaults to `US`.
 - `useManualInit` (_boolean_): Set to `true` to manually initialize Intercom from JavaScript instead of at app startup. Optional. Defaults to `false`.
+- `androidPushFallback` (_string_): What the generated Android messaging service does with push messages that are not from Intercom. `"expo-notifications"` forwards them to `expo-notifications` for handling and display (requires `expo-notifications` to be installed). `"none"` ignores them and also stops forwarding new FCM tokens to `expo-notifications` push token listeners; use it when another push provider (e.g. OneSignal, Braze) displays its own notifications, to avoid duplicates. Optional. Defaults to `"expo-notifications"` when `expo-notifications` is installed, `"none"` otherwise.
 
 ```json
 {
@@ -654,6 +655,8 @@ Next, rebuild your app as described in the ["Adding custom native code"](https:/
 The Expo plugin automatically generates a `FirebaseMessagingService` for Android that routes Intercom pushes to the SDK and passes non-Intercom messages through to other handlers (e.g. `expo-notifications`).
 
 > **Note**: If your app uses another SDK that registers its own `FirebaseMessagingService` (e.g. OneSignal, Braze), list `@intercom/intercom-react-native` **before** that SDK in your `plugins` array. This allows the plugin to detect the other service and skip its own registration, avoiding conflicts.
+
+> **Note**: Some push providers (e.g. OneSignal) receive FCM messages through their own broadcast receiver instead of a `FirebaseMessagingService`, so the detection above never triggers for them. If `expo-notifications` is also installed, the generated service then forwards the provider's pushes to `expo-notifications`, and each push is displayed twice. Set `"androidPushFallback": "none"` in the plugin props so the generated service handles Intercom pushes only and ignores everything else.
 
 #### Expo: Push notification deep links support
 
