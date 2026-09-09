@@ -8,8 +8,9 @@ function isTurboModuleAvailable(name: string) {
   }
 }
 
-export const IntercomModule = isTurboModuleAvailable('IntercomModule')
-  ? require('./NativeIntercomSpec').default
-  : NativeModules.IntercomModule;
+export const IntercomModule =
+  (isTurboModuleAvailable('IntercomModule')
+    ? require('./NativeIntercomSpec').default
+    : NativeModules.IntercomModule) ?? {};
 
-export const IntercomEventEmitter = NativeModules.IntercomEventEmitter;
+export const IntercomEventEmitter = NativeModules.IntercomEventEmitter ?? {};
