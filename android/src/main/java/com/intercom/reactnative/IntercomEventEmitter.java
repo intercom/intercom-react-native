@@ -23,6 +23,7 @@ public class IntercomEventEmitter extends ReactContextBaseJavaModule {
 
   public static final String NAME = "IntercomEventEmitter";
   private static final String UNREAD_COUNT_CHANGE_NOTIFICATION = "IntercomUnreadConversationCountDidChangeNotification";
+  static final String USER_JWT_REQUESTED_NOTIFICATION = "IntercomUserJwtRequested";
   private int activeListenersCount = 0;
   private final UnreadConversationCountListener unreadConversationCountListener = new UnreadConversationCountListener() {
     @Override
@@ -80,6 +81,7 @@ public class IntercomEventEmitter extends ReactContextBaseJavaModule {
   public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
     constants.put("UNREAD_COUNT_CHANGE_NOTIFICATION", UNREAD_COUNT_CHANGE_NOTIFICATION);
+    constants.put("USER_JWT_REQUESTED_NOTIFICATION", USER_JWT_REQUESTED_NOTIFICATION);
     return constants;
   }
 

@@ -586,6 +586,43 @@ public class IntercomModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void setUserJwtProvider(Promise promise) {
+    try {
+      IntercomUserJwtProviderBridge.setProvider(getReactApplicationContext());
+      Log.d(NAME, "setUserJwtProvider");
+      promise.resolve(true);
+    } catch (Exception err) {
+      Log.e(NAME, "setUserJwtProvider error:");
+      Log.e(NAME, err.toString());
+      promise.reject(IntercomErrorCodes.SET_USER_JWT_PROVIDER, err.toString());
+    }
+  }
+
+  @ReactMethod
+  public void removeUserJwtProvider(Promise promise) {
+    try {
+      IntercomUserJwtProviderBridge.removeProvider();
+      Log.d(NAME, "removeUserJwtProvider");
+      promise.resolve(true);
+    } catch (Exception err) {
+      Log.e(NAME, "removeUserJwtProvider error:");
+      Log.e(NAME, err.toString());
+      promise.reject(IntercomErrorCodes.REMOVE_USER_JWT_PROVIDER, err.toString());
+    }
+  }
+
+  @ReactMethod
+  public void completeUserJwtRequest(String requestId, @Nullable String jwt) {
+    IntercomUserJwtProviderBridge.complete(requestId, jwt);
+  }
+
+  @Override
+  public void invalidate() {
+    IntercomUserJwtProviderBridge.invalidate();
+    super.invalidate();
+  }
+
+  @ReactMethod
   public void setAuthTokens(ReadableMap authTokens, Promise promise) {
     try {
       List<io.intercom.android.sdk.AuthToken> authTokensList = IntercomHelpers.buildAuthTokensList(authTokens);
