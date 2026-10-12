@@ -12,6 +12,8 @@ public class IntercomErrorCodes {
   public static final String SET_USER_JWT = "109";
   public static final String SET_AUTH_TOKENS = "110";
   public static final String INITIALIZE_ERROR = "111";
+  public static final String SET_USER_JWT_PROVIDER = "112";
+  public static final String REMOVE_USER_JWT_PROVIDER = "113";
   public static final String DISPLAY_MESSENGER = "201";
   public static final String DISPLAY_MESSENGER_COMPOSER = "202";
   public static final String DISPLAY_CONTENT = "203";

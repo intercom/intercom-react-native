@@ -1,11 +1,16 @@
 #import "IntercomModule.h"
 #import "IntercomAttributesBuilder.h"
 #import "IntercomHelpCenterHelpers.h"
+#import "IntercomEventEmitter.h"
 #import <React/RCTLog.h>
 @import Intercom;
 
 @interface Intercom (Intercom)
 + (void)setReactNativeVersion:(NSString *)v;
+@end
+
+@interface IntercomModule () <RCTInvalidating>
+@property (nonatomic, strong) NSMutableDictionary<NSString *, void (^)(NSString *_Nullable)> *pendingUserJwtRequests;
 @end
 
 @implementation IntercomModule
@@ -18,6 +23,8 @@ NSString *UNREAD_CONVERSATION_COUNT = @"107";
 NSString *SET_USER_JWT = @"109";
 NSString *SET_AUTH_TOKENS = @"110";
 NSString *INITIALIZE_ERROR = @"111";
+NSString *SET_USER_JWT_PROVIDER = @"112";
+NSString *REMOVE_USER_JWT_PROVIDER = @"113";
 NSString *SEND_TOKEN_TO_INTERCOM = @"302";
 NSString *FETCH_HELP_CENTER_COLLECTIONS = @"901";
 NSString *FETCH_HELP_CENTER_COLLECTION = @"902";
@@ -345,6 +352,77 @@ RCT_EXPORT_METHOD(setUserJwt:(NSString *)jwt
         reject(SET_USER_JWT, @"Error in setUserJwt", [self exceptionToError:exception :@"SET_USER_JWT" :@"setUserJwt"]);
     }
 };
+
+RCT_EXPORT_METHOD(setUserJwtProvider:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    @try {
+        __weak IntercomModule *weakSelf = self;
+        [Intercom setUserJwtProvider:^(void (^completion)(NSString *_Nullable)) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                IntercomModule *strongSelf = weakSelf;
+                if (!strongSelf) {
+                    completion(nil);
+                    return;
+                }
+                NSString *requestId = [[NSUUID UUID] UUIDString];
+                strongSelf.pendingUserJwtRequests[requestId] = completion;
+                [[NSNotificationCenter defaultCenter] postNotificationName:IntercomUserJwtRequestedNotification
+                                                                    object:nil
+                                                                  userInfo:@{@"requestId": requestId}];
+            });
+        }];
+        resolve(@(YES));
+    } @catch (NSException *exception) {
+        reject(SET_USER_JWT_PROVIDER, @"Error in setUserJwtProvider", [self exceptionToError:exception :SET_USER_JWT_PROVIDER :@"setUserJwtProvider"]);
+    }
+};
+
+RCT_EXPORT_METHOD(removeUserJwtProvider:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    @try {
+        [Intercom removeUserJwtProvider];
+        [self failPendingUserJwtRequests];
+        resolve(@(YES));
+    } @catch (NSException *exception) {
+        reject(REMOVE_USER_JWT_PROVIDER, @"Error in removeUserJwtProvider", [self exceptionToError:exception :REMOVE_USER_JWT_PROVIDER :@"removeUserJwtProvider"]);
+    }
+};
+
+RCT_EXPORT_METHOD(completeUserJwtRequest:(NSString *)requestId
+                  jwt:(nullable NSString *)jwt) {
+    // Apps can opt into sync void TurboModule methods, which would run this on the JS thread.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        void (^completion)(NSString *_Nullable) = self.pendingUserJwtRequests[requestId];
+        if (!completion) {
+            return;
+        }
+        [self.pendingUserJwtRequests removeObjectForKey:requestId];
+        BOOL hasJwt = [jwt isKindOfClass:[NSString class]] && jwt.length > 0;
+        completion(hasJwt ? jwt : nil);
+    });
+};
+
+- (NSMutableDictionary<NSString *, void (^)(NSString *_Nullable)> *)pendingUserJwtRequests {
+    if (!_pendingUserJwtRequests) {
+        _pendingUserJwtRequests = [NSMutableDictionary dictionary];
+    }
+    return _pendingUserJwtRequests;
+}
+
+- (void)failPendingUserJwtRequests {
+    NSArray<void (^)(NSString *_Nullable)> *completions = self.pendingUserJwtRequests.allValues;
+    [self.pendingUserJwtRequests removeAllObjects];
+    for (void (^completion)(NSString *_Nullable) in completions) {
+        completion(nil);
+    }
+}
+
+- (void)invalidate {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [Intercom removeUserJwtProvider];
+        [self failPendingUserJwtRequests];
+    });
+}
 
 RCT_EXPORT_METHOD(setAuthTokens:(NSDictionary *)authTokens
                   resolver:(RCTPromiseResolveBlock)resolve

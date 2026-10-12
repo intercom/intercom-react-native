@@ -1345,6 +1345,54 @@ This should be called before any user login takes place.
 
 ---
 
+### `Intercom.setUserJwtProvider(provider)`
+
+Registers a provider Intercom calls when it needs a fresh user JWT, because the current one is about to expire or
+Intercom rejected a request because it has expired. Requests that hit an expired JWT are retried once with the new
+token instead of failing, and open Messenger screens recover without being reopened.
+
+The provider is only called while the app is in the foreground, and never more than once at a time. Resolve with a
+fresh JWT, or with `null` if you can't supply one. Intercom waits up to 10 seconds for an answer. If the provider
+fails or doesn't answer in time, Intercom waits 30 seconds before asking again. Calling `setUserJwt` while a request
+is pending also completes it.
+
+Register the provider as early as possible after the app starts. Requests that expire before it is registered fail
+until a new JWT is set.
+
+```javascript
+Intercom.setUserJwtProvider(async () => {
+  const response = await fetch('https://your-backend.example.com/intercom-jwt');
+  if (!response.ok) {
+    return null;
+  }
+  const { jwt } = await response.json();
+  return jwt;
+});
+```
+
+### Options
+
+| Name     | Type                           | Required |
+| -------- | ------------------------------ | -------- |
+| provider | `() => Promise<string \| null>` | yes      |
+
+### Returns
+
+`Promise<boolean>`
+
+---
+
+### `Intercom.removeUserJwtProvider()`
+
+Removes the provider registered with `setUserJwtProvider`. Requests rejected for an expired JWT then fail until a new
+JWT is set with `setUserJwt`.
+
+### Returns
+
+`Promise<boolean>`
+
+---
+
 ### `Intercom.setAuthTokens(authTokens)`
 
 Provide Intercom with your auth tokens which can be used for functionality such as Custom Actions with Data Connectors. You can provide multiple

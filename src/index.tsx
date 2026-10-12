@@ -1,4 +1,5 @@
-import { Platform } from 'react-native';
+import { NativeEventEmitter, Platform } from 'react-native';
+import type { EmitterSubscription } from 'react-native';
 import { IntercomModule, IntercomEventEmitter } from './nativeModules';
 import type {
   MetaData,
@@ -299,6 +300,25 @@ export type IntercomType = {
   setUserJwt(jwt: string): Promise<boolean>;
 
   /**
+   * Registers a provider Intercom calls when it needs a fresh user JWT, because the current one is
+   * about to expire or Intercom rejected a request because it has expired. Requests that hit an
+   * expired JWT are retried once with the new token instead of failing.
+   *
+   * The provider is only called while the app is in the foreground, and never more than once at a time.
+   * Resolve with a fresh JWT, or with `null` if you can't supply one. Intercom waits up to 10 seconds.
+   * Calling `setUserJwt` while a request is pending also completes it.
+   *
+   * @param provider A function that resolves to a fresh JWT, or `null`.
+   */
+  setUserJwtProvider(provider: () => Promise<string | null>): Promise<boolean>;
+
+  /**
+   * Removes the provider registered with `setUserJwtProvider`. Requests rejected for an expired JWT
+   * then fail until a new JWT is set with `setUserJwt`.
+   */
+  removeUserJwtProvider(): Promise<boolean>;
+
+  /**
    * Provide Intercom with your auth tokens which can be used for functionality
    * such as Custom Actions with Data Connectors. You can provide multiple tokens at once. To create tokens:
    * 1. Go to Settings > Integrations > Authentication in your Intercom workspace
@@ -320,6 +340,8 @@ export type IntercomType = {
    */
   bootstrapEventListeners: () => () => void;
 };
+
+let userJwtRequestSubscription: EmitterSubscription | undefined;
 
 const Intercom: IntercomType = {
   initialize: (apiKey, appId) => {
@@ -411,6 +433,37 @@ const Intercom: IntercomType = {
   setLogLevel: (logLevel) => IntercomModule.setLogLevel(logLevel),
   setThemeMode: (themeMode) => IntercomModule.setThemeMode(themeMode),
   setUserJwt: (jwt) => IntercomModule.setUserJwt(jwt),
+  setUserJwtProvider: (provider) => {
+    userJwtRequestSubscription?.remove();
+    const subscription = new NativeEventEmitter(
+      IntercomEventEmitter
+    ).addListener(
+      IntercomEventEmitter.USER_JWT_REQUESTED_NOTIFICATION,
+      async ({ requestId }: { requestId: string }) => {
+        let jwt: string | null = null;
+        try {
+          const result = await provider();
+          jwt = typeof result === 'string' && result.length > 0 ? result : null;
+        } catch (error) {
+          console.warn('Intercom: user JWT provider threw an error', error);
+        }
+        IntercomModule.completeUserJwtRequest(requestId, jwt);
+      }
+    );
+    userJwtRequestSubscription = subscription;
+    return IntercomModule.setUserJwtProvider().catch((error: unknown) => {
+      subscription.remove();
+      if (userJwtRequestSubscription === subscription) {
+        userJwtRequestSubscription = undefined;
+      }
+      throw error;
+    });
+  },
+  removeUserJwtProvider: () => {
+    userJwtRequestSubscription?.remove();
+    userJwtRequestSubscription = undefined;
+    return IntercomModule.removeUserJwtProvider();
+  },
   setAuthTokens: (authTokens) => IntercomModule.setAuthTokens(authTokens),
 
   bootstrapEventListeners: () => {

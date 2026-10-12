@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Image,
@@ -51,6 +51,11 @@ export default function App() {
   const [launcherVisibility, setLauncherVisibility] = useState<boolean>(false);
   const [user, setUser] = useState<UserAttributes>({ email: '' });
   const [currentTheme, setCurrentTheme] = useState<ThemeMode>(ThemeMode.SYSTEM);
+  const [userJwt, setUserJwt] = useState<string>('');
+  const [providerJwt, setProviderJwt] = useState<string>('');
+  const providerJwtRef = useRef<string>('');
+  const [jwtProviderEnabled, setJwtProviderEnabled] = useState<boolean>(false);
+  const [jwtProviderCalls, setJwtProviderCalls] = useState<number>(0);
 
   const [conversationId, setConversationId] = useState<string | undefined>(
     CONVERSATION_ID
@@ -192,6 +197,11 @@ export default function App() {
           {`Logged In: ${loggedUser ? 'Yes' : 'No'}`}
         </Text>
         <Text style={styles.text}>Unread messages count: {count}</Text>
+        <Text style={styles.text} accessibilityLabel="jwt-provider-calls">
+          {`JWT provider: ${
+            jwtProviderEnabled ? 'On' : 'Off'
+          } (calls: ${jwtProviderCalls})`}
+        </Text>
       </View>
       <ScrollView>
         <Button
@@ -240,6 +250,65 @@ export default function App() {
             } else {
               showIncorrectFieldMessage('Email');
             }
+          }}
+        />
+        <Input
+          title="User JWT"
+          accessibilityLabel="user-jwt"
+          value={userJwt}
+          onChangeText={setUserJwt}
+          placeholder="Paste a user JWT"
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+        <Button
+          intercom_accessibilityLabel="set-user-jwt"
+          intercom_disabled={userJwt === ''}
+          intercom_title="Set User JWT"
+          intercom_onPress={() => {
+            Intercom.setUserJwt(userJwt).catch((e) => {
+              showErrorAlert(e);
+              console.error(e);
+            });
+          }}
+        />
+        <Input
+          title="Next JWT for provider"
+          accessibilityLabel="provider-jwt"
+          value={providerJwt}
+          onChangeText={(val) => {
+            setProviderJwt(val);
+            providerJwtRef.current = val;
+          }}
+          placeholder="JWT the provider returns (empty = fail)"
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+        <Button
+          intercom_accessibilityLabel="toggle-jwt-provider"
+          intercom_title={
+            jwtProviderEnabled ? 'Remove JWT Provider' : 'Set JWT Provider'
+          }
+          intercom_onPress={() => {
+            if (jwtProviderEnabled) {
+              Intercom.removeUserJwtProvider().then(() =>
+                setJwtProviderEnabled(false)
+              );
+              return;
+            }
+            Intercom.setUserJwtProvider(async () => {
+              setJwtProviderCalls((calls) => calls + 1);
+              const jwt = providerJwtRef.current;
+              console.log(
+                `JWT provider called, returning ${jwt ? 'a JWT' : 'null'}`
+              );
+              return jwt === '' ? null : jwt;
+            })
+              .then(() => setJwtProviderEnabled(true))
+              .catch((e) => {
+                showErrorAlert(e);
+                console.error(e);
+              });
           }}
         />
         <Button

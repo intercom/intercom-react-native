@@ -85,6 +85,9 @@ export interface Spec extends TurboModule {
   setLogLevel(logLevel: string): Promise<boolean>;
   setThemeMode(themeMode: string): Promise<boolean>;
   setUserJwt(jwt: string): Promise<boolean>;
+  setUserJwtProvider(): Promise<boolean>;
+  removeUserJwtProvider(): Promise<boolean>;
+  completeUserJwtRequest(requestId: string, jwt: string | null): void;
   setAuthTokens(authTokens: Object): Promise<boolean>;
 }
 
