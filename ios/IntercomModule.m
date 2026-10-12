@@ -390,13 +390,16 @@ RCT_EXPORT_METHOD(removeUserJwtProvider:(RCTPromiseResolveBlock)resolve
 
 RCT_EXPORT_METHOD(completeUserJwtRequest:(NSString *)requestId
                   jwt:(nullable NSString *)jwt) {
-    void (^completion)(NSString *_Nullable) = self.pendingUserJwtRequests[requestId];
-    if (!completion) {
-        return;
-    }
-    [self.pendingUserJwtRequests removeObjectForKey:requestId];
-    BOOL hasJwt = [jwt isKindOfClass:[NSString class]] && jwt.length > 0;
-    completion(hasJwt ? jwt : nil);
+    // Apps can opt into sync void TurboModule methods, which would run this on the JS thread.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        void (^completion)(NSString *_Nullable) = self.pendingUserJwtRequests[requestId];
+        if (!completion) {
+            return;
+        }
+        [self.pendingUserJwtRequests removeObjectForKey:requestId];
+        BOOL hasJwt = [jwt isKindOfClass:[NSString class]] && jwt.length > 0;
+        completion(hasJwt ? jwt : nil);
+    });
 };
 
 - (NSMutableDictionary<NSString *, void (^)(NSString *_Nullable)> *)pendingUserJwtRequests {
