@@ -1352,8 +1352,9 @@ Intercom rejected a request because it has expired. Requests that hit an expired
 token instead of failing, and open Messenger screens recover without being reopened.
 
 The provider is only called while the app is in the foreground, and never more than once at a time. Resolve with a
-fresh JWT, or with `null` if you can't supply one. Intercom waits up to 10 seconds for an answer. Calling
-`setUserJwt` while a request is pending also completes it.
+fresh JWT, or with `null` if you can't supply one. Intercom waits up to 10 seconds for an answer. If the provider
+fails or doesn't answer in time, Intercom waits 30 seconds before asking again. Calling `setUserJwt` while a request
+is pending also completes it.
 
 Register the provider as early as possible after the app starts. Requests that expire before it is registered fail
 until a new JWT is set.

@@ -435,7 +435,7 @@ const Intercom: IntercomType = {
   setUserJwt: (jwt) => IntercomModule.setUserJwt(jwt),
   setUserJwtProvider: (provider) => {
     userJwtRequestSubscription?.remove();
-    userJwtRequestSubscription = new NativeEventEmitter(
+    const subscription = new NativeEventEmitter(
       IntercomEventEmitter
     ).addListener(
       IntercomEventEmitter.USER_JWT_REQUESTED_NOTIFICATION,
@@ -444,11 +444,20 @@ const Intercom: IntercomType = {
         try {
           const result = await provider();
           jwt = typeof result === 'string' && result.length > 0 ? result : null;
-        } catch {}
+        } catch (error) {
+          console.warn('Intercom: user JWT provider threw an error', error);
+        }
         IntercomModule.completeUserJwtRequest(requestId, jwt);
       }
     );
-    return IntercomModule.setUserJwtProvider();
+    userJwtRequestSubscription = subscription;
+    return IntercomModule.setUserJwtProvider().catch((error: unknown) => {
+      subscription.remove();
+      if (userJwtRequestSubscription === subscription) {
+        userJwtRequestSubscription = undefined;
+      }
+      throw error;
+    });
   },
   removeUserJwtProvider: () => {
     userJwtRequestSubscription?.remove();

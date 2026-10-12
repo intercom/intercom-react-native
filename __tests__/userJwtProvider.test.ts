@@ -41,6 +41,7 @@ describe('setUserJwtProvider', () => {
     ['resolves an empty string', () => Promise.resolve('')],
     ['rejects', () => Promise.reject(new Error('offline'))],
   ])('fails the request when the provider %s', async (_, provider) => {
+    jest.spyOn(console, 'warn').mockImplementation(() => {});
     await Intercom.setUserJwtProvider(provider);
     await requestJwt('2');
 
@@ -62,6 +63,20 @@ describe('setUserJwtProvider', () => {
       '3',
       'second'
     );
+  });
+
+  test('stops listening when native rejects the registration', async () => {
+    const provider = jest.fn(() => Promise.resolve('jwt'));
+    IntercomModule.setUserJwtProvider.mockImplementationOnce(() =>
+      Promise.reject(new Error('Intercom has been initialized incorrectly'))
+    );
+    await expect(Intercom.setUserJwtProvider(provider)).rejects.toThrow(
+      'initialized incorrectly'
+    );
+    await requestJwt('5');
+
+    expect(provider).not.toHaveBeenCalled();
+    expect(IntercomModule.completeUserJwtRequest).not.toHaveBeenCalled();
   });
 
   test('stops answering after removeUserJwtProvider', async () => {
