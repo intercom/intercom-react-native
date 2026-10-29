@@ -8,15 +8,15 @@ PODS:
   - hermes-engine (0.81.1):
     - hermes-engine/Pre-built (= 0.81.1)
   - hermes-engine/Pre-built (0.81.1)
-  - Intercom (19.9.1)
-  - intercom-react-native (10.8.1):
+  - Intercom (19.9.2)
+  - intercom-react-native (10.9.0):
     - boost
     - DoubleConversion
     - fast_float
     - fmt
     - glog
     - hermes-engine
-    - Intercom (~> 19.9.1)
+    - Intercom (~> 19.9.2)
     - RCT-Folly
     - RCT-Folly/Fabric
     - RCTRequired
@@ -2773,8 +2773,8 @@ SPEC CHECKSUMS:
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: 4f8246b1f6d79f625e0d99472d1f3a71da4d28ca
-  Intercom: 8d06a96c4c808a2b4acffc8373855f651121e26f
-  intercom-react-native: 430ae6fb0c3bdc522d2b08091b54afc626b7a3bf
+  Intercom: c69d3e6909b6ef64b1bfbac5ca746bcdf2f67a1f
+  intercom-react-native: 2cbdb91ae67222232817745b3fcdeb2379e8ec76
   MMKV: 7b5df6a8bf785c6705cc490c541b9d8a957c4a64
   MMKVCore: 3f40b896e9ab522452df9df3ce983471aa2449ba
   RCT-Folly: 59ec0ac1f2f39672a0c6e6cecdd39383b764646f
