@@ -98,6 +98,20 @@ jobs:
           command: |
             yarn prepare
 
+  pod-install:
+    <<: *macos_config
+    steps:
+      - attach_project
+      - node/install:
+          node-version: 22.14.0
+      - run:
+          name: Install example pods with an empty Intercom iOS SDK cache
+          command: |
+            export INTERCOM_IOS_SDK_CACHE_DIR="$(mktemp -d)"
+            cd examples/example/ios
+            pod install
+            ls "$INTERCOM_IOS_SDK_CACHE_DIR"/*/Intercom.xcframework.zip
+
 workflows:
   version: 2.1
   build-and-test:
@@ -117,6 +131,10 @@ workflows:
           requires:
             - install-dependencies
       - build-package:
+          <<: *run_always
+          requires:
+            - install-dependencies
+      - pod-install:
           <<: *run_always
           requires:
             - install-dependencies

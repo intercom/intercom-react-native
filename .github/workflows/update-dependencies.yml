@@ -56,6 +56,7 @@ jobs:
           IOS_RELEASE=$(curl -s https://api.github.com/repos/intercom/intercom-ios/releases/latest)
           IOS_VERSION=$(echo "$IOS_RELEASE" | jq -r '.tag_name // "null"')
           IOS_CHANGELOG=$(echo "$IOS_RELEASE" | jq -r '.body // "No changelog available"')
+          IOS_ZIP_DIGEST=$(echo "$IOS_RELEASE" | jq -r '[.assets[]? | select(.name == "Intercom.xcframework.zip") | .digest][0] // ""')
 
           # Get Android release
           ANDROID_RELEASE=$(curl -s https://api.github.com/repos/intercom/intercom-android/releases/latest)
@@ -66,6 +67,7 @@ jobs:
           echo "🤖 Latest Android SDK: $ANDROID_VERSION"
 
           echo "ios_version=$IOS_VERSION" >> $GITHUB_OUTPUT
+          echo "ios_zip_digest=$IOS_ZIP_DIGEST" >> $GITHUB_OUTPUT
           echo "android_version=$ANDROID_VERSION" >> $GITHUB_OUTPUT
           echo "ios_changelog<<EOF" >> $GITHUB_OUTPUT
           echo "$IOS_CHANGELOG" >> $GITHUB_OUTPUT
@@ -252,6 +254,7 @@ jobs:
           IOS_NEEDS_UPDATE: ${{ steps.update-analysis.outputs.ios_needs_update }}
           IOS_NEW_VERSION: ${{ steps.update-analysis.outputs.ios_new_version }}
           IOS_OLD_VERSION: ${{ steps.current-versions.outputs.ios_version }}
+          IOS_RELEASE_DIGEST: ${{ steps.latest-versions.outputs.ios_zip_digest }}
           ANDROID_NEEDS_UPDATE: ${{ steps.update-analysis.outputs.android_needs_update }}
           ANDROID_NEW_VERSION: ${{ steps.update-analysis.outputs.android_new_version }}
           ANDROID_OLD_VERSION: ${{ steps.current-versions.outputs.android_version }}
@@ -266,14 +269,17 @@ jobs:
             curl --fail --silent --show-error --location --retry 3 --output "$IOS_ZIP" \
               "https://github.com/intercom/intercom-ios/releases/download/$IOS_NEW_VERSION/Intercom.xcframework.zip"
             IOS_SHA256=$(shasum -a 256 "$IOS_ZIP" | cut -d ' ' -f 1)
-            IOS_RELEASE_DIGEST=$(curl -s "https://api.github.com/repos/intercom/intercom-ios/releases/tags/$IOS_NEW_VERSION" \
-              | jq -r '.assets[] | select(.name == "Intercom.xcframework.zip") | .digest')
             if [ "$IOS_RELEASE_DIGEST" != "sha256:$IOS_SHA256" ]; then
               echo "❌ Downloaded Intercom.xcframework.zip ($IOS_SHA256) does not match the release digest ($IOS_RELEASE_DIGEST)"
               exit 1
             fi
             sed -i '' -E "s/^intercom_ios_sdk_version = \"[^\"]*\"/intercom_ios_sdk_version = \"$IOS_NEW_VERSION\"/" intercom-react-native.podspec
             sed -i '' -E "s/^intercom_ios_sdk_sha256 = \"[^\"]*\"/intercom_ios_sdk_sha256 = \"$IOS_SHA256\"/" intercom-react-native.podspec
+            if ! grep -qxF "intercom_ios_sdk_version = \"$IOS_NEW_VERSION\"" intercom-react-native.podspec \
+              || ! grep -qxF "intercom_ios_sdk_sha256 = \"$IOS_SHA256\"" intercom-react-native.podspec; then
+              echo "❌ Could not update the iOS SDK version and checksum in intercom-react-native.podspec"
+              exit 1
+            fi
 
             CHANGES="$CHANGES\\n- Updated iOS SDK from $IOS_OLD_VERSION to $IOS_NEW_VERSION"
             PR_TITLE_PARTS="iOS: $IOS_OLD_VERSION → $IOS_NEW_VERSION"

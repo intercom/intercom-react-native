@@ -13,8 +13,17 @@ module IntercomIosSdk
     framework_path = File.join(package_root, relative_path)
     unless File.exist?(File.join(framework_path, 'Info.plist'))
       extract(cached_zip(version, sha256), File.dirname(framework_path))
+      remove_other_versions(File.join(package_root, 'intercom-ios-sdk'), version)
     end
     relative_path
+  end
+
+  def remove_other_versions(sdk_root, version)
+    (Dir.children(sdk_root) - [version]).each { |entry| FileUtils.rm_rf(File.join(sdk_root, entry)) }
+  end
+
+  def log(message)
+    defined?(Pod::UI) ? Pod::UI.puts(message) : puts(message)
   end
 
   def cache_dir
@@ -28,7 +37,7 @@ module IntercomIosSdk
     url = format(RELEASE_URL, version)
     download_path = "#{zip_path}.download"
     FileUtils.mkdir_p(File.dirname(zip_path))
-    Pod::UI.puts "[Intercom] Downloading the Intercom iOS SDK #{version} from #{url}"
+    log "[Intercom] Downloading the Intercom iOS SDK #{version} from #{url}"
     unless system('curl', '--fail', '--silent', '--show-error', '--location', '--retry', '3', '--output', download_path, url)
       FileUtils.rm_f(download_path)
       raise "[Intercom] Could not download #{url}. Check your network, or place the zip at #{zip_path} " \
