@@ -100,6 +100,9 @@ jobs:
 
   pod-install:
     <<: *macos_config
+    # React Native 0.81's pod install requires Xcode 16.1 or newer.
+    macos:
+      xcode: 26.4.0
     steps:
       - attach_project
       - node/install:
