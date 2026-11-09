@@ -108,11 +108,17 @@ jobs:
       - node/install:
           node-version: 22.14.0
       - run:
+          # The Xcode 26 image does not ship the Ruby pinned in .ruby-version.
+          name: Install Ruby and gems
+          command: |
+            rbenv install --skip-existing
+            bundle install
+      - run:
           name: Install example pods with an empty Intercom iOS SDK cache
           command: |
             export INTERCOM_IOS_SDK_CACHE_DIR="$(mktemp -d)"
             cd examples/example/ios
-            pod install
+            bundle exec pod install
             ls "$INTERCOM_IOS_SDK_CACHE_DIR"/*/Intercom.xcframework.zip
 
 workflows:
