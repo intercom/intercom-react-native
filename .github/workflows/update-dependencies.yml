@@ -36,7 +36,7 @@ jobs:
         id: current-versions
         run: |
           # Extract current iOS version from podspec
-          IOS_VERSION=$(grep -E "s\.dependency.*Intercom" intercom-react-native.podspec | sed -E "s/.*'([^']+)'.*/\1/" | sed 's/~> //')
+          IOS_VERSION=$(sed -nE 's/^intercom_ios_sdk_version = "([^"]+)"$/\1/p' intercom-react-native.podspec)
 
           # Extract current Android version from build.gradle
           ANDROID_VERSION=$(grep -E "io\.intercom\.android:intercom-sdk:" android/build.gradle | head -1 | sed -E "s/.*:([^']+)'.*/\1/")
@@ -262,7 +262,18 @@ jobs:
           # Update iOS if needed
           if [ "$IOS_NEEDS_UPDATE" = "true" ]; then
             echo "📱 Updating iOS SDK: $IOS_OLD_VERSION → $IOS_NEW_VERSION"
-            sed -i '' "s/s\.dependency \"Intercom\", '~> [^']*'/s.dependency \"Intercom\", '~> $IOS_NEW_VERSION'/" intercom-react-native.podspec
+            IOS_ZIP="$RUNNER_TEMP/Intercom.xcframework.zip"
+            curl --fail --silent --show-error --location --retry 3 --output "$IOS_ZIP" \
+              "https://github.com/intercom/intercom-ios/releases/download/$IOS_NEW_VERSION/Intercom.xcframework.zip"
+            IOS_SHA256=$(shasum -a 256 "$IOS_ZIP" | cut -d ' ' -f 1)
+            IOS_RELEASE_DIGEST=$(curl -s "https://api.github.com/repos/intercom/intercom-ios/releases/tags/$IOS_NEW_VERSION" \
+              | jq -r '.assets[] | select(.name == "Intercom.xcframework.zip") | .digest')
+            if [ "$IOS_RELEASE_DIGEST" != "sha256:$IOS_SHA256" ]; then
+              echo "❌ Downloaded Intercom.xcframework.zip ($IOS_SHA256) does not match the release digest ($IOS_RELEASE_DIGEST)"
+              exit 1
+            fi
+            sed -i '' -E "s/^intercom_ios_sdk_version = \"[^\"]*\"/intercom_ios_sdk_version = \"$IOS_NEW_VERSION\"/" intercom-react-native.podspec
+            sed -i '' -E "s/^intercom_ios_sdk_sha256 = \"[^\"]*\"/intercom_ios_sdk_sha256 = \"$IOS_SHA256\"/" intercom-react-native.podspec
 
             CHANGES="$CHANGES\\n- Updated iOS SDK from $IOS_OLD_VERSION to $IOS_NEW_VERSION"
             PR_TITLE_PARTS="iOS: $IOS_OLD_VERSION → $IOS_NEW_VERSION"
@@ -343,7 +354,7 @@ jobs:
             if [ -f "$dir/Podfile" ]; then
               echo "📱 Updating pods in $dir"
               cd "$dir"
-              bundle exec pod install --repo-update || pod install --repo-update || pod update Intercom || echo "Pod install failed in $dir"
+              bundle exec pod install --repo-update || pod install --repo-update || echo "Pod install failed in $dir"
               cd - > /dev/null
 
               # Add any updated Podfile.lock files

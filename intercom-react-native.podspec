@@ -1,7 +1,10 @@
 
 require "json"
+require File.join(__dir__, "ios", "intercom_ios_sdk")
 
 package = JSON.parse(File.read(File.join(__dir__, "package.json")))
+intercom_ios_sdk_version = "19.9.2"
+intercom_ios_sdk_sha256 = "6af284508f58de833313b263f3d82eaebc255c4d9a56ad9adf2fc6af4228c0f4"
 
 Pod::Spec.new do |s|
   s.name         = "intercom-react-native"
@@ -19,7 +22,13 @@ Pod::Spec.new do |s|
 
   s.pod_target_xcconfig = { "DEFINES_MODULE" => "YES" }
 
-  s.dependency "Intercom", '~> 19.9.2'
+  s.vendored_frameworks = IntercomIosSdk.install_xcframework(
+    version: intercom_ios_sdk_version,
+    sha256: intercom_ios_sdk_sha256,
+    package_root: __dir__
+  )
+  s.frameworks = ["Foundation", "UIKit", "Accelerate", "Security", "SystemConfiguration", "MobileCoreServices", "ImageIO", "AudioToolbox", "QuartzCore", "CoreGraphics", "Photos", "WebKit"]
+  s.libraries = "icucore", "xml2"
 
   is_new_arch_enabled = ENV["RCT_NEW_ARCH_ENABLED"] == "1"
   folly_compiler_flags = '-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -Wno-comma -Wno-shorten-64-to-32'
