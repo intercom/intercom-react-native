@@ -46,6 +46,7 @@ examples/*/vendor/
 # Cocoapods
 #
 examples/*/ios/Pods
+intercom-ios-sdk/
 
 # node.js
 #

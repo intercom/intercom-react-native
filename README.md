@@ -738,11 +738,13 @@ The Expo plugin automatically generates a `FirebaseMessagingService` for Android
 
 ### Versioning in dependencies
 
-We define the iOS and Android versions used in React Native with optimistic operators
-i.e. `~> for iOS` and `+ for Android`, ensuring compatibility while allowing for non-breaking updates:
-
-iOS (~> in CocoaPods):
-We use a version constraint e.g.`~> 18.6.1` which allows updates from `18.6.1 to 18.6.x` (up to but not including 18.7.0).
+iOS (exact version):
+The Intercom iOS SDK is no longer published to the CocoaPods trunk. During `pod install`, the podspec downloads
+`Intercom.xcframework.zip` for the exact iOS SDK version this release was built against from the
+[intercom-ios GitHub release](https://github.com/intercom/intercom-ios/releases), verifies its SHA-256 checksum
+and links it. You don't need to add the `Intercom` pod to your Podfile (remove it if you added it yourself).
+The download is cached in `~/Library/Caches/intercom-react-native`; set `INTERCOM_IOS_SDK_CACHE_DIR` to use
+another directory, for example one your CI caches or one you pre-fill for offline builds.
 
 Android (+ in Gradle):
 We use a version constraint e.g. `18.6.+` which allows updates to any patch version within 18.6.x
