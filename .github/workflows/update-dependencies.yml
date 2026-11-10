@@ -152,7 +152,7 @@ jobs:
           echo "   Target: iOS=$TARGET_IOS, Android=$TARGET_ANDROID"
 
           # Find existing PRs
-          EXISTING_PRS=$(gh pr list --state open --search "update Intercom SDK dependencies" --json number,title,headRefName 2>/dev/null || echo "[]")
+          EXISTING_PRS=$(gh pr list --state open --search "update Intercom SDK dependencies in:title" --json number,title,headRefName 2>/dev/null || echo "[]")
 
           if [ "$EXISTING_PRS" = "[]" ] || [ "$(echo "$EXISTING_PRS" | jq 'length')" -eq 0 ]; then
             echo "✅ No existing PRs found - proceeding with update"
