@@ -3,8 +3,8 @@ require "json"
 require File.join(__dir__, "ios", "intercom_ios_sdk")
 
 package = JSON.parse(File.read(File.join(__dir__, "package.json")))
-intercom_ios_sdk_version = "19.9.2"
-intercom_ios_sdk_sha256 = "6af284508f58de833313b263f3d82eaebc255c4d9a56ad9adf2fc6af4228c0f4"
+intercom_ios_sdk_version = "19.10.0"
+intercom_ios_sdk_sha256 = "86721574d5aa8e9619f1d1805135f28690b8f8e371442a2d008c2e95ed8f0c96"
 
 Pod::Spec.new do |s|
   s.name         = "intercom-react-native"
