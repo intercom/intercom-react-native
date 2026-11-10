@@ -49,15 +49,17 @@ export enum ThemeMode {
 
 type ThemeModeType = keyof typeof ThemeMode;
 
+// Optional so that importing outside the native runtime, such as an Expo Router
+// server export, doesn't throw.
 export const IntercomEvents = {
   IntercomUnreadCountDidChange:
-    IntercomEventEmitter.UNREAD_COUNT_CHANGE_NOTIFICATION,
-  IntercomWindowDidHide: IntercomEventEmitter.WINDOW_DID_HIDE_NOTIFICATION,
-  IntercomWindowDidShow: IntercomEventEmitter.WINDOW_DID_SHOW_NOTIFICATION,
+    IntercomEventEmitter?.UNREAD_COUNT_CHANGE_NOTIFICATION,
+  IntercomWindowDidHide: IntercomEventEmitter?.WINDOW_DID_HIDE_NOTIFICATION,
+  IntercomWindowDidShow: IntercomEventEmitter?.WINDOW_DID_SHOW_NOTIFICATION,
   IntercomHelpCenterWindowDidShow:
-    IntercomEventEmitter.WINDOW_DID_SHOW_NOTIFICATION,
+    IntercomEventEmitter?.WINDOW_DID_SHOW_NOTIFICATION,
   IntercomHelpCenterWindowDidHide:
-    IntercomEventEmitter.WINDOW_DID_HIDE_NOTIFICATION,
+    IntercomEventEmitter?.WINDOW_DID_HIDE_NOTIFICATION,
 };
 
 export enum Space {
@@ -425,7 +427,7 @@ const Intercom: IntercomType = {
     IntercomModule.setLauncherVisibility(visibility),
 
   setNeedsStatusBarAppearanceUpdate: Platform.select({
-    ios: IntercomModule.setNeedsStatusBarAppearanceUpdate,
+    ios: () => IntercomModule.setNeedsStatusBarAppearanceUpdate(),
     default: async () => true,
   }),
 
