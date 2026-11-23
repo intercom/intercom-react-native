@@ -34,9 +34,11 @@ If you are running iOS SDK [v19.5.6](https://github.com/intercom/intercom-ios/re
     - [Manual linking (React Native <=0.59)](#ios-manual-linking-with-react-native-v059-and-below)
     - [Setup](#ios-setup)
     - [Permissions](#ios-permissions)
+    - [Location permission in Mobile Carousels](#ios-location-permission-in-mobile-carousels)
     - [Push Notifications](#ios-push-notifications)
     - [Push notification deep links support](#ios-push-notification-deep-links-support)
   - [Expo](#expo)
+    - [iOS location permission in Mobile Carousels](#expo-ios-location-permission-in-mobile-carousels)
     - [Push Notifications](#expo-push-notifications)
     - [Push notification deep links support](#expo-push-notification-deep-links-support)
       - [Android](#android-deep-link)
@@ -413,6 +415,52 @@ Add these permissions to your `Info.plist`:
 
 **Note:** These permissions are only requested when the user attempts to use the respective feature. You can customize the description strings to match your app's use case.
 
+#### iOS: Location permission in Mobile Carousels
+
+Intercom doesn't use CoreLocation itself, so your app doesn't need a location purpose string just because it includes Intercom. Mobile Carousel screens that ask for location permission are only shown on iOS once your app gives Intercom a location permission provider. Android needs no extra setup.
+
+To show those screens, add `NSLocationWhenInUseUsageDescription` to your `Info.plist` (and `NSLocationAlwaysAndWhenInUseUsageDescription` if a carousel asks for "Always" access), then add a provider to your `AppDelegate.swift`:
+
+```Swift
+import CoreLocation
+import Intercom
+
+final class IntercomLocationPermissionProvider: NSObject, ICMLocationPermissionProvider, CLLocationManagerDelegate {
+  private let locationManager = CLLocationManager()
+
+  var authorizationStatusDidChange: ((ICMLocationAuthorizationStatus) -> Void)?
+
+  override init() {
+    super.init()
+    locationManager.delegate = self
+  }
+
+  func currentAuthorizationStatus() -> ICMLocationAuthorizationStatus {
+    ICMLocationAuthorizationStatus(rawValue: Int(locationManager.authorizationStatus.rawValue)) ?? .notDetermined
+  }
+
+  func requestWhenInUsePermission() {
+    locationManager.requestWhenInUseAuthorization()
+  }
+
+  func requestAlwaysPermission() {
+    locationManager.requestAlwaysAuthorization()
+  }
+
+  func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+    authorizationStatusDidChange?(currentAuthorizationStatus())
+  }
+}
+```
+
+and register it inside `didFinishLaunchingWithOptions`:
+
+```Swift
+Intercom.setLocationPermissionProvider(IntercomLocationPermissionProvider())
+```
+
+If you use Expo, set the [`iosLocationPermission`](#expo-ios-location-permission-in-mobile-carousels) plugin option instead.
+
 #### iOS: Push Notifications
 
 > **Note**: You should request user permission to display push notifications.
@@ -537,6 +585,7 @@ The plugin provides props for extra customization. Every time you change the pro
 - `iosApiKey` (_string_): iOS API Key from Intercom.
 - `intercomRegion` (_string_): Region for Intercom `US`, `EU`, `AU`. Optional. Defaults to `US`.
 - `useManualInit` (_boolean_): Set to `true` to manually initialize Intercom from JavaScript instead of at app startup. Optional. Defaults to `false`.
+- `iosLocationPermission` (_boolean_): Set to `true` to show Mobile Carousel screens that ask for location permission on iOS. See [Expo: iOS location permission in Mobile Carousels](#expo-ios-location-permission-in-mobile-carousels). Optional. Defaults to `false`.
 
 ```json
 {
@@ -611,6 +660,33 @@ To enable camera and microphone features in your Expo app, add the following to 
 **Note:** These permissions are required for iOS SDK 19.3.0+. The microphone permission enables voice message transcription. You can customize the description strings to match your app's use case.
 
 After adding these permissions, run `npx expo prebuild` to regenerate the native iOS project with the updated Info.plist.
+
+#### Expo: iOS location permission in Mobile Carousels
+
+Mobile Carousel screens that ask for location permission are only shown on iOS once your app gives Intercom a location permission provider. Set `iosLocationPermission` to `true` and the plugin adds one to your `AppDelegate`. Add the location purpose strings too:
+
+```json
+{
+  "expo": {
+    "ios": {
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Share your location when a message asks for it",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Share your location when a message asks for it"
+      }
+    },
+    "plugins": [
+      [
+        "@intercom/intercom-react-native",
+        {
+          "iosLocationPermission": true
+        }
+      ]
+    ]
+  }
+}
+```
+
+`NSLocationAlwaysAndWhenInUseUsageDescription` is only needed if a carousel asks for "Always" access. Android needs no extra setup.
 
 #### Expo: Push notifications
 

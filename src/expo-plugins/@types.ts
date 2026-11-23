@@ -3,6 +3,12 @@ export type IntercomRegion = 'US' | 'EU' | 'AU';
 type BasePluginProps = {
   /** Data hosting region for your Intercom workspace. Defaults to 'US' */
   intercomRegion?: IntercomRegion;
+  /**
+   * iOS only. Registers a location permission provider so Mobile Carousel
+   * screens that ask for location permission are shown. Requires
+   * NSLocationWhenInUseUsageDescription in your Info.plist. Defaults to false.
+   */
+  iosLocationPermission?: boolean;
 };
 
 type AutoInitPluginProps = BasePluginProps & {

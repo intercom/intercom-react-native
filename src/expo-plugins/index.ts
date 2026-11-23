@@ -21,6 +21,7 @@ import {
 } from '@expo/config-plugins/build/ios/codeMod';
 import type { IntercomPluginProps, IntercomRegion } from './@types';
 import { withIntercomPushNotification } from './withPushNotifications';
+import { withIosLocationPermission } from './withIosLocationPermission';
 
 const mainApplication: ConfigPlugin<IntercomPluginProps> = (_config, props) =>
   withMainApplication(_config, (config) => {
@@ -156,6 +157,7 @@ const infoPlist: ConfigPlugin<IntercomPluginProps> = (
 const withIntercomIOS: ConfigPlugin<IntercomPluginProps> = (config, props) => {
   let newConfig = appDelegate(config, props);
   newConfig = infoPlist(newConfig, props);
+  newConfig = withIosLocationPermission(newConfig, props);
   return newConfig;
 };
 
